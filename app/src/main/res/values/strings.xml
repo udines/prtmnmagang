@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Pertamina Tuban</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_login">Login</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
 </resources>
