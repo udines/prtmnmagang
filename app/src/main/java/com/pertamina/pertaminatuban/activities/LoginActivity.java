@@ -1,5 +1,6 @@
 package com.pertamina.pertaminatuban.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -54,6 +55,8 @@ public class LoginActivity extends AppCompatActivity {
                     /*lakukan otentikasi dengan username dan password yang sudah terisi data*/
                     otentikasi(username, password);
                 } else {
+
+                    /*menampilkan peringatan jika salah satu input tidak diisi*/
                     if (inputUsername.getText().length() == 0) {
                         Toast.makeText(LoginActivity.this, "Masukkan username", Toast.LENGTH_SHORT).show();
                     } else if (inputPassword.getText().length() == 0) {
@@ -66,6 +69,10 @@ public class LoginActivity extends AppCompatActivity {
 
     private void otentikasi(String username, String password) {
         Toast.makeText(this, username + " " + password, Toast.LENGTH_SHORT).show();
+        Intent menuIntent = new Intent(getApplicationContext(), MenuActivity.class);
+        menuIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(menuIntent);
     }
+
 
 }
