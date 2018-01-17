@@ -11,26 +11,26 @@ import com.pertamina.pertaminatuban.models.MenuViewModel;
 
 import java.util.ArrayList;
 
-public class GridMenuAdapter extends RecyclerView.Adapter<GridMenuViewHolder> {
+public class ListMenuAdapter extends RecyclerView.Adapter<ListMenuViewHolder> {
 
     private ArrayList<MenuViewModel> menuList;
     private Context context;
 
-    public GridMenuAdapter(ArrayList<MenuViewModel> menuList, Context context) {
+    public ListMenuAdapter(ArrayList<MenuViewModel> menuList, Context context) {
         this.menuList = menuList;
         this.context = context;
     }
 
     @Override
-    public GridMenuViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ListMenuViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        /*membuat inflater untuk menghubungkan viewholder dengan layout item_menu_grid*/
+        /*membuat inflater untuk menghubungkan viewholder dengan layout item_menu_list*/
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        return new GridMenuViewHolder(inflater.inflate(R.layout.item_menu_grid, parent, false));
+        return new ListMenuViewHolder(inflater.inflate(R.layout.item_menu_list, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(GridMenuViewHolder holder, int position) {
+    public void onBindViewHolder(ListMenuViewHolder holder, int position) {
 
         /*set text pada menu sesuai dengan teks yang sudah ditentukan dan
          sesuai dengan urutan dari daftar menu*/

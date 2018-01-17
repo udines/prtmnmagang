@@ -3,8 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.pertamina.pertaminatuban.activities.MenuActivity">
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
+        android:id="@+id/action_menu_list"
+        android:title="List"/>
+    <item
+        android:id="@+id/action_menu_grid"
+        android:title="Kolom"/>
 </menu>

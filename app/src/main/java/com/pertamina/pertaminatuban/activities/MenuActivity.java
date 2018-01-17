@@ -3,6 +3,7 @@ package com.pertamina.pertaminatuban.activities;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -11,12 +12,19 @@ import android.view.MenuItem;
 import com.pertamina.pertaminatuban.R;
 import com.pertamina.pertaminatuban.models.MenuViewModel;
 import com.pertamina.pertaminatuban.utils.GridMenuAdapter;
+import com.pertamina.pertaminatuban.utils.ListMenuAdapter;
 
 import java.util.ArrayList;
 
 /*Tujuan activity ini adalah menampilkan menu kepada pengguna agar pengguna
 * bisa memilih divisi mana yang ingin pengguna lihat atau edit atau tambah datanya*/
 public class MenuActivity extends AppCompatActivity {
+
+    private GridMenuAdapter gridAdapter;
+    private ListMenuAdapter listAdapter;
+    private RecyclerView recyclerView;
+    private GridLayoutManager gridLayoutManager;
+    private LinearLayoutManager linearLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,17 +51,24 @@ public class MenuActivity extends AppCompatActivity {
         menuList.add(new MenuViewModel("Divisi 5", R.drawable.ic_launcher_foreground));
         menuList.add(new MenuViewModel("Divisi 6", R.drawable.ic_launcher_foreground));
 
-        /*membuat obyek dari GridMenuAdapter*/
-        GridMenuAdapter adapter = new GridMenuAdapter(menuList, getApplicationContext());
+        /*membuat obyek dari GridMenuAdapter untuk menampilkan menu bentuk gridLayoutManager 2 kolom*/
+        gridAdapter = new GridMenuAdapter(menuList, getApplicationContext());
+
+        /*membuat obyek dari ListMenuAdapter untuk menampilkan menu dalam bentuk list menurun*/
+        listAdapter = new ListMenuAdapter(menuList, getApplicationContext());
 
         /*menghubungkan view dengan layout recyclerview di content_menu.xml*/
-        RecyclerView recyclerView = findViewById(R.id.menu_recyclerview);
+        recyclerView = findViewById(R.id.menu_recyclerview);
 
-        /*membuat obyek layout manager tipe grid dengan jumlah kolom : 2
-        * sekaligus menggabungkan dengan recyclerview dan adapter yang sudah dibuat*/
-        GridLayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 2);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapter);
+        /*membuat obyek layout manager tipe gridLayoutManager dengan jumlah kolom : 2*/
+        gridLayoutManager = new GridLayoutManager(getApplicationContext(), 2);
+
+        /*membuat obyek layout manager tipe linear*/
+        linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+
+        /*inisialisasi awal menu dalam bentuk grid*/
+        recyclerView.setLayoutManager(gridLayoutManager);
+        recyclerView.setAdapter(gridAdapter);
     }
 
     @Override
@@ -71,7 +86,21 @@ public class MenuActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_menu_grid) {
+
+            /*ganti menu menjadi bentuk grid dengan menghilangkan
+            * adapter yang menempel di recyclerview dan mengganti dengan
+            * layout manager grid dan adapter grid*/
+            recyclerView.setLayoutManager(gridLayoutManager);
+            recyclerView.setAdapter(gridAdapter);
+            return true;
+        } else if (id == R.id.action_menu_list) {
+
+            /*ganti menu menjadi bentuk list dengan menghilangkan
+            * adapter yang menempel di recyclerview dan mengganti dengan
+            * layout manager linear dan adapter list*/
+            recyclerView.setLayoutManager(linearLayoutManager);
+            recyclerView.setAdapter(listAdapter);
             return true;
         }
 
