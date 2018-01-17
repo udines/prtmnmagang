@@ -26,7 +26,7 @@ public class GridMenuViewHolder extends RecyclerView.ViewHolder {
         context = itemView.getContext();
 
         /*menghubungkan variable view dengan layout sesuai dengan id
-        * pada layout item_menu.xml*/
+        * pada layout item_menu_grid.xml*/
         title = itemView.findViewById(R.id.item_menu_title);
         image = itemView.findViewById(R.id.item_menu_image);
 

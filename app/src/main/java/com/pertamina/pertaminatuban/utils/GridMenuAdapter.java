@@ -28,7 +28,7 @@ public class GridMenuAdapter extends RecyclerView.Adapter<GridMenuViewHolder> {
     @Override
     public GridMenuViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        return new GridMenuViewHolder(inflater.inflate(R.layout.item_menu, parent, false));
+        return new GridMenuViewHolder(inflater.inflate(R.layout.item_menu_grid, parent, false));
     }
 
     @Override
