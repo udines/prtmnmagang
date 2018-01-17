@@ -27,13 +27,13 @@ public class GridMenuViewHolder extends RecyclerView.ViewHolder {
 
         /*menghubungkan variable view dengan layout sesuai dengan id
         * pada layout item_menu_grid.xml*/
-        title = itemView.findViewById(R.id.item_menu_title);
-        image = itemView.findViewById(R.id.item_menu_image);
+        title = itemView.findViewById(R.id.item_menu_grid_title);
+        image = itemView.findViewById(R.id.item_menu_grid_image);
 
         /*menambahkan click listener. jika pengguna melakukan klik pada
         * salah satu menu, maka pindah ke halaman sesuai dengan pilihan
         * pengguna berdasarkan title menu.*/
-        card = itemView.findViewById(R.id.item_menu_card);
+        card = itemView.findViewById(R.id.item_menu_grid_card);
         card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
