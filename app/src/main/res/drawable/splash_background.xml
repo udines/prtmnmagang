@@ -3,7 +3,7 @@
 
     <item android:drawable="@color/white"/>
     <item
-        android:drawable="@drawable/ic_launcher_foreground"
+        android:drawable="@drawable/ic_pertamina_logo_vertical"
         android:gravity="center">
     </item>
 </layer-list>
