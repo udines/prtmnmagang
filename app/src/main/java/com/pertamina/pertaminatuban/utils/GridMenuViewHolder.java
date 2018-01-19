@@ -16,8 +16,8 @@ public class GridMenuViewHolder extends RecyclerView.ViewHolder {
 
     public final TextView title;
     public final ImageView image;
-    private final CardView card;
-    private final Context context;
+    public final CardView card;
+    public final Context context;
 
     public GridMenuViewHolder(View itemView) {
         super(itemView);
@@ -34,11 +34,5 @@ public class GridMenuViewHolder extends RecyclerView.ViewHolder {
         * salah satu menu, maka pindah ke halaman sesuai dengan pilihan
         * pengguna berdasarkan title menu.*/
         card = itemView.findViewById(R.id.item_menu_grid_card);
-        card.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(context, title.getText().toString(), Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 }

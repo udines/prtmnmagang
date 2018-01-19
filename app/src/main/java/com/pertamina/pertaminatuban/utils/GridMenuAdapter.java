@@ -1,12 +1,15 @@
 package com.pertamina.pertaminatuban.utils;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.pertamina.pertaminatuban.R;
+import com.pertamina.pertaminatuban.activities.DistribusiActivity;
 import com.pertamina.pertaminatuban.models.MenuViewModel;
 
 import java.util.ArrayList;
@@ -30,7 +33,7 @@ public class GridMenuAdapter extends RecyclerView.Adapter<GridMenuViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(GridMenuViewHolder holder, int position) {
+    public void onBindViewHolder(final GridMenuViewHolder holder, int position) {
 
         /*set text pada menu sesuai dengan teks yang sudah ditentukan dan
          sesuai dengan urutan dari daftar menu*/
@@ -39,6 +42,18 @@ public class GridMenuAdapter extends RecyclerView.Adapter<GridMenuViewHolder> {
         /*set gambar menu sesuai dengan id gambar yang sudah ditentukan*/
         holder.image.setImageDrawable(ContextCompat.getDrawable(context,
                 menuList.get(position).getIdDrawable()));
+
+        holder.card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switch (holder.getAdapterPosition()) {
+                    case 0 :
+                        Intent distribusiIntent = new Intent(holder.context, DistribusiActivity.class);
+                        distribusiIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        holder.context.startActivity(distribusiIntent);
+                }
+            }
+        });
     }
 
     @Override
@@ -47,4 +62,6 @@ public class GridMenuAdapter extends RecyclerView.Adapter<GridMenuViewHolder> {
         /*jika list kosong maka return nilai 0 agar tidak terjadi error*/
         return (menuList != null ? menuList.size() : 0);
     }
+
+
 }

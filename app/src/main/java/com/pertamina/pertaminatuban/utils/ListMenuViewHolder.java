@@ -34,11 +34,5 @@ public class ListMenuViewHolder extends RecyclerView.ViewHolder {
         * salah satu menu, maka pindah ke halaman sesuai dengan pilihan
         * pengguna berdasarkan title menu.*/
         card = itemView.findViewById(R.id.item_menu_grid_card);
-        card.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(context, title.getText().toString(), Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 }
