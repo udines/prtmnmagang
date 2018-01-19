@@ -44,7 +44,7 @@ public class MenuActivity extends AppCompatActivity {
         /*menambahkan obyek dari MenuViewModel ke dalam daftar menuList
         * instansiasi memerlukan 2 parameter yaitu String untuk judul menu
         * dan int untuk id gambar menu*/
-        menuList.add(new MenuViewModel("Divisi 1", R.drawable.ic_launcher_foreground));
+        menuList.add(new MenuViewModel("Distribusi", R.drawable.ic_tank));
         menuList.add(new MenuViewModel("Divisi 2", R.drawable.ic_launcher_foreground));
         menuList.add(new MenuViewModel("Divisi 3", R.drawable.ic_launcher_foreground));
         menuList.add(new MenuViewModel("Divisi 4", R.drawable.ic_launcher_foreground));
