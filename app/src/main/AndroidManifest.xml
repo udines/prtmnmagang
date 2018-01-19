@@ -46,6 +46,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.pertamina.pertaminatuban.activities.MenuActivity" />
         </activity>
+        <activity
+            android:name=".input_activities.InputMatbalActivity"
+            android:label="@string/title_activity_input_matbal"
+            android:parentActivityName=".activities.DistribusiActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.pertamina.pertaminatuban.activities.DistribusiActivity" />
+        </activity>
     </application>
 
 </manifest>

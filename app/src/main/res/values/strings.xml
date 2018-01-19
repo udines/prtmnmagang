@@ -6,4 +6,5 @@
     <string name="password">Password</string>
     <string name="title_activity_register">Daftar Akun</string>
     <string name="title_activity_distribusi">Distribusi</string>
+    <string name="title_activity_input_matbal">Input Matbal</string>
 </resources>
