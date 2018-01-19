@@ -1,5 +1,6 @@
 package com.pertamina.pertaminatuban.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -9,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.pertamina.pertaminatuban.R;
@@ -17,6 +19,7 @@ import com.pertamina.pertaminatuban.fragment.distribusi.MatbalFragment;
 import com.pertamina.pertaminatuban.fragment.distribusi.OpersFragment;
 import com.pertamina.pertaminatuban.fragment.distribusi.RitaseFragment;
 import com.pertamina.pertaminatuban.fragment.distribusi.WilayahFragment;
+import com.pertamina.pertaminatuban.input_activities.InputMatbalActivity;
 import com.pertamina.pertaminatuban.utils.ViewPagerAdapter;
 
 import java.text.DateFormat;
@@ -25,6 +28,8 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 public class DistribusiActivity extends AppCompatActivity {
+
+    private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,13 +56,30 @@ public class DistribusiActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         handleAppBar();
+        handleInpuButton();
+    }
+
+    private void handleInpuButton() {
+        Button button = findViewById(R.id.distribusi_button_tambah);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switch (viewPager.getCurrentItem()) {
+                    case 0 :
+                        Intent matbalIntent = new Intent(getApplicationContext(), InputMatbalActivity.class);
+                        matbalIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(matbalIntent);
+                        break;
+                }
+            }
+        });
     }
 
     private void handleAppBar() {
-        ViewPager viewPager = findViewById(R.id.distribusi_viewpager);
+        viewPager = findViewById(R.id.distribusi_viewpager);
         TabLayout tabLayout = findViewById(R.id.distribusi_tab);
         TextView tanggal = findViewById(R.id.distribusi_tanggal);
-        DateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+        DateFormat dateFormat = new SimpleDateFormat("MMMM yyyy", Locale.getDefault());
 
         /*inisialisasi tab*/
         ArrayList<Fragment> fragments = new ArrayList<>();

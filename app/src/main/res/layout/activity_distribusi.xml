@@ -54,8 +54,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:visibility="gone"
         android:layout_margin="@dimen/fab_margin"
+        android:visibility="gone"
         app:srcCompat="@android:drawable/ic_dialog_email" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:drawableStart="@drawable/ic_edit_black_24dp"
+        android:background="@drawable/round_corner_24dp_accent"
+        android:drawableLeft="@drawable/ic_edit_black_24dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:text="Tambah Data"
+        android:drawablePadding="8dp"
+        android:textColor="@color/white"
+        android:id="@+id/distribusi_button_tambah"/>
 
 </android.support.design.widget.CoordinatorLayout>
