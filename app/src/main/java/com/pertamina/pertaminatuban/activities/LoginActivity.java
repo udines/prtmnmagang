@@ -14,6 +14,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pertamina.pertaminatuban.R;
+import com.pertamina.pertaminatuban.models.InvalidResponse;
+import com.pertamina.pertaminatuban.models.UserCredential;
+import com.pertamina.pertaminatuban.models.ValidResponse;
+import com.pertamina.pertaminatuban.service.UserClient;
 
 import org.json.JSONObject;
 
@@ -23,6 +27,12 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.stream.Collectors;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -104,53 +114,41 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void otentikasi(String username, String password)  {
-        sendPost(username, password);
+
+        UserCredential credential = new UserCredential(
+                username,
+                password
+        );
+
+        sendAuthRequest(credential);
+
+//        sendPost(username, password);
     }
 
-    /**/
-    private void sendPost(final String username, final String password) {
-        Thread thread = new Thread(new Runnable() {
+    private void sendAuthRequest(UserCredential credential) {
+        String baseUrl = "http://www.api.odc-abcd.com/";
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create());
+
+        Retrofit retrofit = builder.build();
+        UserClient client = retrofit.create(UserClient.class);
+        Call<Object> call = client.UserClient(credential);
+
+        call.enqueue(new Callback<Object>() {
             @Override
-            public void run() {
-                try {
-
-                    /*api url untuk login*/
-                    URL url = new URL("http://www.api.odc-abcd.com/login");
-
-                    /*membuat koneksi dan set metode POST*/
-                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                    connection.setRequestMethod("POST");
-                    connection.setRequestProperty("Content-Type", "application/json");
-                    connection.setDoInput(true);
-                    connection.setDoOutput(true);
-
-                    /*membuat obyek json yang berisi data login*/
-                    JSONObject jsonObject = new JSONObject();
-                    jsonObject.put("username", username);
-                    jsonObject.put("password", password);
-                    Log.d("json", jsonObject.toString());
-
-                    /*mengubah json menjadi output stream*/
-                    DataOutputStream os = new DataOutputStream(connection.getOutputStream());
-                    os.writeBytes(jsonObject.toString());
-                    os.flush();
-                    os.close();
-
-                    Log.d("connection", String.valueOf(connection.getResponseCode()));
-                    Log.d("connection", String.valueOf(connection.getResponseMessage()));
-
-                    /*Log hasil request body*/
-                    BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        Log.d("connection body", br.lines().collect(Collectors.joining()));
-                    }
-
-                    connection.disconnect();
-                } catch (Exception e) {
-                    e.printStackTrace();
+            public void onResponse(Call<Object> call, Response<Object> response) {
+                Log.d("request", "Success");
+                Log.d("response code", String.valueOf(response.code()) + " " + response.message());
+                if (response.code() == 200 && response.body() != null) {
+                    
                 }
             }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+                Log.d("request", "Failure");
+            }
         });
-        thread.start();
     }
 }
