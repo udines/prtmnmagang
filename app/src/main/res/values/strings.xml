@@ -7,4 +7,9 @@
     <string name="title_activity_register">Daftar Akun</string>
     <string name="title_activity_distribusi">Distribusi</string>
     <string name="title_activity_input_matbal">Input Matbal</string>
+    <string name="title_activity_konsumen">Konsumen</string>
+    <string name="title_activity_matbal">Matbal</string>
+    <string name="title_activity_opers">Opers</string>
+    <string name="title_activity_ritase">Ritase</string>
+    <string name="title_activity_wilayah">Wilayah</string>
 </resources>

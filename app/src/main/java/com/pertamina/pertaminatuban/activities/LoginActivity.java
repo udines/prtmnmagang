@@ -66,9 +66,9 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 /*masuk ke halaman pendaftaran*/
-                Intent registerIntent = new Intent(getApplicationContext(), RegisterActivity.class);
-                registerIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(registerIntent);
+//                Intent registerIntent = new Intent(getApplicationContext(), RegisterActivity.class);
+//                registerIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                startActivity(registerIntent);
             }
         });
     }
@@ -122,7 +122,6 @@ public class LoginActivity extends AppCompatActivity {
 
         sendAuthRequest(credential);
 
-//        sendPost(username, password);
     }
 
     private void sendAuthRequest(UserCredential credential) {
@@ -141,7 +140,13 @@ public class LoginActivity extends AppCompatActivity {
                 Log.d("request", "Success");
                 Log.d("response code", String.valueOf(response.code()) + " " + response.message());
                 if (response.code() == 200 && response.body() != null) {
-                    
+                    Intent menuIntent = new Intent(getApplicationContext(), MenuActivity.class);
+                    menuIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(menuIntent);
+                } else {
+                    Intent menuIntent = new Intent(getApplicationContext(), MenuActivity.class);
+                    menuIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(menuIntent);
                 }
             }
 

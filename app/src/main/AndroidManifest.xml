@@ -38,7 +38,7 @@
                 android:value="com.pertamina.pertaminatuban.activities.LoginActivity" />
         </activity>
         <activity
-            android:name=".activities.DistribusiActivity"
+            android:name=".distribusi.DistribusiActivity"
             android:label="@string/title_activity_distribusi"
             android:parentActivityName=".activities.MenuActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -47,13 +47,58 @@
                 android:value="com.pertamina.pertaminatuban.activities.MenuActivity" />
         </activity>
         <activity
-            android:name=".input_activities.InputMatbalActivity"
+            android:name=".distribusi.InputMatbalActivity"
             android:label="@string/title_activity_input_matbal"
-            android:parentActivityName=".activities.DistribusiActivity"
+            android:parentActivityName=".distribusi.DistribusiActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.pertamina.pertaminatuban.activities.DistribusiActivity" />
+                android:value="com.pertamina.pertaminatuban.distribusi.DistribusiActivity" />
+        </activity>
+        <activity
+            android:name=".distribusi.KonsumenActivity"
+            android:label="@string/title_activity_konsumen"
+            android:parentActivityName=".distribusi.DistribusiActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.pertamina.pertaminatuban.distribusi.DistribusiActivity" />
+        </activity>
+        <activity
+            android:name=".distribusi.MatbalActivity"
+            android:label="@string/title_activity_matbal"
+            android:parentActivityName=".distribusi.DistribusiActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.pertamina.pertaminatuban.distribusi.DistribusiActivity" />
+        </activity>
+        <activity
+            android:name=".distribusi.OpersActivity"
+            android:label="@string/title_activity_opers"
+            android:parentActivityName=".distribusi.DistribusiActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.pertamina.pertaminatuban.distribusi.DistribusiActivity" />
+        </activity>
+        <activity
+            android:name=".distribusi.RitaseActivity"
+            android:label="@string/title_activity_ritase"
+            android:parentActivityName=".distribusi.DistribusiActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.pertamina.pertaminatuban.distribusi.DistribusiActivity" />
+        </activity>
+        <activity
+            android:name=".distribusi.WilayahActivity"
+            android:label="@string/title_activity_wilayah"
+            android:parentActivityName=".distribusi.DistribusiActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.pertamina.pertaminatuban.distribusi.DistribusiActivity" />
         </activity>
     </application>
 

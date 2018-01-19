@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.pertamina.pertaminatuban.R;
-import com.pertamina.pertaminatuban.activities.DistribusiActivity;
+import com.pertamina.pertaminatuban.distribusi.DistribusiActivity;
 import com.pertamina.pertaminatuban.models.MenuViewModel;
 
 import java.util.ArrayList;

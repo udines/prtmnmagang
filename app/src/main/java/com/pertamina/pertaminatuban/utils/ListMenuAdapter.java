@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.pertamina.pertaminatuban.R;
@@ -36,9 +37,6 @@ public class ListMenuAdapter extends RecyclerView.Adapter<ListMenuViewHolder> {
          sesuai dengan urutan dari daftar menu*/
         holder.title.setText(menuList.get(position).getTitle());
 
-        /*set gambar menu sesuai dengan id gambar yang sudah ditentukan*/
-        holder.image.setImageDrawable(ContextCompat.getDrawable(context,
-                menuList.get(position).getIdDrawable()));
     }
 
     @Override

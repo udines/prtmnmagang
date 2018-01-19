@@ -12,7 +12,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintDimensionRatio="H, 3.4:1"
+        app:layout_constraintDimensionRatio="H, 5:1"
         android:clickable="true"
         android:focusable="true"
         android:foreground="?attr/selectableItemBackground">
@@ -20,13 +20,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
+            android:padding="16dp"
             android:orientation="horizontal">
-            <ImageView
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_margin="32dp"
-                android:scaleType="center"
-                android:id="@+id/item_menu_grid_image"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

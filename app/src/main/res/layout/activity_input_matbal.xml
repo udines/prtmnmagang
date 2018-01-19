@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.pertamina.pertaminatuban.input_activities.InputMatbalActivity">
+    tools:context="com.pertamina.pertaminatuban.distribusi.InputMatbalActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"

@@ -15,7 +15,6 @@ import com.pertamina.pertaminatuban.R;
 public class ListMenuViewHolder extends RecyclerView.ViewHolder {
 
     public final TextView title;
-    public final ImageView image;
     private final CardView card;
     private final Context context;
 
@@ -28,7 +27,6 @@ public class ListMenuViewHolder extends RecyclerView.ViewHolder {
         /*menghubungkan variable view dengan layout sesuai dengan id
         * pada layout item_menu_grid.xml*/
         title = itemView.findViewById(R.id.item_menu_grid_title);
-        image = itemView.findViewById(R.id.item_menu_grid_image);
 
         /*menambahkan click listener. jika pengguna melakukan klik pada
         * salah satu menu, maka pindah ke halaman sesuai dengan pilihan

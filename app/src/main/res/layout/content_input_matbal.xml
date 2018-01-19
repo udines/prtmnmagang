@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.pertamina.pertaminatuban.input_activities.InputMatbalActivity"
+    tools:context="com.pertamina.pertaminatuban.distribusi.InputMatbalActivity"
     tools:showIn="@layout/activity_input_matbal">
     <LinearLayout
         android:layout_width="match_parent"
