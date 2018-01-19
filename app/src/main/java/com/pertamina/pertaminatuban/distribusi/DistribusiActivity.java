@@ -41,7 +41,16 @@ public class DistribusiActivity extends AppCompatActivity {
         menus.add(new MenuViewModel("Opers", 0));
         menus.add(new MenuViewModel("Ritase", 0));
 
+        ArrayList<Class> classes = new ArrayList<>();
+        classes.add(MatbalActivity.class);
+        classes.add(KonsumenActivity.class);
+        classes.add(WilayahActivity.class);
+        classes.add(OpersActivity.class);
+        classes.add(RitaseActivity.class);
+
         ListMenuAdapter adapter = new ListMenuAdapter(menus, getApplicationContext());
+        adapter.setClasses(classes);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         recyclerView.setAdapter(adapter);
     }

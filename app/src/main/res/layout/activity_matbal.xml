@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.pertamina.pertaminatuban.distribusi.MatbalActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            android:contentInsetLeft="0dp"
+            android:contentInsetStart="0dp"
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp" >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:paddingEnd="64dp"
+                android:gravity="center"
+                android:paddingRight="64dp"
+                tools:ignore="RtlSymmetry">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="12 Maret 2017"
+                    android:textSize="16sp"
+                    android:textColor="@color/white"
+                    android:id="@+id/matbal_tanggal"
+                    android:padding="8dp"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+        </android.support.v7.widget.Toolbar>
+
+        <android.support.design.widget.TabLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/matbal_tab" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <include layout="@layout/content_matbal" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:drawableStart="@drawable/ic_edit_black_24dp"
+        android:background="@drawable/round_corner_24dp_accent"
+        android:drawableLeft="@drawable/ic_edit_black_24dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:text="Tambah Data"
+        android:drawablePadding="8dp"
+        android:textColor="@color/white"
+        android:id="@+id/distribusi_button_tambah"/>
+
+</android.support.design.widget.CoordinatorLayout>

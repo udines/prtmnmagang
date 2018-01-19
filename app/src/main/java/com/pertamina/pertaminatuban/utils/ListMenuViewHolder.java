@@ -15,7 +15,7 @@ import com.pertamina.pertaminatuban.R;
 public class ListMenuViewHolder extends RecyclerView.ViewHolder {
 
     public final TextView title;
-    private final CardView card;
+    public final CardView card;
     private final Context context;
 
     public ListMenuViewHolder(View itemView) {
