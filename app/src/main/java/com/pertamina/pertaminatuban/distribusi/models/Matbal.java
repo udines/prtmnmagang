@@ -15,8 +15,8 @@ public class Matbal {
     public static final String PERTAMAX = "Pertamax";
     public static final String PERTALITE = "Pertalite";
     public static final String BIOSOLAR = "Biosolar";
-    public static final String SOLAR = "";
-    public static final String BIOFLAME = "";
+    public static final String SOLAR = "Solar";
+    public static final String BIOFLAME = "Bioflame";
 
     @SerializedName("id")
     @Expose

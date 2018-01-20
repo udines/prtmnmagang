@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.pertamina.pertaminatuban.R;
 import com.pertamina.pertaminatuban.distribusi.models.Matbal;
@@ -16,6 +17,7 @@ import com.pertamina.pertaminatuban.service.UserClient;
 import com.pertamina.pertaminatuban.utils.ViewPagerAdapter;
 import com.whiteelephant.monthpicker.MonthPickerDialog;
 
+import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -61,8 +63,9 @@ public class MatbalActivity extends AppCompatActivity {
 
         /*inisialisasi tanggal jika data tidak ada agar tidak error*/
         Calendar calendar = Calendar.getInstance();
-        month = calendar.get(Calendar.MONTH) + 1;
+        month = calendar.get(Calendar.MONTH);
         year = calendar.get(Calendar.YEAR);
+        setDateButton(month, year);
 
         /*get data. jika data tidak ada maka tampilkan tulisan jika kosong. jika ada
         * maka tampilkan tab beserta isinya*/
@@ -83,7 +86,6 @@ public class MatbalActivity extends AppCompatActivity {
             tabLayout.setVisibility(View.VISIBLE);
             emptyText.setVisibility(View.GONE);
             populateTabs(matbals);
-            setDate(matbals.get(0).getDate());
         } else {
 
             Log.d("data", "data matbal tidak ada");
@@ -93,14 +95,6 @@ public class MatbalActivity extends AppCompatActivity {
             tabLayout.setVisibility(View.GONE);
             emptyText.setVisibility(View.VISIBLE);
 
-            /*ganti format tanggal menjadi bulan dan tahun*/
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-            SimpleDateFormat bulanFormat = new SimpleDateFormat("MMMM yyyy");
-            try {
-                tanggal.setText(bulanFormat.format(format.parse(getDate(year, month, 1))));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
         }
     }
 
@@ -115,15 +109,17 @@ public class MatbalActivity extends AppCompatActivity {
                         new MonthPickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(int selectedMonth, int selectedYear) {
-                                month = selectedMonth + 1;
+                                month = selectedMonth;
                                 year = selectedYear;
-                                setDate(getDate(selectedYear, selectedMonth  + 1, 1));
                                 getMatbal(month);
+                                setDateButton(month, year);
                             }
                         },
                         today.get(Calendar.YEAR),
                         today.get(Calendar.MONTH)
                 );
+
+                Toast.makeText(MatbalActivity.this, String.valueOf(month), Toast.LENGTH_SHORT).show();
 
                 builder.setMinYear(1970)
                         .setMaxYear(today.get(Calendar.YEAR))
@@ -136,28 +132,10 @@ public class MatbalActivity extends AppCompatActivity {
         });
     }
 
-    public String getDate(int y, int m, int d) {
-        String year, month, day;
-        year = String.valueOf(y);
-        month = String.valueOf(m);
-        day = String.valueOf(d);
-        return year + "-" + month + "-" + day;
-    }
-
-    private void setDate(String stringDate) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat bulanFormat = new SimpleDateFormat("MMMM yyyy");
-        Calendar calendar = Calendar.getInstance();
-        try {
-            Date date = format.parse(stringDate);
-            String bulanTahun = bulanFormat.format(date);
-            tanggal.setText(bulanTahun);
-            calendar.setTimeInMillis(date.getTime());
-            month = calendar.get(Calendar.MONTH);
-            year = calendar.get(Calendar.YEAR);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+    private void setDateButton(int month, int year) {
+        DateFormatSymbols symbols = new DateFormatSymbols();
+        String text = symbols.getMonths()[month] + " " + String.valueOf(year);
+        tanggal.setText(text);
     }
 
     private void populateTabs(ArrayList<Matbal> matbals) {
