@@ -14,7 +14,6 @@
         android:id="@+id/distribusi_menu_recycler"
         android:padding="4dp"
         android:clipToPadding="false"
-        android:overScrollMode="never"
         android:scrollbars="none"/>
 
 </android.support.constraint.ConstraintLayout>
