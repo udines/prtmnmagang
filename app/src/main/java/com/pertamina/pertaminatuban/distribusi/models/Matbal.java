@@ -45,12 +45,8 @@ public class Matbal {
         this.total = total;
     }
 
-    public void setDate(int y, int m, int d) {
-        String year, month, day;
-        year = String.valueOf(y);
-        month = String.valueOf(m);
-        day = String.valueOf(d);
-        this.date = year + "-" + month + "-" + day;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     /*getter*/
