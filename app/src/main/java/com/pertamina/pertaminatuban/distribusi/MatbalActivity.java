@@ -78,7 +78,10 @@ public class MatbalActivity extends AppCompatActivity {
         ArrayList<Matbal> matbals = new ArrayList<>();
         matbals.add(new Matbal("2018-01-20", Matbal.PERTAMAX, 244, 900));
         matbals.add(new Matbal("2018-01-20", Matbal.PERTALITE, 426, 900));
+        matbals.add(new Matbal("2018-01-20", Matbal.PERTALITE, 222, 900));
+        matbals.add(new Matbal("2018-01-20", Matbal.PERTALITE, 396, 900));
         matbals.add(new Matbal("2018-01-20", Matbal.BIOSOLAR, 230, 900));
+        matbals.add(new Matbal("2018-01-20", Matbal.BIOSOLAR, 130, 900));
 
         /*cek apakah data ada atau tidak*/
         if (matbals != null && matbals.size() > 0) {
@@ -171,8 +174,18 @@ public class MatbalActivity extends AppCompatActivity {
         ArrayList<String> titles = new ArrayList<>();
         ArrayList<ArrayList<Matbal>> kumpulanFragment = new ArrayList<>();
 
+        titles.add(matbals.get(0).getFuel());
         for (int i = 0; i < matbals.size(); i++) {
-            if (fuelSudahAda(matbals.get(i).getFuel(), matbals)) {
+            boolean ada = false;
+            for (int j = 0; j < titles.size(); j++) {
+                if (matbals.get(i).getFuel().equals(titles.get(j))) {
+                    ada = true;
+                    break;
+                } else {
+                    ada = false;
+                }
+            }
+            if (!ada) {
                 titles.add(matbals.get(i).getFuel());
             }
         }
