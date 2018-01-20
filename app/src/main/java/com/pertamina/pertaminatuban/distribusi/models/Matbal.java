@@ -1,4 +1,4 @@
-package com.pertamina.pertaminatuban.input_models;
+package com.pertamina.pertaminatuban.distribusi.models;
 
 
 import java.util.Calendar;
@@ -9,14 +9,14 @@ import java.util.Calendar;
 
 public class Matbal {
 
-    private final String PERTAMAX = "";
-    private final String PERTALITE = "";
-    private final String BIOSOLAR = "";
-    private final String SOLAR = "";
-    private final String BIOFLAME = "";
+    public static final String PERTAMAX = "Pertamax";
+    public static final String PERTALITE = "Pertalite";
+    public static final String BIOSOLAR = "Biosolar";
+    public static final String SOLAR = "";
+    public static final String BIOFLAME = "";
 
     private String date;
-    private int fuel;
+    private String fuel;
     private int nilai;
     private int total;
 
@@ -24,7 +24,7 @@ public class Matbal {
     public Matbal() {
     }
 
-    public Matbal(String date, int fuel, int nilai, int total) {
+    public Matbal(String date, String fuel, int nilai, int total) {
         this.date = date;
         this.fuel = fuel;
         this.nilai = nilai;
@@ -32,7 +32,8 @@ public class Matbal {
     }
 
     /*setter*/
-    public void setFuel(int fuel) {
+
+    public void setFuel(String fuel) {
         this.fuel = fuel;
     }
 
@@ -57,7 +58,7 @@ public class Matbal {
         return date;
     }
 
-    public int getFuel() {
+    public String getFuel() {
         return fuel;
     }
 
