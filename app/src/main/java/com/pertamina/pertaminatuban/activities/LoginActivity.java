@@ -66,9 +66,9 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 /*masuk ke halaman pendaftaran*/
-//                Intent registerIntent = new Intent(getApplicationContext(), RegisterActivity.class);
-//                registerIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                startActivity(registerIntent);
+                Intent registerIntent = new Intent(getApplicationContext(), RegisterActivity.class);
+                registerIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(registerIntent);
             }
         });
     }

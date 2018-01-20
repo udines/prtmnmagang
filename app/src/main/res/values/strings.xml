@@ -2,8 +2,8 @@
     <string name="app_name">Click Tuban</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_login">Login</string>
-    <string name="username">Username</string>
-    <string name="password">Password</string>
+    <string name="username">username</string>
+    <string name="password">password</string>
     <string name="title_activity_register">Daftar Akun</string>
     <string name="title_activity_distribusi">Distribusi</string>
     <string name="title_activity_input_matbal">Input Matbal</string>
@@ -12,4 +12,6 @@
     <string name="title_activity_opers">Opers</string>
     <string name="title_activity_ritase">Ritase</string>
     <string name="title_activity_wilayah">Wilayah</string>
+    <string name="email">email</string>
+    <string name="ulangi_password">ulangi password</string>
 </resources>
