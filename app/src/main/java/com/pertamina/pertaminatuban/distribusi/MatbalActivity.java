@@ -9,12 +9,16 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
 
 import com.pertamina.pertaminatuban.R;
 import com.pertamina.pertaminatuban.distribusi.models.Matbal;
 import com.pertamina.pertaminatuban.utils.ViewPagerAdapter;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MatbalActivity extends AppCompatActivity {
 
@@ -43,7 +47,16 @@ public class MatbalActivity extends AppCompatActivity {
     }
 
     private void setDate(String stringDate) {
-        
+        TextView tanggal = findViewById(R.id.matbal_tanggal);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat bulanFormat = new SimpleDateFormat("MMMM yyyy");
+        try {
+            Date date = format.parse(stringDate);
+            String bulanTahun = bulanFormat.format(date);
+            tanggal.setText(bulanTahun);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     private void populateTabs(ArrayList<Matbal> matbals) {
