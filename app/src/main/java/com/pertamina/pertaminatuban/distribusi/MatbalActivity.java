@@ -1,9 +1,6 @@
 package com.pertamina.pertaminatuban.distribusi;
 
-import android.app.DatePickerDialog;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -11,12 +8,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.DatePicker;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.pertamina.pertaminatuban.R;
 import com.pertamina.pertaminatuban.distribusi.models.Matbal;
+import com.pertamina.pertaminatuban.service.UserClient;
 import com.pertamina.pertaminatuban.utils.ViewPagerAdapter;
 import com.whiteelephant.monthpicker.MonthPickerDialog;
 
@@ -25,6 +21,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MatbalActivity extends AppCompatActivity {
 
@@ -59,29 +61,18 @@ public class MatbalActivity extends AppCompatActivity {
 
         /*inisialisasi tanggal jika data tidak ada agar tidak error*/
         Calendar calendar = Calendar.getInstance();
-        month = calendar.get(Calendar.MONTH);
+        month = calendar.get(Calendar.MONTH) + 1;
         year = calendar.get(Calendar.YEAR);
 
         /*get data. jika data tidak ada maka tampilkan tulisan jika kosong. jika ada
         * maka tampilkan tab beserta isinya*/
-        getData(year, month);
+        getMatbal(month);
 
         /*handle tanggal untuk mengubah data berdasarkan bulan*/
         handleDate();
     }
 
-    private void getData(int year, int month) {
-
-        Log.d("get data ", "year " + year + ",month " + month);
-
-        /*get data*/
-        ArrayList<Matbal> matbals = new ArrayList<>();
-        matbals.add(new Matbal("2018-01-20", Matbal.PERTAMAX, 244, 900));
-        matbals.add(new Matbal("2018-01-20", Matbal.PERTALITE, 426, 900));
-        matbals.add(new Matbal("2018-01-20", Matbal.PERTALITE, 222, 900));
-        matbals.add(new Matbal("2018-01-20", Matbal.PERTALITE, 396, 900));
-        matbals.add(new Matbal("2018-01-20", Matbal.BIOSOLAR, 230, 900));
-        matbals.add(new Matbal("2018-01-20", Matbal.BIOSOLAR, 130, 900));
+    private void cekData(ArrayList<Matbal> matbals) {
 
         /*cek apakah data ada atau tidak*/
         if (matbals != null && matbals.size() > 0) {
@@ -127,6 +118,7 @@ public class MatbalActivity extends AppCompatActivity {
                                 month = selectedMonth + 1;
                                 year = selectedYear;
                                 setDate(getDate(selectedYear, selectedMonth  + 1, 1));
+                                getMatbal(month);
                             }
                         },
                         today.get(Calendar.YEAR),
@@ -216,13 +208,31 @@ public class MatbalActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
     }
 
-    private boolean fuelSudahAda(String fuel, ArrayList<Matbal> matbals) {
-        boolean ada = false;
-        for (int i = 0; i < matbals.size(); i++) {
-            if (matbals.get(i).getFuel().equals(fuel)) {
-                ada = true;
+    private void getMatbal(int bulan) {
+        Log.w("GET ", "start getting matbal bulan " + bulan);
+        String baseUrl = "http://www.api.clicktuban.com/";
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create());
+
+        Retrofit retrofit = builder.build();
+        UserClient client = retrofit.create(UserClient.class);
+        Call<ArrayList<Matbal>> call = client.getMatbal(bulan);
+
+        call.enqueue(new Callback<ArrayList<Matbal>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Matbal>> call, Response<ArrayList<Matbal>> response) {
+                Log.w("code", String.valueOf(response.code()));
+                Log.w("size", String.valueOf(response.body().size()));
+                if (response.code() == 200 && response.body() != null) {
+                    cekData(response.body());
+                }
             }
-        }
-        return ada;
+
+            @Override
+            public void onFailure(Call<ArrayList<Matbal>> call, Throwable t) {
+                Log.e("Call", " failed " + t.getMessage());
+            }
+        });
     }
 }

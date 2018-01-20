@@ -1,6 +1,9 @@
 package com.pertamina.pertaminatuban.distribusi.models;
 
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Calendar;
 
 /**
@@ -15,16 +18,31 @@ public class Matbal {
     public static final String SOLAR = "";
     public static final String BIOFLAME = "";
 
+    @SerializedName("id")
+    @Expose
+    private String id;
+
+    @SerializedName("date")
+    @Expose
     private String date;
+
+    @SerializedName("fuel")
+    @Expose
     private String fuel;
-    private int nilai;
-    private int total;
+
+    @SerializedName("nilai")
+    @Expose
+    private float nilai;
+
+    @SerializedName("total")
+    @Expose
+    private float total;
 
     /*constructor*/
     public Matbal() {
     }
 
-    public Matbal(String date, String fuel, int nilai, int total) {
+    public Matbal(String date, String fuel, float nilai, float total) {
         this.date = date;
         this.fuel = fuel;
         this.nilai = nilai;
@@ -49,6 +67,10 @@ public class Matbal {
         this.date = date;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
     /*getter*/
     public String getDate() {
         return date;
@@ -58,11 +80,15 @@ public class Matbal {
         return fuel;
     }
 
-    public int getNilai() {
+    public float getNilai() {
         return nilai;
     }
 
-    public int getTotal() {
+    public float getTotal() {
         return total;
+    }
+
+    public String getId() {
+        return id;
     }
 }

@@ -41,7 +41,7 @@ public class MatbalPage extends Fragment {
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             recyclerView.setAdapter(adapter);
 
-            int grandTotal = 0;
+            float grandTotal = 0;
             for (int i = 0; i < matbals.size(); i++) {
                 grandTotal = grandTotal + matbals.get(i).getNilai();
             }
