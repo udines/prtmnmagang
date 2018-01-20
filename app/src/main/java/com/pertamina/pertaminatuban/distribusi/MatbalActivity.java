@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.pertamina.pertaminatuban.R;
 import com.pertamina.pertaminatuban.distribusi.models.Matbal;
@@ -71,6 +72,8 @@ public class MatbalActivity extends AppCompatActivity {
 
     private void getData(int year, int month) {
 
+        Log.d("get data ", "year " + year + ",month " + month);
+
         /*get data*/
         ArrayList<Matbal> matbals = new ArrayList<>();
         matbals.add(new Matbal("2018-01-20", Matbal.PERTAMAX, 244, 900));
@@ -80,6 +83,7 @@ public class MatbalActivity extends AppCompatActivity {
         /*cek apakah data ada atau tidak*/
         if (matbals != null && matbals.size() > 0) {
 
+            Log.d("data", "data matbal ada");
             /*data ada maka tampilkan tab dan isinya*/
             viewPager.setVisibility(View.VISIBLE);
             tabLayout.setVisibility(View.VISIBLE);
@@ -88,6 +92,7 @@ public class MatbalActivity extends AppCompatActivity {
             setDate(matbals.get(0).getDate());
         } else {
 
+            Log.d("data", "data matbal tidak ada");
             /*data tidak ada maka hilangkan tab dan tampilkan pesan peringatan
             * untuk tanggal gunakan month dan year yang sudah diinisialisasi*/
             viewPager.setVisibility(View.GONE);
@@ -164,12 +169,26 @@ public class MatbalActivity extends AppCompatActivity {
 
         ArrayList<Fragment> fragments = new ArrayList<>();
         ArrayList<String> titles = new ArrayList<>();
+        ArrayList<ArrayList<Matbal>> kumpulanFragment = new ArrayList<>();
 
         for (int i = 0; i < matbals.size(); i++) {
-            titles.add(matbals.get(i).getFuel());
+            if (fuelSudahAda(matbals.get(i).getFuel(), matbals)) {
+                titles.add(matbals.get(i).getFuel());
+            }
+        }
+
+        Log.d("tabs ada", String.valueOf(titles.size()));
+
+        for (int i = 0; i < titles.size(); i++) {
+            kumpulanFragment.add(new ArrayList<Matbal>());
+            for (int j = 0; j < matbals.size(); j++) {
+                if (titles.get(i).equals(matbals.get(j).getFuel())) {
+                    kumpulanFragment.get(i).add(matbals.get(j));
+                }
+            }
             MatbalPage page = new MatbalPage();
-            page.setMatbals(matbals);
-            page.setFuel(matbals.get(i).getFuel());
+            page.setMatbals(kumpulanFragment.get(i));
+            page.setFuel(titles.get(i));
             fragments.add(page);
         }
 
@@ -182,5 +201,15 @@ public class MatbalActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         tabLayout.setupWithViewPager(viewPager);
+    }
+
+    private boolean fuelSudahAda(String fuel, ArrayList<Matbal> matbals) {
+        boolean ada = false;
+        for (int i = 0; i < matbals.size(); i++) {
+            if (matbals.get(i).getFuel().equals(fuel)) {
+                ada = true;
+            }
+        }
+        return ada;
     }
 }
