@@ -71,6 +71,7 @@ public class MatbalActivity extends AppCompatActivity {
         for (int i = 0; i < matbals.size(); i++) {
             titles.add(matbals.get(i).getFuel());
             MatbalPage page = new MatbalPage();
+            page.setMatbals(matbals);
             page.setFuel(matbals.get(i).getFuel());
             fragments.add(page);
         }

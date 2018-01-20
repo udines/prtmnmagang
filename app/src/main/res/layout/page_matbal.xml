@@ -1,9 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/matbal_text"/>
-</android.support.constraint.ConstraintLayout>
+        android:textSize="20sp"
+        android:id="@+id/matbal_text"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/black"
+        android:layout_margin="16dp"
+        android:text="Pertamax"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:id="@+id/matbal_total"
+        android:layout_gravity="center_horizontal"
+        android:text="Grand total : 6352"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_marginTop="8dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:clipToPadding="false"
+        android:layout_height="match_parent"
+        tools:listitem="@layout/item_tabel_matbal"
+        android:id="@+id/matbal_table_recyclerview"/>
+
+</LinearLayout>

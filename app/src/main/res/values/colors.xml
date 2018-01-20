@@ -6,4 +6,6 @@
     <color name="grey_900">#212121</color>
     <color name="grey_400">#bdbdbd</color>
     <color name="white">#fff</color>
+    <color name="black">#000</color>
+    <color name="grey_200">#eeeeee</color>
 </resources>
