@@ -1,7 +1,6 @@
 package com.pertamina.pertaminatuban.activities;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
@@ -14,19 +13,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pertamina.pertaminatuban.R;
-import com.pertamina.pertaminatuban.models.InvalidResponse;
 import com.pertamina.pertaminatuban.models.UserCredential;
-import com.pertamina.pertaminatuban.models.ValidResponse;
+import com.pertamina.pertaminatuban.models.LoginResponse;
 import com.pertamina.pertaminatuban.service.UserClient;
-
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.stream.Collectors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -121,37 +110,45 @@ public class LoginActivity extends AppCompatActivity {
         );
 
         sendAuthRequest(credential);
-
     }
 
     private void sendAuthRequest(UserCredential credential) {
-        String baseUrl = "http://www.api.odc-abcd.com/";
+        String baseUrl = "http://www.api.clicktuban.com/";
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create());
 
         Retrofit retrofit = builder.build();
         UserClient client = retrofit.create(UserClient.class);
-        Call<Object> call = client.UserClient(credential);
+        Call<LoginResponse> call = client.login(credential);
 
-        call.enqueue(new Callback<Object>() {
+        call.enqueue(new Callback<LoginResponse>() {
             @Override
-            public void onResponse(Call<Object> call, Response<Object> response) {
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 Log.d("request", "Success");
                 Log.d("response code", String.valueOf(response.code()) + " " + response.message());
                 if (response.code() == 200 && response.body() != null) {
                     Intent menuIntent = new Intent(getApplicationContext(), MenuActivity.class);
                     menuIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(menuIntent);
+
+                    LoginResponse loginResponse = response.body();
+                    if (loginResponse.isSuccess()) {
+                        Log.w("user key ", loginResponse.getKey());
+                        Log.w("user token ", loginResponse.getToken());
+                        startActivity(menuIntent);
+                    } else {
+                        Log.w("msg ", loginResponse.getMsg());
+                        Toast.makeText(LoginActivity.this, "username dan password salah", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
                     Intent menuIntent = new Intent(getApplicationContext(), MenuActivity.class);
                     menuIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(menuIntent);
+//                    startActivity(menuIntent);
                 }
             }
 
             @Override
-            public void onFailure(Call<Object> call, Throwable t) {
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
                 Log.d("request", "Failure");
             }
         });
