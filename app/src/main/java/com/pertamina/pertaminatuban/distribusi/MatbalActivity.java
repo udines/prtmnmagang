@@ -30,6 +30,9 @@ public class MatbalActivity extends AppCompatActivity {
     private TextView tanggal;
     private int month;
     private int year;
+    private ViewPager viewPager;
+    private TabLayout tabLayout;
+    private TextView emptyText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,23 +52,57 @@ public class MatbalActivity extends AppCompatActivity {
 
         /*inisialisasi view yang digunakan lebih dari satu fungsi*/
         tanggal = findViewById(R.id.matbal_tanggal);
+        viewPager = findViewById(R.id.matbal_viewpager);
+        tabLayout = findViewById(R.id.matbal_tab);
+        emptyText = findViewById(R.id.matbal_empty_text);
 
         /*inisialisasi tanggal jika data tidak ada agar tidak error*/
         Calendar calendar = Calendar.getInstance();
         month = calendar.get(Calendar.MONTH);
         year = calendar.get(Calendar.YEAR);
 
+        /*get data. jika data tidak ada maka tampilkan tulisan jika kosong. jika ada
+        * maka tampilkan tab beserta isinya*/
+        getData(year, month);
+
+        /*handle tanggal untuk mengubah data berdasarkan bulan*/
+        handleDate();
+    }
+
+    private void getData(int year, int month) {
+
+        /*get data*/
         ArrayList<Matbal> matbals = new ArrayList<>();
         matbals.add(new Matbal("2018-01-20", Matbal.PERTAMAX, 244, 900));
         matbals.add(new Matbal("2018-01-20", Matbal.PERTALITE, 426, 900));
         matbals.add(new Matbal("2018-01-20", Matbal.BIOSOLAR, 230, 900));
 
-        /*inisialisasi teks tanggal dan data*/
-        populateTabs(matbals);
-        setDate(matbals.get(0).getDate());
+        /*cek apakah data ada atau tidak*/
+        if (matbals != null && matbals.size() > 0) {
 
-        /*handle tanggal untuk mengubah data berdasarkan bulan*/
-        handleDate();
+            /*data ada maka tampilkan tab dan isinya*/
+            viewPager.setVisibility(View.VISIBLE);
+            tabLayout.setVisibility(View.VISIBLE);
+            emptyText.setVisibility(View.GONE);
+            populateTabs(matbals);
+            setDate(matbals.get(0).getDate());
+        } else {
+
+            /*data tidak ada maka hilangkan tab dan tampilkan pesan peringatan
+            * untuk tanggal gunakan month dan year yang sudah diinisialisasi*/
+            viewPager.setVisibility(View.GONE);
+            tabLayout.setVisibility(View.GONE);
+            emptyText.setVisibility(View.VISIBLE);
+
+            /*ganti format tanggal menjadi bulan dan tahun*/
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat bulanFormat = new SimpleDateFormat("MMMM yyyy");
+            try {
+                tanggal.setText(bulanFormat.format(format.parse(getDate(year, month, 1))));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void handleDate() {
@@ -124,9 +161,6 @@ public class MatbalActivity extends AppCompatActivity {
     }
 
     private void populateTabs(ArrayList<Matbal> matbals) {
-
-        ViewPager viewPager = findViewById(R.id.matbal_viewpager);
-        TabLayout tabLayout = findViewById(R.id.matbal_tab);
 
         ArrayList<Fragment> fragments = new ArrayList<>();
         ArrayList<String> titles = new ArrayList<>();
