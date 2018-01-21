@@ -2,6 +2,7 @@ package com.pertamina.pertaminatuban.distribusi.tables;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.pertamina.pertaminatuban.R;
@@ -11,11 +12,13 @@ public class OpersTableViewHolder extends RecyclerView.ViewHolder {
 
     private final TextView tanggal;
     private final TextView nilai;
+    public final LinearLayout row;
 
     public OpersTableViewHolder(View itemView) {
         super(itemView);
         tanggal = itemView.findViewById(R.id.item_opers_tanggal);
         nilai = itemView.findViewById(R.id.item_opers_nilai);
+        row = itemView.findViewById(R.id.item_opers_row);
     }
 
     public void setView(Opers model, int type) {

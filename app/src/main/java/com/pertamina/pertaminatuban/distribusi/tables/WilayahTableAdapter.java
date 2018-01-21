@@ -33,6 +33,8 @@ public class WilayahTableAdapter extends RecyclerView.Adapter<WilayahTableViewHo
         holder.setView(wilayahs.get(position));
         if (position % 2 == 0) {
             holder.row.setBackgroundColor(ContextCompat.getColor(context, R.color.grey_200));
+        } else {
+            holder.row.setBackgroundColor(ContextCompat.getColor(context, R.color.white));
         }
     }
 

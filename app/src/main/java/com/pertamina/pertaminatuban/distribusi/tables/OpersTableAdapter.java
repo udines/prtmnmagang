@@ -1,6 +1,7 @@
 package com.pertamina.pertaminatuban.distribusi.tables;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +37,11 @@ public class OpersTableAdapter extends RecyclerView.Adapter<OpersTableViewHolder
     @Override
     public void onBindViewHolder(OpersTableViewHolder holder, int position) {
         holder.setView(opers.get(position), type);
+        if (position % 2 == 0) {
+            holder.row.setBackgroundColor(ContextCompat.getColor(context, R.color.grey_200));
+        } else {
+            holder.row.setBackgroundColor(ContextCompat.getColor(context, R.color.white));
+        }
     }
 
     @Override

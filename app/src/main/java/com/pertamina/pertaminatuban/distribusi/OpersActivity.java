@@ -119,7 +119,7 @@ public class OpersActivity extends AppCompatActivity {
         UserClient client = retrofit.create(UserClient.class);
         Call<ArrayList<Opers>> call = client.getOpers(bulan);
 
-        call.enqueue(new Callback<ArrayList<Opers>>() {
+        /*call.enqueue(new Callback<ArrayList<Opers>>() {
             @Override
             public void onResponse(Call<ArrayList<Opers>> call, Response<ArrayList<Opers>> response) {
                 Log.w("code", String.valueOf(response.code()));
@@ -133,30 +133,30 @@ public class OpersActivity extends AppCompatActivity {
             public void onFailure(Call<ArrayList<Opers>> call, Throwable t) {
                 Log.e("Call", " failed " + t.getMessage());
             }
-        });
+        });*/
 
         /*SAMPLE DATA*/
-        /*ArrayList<Opers> opers = new ArrayList<>();
-        opers.add(new Opers("2017-2-1", 1608, "4:49 AM", "4:44 PM", "11:54"));
-        opers.add(new Opers("2017-2-2", 1592, "4:49 AM", "4:44 PM", "11:54"));
-        opers.add(new Opers("2017-2-3", 1440, "4:49 AM", "4:44 PM", "11:54"));
-        opers.add(new Opers("2017-2-4", 1568, "4:49 AM", "4:44 PM", "11:54"));
-        opers.add(new Opers("2017-2-5", 1064, "4:49 AM", "4:44 PM", "11:54"));
-        opers.add(new Opers("2017-2-6", 1132, "4:49 AM", "4:44 PM", "11:54"));
-        opers.add(new Opers("2017-2-7", 1836, "4:49 AM", "4:44 PM", "11:54"));
-        opers.add(new Opers("2017-2-8", 1596, "4:49 AM", "4:44 PM", "11:54"));
-        opers.add(new Opers("2017-2-9", 1456, "4:49 AM", "4:44 PM", "11:54"));
-        opers.add(new Opers("2017-2-10", 1512, "4:49 AM", "4:44 PM", "11:54"));
-        opers.add(new Opers("2017-2-11", 1604, "4:49 AM", "4:44 PM", "11:54"));
-        opers.add(new Opers("2017-2-12", 1172, "4:49 AM", "4:44 PM", "11:54"));
-        opers.add(new Opers("2017-2-13", 1208, "4:49 AM", "4:44 PM", "11:54"));
-        opers.add(new Opers("2017-2-14", 1888, "4:49 AM", "4:44 PM", "11:54"));
-        opers.add(new Opers("2017-2-15", 1728, "4:49 AM", "4:44 PM", "11:54"));
-        opers.add(new Opers("2017-2-16", 1044, "4:49 AM", "4:44 PM", "11:54"));
-        opers.add(new Opers("2017-2-17", 1728, "4:49 AM", "4:44 PM", "11:54"));
-        opers.add(new Opers("2017-2-18", 1648, "4:49 AM", "4:44 PM", "11:54"));
-        opers.add(new Opers("2017-2-19", 1312, "4:49 AM", "4:44 PM", "11:54"));
-        cekData(opers);*/
+        ArrayList<Opers> opers = new ArrayList<>();
+        opers.add(new Opers("2017-02-01", 1608, "4:49 AM", "4:44 PM", "11:54"));
+        opers.add(new Opers("2017-02-02", 1592, "5:08 AM", "5:16 PM", "12:08"));
+        opers.add(new Opers("2017-02-03", 1440, "5:11 AM", "5:04 PM", "11:53"));
+        opers.add(new Opers("2017-02-04", 1568, "5:18 AM", "8:04 PM", "14:45"));
+        opers.add(new Opers("2017-02-05", 1064, "5:04 AM", "3:05 PM", "10:01"));
+        opers.add(new Opers("2017-02-06", 1132, "5:04 AM", "5:11 PM", "12:06"));
+        opers.add(new Opers("2017-02-07", 1836, "2:50 AM", "5:56 PM", "15:06"));
+        opers.add(new Opers("2017-02-08", 1596, "4:51 AM", "4:55 PM", "12:04"));
+        opers.add(new Opers("2017-02-09", 1456, "5:12 AM", "4:56 PM", "11:43"));
+        opers.add(new Opers("2017-02-10", 1512, "5:00 AM", "8:32 PM", "15:32"));
+        opers.add(new Opers("2017-02-11", 1604, "5:05 AM", "10:53 PM", "17:48"));
+        opers.add(new Opers("2017-02-12", 1172, "5:12 AM", "1:11 PM", "07:58"));
+        opers.add(new Opers("2017-02-13", 1208, "5:38 AM", "4:16 PM", "10:38"));
+        opers.add(new Opers("2017-02-14", 1888, "2:43 AM", "5:30 PM", "14:47"));
+        opers.add(new Opers("2017-02-15", 1728, "4:53 AM", "7:00 PM", "14:06"));
+        opers.add(new Opers("2017-02-16", 1044, "6:13 AM", "3:28 PM", "09:15"));
+        opers.add(new Opers("2017-02-17", 1728, "5:02 AM", "6:31PM", "13:28"));
+        opers.add(new Opers("2017-02-18", 1648, "5:09 AM", "7:27 PM", "14:18"));
+        opers.add(new Opers("2017-02-19", 1312, "4:54 AM", "5:01 PM", "12:06"));
+        cekData(opers);
     }
 
     private void cekData(ArrayList<Opers> opers) {
