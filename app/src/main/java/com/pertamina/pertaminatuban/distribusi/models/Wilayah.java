@@ -1,11 +1,32 @@
 package com.pertamina.pertaminatuban.distribusi.models;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class Wilayah {
+
+    @SerializedName("wilayah")
+    @Expose
     private String wilayah;
+
+    @SerializedName("konsumen")
+    @Expose
     private String konsumen;
+
+    @SerializedName("fuel")
+    @Expose
     private String fuel;
+
+    @SerializedName("month")
+    @Expose
     private String date;
+
+    @SerializedName("nilai")
+    @Expose
     private float nilai;
+
+    @SerializedName("total")
+    @Expose
     private float total;
 
     public Wilayah(String wilayah, String konsumen, String fuel, float nilai) {

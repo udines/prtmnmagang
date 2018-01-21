@@ -17,6 +17,10 @@ import com.pertamina.pertaminatuban.distribusi.tables.WilayahTableAdapter;
 
 import java.util.ArrayList;
 
+/**
+ * Created by fata on 1/21/2018.
+ */
+
 public class WilayahPage extends Fragment {
     private String fuel;
     private ArrayList<Wilayah> wilayahs;
@@ -36,7 +40,7 @@ public class WilayahPage extends Fragment {
             for (int i = 0; i < wilayahs.size(); i++) {
                 grandTotal = grandTotal + wilayahs.get(i).getNilai();
             }
-            total.setText(String.valueOf(grandTotal));
+            total.setText(String.valueOf("Grand total: " + grandTotal));
 
             WilayahTableAdapter adapter = new WilayahTableAdapter(wilayahs, getContext());
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

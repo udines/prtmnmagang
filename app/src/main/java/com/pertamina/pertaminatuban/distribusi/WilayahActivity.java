@@ -1,5 +1,7 @@
 package com.pertamina.pertaminatuban.distribusi;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -20,10 +22,14 @@ import com.pertamina.pertaminatuban.service.UserClient;
 import com.pertamina.pertaminatuban.utils.ViewPagerAdapter;
 import com.whiteelephant.monthpicker.MonthPickerDialog;
 
+import java.io.IOException;
 import java.text.DateFormatSymbols;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -185,14 +191,37 @@ public class WilayahActivity extends AppCompatActivity {
 
     private void getWilayah(int bulan) {
 
+        SharedPreferences preferences = WilayahActivity.this.getSharedPreferences(
+                "login",
+                Context.MODE_PRIVATE
+        );
+        final String key = preferences.getString("userKey", "none");
+
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(new Interceptor() {
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request original = chain.request();
+
+                Request request = original.newBuilder()
+                        .header("Authorization", key)
+                        .method(original.method(), original.body())
+                        .build();
+                return chain.proceed(request);
+            }
+        });
+
+        OkHttpClient client = httpClient.build();
+
         String baseUrl = "http://www.api.clicktuban.com/";
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(baseUrl)
-                .addConverterFactory(GsonConverterFactory.create());
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client);
 
         Retrofit retrofit = builder.build();
-        UserClient client = retrofit.create(UserClient.class);
-        Call<ArrayList<Wilayah>> call = client.getWilayah(bulan);
+        UserClient userClient = retrofit.create(UserClient.class);
+        Call<ArrayList<Wilayah>> call = userClient.getWilayah(bulan + 1);
 
         call.enqueue(new Callback<ArrayList<Wilayah>>() {
             @Override
@@ -210,22 +239,5 @@ public class WilayahActivity extends AppCompatActivity {
             }
         });
 
-        /*SAMPLE DATA*/
-        /*ArrayList<Wilayah> wilayahs = new ArrayList<>();
-        wilayahs.add(new Wilayah("Cepu", "SPBU", Matbal.PERTAMAX, 24));
-        wilayahs.add(new Wilayah("Cepu", "SPBU", Matbal.PREMIUM, 368));
-        wilayahs.add(new Wilayah("Lamongan", "SPBU", Matbal.PERTAMAX, 1384));
-        wilayahs.add(new Wilayah("Lamongan", "SPBU", Matbal.PREMIUM, 1248));
-        wilayahs.add(new Wilayah("Lamongan", "SPBU", Matbal.BIOSOLAR, 3272));
-        wilayahs.add(new Wilayah("Lamongan", "SPBU", Matbal.SOLAR, 2618));
-        wilayahs.add(new Wilayah("Lamongan", "TNI/Polri", Matbal.PERTAMAX, 40));
-        wilayahs.add(new Wilayah("Lamongan", "TNI/Polri", Matbal.SOLAR, 8));
-        wilayahs.add(new Wilayah("Lamongan", "SPDN", Matbal.BIOSOLAR, 400));
-        wilayahs.add(new Wilayah("Lamongan", "SPDN", Matbal.SOLAR, 320));
-        wilayahs.add(new Wilayah("Bojonegoro", "SPBU", Matbal.PERTAMAX, 892));
-        wilayahs.add(new Wilayah("Bojonegoro", "SPBU", Matbal.PREMIUM, 1032));
-        wilayahs.add(new Wilayah("Bojonegoro", "SPBU", Matbal.BIOSOLAR, 2280));
-
-        cekData(wilayahs);*/
     }
 }
