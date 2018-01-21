@@ -9,6 +9,16 @@ public class Ritase {
     private float nilai;
     private float total;
 
+    public Ritase(String status, String transportir, String nomobil, String date, float kapasitas, float nilai, float total) {
+        this.status = status;
+        this.transportir = transportir;
+        this.nomobil = nomobil;
+        this.date = date;
+        this.kapasitas = kapasitas;
+        this.nilai = nilai;
+        this.total = total;
+    }
+
     public String getStatus() {
         return status;
     }

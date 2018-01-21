@@ -8,6 +8,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.pertamina.pertaminatuban.R;
+import com.pertamina.pertaminatuban.distribusi.models.Ritase;
+
+import java.util.ArrayList;
 
 public class RitaseActivity extends AppCompatActivity {
 
@@ -25,6 +28,10 @@ public class RitaseActivity extends AppCompatActivity {
         });
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    private void getRitase(int month) {
+
     }
 
 }
