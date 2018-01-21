@@ -1,5 +1,7 @@
 package com.pertamina.pertaminatuban.distribusi;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -18,10 +20,16 @@ import com.pertamina.pertaminatuban.service.UserClient;
 import com.pertamina.pertaminatuban.utils.ViewPagerAdapter;
 import com.whiteelephant.monthpicker.MonthPickerDialog;
 
+import java.io.IOException;
 import java.text.DateFormatSymbols;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
 
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -42,6 +50,7 @@ public class KonsumenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_konsumen);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("");
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,8 +125,6 @@ public class KonsumenActivity extends AppCompatActivity {
                         today.get(Calendar.MONTH)
                 );
 
-                Toast.makeText(KonsumenActivity.this, String.valueOf(month), Toast.LENGTH_SHORT).show();
-
                 builder.setMinYear(1970)
                         .setMaxYear(today.get(Calendar.YEAR))
                         .setTitle("Pilih bulan dan tahun")
@@ -139,13 +146,14 @@ public class KonsumenActivity extends AppCompatActivity {
 
         ArrayList<Fragment> fragments = new ArrayList<>();
         ArrayList<String> titles = new ArrayList<>();
+        ArrayList<String> realTitles = new ArrayList<>();
         ArrayList<ArrayList<Konsumen>> kumpulanFragment = new ArrayList<>();
 
-        titles.add(konsumens.get(0).getFuel());
+        titles.add(konsumens.get(0).getFuelKonsumen());
         for (int i = 0; i < konsumens.size(); i++) {
             boolean ada = false;
             for (int j = 0; j < titles.size(); j++) {
-                if (konsumens.get(i).getFuel().equals(titles.get(j))) {
+                if (konsumens.get(i).getFuelKonsumen().equals(titles.get(j))) {
                     ada = true;
                     break;
                 } else {
@@ -153,29 +161,34 @@ public class KonsumenActivity extends AppCompatActivity {
                 }
             }
             if (!ada) {
-                titles.add(konsumens.get(i).getFuel());
+                titles.add(konsumens.get(i).getFuelKonsumen());
             }
         }
 
-        Log.d("tabs ada", String.valueOf(titles.size()));
+        Log.w("tabs ada", String.valueOf(titles.size()));
 
         for (int i = 0; i < titles.size(); i++) {
             kumpulanFragment.add(new ArrayList<Konsumen>());
             for (int j = 0; j < konsumens.size(); j++) {
-                if (titles.get(i).equals(konsumens.get(j).getFuel())) {
+                if (titles.get(i).equals(konsumens.get(j).getFuelKonsumen())) {
                     kumpulanFragment.get(i).add(konsumens.get(j));
                 }
             }
+
+            List<String> titleKonsumen = Arrays.asList(titles.get(i).split(";"));
+            realTitles.add(titleKonsumen.get(0));
+
             KonsumenPage page = new KonsumenPage();
+            page.setKonsumen(titleKonsumen.get(1));
             page.setKonsumens(kumpulanFragment.get(i));
-            page.setFuel(titles.get(i));
+            page.setFuel(realTitles.get(i));
             fragments.add(page);
         }
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(
                 getSupportFragmentManager(),
                 fragments,
-                titles
+                realTitles
         );
 
         viewPager.setAdapter(adapter);
@@ -184,15 +197,39 @@ public class KonsumenActivity extends AppCompatActivity {
     }
 
     private void getKonsumen(int bulan) {
+
+        SharedPreferences preferences = KonsumenActivity.this.getSharedPreferences(
+                "login",
+                Context.MODE_PRIVATE
+        );
+        final String key = preferences.getString("userKey", "none");
+
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(new Interceptor() {
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request original = chain.request();
+
+                Request request = original.newBuilder()
+                        .header("Authorization", key)
+                        .method(original.method(), original.body())
+                        .build();
+                return chain.proceed(request);
+            }
+        });
+
+        OkHttpClient client = httpClient.build();
+
         Log.w("GET ", "start getting konsumen bulan " + bulan);
         String baseUrl = "http://www.api.clicktuban.com/";
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(baseUrl)
-                .addConverterFactory(GsonConverterFactory.create());
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client);
 
         Retrofit retrofit = builder.build();
-        UserClient client = retrofit.create(UserClient.class);
-        Call<ArrayList<Konsumen>> call = client.getKonsumen(bulan);
+        UserClient userClient = retrofit.create(UserClient.class);
+        Call<ArrayList<Konsumen>> call = userClient.getKonsumen(bulan + 1);
 
         call.enqueue(new Callback<ArrayList<Konsumen>>() {
             @Override

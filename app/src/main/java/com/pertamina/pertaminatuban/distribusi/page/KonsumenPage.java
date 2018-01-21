@@ -19,6 +19,7 @@ import java.util.ArrayList;
 
 public class KonsumenPage extends Fragment {
     private String fuel;
+    private String konsumen;
     private ArrayList<Konsumen> konsumens;
 
     @Nullable
@@ -26,7 +27,9 @@ public class KonsumenPage extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.page_konsumen, container,false);
         TextView textView = view.findViewById(R.id.konsumen_text);
-        textView.setText(fuel);
+
+        textView.setText(String.valueOf(fuel + "(" + konsumen + ")"));
+
         TextView total = view.findViewById(R.id.konsumen_total);
         RecyclerView recyclerView = view.findViewById(R.id.konsumen_table_recyclerview);
         if (konsumens.size() == 0) {
@@ -43,6 +46,14 @@ public class KonsumenPage extends Fragment {
             total.setText(String.valueOf("Grand total : " + grandTotal));
         }
         return view;
+    }
+
+    public String getKonsumen() {
+        return konsumen;
+    }
+
+    public void setKonsumen(String konsumen) {
+        this.konsumen = konsumen;
     }
 
     public String getFuel() {

@@ -25,15 +25,19 @@ public class Konsumen {
     @Expose
     private float total;
 
+    @SerializedName("konsumen")
+    @Expose
+    private String konsumen;
+
     /*constructor*/
     public Konsumen() {
     }
 
-    public Konsumen(String date, String fuel, float nilai, float total) {
+    public Konsumen(String date, String konsumen, String fuel, float nilai) {
         this.date = date;
+        this.konsumen = konsumen;
         this.fuel = fuel;
         this.nilai = nilai;
-        this.total = total;
     }
 
     /*setter*/
@@ -58,6 +62,10 @@ public class Konsumen {
         this.id = id;
     }
 
+    public void setKonsumen(String konsumen) {
+        this.konsumen = konsumen;
+    }
+
     /*getter*/
     public String getDate() {
         return date;
@@ -77,5 +85,13 @@ public class Konsumen {
 
     public String getId() {
         return id;
+    }
+
+    public String getKonsumen() {
+        return konsumen;
+    }
+
+    public String getFuelKonsumen() {
+        return fuel + ";" + konsumen;
     }
 }
