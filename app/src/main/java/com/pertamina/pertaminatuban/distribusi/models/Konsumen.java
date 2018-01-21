@@ -3,10 +3,6 @@ package com.pertamina.pertaminatuban.distribusi.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by fata on 1/20/2018.
- */
-
 public class Konsumen {
 
     @SerializedName("id")

@@ -12,10 +12,6 @@ import com.pertamina.pertaminatuban.distribusi.models.Matbal;
 
 import java.util.ArrayList;
 
-/**
- * Created by fata on 1/20/2018.
- */
-
 public class MatbalTableAdapter extends RecyclerView.Adapter<MatbalTableViewHolder> {
 
     private ArrayList<Matbal> matbals;

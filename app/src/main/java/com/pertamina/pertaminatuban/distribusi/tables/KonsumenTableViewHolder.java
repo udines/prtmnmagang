@@ -8,10 +8,6 @@ import android.widget.TextView;
 import com.pertamina.pertaminatuban.R;
 import com.pertamina.pertaminatuban.distribusi.models.Konsumen;
 
-/**
- * Created by fata on 1/20/2018.
- */
-
 public class KonsumenTableViewHolder extends RecyclerView.ViewHolder {
 
     private final TextView tanggal;

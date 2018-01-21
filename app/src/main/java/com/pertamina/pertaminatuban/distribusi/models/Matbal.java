@@ -6,10 +6,6 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.Calendar;
 
-/**
- * Created by laptop on 1/19/2018.
- */
-
 public class Matbal {
 
     public static final String PERTAMAX = "Pertamax";

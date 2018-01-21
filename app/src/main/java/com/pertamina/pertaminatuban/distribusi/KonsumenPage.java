@@ -19,10 +19,6 @@ import com.pertamina.pertaminatuban.distribusi.tables.MatbalTableAdapter;
 
 import java.util.ArrayList;
 
-/**
- * Created by fata on 1/20/2018.
- */
-
 public class KonsumenPage extends Fragment {
     private String fuel;
     private ArrayList<Konsumen> konsumens;

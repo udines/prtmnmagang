@@ -1,9 +1,5 @@
 package com.pertamina.pertaminatuban.models;
 
-/**
- * Created by laptop on 1/17/2018.
- */
-
 public class UserCredential {
 
     /*variabel konstan agar string konsisten di semua class*/

@@ -9,10 +9,6 @@ import android.widget.TextView;
 import com.pertamina.pertaminatuban.R;
 import com.pertamina.pertaminatuban.distribusi.models.Matbal;
 
-/**
- * Created by fata on 1/20/2018.
- */
-
 public class MatbalTableViewHolder extends RecyclerView.ViewHolder {
 
     private final TextView tanggal;

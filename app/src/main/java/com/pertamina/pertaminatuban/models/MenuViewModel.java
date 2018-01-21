@@ -1,9 +1,5 @@
 package com.pertamina.pertaminatuban.models;
 
-/**
- * Created by laptop on 1/16/2018.
- */
-
 public class MenuViewModel {
     private String title;
 

@@ -12,10 +12,6 @@ import com.pertamina.pertaminatuban.distribusi.models.Konsumen;
 
 import java.util.ArrayList;
 
-/**
- * Created by fata on 1/20/2018.
- */
-
 public class KonsumenTableAdapter extends RecyclerView.Adapter<KonsumenTableViewHolder> {
 
     private ArrayList<Konsumen> konsumens;
