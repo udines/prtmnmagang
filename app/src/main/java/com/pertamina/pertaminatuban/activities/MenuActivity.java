@@ -1,6 +1,10 @@
 package com.pertamina.pertaminatuban.activities;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -86,24 +90,25 @@ public class MenuActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_menu_grid) {
+        if (id == R.id.action_menu_logout) {
 
-            /*ganti menu menjadi bentuk grid dengan menghilangkan
-            * adapter yang menempel di recyclerview dan mengganti dengan
-            * layout manager grid dan adapter grid*/
-            recyclerView.setLayoutManager(gridLayoutManager);
-            recyclerView.setAdapter(gridAdapter);
-            return true;
-        } else if (id == R.id.action_menu_list) {
-
-            /*ganti menu menjadi bentuk list dengan menghilangkan
-            * adapter yang menempel di recyclerview dan mengganti dengan
-            * layout manager linear dan adapter list*/
-            recyclerView.setLayoutManager(linearLayoutManager);
-            recyclerView.setAdapter(listAdapter);
+            /*hapus key dan keluar ke login activity*/
+            SharedPreferences sharedPreferences = MenuActivity.this.getSharedPreferences(
+                    "login",
+                    Context.MODE_PRIVATE
+            );
+            sharedPreferences.edit().putString("userKey", null).apply();
+            Intent loginIntent = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(loginIntent);
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finishAffinity();
     }
 }

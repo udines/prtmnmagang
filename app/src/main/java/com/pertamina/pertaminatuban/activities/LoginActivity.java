@@ -1,6 +1,8 @@
 package com.pertamina.pertaminatuban.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
@@ -31,10 +33,6 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-
-        StrictMode.setThreadPolicy(policy);
 
         /*mengurus pengambilan data username dan password lalu melakukan
         * otentikasi menggunakan data diatas*/
@@ -133,8 +131,12 @@ public class LoginActivity extends AppCompatActivity {
 
                     LoginResponse loginResponse = response.body();
                     if (loginResponse.isSuccess()) {
-                        Log.w("user key ", loginResponse.getKey());
-                        Log.w("user token ", loginResponse.getToken());
+                        Log.w("login", "success");
+                        SharedPreferences preferences = LoginActivity.this.getSharedPreferences(
+                                "login",
+                                Context.MODE_PRIVATE
+                        );
+                        preferences.edit().putString("userKey", loginResponse.getKey()).apply();
                         startActivity(menuIntent);
                     } else {
                         Log.w("msg ", loginResponse.getMsg());
@@ -152,5 +154,11 @@ public class LoginActivity extends AppCompatActivity {
                 Log.d("request", "Failure");
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finishAffinity();
     }
 }

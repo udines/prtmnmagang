@@ -1,6 +1,8 @@
 package com.pertamina.pertaminatuban.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -21,8 +23,24 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
 
+                /*cek auth, mengecek apakah user sudah pernah login, jika sudah pernah
+                * langsung menuju ke menu activity*/
+                String userKey;
+                SharedPreferences preferences = SplashActivity.this.getSharedPreferences(
+                        "login",
+                        Context.MODE_PRIVATE
+                );
+                userKey = preferences.getString("userKey", "none");
+                if (!userKey.equals("none")) {
+                    Intent menuIntent = new Intent(getApplicationContext(), MenuActivity.class);
+                    menuIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(menuIntent);
+                } else {
+
                 /*eksekusi intent diatas untuk masuk halaman LoginActivity.class*/
-                startActivity(loginIntent);
+                    startActivity(loginIntent);
+                }
+
                 finish();
 
             }

@@ -3,9 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.pertamina.pertaminatuban.activities.MenuActivity">
     <item
-        android:id="@+id/action_menu_list"
-        android:title="List"/>
-    <item
-        android:id="@+id/action_menu_grid"
-        android:title="Kolom"/>
+        android:id="@+id/action_menu_logout"
+        android:title="Logout"/>
 </menu>
