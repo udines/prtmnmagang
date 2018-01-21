@@ -6,10 +6,10 @@ public class Ritase {
     private String nomobil;
     private String date;
     private float kapasitas;
-    private float nilai;
-    private float total;
+    private int nilai;
+    private int total;
 
-    public Ritase(String status, String transportir, String nomobil, String date, float kapasitas, float nilai, float total) {
+    public Ritase(String status, String transportir, String nomobil, String date, float kapasitas, int nilai, int total) {
         this.status = status;
         this.transportir = transportir;
         this.nomobil = nomobil;
@@ -63,7 +63,7 @@ public class Ritase {
         return nilai;
     }
 
-    public void setNilai(float nilai) {
+    public void setNilai(int nilai) {
         this.nilai = nilai;
     }
 
@@ -71,7 +71,7 @@ public class Ritase {
         return total;
     }
 
-    public void setTotal(float total) {
+    public void setTotal(int total) {
         this.total = total;
     }
 }
