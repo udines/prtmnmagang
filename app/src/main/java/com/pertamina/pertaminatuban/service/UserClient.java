@@ -3,6 +3,7 @@ package com.pertamina.pertaminatuban.service;
 import com.pertamina.pertaminatuban.distribusi.models.Konsumen;
 import com.pertamina.pertaminatuban.distribusi.models.Matbal;
 import com.pertamina.pertaminatuban.distribusi.models.Opers;
+import com.pertamina.pertaminatuban.distribusi.models.Wilayah;
 import com.pertamina.pertaminatuban.models.LoginResponse;
 import com.pertamina.pertaminatuban.models.UserCredential;
 
@@ -27,4 +28,7 @@ public interface UserClient {
 
     @GET("distribusi/opers/{bulan}")
     Call<ArrayList<Opers>> getOpers(@Path("bulan") int bulan);
+
+    @GET("distribusi/wilayah/{bulan}")
+    Call<ArrayList<Wilayah>> getWilayah(@Path("bulan") int bulan);
 }

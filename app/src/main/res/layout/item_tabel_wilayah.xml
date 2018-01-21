@@ -2,21 +2,29 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/item_opers_row"
-    android:padding="8dp">
+    android:padding="8dp"
+    android:id="@+id/item_wilayah_row">
     <TextView
         android:layout_width="0dp"
         android:layout_weight="1"
         android:textSize="16sp"
         android:layout_height="wrap_content"
-        android:text="2018-1-21"
-        android:id="@+id/item_opers_tanggal"/>
+        android:text="Cepu"
+        android:id="@+id/item_wilayah_lokasi"/>
+    <TextView
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:text="SPBU"
+        android:id="@+id/item_wilayah_konsumen"/>
     <TextView
         android:layout_width="0dp"
         android:layout_weight="1"
         android:gravity="end"
         android:textSize="16sp"
-        android:id="@+id/item_opers_nilai"
+        android:id="@+id/item_wilayah_nilai"
         android:layout_height="wrap_content"
         android:text="1608"/>
 </LinearLayout>
