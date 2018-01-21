@@ -45,6 +45,7 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.pertamina.pertaminatuban.activities.MenuActivity" />
+
         </activity>
         <activity
             android:name=".distribusi.InputMatbalActivity"

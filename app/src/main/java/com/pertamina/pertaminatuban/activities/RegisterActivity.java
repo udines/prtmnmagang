@@ -5,6 +5,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +13,15 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.pertamina.pertaminatuban.R;
+import com.pertamina.pertaminatuban.models.LoginResponse;
+import com.pertamina.pertaminatuban.models.RegisterData;
+import com.pertamina.pertaminatuban.service.UserClient;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -48,8 +58,40 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (dataTerisi() && emailSesuai() && passwordSama()) {
-                    Toast.makeText(RegisterActivity.this, "lanjut", Toast.LENGTH_SHORT).show();
+
+                    RegisterData data = new RegisterData(
+                            inputUsername.getText().toString(),
+                            inputEmail.getText().toString(),
+                            inputPassword.getText().toString()
+                    );
+
+                    sendAuthRequest(data);
                 }
+            }
+        });
+    }
+
+    private void sendAuthRequest(RegisterData data) {
+        String baseUrl = "http://www.api.clicktuban.com/";
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create());
+
+        Retrofit retrofit = builder.build();
+        UserClient client = retrofit.create(UserClient.class);
+        Call<LoginResponse> call = client.register(data);
+
+        call.enqueue(new Callback<LoginResponse>() {
+            @Override
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                if (response.code() == 200) {
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
+                Log.e("register", "error " + t.getMessage());
             }
         });
     }
