@@ -21,7 +21,7 @@ public interface UserClient {
     @POST("login")
     Call<LoginResponse> login(@Body UserCredential credential);
 
-    @GET("distribusi/matbal/coba/{bulan}")
+    @GET("distribusi/matbal/{bulan}")
     Call<ArrayList<Matbal>> getMatbal(@Path("bulan") int bulan);
 
     @GET("distribusi/konsumen/{bulan}")

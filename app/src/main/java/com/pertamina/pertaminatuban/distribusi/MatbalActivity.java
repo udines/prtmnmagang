@@ -117,8 +117,6 @@ public class MatbalActivity extends AppCompatActivity {
                         today.get(Calendar.MONTH)
                 );
 
-                Toast.makeText(MatbalActivity.this, String.valueOf(month), Toast.LENGTH_SHORT).show();
-
                 builder.setMinYear(1970)
                         .setMaxYear(today.get(Calendar.YEAR))
                         .setTitle("Pilih bulan dan tahun")
@@ -199,8 +197,8 @@ public class MatbalActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ArrayList<Matbal>> call, Response<ArrayList<Matbal>> response) {
                 Log.w("code", String.valueOf(response.code()));
-                Log.w("size", String.valueOf(response.body().size()));
                 if (response.code() == 200 && response.body() != null) {
+                    Log.w("size", String.valueOf(response.body().size()));
                     cekData(response.body());
                 }
             }

@@ -198,8 +198,8 @@ public class KonsumenActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ArrayList<Konsumen>> call, Response<ArrayList<Konsumen>> response) {
                 Log.w("code", String.valueOf(response.code()));
-                Log.w("size", String.valueOf(response.body().size()));
                 if (response.code() == 200 && response.body() != null) {
+                    Log.w("size", String.valueOf(response.body().size()));
                     cekData(response.body());
                 }
             }
@@ -209,5 +209,8 @@ public class KonsumenActivity extends AppCompatActivity {
                 Log.e("Call", " failed " + t.getMessage());
             }
         });
+
+        ArrayList<Konsumen> konsumenJan = new ArrayList<>();
+        ArrayList<Konsumen> konsumenFeb = new ArrayList<>();
     }
 }

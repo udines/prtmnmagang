@@ -198,8 +198,8 @@ public class WilayahActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ArrayList<Wilayah>> call, Response<ArrayList<Wilayah>> response) {
                 Log.w("code", String.valueOf(response.code()));
-                Log.w("size", String.valueOf(response.body().size()));
                 if (response.code() == 200 && response.body() != null) {
+                    Log.w("size", String.valueOf(response.body().size()));
                     cekData(response.body());
                 }
             }
