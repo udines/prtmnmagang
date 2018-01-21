@@ -39,11 +39,10 @@ public class Matbal {
     public Matbal() {
     }
 
-    public Matbal(String date, String fuel, float nilai, float total) {
+    public Matbal(String date, String fuel, float nilai) {
         this.date = date;
         this.fuel = fuel;
         this.nilai = nilai;
-        this.total = total;
     }
 
     /*setter*/
