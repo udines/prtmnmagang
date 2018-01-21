@@ -1,4 +1,4 @@
-package com.pertamina.pertaminatuban.distribusi;
+package com.pertamina.pertaminatuban.distribusi.page;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,9 +13,7 @@ import android.widget.TextView;
 
 import com.pertamina.pertaminatuban.R;
 import com.pertamina.pertaminatuban.distribusi.models.Konsumen;
-import com.pertamina.pertaminatuban.distribusi.models.Matbal;
 import com.pertamina.pertaminatuban.distribusi.tables.KonsumenTableAdapter;
-import com.pertamina.pertaminatuban.distribusi.tables.MatbalTableAdapter;
 
 import java.util.ArrayList;
 
