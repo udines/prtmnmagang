@@ -8,11 +8,11 @@ import java.util.Calendar;
 
 public class Matbal {
 
-    public static final String PERTAMAX = "Pertamax";
+    public static final String PERTAMAX = "Pertamax, BULK";
     public static final String PERTALITE = "Pertalite";
     public static final String PREMIUM = "Premium";
     public static final String BIOSOLAR = "Biosolar";
-    public static final String SOLAR = "Solar";
+    public static final String SOLAR = "SOLAR/HSD/MGO/ADO";
     public static final String BIOFLAME = "Bioflame";
 
     @SerializedName("id")
@@ -45,17 +45,24 @@ public class Matbal {
         this.nilai = nilai;
     }
 
+    public Matbal(String date, String fuel, float nilai, float total) {
+        this.date = date;
+        this.fuel = fuel;
+        this.nilai = nilai;
+        this.total = total;
+    }
+
     /*setter*/
 
     public void setFuel(String fuel) {
         this.fuel = fuel;
     }
 
-    public void setNilai(int nilai) {
+    public void setNilai(float nilai) {
         this.nilai = nilai;
     }
 
-    public void setTotal(int total) {
+    public void setTotal(float total) {
         this.total = total;
     }
 

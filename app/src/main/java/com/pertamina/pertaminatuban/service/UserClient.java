@@ -10,10 +10,14 @@ import com.pertamina.pertaminatuban.models.RegisterData;
 import com.pertamina.pertaminatuban.models.RegisterResponse;
 import com.pertamina.pertaminatuban.models.UserCredential;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -43,4 +47,7 @@ public interface UserClient {
 
     @GET("distribusi/{data}/{bulan}")
     Call<Object> getObject(@Path("data") String jenisData, @Path("bulan") int bulan);
+
+    @POST("distribusi/matbal")
+    Call<Object> postMatbal(@Body JSONArray matbals);
 }

@@ -65,11 +65,11 @@ public class DistribusiActivity extends AppCompatActivity {
     private void populateMenu() {
         RecyclerView recyclerView = findViewById(R.id.distribusi_menu_recycler);
         ArrayList<MenuViewModel> menus = new ArrayList<>();
-        menus.add(new MenuViewModel("TOTAL Harian", 0));
-        menus.add(new MenuViewModel("Berdasarkan KONSUMEN", 0));
-        menus.add(new MenuViewModel("Berdasarkan WILAYAH", 0));
-        menus.add(new MenuViewModel("JAM Operasional", 0));
-        menus.add(new MenuViewModel("RITASE Mobil Tanki", 0));
+        menus.add(new MenuViewModel("Matbal", 0));
+        menus.add(new MenuViewModel("Konsumen", 0));
+        menus.add(new MenuViewModel("Wilayah", 0));
+        menus.add(new MenuViewModel("Operasional", 0));
+        menus.add(new MenuViewModel("Ritase MT", 0));
 
         ArrayList<Class> classes = new ArrayList<>();
         classes.add(MatbalActivity.class);
