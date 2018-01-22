@@ -5,11 +5,8 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.pertamina.pertaminatuban.R;
@@ -41,14 +38,19 @@ public class DistribusiAddDialog extends DialogFragment {
                         intent.setClass(getContext(), InputMatbalActivity.class);
                         break;
                     case R.id.dialog_distribusi_konsumen:
+                        intent.setClass(getContext(), InputKonsumenActivity.class);
                         break;
                     case R.id.dialog_distribusi_wilayah:
+                        intent.setClass(getContext(), InputWilayahActivity.class);
                         break;
                     case R.id.dialog_distribusi_ritase:
+                        intent.setClass(getContext(), InputRitaseActivity.class);
                         break;
                     case R.id.dialog_distribusi_opers:
+                        intent.setClass(getContext(), InputOpersActivity.class);
                         break;
                 }
+                DistribusiAddDialog.this.dismiss();
                 startActivity(intent);
             }
         };

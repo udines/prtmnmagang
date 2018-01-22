@@ -6,7 +6,7 @@
     <string name="password">password</string>
     <string name="title_activity_register">Daftar Akun</string>
     <string name="title_activity_distribusi">Distribusi</string>
-    <string name="title_activity_input_matbal">Input Matbal</string>
+    <string name="title_activity_input_matbal">Input Data Matbal</string>
     <string name="title_activity_konsumen">Konsumen</string>
     <string name="title_activity_matbal">Matbal</string>
     <string name="title_activity_opers">Opers</string>
@@ -14,4 +14,8 @@
     <string name="title_activity_wilayah">Wilayah</string>
     <string name="email">email</string>
     <string name="ulangi_password">ulangi password</string>
+    <string name="title_activity_input_konsumen">Input Data Konsumen</string>
+    <string name="title_activity_input_wilayah">Input Data Wilayah</string>
+    <string name="title_activity_input_opers">Input Data Opers</string>
+    <string name="title_activity_input_ritase">Input Data Ritase</string>
 </resources>
