@@ -7,6 +7,7 @@ import com.pertamina.pertaminatuban.distribusi.models.Ritase;
 import com.pertamina.pertaminatuban.distribusi.models.Wilayah;
 import com.pertamina.pertaminatuban.models.LoginResponse;
 import com.pertamina.pertaminatuban.models.RegisterData;
+import com.pertamina.pertaminatuban.models.RegisterResponse;
 import com.pertamina.pertaminatuban.models.UserCredential;
 
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ public interface UserClient {
     Call<LoginResponse> login(@Body UserCredential credential);
 
     @POST("register")
-    Call<LoginResponse> register(@Body RegisterData data);
+    Call<RegisterResponse> register(@Body RegisterData data);
 
     @GET("distribusi/matbal/{bulan}")
     Call<ArrayList<Matbal>> getMatbal(@Path("bulan") int bulan);
@@ -39,4 +40,7 @@ public interface UserClient {
 
     @GET("distribusi/ritase/{bulan}")
     Call<ArrayList<Ritase>> getRitase(@Path("bulan") int bulan);
+
+    @GET("distribusi/{data}/{bulan}")
+    Call<Object> getObject(@Path("data") String jenisData, @Path("bulan") int bulan);
 }

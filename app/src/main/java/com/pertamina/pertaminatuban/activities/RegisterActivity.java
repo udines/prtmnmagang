@@ -1,5 +1,6 @@
 package com.pertamina.pertaminatuban.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 import com.pertamina.pertaminatuban.R;
 import com.pertamina.pertaminatuban.models.LoginResponse;
 import com.pertamina.pertaminatuban.models.RegisterData;
+import com.pertamina.pertaminatuban.models.RegisterResponse;
 import com.pertamina.pertaminatuban.service.UserClient;
 
 import retrofit2.Call;
@@ -57,12 +59,13 @@ public class RegisterActivity extends AppCompatActivity {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (dataTerisi() && emailSesuai() && passwordSama()) {
+                if (dataTerisi() && usernameCukup() && emailSesuai() && passwordCukup() && passwordSama()) {
 
                     RegisterData data = new RegisterData(
                             inputUsername.getText().toString(),
                             inputEmail.getText().toString(),
-                            inputPassword.getText().toString()
+                            inputPassword.getText().toString(),
+                            inputUlangPassword.getText().toString()
                     );
 
                     sendAuthRequest(data);
@@ -79,18 +82,26 @@ public class RegisterActivity extends AppCompatActivity {
 
         Retrofit retrofit = builder.build();
         UserClient client = retrofit.create(UserClient.class);
-        Call<LoginResponse> call = client.register(data);
+        Call<RegisterResponse> call = client.register(data);
 
-        call.enqueue(new Callback<LoginResponse>() {
+        call.enqueue(new Callback<RegisterResponse>() {
             @Override
-            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+            public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
+                Log.w("code", String.valueOf(response.code()));
                 if (response.code() == 200) {
-
+                    Log.w("msg", response.body().getMsg());
+                    Log.w("success", String.valueOf(response.body().isSuccess()));
+                    if (!response.body().isSuccess()) {
+                        Intent loginIntent = new Intent(getApplicationContext(), LoginActivity.class);
+                        loginIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        Toast.makeText(RegisterActivity.this, "Pendaftaran BERHASIL, silakan login", Toast.LENGTH_SHORT).show();
+                        startActivity(loginIntent);
+                    }
                 }
             }
 
             @Override
-            public void onFailure(Call<LoginResponse> call, Throwable t) {
+            public void onFailure(Call<RegisterResponse> call, Throwable t) {
                 Log.e("register", "error " + t.getMessage());
             }
         });
@@ -123,6 +134,24 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(this, "Password tidak sama", Toast.LENGTH_SHORT).show();
         }
         return sama;
+    }
+
+    private boolean passwordCukup() {
+        boolean cukup;
+        cukup = inputPassword.getText().length() >= 8;
+        if (!cukup) {
+            Toast.makeText(this, "Password minimal 8 karakter", Toast.LENGTH_SHORT).show();
+        }
+        return cukup;
+    }
+
+    private boolean usernameCukup() {
+        boolean cukup;
+        cukup = inputUsername.getText().length() >= 6;
+        if (!cukup) {
+            Toast.makeText(this, "Username minimal 6 karakter", Toast.LENGTH_SHORT).show();
+        }
+        return cukup;
     }
 
     private boolean emailSesuai() {
