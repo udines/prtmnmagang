@@ -24,12 +24,6 @@ import java.util.ArrayList;
 * bisa memilih divisi mana yang ingin pengguna lihat atau edit atau tambah datanya*/
 public class MenuActivity extends AppCompatActivity {
 
-    private GridMenuAdapter gridAdapter;
-    private ListMenuAdapter listAdapter;
-    private RecyclerView recyclerView;
-    private GridLayoutManager gridLayoutManager;
-    private LinearLayoutManager linearLayoutManager;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +33,7 @@ public class MenuActivity extends AppCompatActivity {
 
         /*membuat daftar menu dengan judul beserta id gambarnya*/
         populateMenu();
+
     }
 
     private void populateMenu() {
@@ -56,19 +51,13 @@ public class MenuActivity extends AppCompatActivity {
         menuList.add(new MenuViewModel("Divisi 6", R.drawable.ic_launcher_foreground));
 
         /*membuat obyek dari GridMenuAdapter untuk menampilkan menu bentuk gridLayoutManager 2 kolom*/
-        gridAdapter = new GridMenuAdapter(menuList, getApplicationContext());
-
-        /*membuat obyek dari ListMenuAdapter untuk menampilkan menu dalam bentuk list menurun*/
-        listAdapter = new ListMenuAdapter(menuList, getApplicationContext());
+        GridMenuAdapter gridAdapter = new GridMenuAdapter(menuList, getApplicationContext());
 
         /*menghubungkan view dengan layout recyclerview di content_menu.xml*/
-        recyclerView = findViewById(R.id.menu_recyclerview);
+        RecyclerView recyclerView = findViewById(R.id.menu_recyclerview);
 
         /*membuat obyek layout manager tipe gridLayoutManager dengan jumlah kolom : 2*/
-        gridLayoutManager = new GridLayoutManager(getApplicationContext(), 2);
-
-        /*membuat obyek layout manager tipe linear*/
-        linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(), 2);
 
         /*inisialisasi awal menu dalam bentuk grid*/
         recyclerView.setLayoutManager(gridLayoutManager);
@@ -98,6 +87,7 @@ public class MenuActivity extends AppCompatActivity {
                     Context.MODE_PRIVATE
             );
             sharedPreferences.edit().putString("userKey", null).apply();
+            sharedPreferences.edit().putString("userRole", null).apply();
             Intent loginIntent = new Intent(getApplicationContext(), LoginActivity.class);
             startActivity(loginIntent);
             return true;

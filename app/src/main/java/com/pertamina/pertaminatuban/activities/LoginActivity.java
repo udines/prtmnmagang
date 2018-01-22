@@ -137,6 +137,7 @@ public class LoginActivity extends AppCompatActivity {
                                 Context.MODE_PRIVATE
                         );
                         preferences.edit().putString("userKey", loginResponse.getKey()).apply();
+                        preferences.edit().putString("userRole", loginResponse.getRole()).apply();
                         startActivity(menuIntent);
                     } else {
                         Log.w("msg ", loginResponse.getMsg());

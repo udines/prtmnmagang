@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,5 +7,53 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.pertamina.pertaminatuban.distribusi.InputOpersActivity"
     tools:showIn="@layout/activity_input_opers">
-
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:orientation="vertical">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Pilih Tanggal"
+            style="@style/Base.Widget.AppCompat.Button.Colored"
+            android:id="@+id/input_matbal_tanggal"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:textSize="16sp"
+            android:id="@+id/input_matbal_bioflame"
+            android:maxLines="1"
+            android:hint="Sum of JUMLAH KL"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/black"
+            android:text="Min of JAM KELUAR"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pilih Jam"
+            style="@style/Base.Widget.AppCompat.Button.Colored"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/black"
+            android:text="Max of JAM KELUAR"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pilih Jam"
+            style="@style/Base.Widget.AppCompat.Button.Colored"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/input_matbal_kirim"
+            android:layout_margin="4dp"
+            android:text="Kirim"/>
+    </LinearLayout>
+</ScrollView>

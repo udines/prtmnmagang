@@ -24,6 +24,7 @@ public class LoginResponse {
     @Expose
     private String key;
 
+    public static final String ROLE_DISTRIBUSI = "distribusi";
 
     public LoginResponse() {
     }
