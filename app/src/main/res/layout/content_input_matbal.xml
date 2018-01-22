@@ -19,9 +19,73 @@
             android:text="Pilih Tanggal"
             style="@style/Base.Widget.AppCompat.Button.Colored"
             android:id="@+id/input_matbal_tanggal"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:id="@+id/input_matbal_pertamax"
+            android:maxLines="1"
+            android:hint="Matbal pertamax"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:id="@+id/input_matbal_pertalite"
+            android:maxLines="1"
+            android:hint="Matbal pertalite"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:id="@+id/input_matbal_premium"
+            android:maxLines="1"
+            android:hint="Matbal premium"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:id="@+id/input_matbal_biosolar"
+            android:maxLines="1"
+            android:hint="Matbal biosolar"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:id="@+id/input_matbal_solar"
+            android:maxLines="1"
+            android:hint="Matbal solar"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:id="@+id/input_matbal_bioflame"
+            android:maxLines="1"
+            android:hint="Matbal bioflame"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Lain"
+            android:id="@+id/input_matbal_lain"
+            android:maxLines="1"
+            android:inputType="text"
+            android:layout_weight="1"/>
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Nilai"
+            android:id="@+id/input_matbal_lain_nilai"
+            android:inputType="number"
+            android:layout_weight="1"/>
+    </LinearLayout>
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="number"
+            android:id="@+id/input_matbal_kirim"
             android:text="Kirim"/>
     </LinearLayout>
 </ScrollView>

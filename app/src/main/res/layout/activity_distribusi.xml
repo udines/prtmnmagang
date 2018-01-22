@@ -22,4 +22,22 @@
 
     <include layout="@layout/content_distribusi" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:drawableStart="@drawable/ic_add_black_24dp"
+        android:background="@drawable/round_corner_24dp_accent"
+        android:drawableLeft="@drawable/ic_add_black_24dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:text="Tambah Data"
+        android:visibility="gone"
+        android:drawablePadding="8dp"
+        android:textColor="@color/white"
+        android:id="@+id/distribusi_button_tambah"/>
+
 </android.support.design.widget.CoordinatorLayout>

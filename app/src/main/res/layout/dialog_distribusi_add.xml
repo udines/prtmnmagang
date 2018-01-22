@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="16dp"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Matbal"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:clickable="true"
+        android:id="@+id/dialog_distribusi_matbal"
+        android:padding="8dp"
+        android:focusable="true"
+        android:foreground="?selectableItemBackground"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Konsumen"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:clickable="true"
+        android:id="@+id/dialog_distribusi_konsumen"
+        android:padding="8dp"
+        android:focusable="true"
+        android:foreground="?selectableItemBackground"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Wilayah"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:clickable="true"
+        android:id="@+id/dialog_distribusi_wilayah"
+        android:padding="8dp"
+        android:focusable="true"
+        android:foreground="?selectableItemBackground"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Opers"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:clickable="true"
+        android:id="@+id/dialog_distribusi_opers"
+        android:padding="8dp"
+        android:focusable="true"
+        android:foreground="?selectableItemBackground"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ritase MT"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:clickable="true"
+        android:id="@+id/dialog_distribusi_ritase"
+        android:padding="8dp"
+        android:focusable="true"
+        android:foreground="?selectableItemBackground"/>
+</LinearLayout>
