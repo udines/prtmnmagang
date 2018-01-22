@@ -136,7 +136,6 @@ public class InputMatbalActivity extends AppCompatActivity {
 
                 Request request = original.newBuilder()
                         .header("Authorization", key)
-                        .header("Content-Type", "application/json")
                         .method(original.method(), original.body())
                         .build();
                 return chain.proceed(request);
@@ -157,15 +156,15 @@ public class InputMatbalActivity extends AppCompatActivity {
         Retrofit retrofit = builder.build();
         UserClient userClient = retrofit.create(UserClient.class);
 
-        JSONArray jsonArray = new JSONArray(matbals);
-
-        Call<Object> call = userClient.postMatbal(jsonArray);
+        Call<Object> call = userClient.postMatbal(matbals);
         call.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, Response<Object> response) {
                 Log.w("code", String.valueOf(response.code()));
                 if (response.code() == 200) {
                     Log.w("response size", response.body().toString());
+                    Toast.makeText(InputMatbalActivity.this, "Data berhasil ditambahkan", Toast.LENGTH_LONG).show();
+                    finish();
                 }
             }
 

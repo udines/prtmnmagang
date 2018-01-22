@@ -49,5 +49,5 @@ public interface UserClient {
     Call<Object> getObject(@Path("data") String jenisData, @Path("bulan") int bulan);
 
     @POST("distribusi/matbal")
-    Call<Object> postMatbal(@Body JSONArray matbals);
+    Call<Object> postMatbal(@Body ArrayList<Matbal> matbals);
 }
