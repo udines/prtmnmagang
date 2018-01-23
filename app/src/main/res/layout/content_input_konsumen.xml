@@ -18,7 +18,7 @@
             android:layout_gravity="center_horizontal"
             android:text="Pilih Tanggal"
             style="@style/Base.Widget.AppCompat.Button.Colored"
-            android:id="@+id/input_matbal_tanggal"/>
+            android:id="@+id/input_konsumen_tanggal"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -27,7 +27,12 @@
             android:layout_marginBottom="4dp"
             android:textColor="@color/black"
             android:layout_marginTop="8dp"/>
-        <RadioGroup
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/input_konsumen_bb_spinner"/>
+        <!--<RadioGroup
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <LinearLayout
@@ -37,11 +42,13 @@
                 <RadioButton
                     android:layout_width="0dp"
                     android:text="Pertamax"
+                    android:id="@+id/input_konsumen_pertamax"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"/>
                 <RadioButton
                     android:layout_width="0dp"
                     android:text="Pertalite"
+                    android:id="@+id/input_konsumen_pertalite"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"/>
             </LinearLayout>
@@ -52,11 +59,13 @@
                 <RadioButton
                     android:layout_width="0dp"
                     android:text="Premium"
+                    android:id="@+id/input_konsumen_premium"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"/>
                 <RadioButton
                     android:layout_width="0dp"
                     android:text="Solar"
+                    android:id="@+id/input_konsumen_solar"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"/>
             </LinearLayout>
@@ -67,11 +76,13 @@
                 <RadioButton
                     android:layout_width="0dp"
                     android:text="Biosolar"
+                    android:id="@+id/input_konsumen_biosolar"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"/>
                 <RadioButton
                     android:layout_width="0dp"
                     android:text="Bioflame"
+                    android:id="@+id/input_konsumen_bioflame"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"/>
             </LinearLayout>
@@ -82,14 +93,16 @@
                 <RadioButton
                     android:layout_width="0dp"
                     android:text="Lain"
+                    android:id="@+id/input_radio_bb_lain"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"/>
             </LinearLayout>
-        </RadioGroup>
+        </RadioGroup>-->
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp"
+            android:id="@+id/input_konsumen_bahan_bakar"
             android:inputType="textCapWords"
             android:maxLines="1"
             android:hint="Bahan bakar lain"/>
@@ -101,7 +114,7 @@
             android:layout_marginBottom="4dp"
             android:textColor="@color/black"
             android:layout_marginTop="8dp"/>
-        <RadioGroup
+        <!--<RadioGroup
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <LinearLayout
@@ -111,11 +124,13 @@
                 <RadioButton
                     android:layout_width="0dp"
                     android:text="SPBU"
+                    android:id="@+id/input_konsumen_spbu"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"/>
                 <RadioButton
                     android:layout_width="0dp"
                     android:text="SPDN"
+                    android:id="@+id/input_konsumen_spdn"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"/>
             </LinearLayout>
@@ -126,11 +141,13 @@
                 <RadioButton
                     android:layout_width="0dp"
                     android:text="TNI/Polri"
+                    android:id="@+id/input_konsumen_tni"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"/>
                 <RadioButton
                     android:layout_width="0dp"
                     android:text="PLN"
+                    android:id="@+id/input_konsumen_pln"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"/>
             </LinearLayout>
@@ -141,19 +158,22 @@
                 <RadioButton
                     android:layout_width="0dp"
                     android:text="Own Use MT"
+                    android:id="@+id/input_konsumen_mt"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"/>
                 <RadioButton
                     android:layout_width="0dp"
                     android:text="Lain"
+                    android:id="@+id/input_radio_konsumen_lain"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"/>
             </LinearLayout>
-        </RadioGroup>
+        </RadioGroup>-->
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp"
+            android:id="@+id/input_konsumen_lain"
             android:inputType="textCapWords"
             android:maxLines="1"
             android:hint="Konsumen lain"/>
@@ -161,6 +181,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp"
+            android:id="@+id/input_konsumen_nilai"
             android:inputType="number"
             android:maxLines="1"
             android:hint="Nilai"/>

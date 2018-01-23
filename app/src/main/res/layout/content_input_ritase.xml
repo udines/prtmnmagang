@@ -18,7 +18,7 @@
             android:layout_gravity="center_horizontal"
             android:text="Pilih Tanggal"
             style="@style/Base.Widget.AppCompat.Button.Colored"
-            android:id="@+id/input_matbal_tanggal"/>
+            android:id="@+id/input_ritase_tanggal"/>
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -26,11 +26,13 @@
             android:layout_marginTop="8dp"
             android:inputType="textCapWords"
             android:maxLines="1"
+            android:id="@+id/input_ritase_trasnportir"
             android:hint="Nama Transportir"/>
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp"
+            android:id="@+id/input_ritase_nomobil"
             android:inputType="textCapWords"
             android:maxLines="1"
             android:hint="Nomor Mobil"/>
@@ -38,6 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp"
+            android:id="@+id/input_ritase_status"
             android:inputType="textCapWords"
             android:maxLines="1"
             android:hint="Status Transportir"/>
@@ -45,6 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp"
+            android:id="@+id/input_ritase_kapasitas"
             android:inputType="number"
             android:maxLines="1"
             android:hint="Kapasitas MT"/>
@@ -52,13 +56,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp"
+            android:id="@+id/input_ritase_nilai"
             android:inputType="number"
             android:maxLines="1"
             android:hint="Nilai"/>
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/input_matbal_kirim"
+            android:id="@+id/input_ritase_kirim"
             android:layout_margin="4dp"
             android:text="Kirim"/>
     </LinearLayout>

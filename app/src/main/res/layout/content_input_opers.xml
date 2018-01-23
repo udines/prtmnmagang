@@ -18,13 +18,13 @@
             android:layout_gravity="center_horizontal"
             android:text="Pilih Tanggal"
             style="@style/Base.Widget.AppCompat.Button.Colored"
-            android:id="@+id/input_matbal_tanggal"/>
+            android:id="@+id/input_opers_tanggal"/>
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="number"
             android:textSize="16sp"
-            android:id="@+id/input_matbal_bioflame"
+            android:id="@+id/input_opers_jumlah_kl"
             android:maxLines="1"
             android:hint="Sum of JUMLAH KL"/>
         <TextView
@@ -37,6 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Pilih Jam"
+            android:id="@+id/input_opers_min_jam"
             style="@style/Base.Widget.AppCompat.Button.Colored"/>
         <TextView
             android:layout_width="wrap_content"
@@ -48,11 +49,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Pilih Jam"
+            android:id="@+id/input_opers_max_jam"
             style="@style/Base.Widget.AppCompat.Button.Colored"/>
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/input_matbal_kirim"
+            android:id="@+id/input_opers_kirim"
             android:layout_margin="4dp"
             android:text="Kirim"/>
     </LinearLayout>
