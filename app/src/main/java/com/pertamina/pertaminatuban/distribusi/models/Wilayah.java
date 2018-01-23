@@ -36,6 +36,15 @@ public class Wilayah {
         this.nilai = nilai;
     }
 
+    public Wilayah(String wilayah, String konsumen, String fuel, String date, float nilai, float total) {
+        this.wilayah = wilayah;
+        this.konsumen = konsumen;
+        this.fuel = fuel;
+        this.date = date;
+        this.nilai = nilai;
+        this.total = total;
+    }
+
     public String getWilayah() {
         return wilayah;
     }
