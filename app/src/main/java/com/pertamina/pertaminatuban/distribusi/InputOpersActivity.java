@@ -18,6 +18,7 @@ import com.pertamina.pertaminatuban.distribusi.models.Opers;
 import com.pertamina.pertaminatuban.service.UserClient;
 
 import java.io.IOException;
+import java.sql.Time;
 import java.util.ArrayList;
 
 import okhttp3.Interceptor;
@@ -46,8 +47,7 @@ public class InputOpersActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    private void sendPostRequest(ArrayList<Opers> opers) {
-        Log.w("input size", String.valueOf(opers.size()));
+    private void sendPostRequest(Opers opers) {
 
         SharedPreferences preferences = InputOpersActivity.this.getSharedPreferences(
                 "login",

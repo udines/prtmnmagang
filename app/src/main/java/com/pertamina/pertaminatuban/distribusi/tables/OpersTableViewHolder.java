@@ -28,13 +28,13 @@ public class OpersTableViewHolder extends RecyclerView.ViewHolder {
                 nilai.setText(String.valueOf(model.getJumlahKeluar()));
                 break;
             case Opers.TYPE_MIN_JAM_KELUAR:
-                nilai.setText(model.getMinJamKeluar());
+                nilai.setText(String.valueOf(model.getMinJamKeluar()));
                 break;
             case Opers.TYPE_MAX_JAM_KELUAR:
-                nilai.setText(model.getMaxJamKeluar());
+                nilai.setText(String.valueOf(model.getMaxJamKeluar()));
                 break;
             case Opers.TYPE_JAM_OPERASIONAL:
-                nilai.setText(model.getJamOperasional());
+                nilai.setText(String.valueOf(model.getJamOperasional()));
                 break;
         }
     }

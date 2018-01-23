@@ -1,5 +1,10 @@
 package com.pertamina.pertaminatuban.distribusi.models;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+import java.sql.Time;
+
 public class Opers {
 
     public static final int TYPE_JUMLAH_KELUAR = 0;
@@ -7,13 +12,27 @@ public class Opers {
     public static final int TYPE_MAX_JAM_KELUAR = 2;
     public static final int TYPE_JAM_OPERASIONAL = 3;
 
+    @SerializedName("date")
+    @Expose
     private String date;
-    private float jumlahKeluar;
-    private String minJamKeluar;
-    private String maxJamKeluar;
-    private String jamOperasional;
 
-    public Opers(String date, float jumlahKeluar, String minJamKeluar, String maxJamKeluar, String jamOperasional) {
+    @SerializedName("sumJumlahKL")
+    @Expose
+    private int jumlahKeluar;
+
+    @SerializedName("minJamKeluar")
+    @Expose
+    private Time minJamKeluar;
+
+    @SerializedName("maxJamKeluar")
+    @Expose
+    private Time maxJamKeluar;
+
+    @SerializedName("JamOperasional")
+    @Expose
+    private Time jamOperasional;
+
+    public Opers(String date, int jumlahKeluar, Time minJamKeluar, Time maxJamKeluar, Time jamOperasional) {
         this.date = date;
         this.jumlahKeluar = jumlahKeluar;
         this.minJamKeluar = minJamKeluar;
@@ -33,31 +52,31 @@ public class Opers {
         return jumlahKeluar;
     }
 
-    public void setJumlahKeluar(float jumlahKeluar) {
+    public void setJumlahKeluar(int jumlahKeluar) {
         this.jumlahKeluar = jumlahKeluar;
     }
 
-    public String getMinJamKeluar() {
+    public Time getMinJamKeluar() {
         return minJamKeluar;
     }
 
-    public void setMinJamKeluar(String minJamKeluar) {
+    public void setMinJamKeluar(Time minJamKeluar) {
         this.minJamKeluar = minJamKeluar;
     }
 
-    public String getMaxJamKeluar() {
+    public Time getMaxJamKeluar() {
         return maxJamKeluar;
     }
 
-    public void setMaxJamKeluar(String maxJamKeluar) {
+    public void setMaxJamKeluar(Time maxJamKeluar) {
         this.maxJamKeluar = maxJamKeluar;
     }
 
-    public String getJamOperasional() {
+    public Time getJamOperasional() {
         return jamOperasional;
     }
 
-    public void setJamOperasional(String jamOperasional) {
+    public void setJamOperasional(Time jamOperasional) {
         this.jamOperasional = jamOperasional;
     }
 

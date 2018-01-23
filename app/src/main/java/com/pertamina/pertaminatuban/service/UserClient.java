@@ -61,5 +61,5 @@ public interface UserClient {
     Call<Object> postRitase(@Body ArrayList<Ritase> ritases);
 
     @POST("distribusi/opers")
-    Call<Object> postOpers(@Body ArrayList<Opers> opers);
+    Call<Object> postOpers(@Body Opers opers);
 }
