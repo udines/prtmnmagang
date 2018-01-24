@@ -15,7 +15,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
+            android:textSize="18sp"
             android:padding="8dp"
             android:textStyle="bold"
             android:textAllCaps="true"
@@ -32,15 +32,17 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:text="SPBU"
+                android:textSize="16sp"
                 android:textColor="@color/black"
                 android:layout_height="wrap_content" />
             <TextView
                 android:layout_width="0dp"
                 android:text="0 KL"
+                android:textSize="16sp"
                 android:id="@+id/konsumen_nilai_pertamax_spbu"
                 android:gravity="end"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="0.5"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -53,15 +55,17 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:text="TNI/Polri"
+                android:textSize="16sp"
                 android:textColor="@color/black"
                 android:layout_height="wrap_content" />
             <TextView
                 android:layout_width="0dp"
                 android:text="0 KL"
+                android:textSize="16sp"
                 android:gravity="end"
                 android:id="@+id/konsumen_nilai_pertamax_tni"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="0.5"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -74,20 +78,22 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:text="Pertamax, BULK Total"
+                android:textSize="16sp"
                 android:textColor="@color/black"
                 android:layout_height="wrap_content" />
             <TextView
                 android:layout_width="0dp"
                 android:text="0 KL"
+                android:textSize="16sp"
                 android:gravity="end"
                 android:id="@+id/konsumen_nilai_pertamax_total"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="0.5"/>
         </LinearLayout>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
+            android:textSize="18sp"
             android:padding="8dp"
             android:textStyle="bold"
             android:textAllCaps="true"
@@ -105,15 +111,17 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:text="SPBU"
+                android:textSize="16sp"
                 android:textColor="@color/black"
                 android:layout_height="wrap_content" />
             <TextView
                 android:layout_width="0dp"
                 android:text="0 KL"
+                android:textSize="16sp"
                 android:id="@+id/konsumen_nilai_pertalite_spbu"
                 android:gravity="end"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="0.5"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -126,20 +134,22 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:text="Pertalite Total"
+                android:textSize="16sp"
                 android:textColor="@color/black"
                 android:layout_height="wrap_content" />
             <TextView
                 android:layout_width="0dp"
                 android:text="0 KL"
                 android:gravity="end"
+                android:textSize="16sp"
                 android:id="@+id/konsumen_nilai_pertalite_total"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="0.5"/>
         </LinearLayout>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
+            android:textSize="18sp"
             android:padding="8dp"
             android:textStyle="bold"
             android:textAllCaps="true"
@@ -157,15 +167,17 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:text="SPBU"
+                android:textSize="16sp"
                 android:textColor="@color/black"
                 android:layout_height="wrap_content" />
             <TextView
                 android:layout_width="0dp"
                 android:text="0 KL"
                 android:gravity="end"
+                android:textSize="16sp"
                 android:id="@+id/konsumen_nilai_premium_spbu"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="0.5"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -178,20 +190,22 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:text="Premium Total"
+                android:textSize="16sp"
                 android:textColor="@color/black"
                 android:layout_height="wrap_content" />
             <TextView
                 android:layout_width="0dp"
                 android:text="0 KL"
+                android:textSize="16sp"
                 android:gravity="end"
                 android:id="@+id/konsumen_nilai_premium_total"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="0.5"/>
         </LinearLayout>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
+            android:textSize="18sp"
             android:padding="8dp"
             android:textStyle="bold"
             android:layout_marginTop="8dp"
@@ -209,15 +223,17 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:text="SPBU"
+                android:textSize="16sp"
                 android:textColor="@color/black"
                 android:layout_height="wrap_content" />
             <TextView
                 android:layout_width="0dp"
                 android:text="0 KL"
+                android:textSize="16sp"
                 android:gravity="end"
                 android:id="@+id/konsumen_nilai_biosolar_spbu"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="0.5"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -230,15 +246,17 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:text="SPDN"
+                android:textSize="16sp"
                 android:textColor="@color/black"
                 android:layout_height="wrap_content" />
             <TextView
                 android:layout_width="0dp"
                 android:text="0 KL"
+                android:textSize="16sp"
                 android:gravity="end"
                 android:id="@+id/konsumen_nilai_biosolar_spdn"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="0.5"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -251,20 +269,22 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:text="Biosolar Total"
+                android:textSize="16sp"
                 android:textColor="@color/black"
                 android:layout_height="wrap_content" />
             <TextView
                 android:layout_width="0dp"
                 android:text="0 KL"
                 android:gravity="end"
+                android:textSize="16sp"
                 android:id="@+id/konsumen_nilai_biosolar_total"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="0.5"/>
         </LinearLayout>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
+            android:textSize="18sp"
             android:padding="8dp"
             android:textStyle="bold"
             android:layout_marginTop="8dp"
@@ -282,15 +302,17 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:text="Own Use MT"
+                android:textSize="16sp"
                 android:textColor="@color/black"
                 android:layout_height="wrap_content" />
             <TextView
                 android:layout_width="0dp"
                 android:text="0 KL"
                 android:gravity="end"
+                android:textSize="16sp"
                 android:id="@+id/konsumen_nilai_solar_mt"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="0.5"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -303,15 +325,17 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:text="PLN"
+                android:textSize="16sp"
                 android:textColor="@color/black"
                 android:layout_height="wrap_content" />
             <TextView
                 android:layout_width="0dp"
                 android:text="0 KL"
+                android:textSize="16sp"
                 android:gravity="end"
                 android:id="@+id/konsumen_nilai_solar_pln"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="0.5"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -324,15 +348,17 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:text="SPBU"
+                android:textSize="16sp"
                 android:textColor="@color/black"
                 android:layout_height="wrap_content" />
             <TextView
                 android:layout_width="0dp"
                 android:text="0 KL"
+                android:textSize="16sp"
                 android:gravity="end"
                 android:id="@+id/konsumen_nilai_solar_spbu"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="0.5"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -345,15 +371,17 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:text="SPDN"
+                android:textSize="16sp"
                 android:textColor="@color/black"
                 android:layout_height="wrap_content" />
             <TextView
                 android:layout_width="0dp"
                 android:text="0 KL"
                 android:gravity="end"
+                android:textSize="16sp"
                 android:id="@+id/konsumen_nilai_solar_spdn"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="0.5"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -366,15 +394,17 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:text="TNI/Polri"
+                android:textSize="16sp"
                 android:textColor="@color/black"
                 android:layout_height="wrap_content" />
             <TextView
                 android:layout_width="0dp"
                 android:text="0 KL"
                 android:gravity="end"
+                android:textSize="16sp"
                 android:id="@+id/konsumen_nilai_solar_tni"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="0.5"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -385,17 +415,19 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_weight="1"
+                android:textSize="16sp"
                 android:text="SOLAR/HSD/MGO/ADO Total"
                 android:textColor="@color/black"
                 android:layout_height="wrap_content" />
             <TextView
                 android:layout_width="0dp"
                 android:text="0 KL"
+                android:textSize="16sp"
                 android:layout_gravity="center_vertical"
                 android:gravity="end"
                 android:id="@+id/konsumen_nilai_solar_total"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="0.5"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -409,6 +441,7 @@
                 android:text="Grand Total"
                 android:textAllCaps="true"
                 android:textStyle="bold"
+                android:textSize="16sp"
                 android:textColor="@color/black"
                 android:layout_height="wrap_content" />
             <TextView
@@ -416,9 +449,11 @@
                 android:text="0 KL"
                 android:layout_gravity="center_vertical"
                 android:gravity="end"
+                android:textStyle="bold"
+                android:textSize="16sp"
                 android:id="@+id/konsumen_nilai_grand_total"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="0.5"/>
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

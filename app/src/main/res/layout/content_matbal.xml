@@ -15,10 +15,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
             android:text="Matbal"
+            android:textAllCaps="true"
+            android:textColor="@color/black"
             android:textSize="18sp"
-            android:layout_marginBottom="8dp"/>
+            android:textStyle="bold"
+            android:layout_margin="8dp"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -29,17 +31,17 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:id="@+id/matbal_pertamax"
                 android:textColor="@color/black"
                 android:layout_height="wrap_content"
                 android:text="Pertamax, BULK"/>
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_weight="0.5"
                 android:gravity="end"
                 android:id="@+id/matbal_nilai_pertamax"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:layout_height="wrap_content"
                 android:text="0 KL"/>
         </LinearLayout>
@@ -53,17 +55,17 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:id="@+id/matbal_pertalite"
                 android:textColor="@color/black"
                 android:layout_height="wrap_content"
                 android:text="Pertalite"/>
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_weight="0.5"
                 android:gravity="end"
                 android:id="@+id/matbal_nilai_pertalite"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:layout_height="wrap_content"
                 android:text="0 KL"/>
         </LinearLayout>
@@ -77,17 +79,17 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:id="@+id/matbal_premium"
                 android:textColor="@color/black"
                 android:layout_height="wrap_content"
                 android:text="Premium"/>
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_weight="0.5"
                 android:gravity="end"
                 android:id="@+id/matbal_nilai_premium"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:layout_height="wrap_content"
                 android:text="0 KL"/>
         </LinearLayout>
@@ -101,17 +103,17 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:id="@+id/matbal_solar"
                 android:textColor="@color/black"
                 android:layout_height="wrap_content"
                 android:text="SOLAR/HSD/MGO/ADO"/>
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_weight="0.5"
                 android:gravity="end"
                 android:id="@+id/matbal_nilai_solar"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:layout_height="wrap_content"
                 android:text="0 KL"/>
         </LinearLayout>
@@ -125,16 +127,16 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:id="@+id/matbal_biosolar"
                 android:textColor="@color/black"
                 android:layout_height="wrap_content"
                 android:text="Biosolar"/>
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_weight="0.5"
                 android:gravity="end"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:id="@+id/matbal_nilai_biosolar"
                 android:layout_height="wrap_content"
                 android:text="0 KL"/>
@@ -149,17 +151,17 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:id="@+id/matbal_bioflame"
                 android:textColor="@color/black"
                 android:layout_height="wrap_content"
                 android:text="Bioflame"/>
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_weight="0.5"
                 android:gravity="end"
                 android:id="@+id/matbal_nilai_bioflame"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:layout_height="wrap_content"
                 android:text="0 KL"/>
         </LinearLayout>
@@ -173,16 +175,18 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:textSize="18sp"
+                android:textSize="16sp"
+                android:textStyle="bold"
                 android:id="@+id/matbal_total"
                 android:textColor="@color/black"
                 android:layout_height="wrap_content"
                 android:text="Grand Total"/>
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_weight="0.5"
                 android:gravity="end"
-                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textSize="16sp"
                 android:id="@+id/matbal_nilai_total"
                 android:layout_height="wrap_content"
                 android:text="0 KL"/>
