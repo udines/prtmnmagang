@@ -7,23 +7,198 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.pertamina.pertaminatuban.distribusi.MatbalActivity"
     tools:showIn="@layout/activity_matbal">
-
-    <android.support.v4.view.ViewPager
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
-        android:id="@+id/matbal_viewpager"/>
-
+        android:orientation="vertical"
+        android:padding="8dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Matbal"
+            android:textSize="18sp"
+            android:layout_marginBottom="8dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:gravity="center_vertical"
+            android:background="@color/grey_200"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:id="@+id/matbal_pertamax"
+                android:textColor="@color/black"
+                android:layout_height="wrap_content"
+                android:text="Pertamax, BULK"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:id="@+id/matbal_nilai_pertamax"
+                android:textSize="18sp"
+                android:layout_height="wrap_content"
+                android:text="0 KL"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:gravity="center_vertical"
+            android:background="@color/white"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:id="@+id/matbal_pertalite"
+                android:textColor="@color/black"
+                android:layout_height="wrap_content"
+                android:text="Pertalite"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:id="@+id/matbal_nilai_pertalite"
+                android:textSize="18sp"
+                android:layout_height="wrap_content"
+                android:text="0 KL"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:gravity="center_vertical"
+            android:background="@color/grey_200"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:id="@+id/matbal_premium"
+                android:textColor="@color/black"
+                android:layout_height="wrap_content"
+                android:text="Premium"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:id="@+id/matbal_nilai_premium"
+                android:textSize="18sp"
+                android:layout_height="wrap_content"
+                android:text="0 KL"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:gravity="center_vertical"
+            android:background="@color/white"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:id="@+id/matbal_solar"
+                android:textColor="@color/black"
+                android:layout_height="wrap_content"
+                android:text="SOLAR/HSD/MGO/ADO"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:id="@+id/matbal_nilai_solar"
+                android:textSize="18sp"
+                android:layout_height="wrap_content"
+                android:text="0 KL"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:gravity="center_vertical"
+            android:background="@color/grey_200"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:id="@+id/matbal_biosolar"
+                android:textColor="@color/black"
+                android:layout_height="wrap_content"
+                android:text="Biosolar"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:textSize="18sp"
+                android:id="@+id/matbal_nilai_biosolar"
+                android:layout_height="wrap_content"
+                android:text="0 KL"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:gravity="center_vertical"
+            android:background="@color/white"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:id="@+id/matbal_bioflame"
+                android:textColor="@color/black"
+                android:layout_height="wrap_content"
+                android:text="Bioflame"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:id="@+id/matbal_nilai_bioflame"
+                android:textSize="18sp"
+                android:layout_height="wrap_content"
+                android:text="0 KL"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:gravity="center_vertical"
+            android:background="@color/grey_200"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:id="@+id/matbal_total"
+                android:textColor="@color/black"
+                android:layout_height="wrap_content"
+                android:text="Grand Total"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:textSize="18sp"
+                android:id="@+id/matbal_nilai_total"
+                android:layout_height="wrap_content"
+                android:text="0 KL"/>
+        </LinearLayout>
+    </LinearLayout>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18sp"
+        android:visibility="gone"
         android:textAlignment="center"
-        android:id="@+id/matbal_empty_text"
+        android:id="@+id/konsumen_empty_text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:text="Tidak ditemukan data\nCoba ganti bulan atau tahun"/>
+        android:text="Tidak ditemukan data\nCoba ganti tanggal"/>
 
 </android.support.constraint.ConstraintLayout>
