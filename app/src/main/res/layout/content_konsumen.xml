@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,21 +7,418 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.pertamina.pertaminatuban.distribusi.KonsumenActivity"
     tools:showIn="@layout/activity_konsumen">
-    <android.support.v4.view.ViewPager
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"
-        android:id="@+id/konsumen_viewpager"/>
-
-    <TextView
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:textAlignment="center"
-        android:id="@+id/konsumen_empty_text"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:text="Tidak ditemukan data\nCoba ganti bulan atau tahun"/>
-</android.support.constraint.ConstraintLayout>
+        android:orientation="vertical"
+        android:padding="8dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:padding="8dp"
+            android:textStyle="bold"
+            android:textAllCaps="true"
+            android:textColor="@color/black"
+            android:text="Pertamax, BULK"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:background="@color/grey_200"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="SPBU"
+                android:textColor="@color/black"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="0dp"
+                android:text="0 KL"
+                android:id="@+id/konsumen_nilai_pertamax_spbu"
+                android:gravity="end"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:background="@color/white"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="TNI/Polri"
+                android:textColor="@color/black"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="0dp"
+                android:text="0 KL"
+                android:gravity="end"
+                android:id="@+id/konsumen_nilai_pertamax_tni"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:background="@color/grey_200"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="Pertamax, BULK Total"
+                android:textColor="@color/black"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="0dp"
+                android:text="0 KL"
+                android:gravity="end"
+                android:id="@+id/konsumen_nilai_pertamax_total"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+        </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:padding="8dp"
+            android:textStyle="bold"
+            android:textAllCaps="true"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/black"
+            android:text="Pertalite"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:background="@color/grey_200"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="SPBU"
+                android:textColor="@color/black"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="0dp"
+                android:text="0 KL"
+                android:id="@+id/konsumen_nilai_pertalite_spbu"
+                android:gravity="end"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:background="@color/white"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="Pertalite Total"
+                android:textColor="@color/black"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="0dp"
+                android:text="0 KL"
+                android:gravity="end"
+                android:id="@+id/konsumen_nilai_pertalite_total"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+        </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:padding="8dp"
+            android:textStyle="bold"
+            android:textAllCaps="true"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/black"
+            android:text="Premium"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:background="@color/grey_200"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="SPBU"
+                android:textColor="@color/black"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="0dp"
+                android:text="0 KL"
+                android:gravity="end"
+                android:id="@+id/konsumen_nilai_premium_spbu"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:background="@color/white"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="Premium Total"
+                android:textColor="@color/black"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="0dp"
+                android:text="0 KL"
+                android:gravity="end"
+                android:id="@+id/konsumen_nilai_premium_total"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+        </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:padding="8dp"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"
+            android:textAllCaps="true"
+            android:textColor="@color/black"
+            android:text="Biosolar"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:background="@color/grey_200"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="SPBU"
+                android:textColor="@color/black"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="0dp"
+                android:text="0 KL"
+                android:gravity="end"
+                android:id="@+id/konsumen_nilai_biosolar_spbu"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:background="@color/white"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="SPDN"
+                android:textColor="@color/black"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="0dp"
+                android:text="0 KL"
+                android:gravity="end"
+                android:id="@+id/konsumen_nilai_biosolar_spdn"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:background="@color/grey_200"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="Biosolar Total"
+                android:textColor="@color/black"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="0dp"
+                android:text="0 KL"
+                android:gravity="end"
+                android:id="@+id/konsumen_nilai_biosolar_total"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+        </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:padding="8dp"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"
+            android:textAllCaps="true"
+            android:textColor="@color/black"
+            android:text="SOLAR/HSD/MGO/ADO"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:background="@color/grey_200"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="Own Use MT"
+                android:textColor="@color/black"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="0dp"
+                android:text="0 KL"
+                android:gravity="end"
+                android:id="@+id/konsumen_nilai_solar_mt"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:background="@color/white"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="PLN"
+                android:textColor="@color/black"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="0dp"
+                android:text="0 KL"
+                android:gravity="end"
+                android:id="@+id/konsumen_nilai_solar_pln"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:background="@color/grey_200"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="SPBU"
+                android:textColor="@color/black"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="0dp"
+                android:text="0 KL"
+                android:gravity="end"
+                android:id="@+id/konsumen_nilai_solar_spbu"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:background="@color/white"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="SPDN"
+                android:textColor="@color/black"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="0dp"
+                android:text="0 KL"
+                android:gravity="end"
+                android:id="@+id/konsumen_nilai_solar_spdn"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:background="@color/grey_200"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="TNI/Polri"
+                android:textColor="@color/black"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="0dp"
+                android:text="0 KL"
+                android:gravity="end"
+                android:id="@+id/konsumen_nilai_solar_tni"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:background="@color/white"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="SOLAR/HSD/MGO/ADO Total"
+                android:textColor="@color/black"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="0dp"
+                android:text="0 KL"
+                android:layout_gravity="center_vertical"
+                android:gravity="end"
+                android:id="@+id/konsumen_nilai_solar_total"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="Grand Total"
+                android:textAllCaps="true"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="0dp"
+                android:text="0 KL"
+                android:layout_gravity="center_vertical"
+                android:gravity="end"
+                android:id="@+id/konsumen_nilai_grand_total"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

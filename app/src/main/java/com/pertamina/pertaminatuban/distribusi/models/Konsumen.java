@@ -5,6 +5,12 @@ import com.google.gson.annotations.SerializedName;
 
 public class Konsumen {
 
+    public static final String SPBU = "SPBU";
+    public static final String TNI = "TNI/Polri";
+    public static final String SPDN = "SPDN";
+    public static final String PLN = "PLN";
+    public static final String MT = "Own Use MT";
+
     @SerializedName("id")
     @Expose
     private String id;
