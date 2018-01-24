@@ -18,4 +18,23 @@
     <string name="title_activity_input_wilayah">Input Data Wilayah</string>
     <string name="title_activity_input_opers">Input Data Opers</string>
     <string name="title_activity_input_ritase">Input Data Ritase</string>
+
+    <string-array name="bahan_bakar">
+        <item>Pertamax</item>
+        <item>Pertalite</item>
+        <item>Premium</item>
+        <item>Solar</item>
+        <item>Biosolar</item>
+        <item>Bioflame</item>
+        <item>Lain</item>
+    </string-array>
+
+    <string-array name="jenis_konsumen">
+        <item>SPBU</item>
+        <item>SPDN</item>
+        <item>TNI/Polri</item>
+        <item>PLN</item>
+        <item>Own User MT</item>
+        <item>Lain</item>
+    </string-array>
 </resources>
