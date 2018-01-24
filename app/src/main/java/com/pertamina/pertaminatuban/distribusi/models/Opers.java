@@ -75,4 +75,14 @@ public class Opers {
                 return "Lain-Lain";
         }
     }
+
+    public String getString() {
+        return String.valueOf(
+                this.date + "\n" +
+                this.jumlahKeluar + "\n" +
+                this.minJamKeluar + "\n" +
+                this.maxJamKeluar + "\n" +
+                this.jamOperasional
+        );
+    }
 }
