@@ -1,26 +1,27 @@
 package com.pertamina.pertaminatuban.distribusi;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.DatePicker;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.pertamina.pertaminatuban.R;
 import com.pertamina.pertaminatuban.distribusi.models.Opers;
 import com.pertamina.pertaminatuban.distribusi.page.OpersPage;
 import com.pertamina.pertaminatuban.service.UserClient;
 import com.pertamina.pertaminatuban.utils.ViewPagerAdapter;
-import com.whiteelephant.monthpicker.MonthPickerDialog;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.sql.Time;
 import java.text.DateFormatSymbols;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -29,18 +30,15 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class OpersActivity extends AppCompatActivity {
 
-    private int month, year;
+    private int month, year, day;
     private TextView tanggal;
-    private ViewPager viewPager;
-    private TabLayout tabLayout;
-    private TextView emptyText;
+    private LinearLayout tanggalButton;
+    private TextView sum, minJam, maxJam, jamOps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,15 +58,18 @@ public class OpersActivity extends AppCompatActivity {
 
         /*inisialisasi view yang digunakan lebih dari satu fungsi*/
         tanggal = findViewById(R.id.opers_tanggal);
-        viewPager = findViewById(R.id.opers_viewpager);
-        tabLayout = findViewById(R.id.opers_tab);
-        emptyText = findViewById(R.id.opers_empty_text);
+        tanggalButton = findViewById(R.id.opers_tanggal_button);
+        sum = findViewById(R.id.opers_jumlah_keluar);
+        minJam = findViewById(R.id.opers_jam_keluar_min);
+        maxJam = findViewById(R.id.opers_jam_keluar_max);
+        jamOps = findViewById(R.id.opers_jam_operasional);
 
         /*inisialisasi tanggal jika data tidak ada agar tidak error*/
         Calendar calendar = Calendar.getInstance();
         month = calendar.get(Calendar.MONTH);
         year = calendar.get(Calendar.YEAR);
-        setDateButton(month, year);
+        day = calendar.get(Calendar.DAY_OF_MONTH);
+        setDateButton(day, month, year);
 
         getOpers(month);
 
@@ -77,40 +78,34 @@ public class OpersActivity extends AppCompatActivity {
     }
 
     private void handleDate() {
-        tanggal.setOnClickListener(new View.OnClickListener() {
+        tanggalButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Calendar today = Calendar.getInstance();
-
-                MonthPickerDialog.Builder builder = new MonthPickerDialog.Builder(
+                DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+                        year = i;
+                        month = i1;
+                        day = i2;
+                        setDateButton(day, month, year);
+                        getOpers(month);
+                    }
+                };
+                DatePickerDialog dialog = new DatePickerDialog(
                         OpersActivity.this,
-                        new MonthPickerDialog.OnDateSetListener() {
-                            @Override
-                            public void onDateSet(int selectedMonth, int selectedYear) {
-                                month = selectedMonth;
-                                year = selectedYear;
-                                getOpers(month);
-                                setDateButton(month, year);
-                            }
-                        },
-                        today.get(Calendar.YEAR),
-                        today.get(Calendar.MONTH)
+                        listener,
+                        year,
+                        month,
+                        day
                 );
-
-                builder.setMinYear(1970)
-                        .setMaxYear(today.get(Calendar.YEAR))
-                        .setTitle("Pilih bulan dan tahun")
-                        .setActivatedMonth(month)
-                        .setActivatedYear(year)
-                        .build()
-                        .show();
+                dialog.show();
             }
         });
     }
 
-    private void setDateButton(int month, int year) {
+    private void setDateButton(int day, int month, int year) {
         DateFormatSymbols symbols = new DateFormatSymbols();
-        String text = symbols.getMonths()[month] + " " + String.valueOf(year);
+        String text = String.valueOf(day) + " " + symbols.getMonths()[month] + " " + String.valueOf(year);
         tanggal.setText(text);
     }
 
@@ -149,7 +144,7 @@ public class OpersActivity extends AppCompatActivity {
         UserClient userClient = retrofit.create(UserClient.class);
         Call<ArrayList<Opers>> call = userClient.getOpers(bulan);
 
-        call.enqueue(new Callback<ArrayList<Opers>>() {
+        /*call.enqueue(new Callback<ArrayList<Opers>>() {
             @Override
             public void onResponse(Call<ArrayList<Opers>> call, Response<ArrayList<Opers>> response) {
                 Log.w("code", String.valueOf(response.code()));
@@ -163,7 +158,22 @@ public class OpersActivity extends AppCompatActivity {
             public void onFailure(Call<ArrayList<Opers>> call, Throwable t) {
                 Log.e("Call", " failed " + t.getMessage());
             }
-        });
+        });*/
+
+        Calendar calendar = Calendar.getInstance();
+        Calendar calendar1 = Calendar.getInstance();
+        calendar.set(2018, 0, 24, 4, 49);
+        calendar1.set(2018, 0, 24, 16, 44);
+        Opers opers = new Opers(
+                new Date(calendar.getTimeInMillis()).toString(),
+                1608,
+                new Time(calendar.getTimeInMillis()),
+                new Time(calendar1.getTimeInMillis()),
+                new Time(calendar1.getTimeInMillis() - calendar.getTimeInMillis())
+        );
+        ArrayList<Opers> opers1 = new ArrayList<>();
+        opers1.add(opers);
+        cekData(opers1);
     }
 
     private void cekData(ArrayList<Opers> opers) {
@@ -173,42 +183,28 @@ public class OpersActivity extends AppCompatActivity {
 
             Log.d("data", "data matbal ada");
             /*data ada maka tampilkan tab dan isinya*/
-            viewPager.setVisibility(View.VISIBLE);
-            tabLayout.setVisibility(View.VISIBLE);
-            emptyText.setVisibility(View.GONE);
-            populateTabs(opers);
+            populateData(opers);
         } else {
 
             Log.d("data", "data matbal tidak ada");
             /*data tidak ada maka hilangkan tab dan tampilkan pesan peringatan
             * untuk tanggal gunakan month dan year yang sudah diinisialisasi*/
-            viewPager.setVisibility(View.GONE);
-            tabLayout.setVisibility(View.GONE);
-            emptyText.setVisibility(View.VISIBLE);
-
         }
     }
 
-    private void populateTabs(ArrayList<Opers> opers) {
-        ArrayList<Fragment> fragments = new ArrayList<>();
-        ArrayList<String> titles = new ArrayList<>();
-
-        for (int i = 0; i <=3; i++) {
-            OpersPage page = new OpersPage();
-            page.setOpers(opers);
-            page.setType(i);
-            titles.add(Opers.getTitle(i));
-            fragments.add(page);
+    private void populateData(ArrayList<Opers> opers) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month, day);
+        String today = new Date(calendar.getTimeInMillis()).toString();
+        Opers operasional = new Opers();
+        for (int i = 0; i < opers.size(); i++) {
+            if (opers.get(i).getDate().equals(today)) {
+                operasional = opers.get(i);
+            }
         }
-
-        ViewPagerAdapter adapter = new ViewPagerAdapter(
-                getSupportFragmentManager(),
-                fragments,
-                titles
-        );
-
-        viewPager.setAdapter(adapter);
-        tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
-        tabLayout.setupWithViewPager(viewPager);
+        sum.setText(String.valueOf(operasional.getJumlahKeluar()));
+        minJam.setText(operasional.getMinJamKeluar().toString());
+        maxJam.setText(operasional.getMaxJamKeluar().toString());
+        jamOps.setText(operasional.getJamOperasional().toString());
     }
 }

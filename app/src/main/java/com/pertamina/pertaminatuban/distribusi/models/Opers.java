@@ -32,6 +32,9 @@ public class Opers {
     @Expose
     private Time jamOperasional;
 
+    public Opers() {
+    }
+
     public Opers(String date, int jumlahKeluar, Time minJamKeluar, Time maxJamKeluar, Time jamOperasional) {
         this.date = date;
         this.jumlahKeluar = jumlahKeluar;
@@ -48,7 +51,7 @@ public class Opers {
         this.date = date;
     }
 
-    public float getJumlahKeluar() {
+    public int getJumlahKeluar() {
         return jumlahKeluar;
     }
 
