@@ -90,13 +90,13 @@ public class InputMatbalActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (tanggalSet) {
                     ArrayList<Matbal> matbals = new ArrayList<>();
-                        matbals.add(makeObject(inputPertamax, Matbal.PERTAMAX));
-                        matbals.add(makeObject(inputPertalite, Matbal.PERTALITE));
-                        matbals.add(makeObject(inputPremium, Matbal.PREMIUM));
-                        matbals.add(makeObject(inputSolar, Matbal.SOLAR));
-                        matbals.add(makeObject(inputBiosolar, Matbal.BIOSOLAR));
-                        matbals.add(makeObject(inputBioflame, Matbal.BIOFLAME));
-                    if (!isNull(inputLain)) {
+                    if (!isNull(inputPertamax))matbals.add(makeObject(inputPertamax, Matbal.PERTAMAX));
+                    if (!isNull(inputPertalite))matbals.add(makeObject(inputPertalite, Matbal.PERTALITE));
+                    if (!isNull(inputPremium))matbals.add(makeObject(inputPremium, Matbal.PREMIUM));
+                    if (!isNull(inputSolar))matbals.add(makeObject(inputSolar, Matbal.SOLAR));
+                    if (!isNull(inputBiosolar))matbals.add(makeObject(inputBiosolar, Matbal.BIOSOLAR));
+                    if (!isNull(inputBioflame))matbals.add(makeObject(inputBioflame, Matbal.BIOFLAME));
+                    if (!isNull(inputLain) && !isNull(inputLainNilai)) {
                         matbals.add(makeObject(inputLainNilai, inputLain.getText().toString()));
                     }
 
