@@ -50,4 +50,16 @@ public interface UserClient {
 
     @POST("distribusi/matbal")
     Call<Object> postMatbal(@Body ArrayList<Matbal> matbals);
+
+    @POST("distribusi/konsumen")
+    Call<Object> postKonsumen(@Body ArrayList<Konsumen> konsumens);
+
+    @POST("distribusi/wilayah")
+    Call<Object> postWilayah(@Body ArrayList<Wilayah> wilayahs);
+
+    @POST("distribusi/ritase")
+    Call<Object> postRitase(@Body ArrayList<Ritase> ritases);
+
+    @POST("distribusi/opers")
+    Call<Object> postOpers(@Body Opers opers);
 }
