@@ -23,8 +23,8 @@ public class MatbalTableViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void setView(Matbal model) {
-        tanggal.setText(model.getDate());
-        nilai.setText(String.valueOf(model.getNilai()));
+        tanggal.setText(model.getFuel());
+        nilai.setText(String.valueOf(model.getNilai() + " KL"));
 
         nilai.setOnClickListener(new View.OnClickListener() {
             @Override

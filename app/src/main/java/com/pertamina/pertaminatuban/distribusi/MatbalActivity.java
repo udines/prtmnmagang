@@ -8,6 +8,8 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -18,6 +20,7 @@ import android.widget.TextView;
 import com.pertamina.pertaminatuban.R;
 import com.pertamina.pertaminatuban.distribusi.models.Matbal;
 import com.pertamina.pertaminatuban.distribusi.page.MatbalPage;
+import com.pertamina.pertaminatuban.distribusi.tables.MatbalTableAdapter;
 import com.pertamina.pertaminatuban.service.UserClient;
 import com.pertamina.pertaminatuban.utils.ViewPagerAdapter;
 
@@ -39,11 +42,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MatbalActivity extends AppCompatActivity {
 
     private TextView tanggal;
-    private LinearLayout tanggalButton;
+    private LinearLayout tanggalButton, container;
     private int month;
     private int year;
     private int day;
     private TextView pertamax, pertalite, premium, solar, biosolar, bioflame, grandTotal;
+    private TextView emptyText;
+    private RecyclerView recyclerview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,13 +69,10 @@ public class MatbalActivity extends AppCompatActivity {
         /*inisialisasi view yang digunakan lebih dari satu fungsi*/
         tanggal = findViewById(R.id.matbal_tanggal);
         tanggalButton = findViewById(R.id.matbal_tanggal_button);
-        pertamax = findViewById(R.id.matbal_nilai_pertamax);
-        pertalite = findViewById(R.id.matbal_nilai_pertalite);
-        premium = findViewById(R.id.matbal_nilai_premium);
-        solar = findViewById(R.id.matbal_nilai_solar);
-        biosolar = findViewById(R.id.matbal_nilai_biosolar);
-        bioflame = findViewById(R.id.matbal_nilai_bioflame);
-        grandTotal = findViewById(R.id.matbal_nilai_total);
+        container = findViewById(R.id.matbal_container);
+        grandTotal = findViewById(R.id.matbal_total);
+        emptyText = findViewById(R.id.matbal_empty_text);
+        recyclerview = findViewById(R.id.matbal_recyclerview);
 
         /*inisialisasi tanggal jika data tidak ada agar tidak error*/
         Calendar calendar = Calendar.getInstance();
@@ -155,35 +157,17 @@ public class MatbalActivity extends AppCompatActivity {
         }
         grandTotal.setText(String.valueOf(total + " KL"));
 
-        for (int i = 0; i < matbalToday.size(); i++) {
-            switch (matbalToday.get(i).getFuel()) {
-                case Matbal.PERTAMAX:
-                    pertamax.setText(String.valueOf(matbalToday.get(i).getNilai() + " KL"));
-                    break;
-                case Matbal.PERTALITE:
-                    pertalite.setText(String.valueOf(matbalToday.get(i).getNilai() + " KL"));
-                    break;
-                case Matbal.PREMIUM:
-                    premium.setText(String.valueOf(matbalToday.get(i).getNilai() + " KL"));
-                    break;
-                case Matbal.SOLAR:
-                    solar.setText(String.valueOf(matbalToday.get(i).getNilai() + " KL"));
-                    break;
-                case Matbal.BIOSOLAR:
-                    biosolar.setText(String.valueOf(matbalToday.get(i).getNilai() + " KL"));
-                    break;
-                case Matbal.BIOFLAME:
-                    bioflame.setText(String.valueOf(matbalToday.get(i).getNilai() + " KL"));
-                    break;
-            }
-        }
         if (total == 0) {
-            pertamax.setText(String.valueOf("0 KL"));
-            pertalite.setText(String.valueOf("0 KL"));
-            premium.setText(String.valueOf("0 KL"));
-            solar.setText(String.valueOf("0 KL"));
-            biosolar.setText(String.valueOf("0 KL"));
-            bioflame.setText(String.valueOf("0 KL"));
+            container.setVisibility(View.GONE);
+            emptyText.setVisibility(View.VISIBLE);
+        } else {
+            container.setVisibility(View.VISIBLE);
+            emptyText.setVisibility(View.GONE);
+            recyclerview.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+            recyclerview.setAdapter(new MatbalTableAdapter(
+                    matbalToday,
+                    getApplicationContext()
+            ));
         }
     }
 
