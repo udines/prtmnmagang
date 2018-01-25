@@ -194,17 +194,22 @@ public class OpersActivity extends AppCompatActivity {
 
     private void populateData(ArrayList<Opers> opers) {
         Calendar calendar = Calendar.getInstance();
+        Log.w("tanggal", String.valueOf(day));
         calendar.set(year, month, day);
         String today = new Date(calendar.getTimeInMillis()).toString();
-        Opers operasional = new Opers();
         for (int i = 0; i < opers.size(); i++) {
             if (opers.get(i).getDate().equals(today)) {
-                operasional = opers.get(i);
+                sum.setText(String.valueOf(opers.get(i).getJumlahKeluar()));
+                minJam.setText(opers.get(i).getMinJamKeluar().toString());
+                maxJam.setText(opers.get(i).getMaxJamKeluar().toString());
+                jamOps.setText(opers.get(i).getJamOperasional().toString());
+                break;
+            } else {
+                sum.setText(String.valueOf(0));
+                minJam.setText(String.valueOf("00:00"));
+                maxJam.setText(String.valueOf("00:00"));
+                jamOps.setText(String.valueOf("00:00"));
             }
         }
-        sum.setText(String.valueOf(operasional.getJumlahKeluar()));
-        minJam.setText(operasional.getMinJamKeluar().toString());
-        maxJam.setText(operasional.getMaxJamKeluar().toString());
-        jamOps.setText(operasional.getJamOperasional().toString());
     }
 }

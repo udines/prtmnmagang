@@ -209,10 +209,14 @@ public class KonsumenActivity extends AppCompatActivity {
                 pertamax_spbu.setText(String.valueOf(konsumenPertamax.get(i).getNilai() + " KL"));
             } else
             if (konsumenPertamax.get(i).getKonsumen().equals(Konsumen.TNI)) {
-                pertamax_spbu.setText(String.valueOf(konsumenPertamax.get(i).getNilai() + " KL"));
+                pertamax_tni.setText(String.valueOf(konsumenPertamax.get(i).getNilai() + " KL"));
             }
         }
         pertamax_total.setText(String.valueOf(pertamaxTotal + " KL"));
+        if (pertamaxTotal == 0) {
+            pertamax_spbu.setText(String.valueOf("0 KL"));
+            pertamax_tni.setText(String.valueOf("0 KL"));
+        }
 
         float pertaliteTotal = 0;
         for (int i = 0; i < konsumenPertalite.size(); i++) {
@@ -222,6 +226,9 @@ public class KonsumenActivity extends AppCompatActivity {
             }
         }
         pertalite_total.setText(String.valueOf(pertaliteTotal + " KL"));
+        if (pertaliteTotal == 0) {
+            pertalite_spbu.setText(String.valueOf("0 KL"));
+        }
 
         float premiumTotal = 0;
         for (int i = 0; i < konsumenPremium.size(); i++) {
@@ -231,6 +238,9 @@ public class KonsumenActivity extends AppCompatActivity {
             }
         }
         premium_total.setText(String.valueOf(premiumTotal + " KL"));
+        if (premiumTotal == 0) {
+            premium_spbu.setText(String.valueOf("0 KL"));
+        }
 
         float biosolarTotal = 0;
         for (int i = 0; i < konsumenBiosolar.size(); i++) {
@@ -243,6 +253,10 @@ public class KonsumenActivity extends AppCompatActivity {
             }
         }
         biosolar_total.setText(String.valueOf(biosolarTotal + " KL"));
+        if (biosolarTotal == 0) {
+            biosolar_spbu.setText(String.valueOf("0 KL"));
+            biosolar_spdn.setText(String.valueOf("0 KL"));
+        }
 
         float solarTotal = 0;
         for (int i = 0; i < konsumenSolar.size(); i++) {
@@ -266,6 +280,13 @@ public class KonsumenActivity extends AppCompatActivity {
             }
         }
         solar_total.setText(String.valueOf(solarTotal + " KL"));
+        if (solarTotal == 0) {
+            solar_mt.setText(String.valueOf("0 KL"));
+            solar_pln.setText(String.valueOf("0 KL"));
+            solar_spbu.setText(String.valueOf("0 KL"));
+            solar_spdn.setText(String.valueOf("0 KL"));
+            solar_tni.setText(String.valueOf("0 KL"));
+        }
     }
 
     private void getKonsumen(int bulan) {

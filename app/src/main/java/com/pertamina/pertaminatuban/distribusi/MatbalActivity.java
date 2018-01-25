@@ -177,6 +177,14 @@ public class MatbalActivity extends AppCompatActivity {
                     break;
             }
         }
+        if (total == 0) {
+            pertamax.setText(String.valueOf("0 KL"));
+            pertalite.setText(String.valueOf("0 KL"));
+            premium.setText(String.valueOf("0 KL"));
+            solar.setText(String.valueOf("0 KL"));
+            biosolar.setText(String.valueOf("0 KL"));
+            bioflame.setText(String.valueOf("0 KL"));
+        }
     }
 
     private void getMatbal(int bulan) {
