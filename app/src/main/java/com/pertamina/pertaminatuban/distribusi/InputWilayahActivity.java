@@ -1,5 +1,6 @@
 package com.pertamina.pertaminatuban.distribusi;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,16 +10,24 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.pertamina.pertaminatuban.R;
+import com.pertamina.pertaminatuban.distribusi.models.Konsumen;
 import com.pertamina.pertaminatuban.distribusi.models.Ritase;
 import com.pertamina.pertaminatuban.distribusi.models.Wilayah;
 import com.pertamina.pertaminatuban.service.UserClient;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -30,6 +39,13 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class InputWilayahActivity extends AppCompatActivity {
+
+    private int year, month, day;
+    private Spinner spinnerBb, spinnerKons;
+    private Button tanggal;
+    private Button kirim;
+    private EditText inputNilai, inputWilayah;
+    private boolean tanggalSet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +60,124 @@ public class InputWilayahActivity extends AppCompatActivity {
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        /*inisialisasi view yang digunakan lebih dari satu fungsi*/
+        spinnerBb = findViewById(R.id.input_wilayah_jenis_bb_spinner);
+        spinnerKons = findViewById(R.id.input_wilayah_jenis_konsumen_spinner);
+        tanggal = findViewById(R.id.input_wilayah_tanggal);
+        kirim = findViewById(R.id.input_wilayah_kirim);
+        inputNilai = findViewById(R.id.input_wilayah_nilai);
+        inputWilayah = findViewById(R.id.input_wilayah_lokasi);
+
+        /*init tanggal*/
+        Calendar calendar = Calendar.getInstance();
+        year = calendar.get(Calendar.YEAR);
+        month = calendar.get(Calendar.MONTH);
+        day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        handleDatePicker();
+        populateSpinner();
+        getData();
+    }
+
+    private void getData() {
+        kirim.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isDateSet() && lokasiAda() && nilaiAda()) {
+                    String fuel = spinnerBb.getSelectedItem().toString();
+                    String konsumen = spinnerKons.getSelectedItem().toString();
+                    float nilai = Float.parseFloat(inputNilai.getText().toString());
+                    String wilayah = inputWilayah.getText().toString();
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.set(year, month, day);
+                    Date date = new Date(calendar.getTimeInMillis());
+                    String sqlDate = date.toString();
+                    ArrayList<Wilayah> wilayahs = new ArrayList<>();
+                    wilayahs.add(new Wilayah(
+                            wilayah,
+                            konsumen,
+                            fuel,
+                            sqlDate,
+                            nilai,
+                            0
+                    ));
+                    sendPostRequest(wilayahs);
+                }
+            }
+        });
+    }
+
+    private boolean lokasiAda() {
+        boolean ada = false;
+        if (inputWilayah.getText().toString().isEmpty()) {
+            Toast.makeText(this, "Input lokasi pengiriman", Toast.LENGTH_SHORT).show();
+        } else {
+            ada = true;
+        }
+        return ada;
+    }
+
+    private void populateSpinner() {
+        ArrayAdapter<CharSequence> adapterBb = ArrayAdapter.createFromResource(this,
+                R.array.bahan_bakar, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapterKons = ArrayAdapter.createFromResource(this,
+                R.array.jenis_konsumen, android.R.layout.simple_spinner_item);
+
+        adapterBb.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapterKons.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinnerBb.setAdapter(adapterBb);
+        spinnerKons.setAdapter(adapterKons);
+    }
+
+    private boolean isDateSet() {
+        if (!tanggalSet) {
+            Toast.makeText(this, "Pilih tanggal", Toast.LENGTH_SHORT).show();
+        }
+        return tanggalSet;
+    }
+
+    private boolean nilaiAda() {
+        boolean ada = false;
+        if (!inputNilai.getText().toString().isEmpty()) {
+            ada = true;
+        } else {
+            Toast.makeText(this, "Input nilai", Toast.LENGTH_SHORT).show();
+        }
+        return ada;
+    }
+
+    private void setDateButton(int year, int month, int day) {
+        tanggal.setText(String.valueOf(year + " - " + month + 1 + " - " + day));
+    }
+
+    private void handleDatePicker() {
+        final DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+                year = i;
+                month = i1;
+                day = i2;
+                setDateButton(year, month, day);
+                tanggalSet = true;
+            }
+        };
+
+        tanggal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.w("button", "date button clicked");
+                DatePickerDialog dialog = new DatePickerDialog(
+                        InputWilayahActivity.this,
+                        listener,
+                        year,
+                        month,
+                        day
+                );
+                dialog.show();
+            }
+        });
     }
 
     private void sendPostRequest(ArrayList<Wilayah> wilayahs) {

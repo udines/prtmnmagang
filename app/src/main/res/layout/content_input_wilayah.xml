@@ -18,11 +18,12 @@
             android:layout_gravity="center_horizontal"
             android:text="Pilih Tanggal"
             style="@style/Base.Widget.AppCompat.Button.Colored"
-            android:id="@+id/input_matbal_tanggal"/>
+            android:id="@+id/input_wilayah_tanggal"/>
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp"
+            android:id="@+id/input_wilayah_lokasi"
             android:layout_marginTop="8dp"
             android:inputType="textCapWords"
             android:maxLines="1"
@@ -35,7 +36,12 @@
             android:layout_marginBottom="4dp"
             android:textColor="@color/black"
             android:layout_marginTop="8dp"/>
-        <RadioGroup
+        <Spinner
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:minHeight="48dp"
+            android:id="@+id/input_wilayah_jenis_bb_spinner"/>
+        <!--<RadioGroup
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <LinearLayout
@@ -93,11 +99,12 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"/>
             </LinearLayout>
-        </RadioGroup>
+        </RadioGroup>-->
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp"
+            android:visibility="gone"
             android:inputType="textCapWords"
             android:maxLines="1"
             android:hint="Bahan bakar lain"/>
@@ -109,7 +116,12 @@
             android:layout_marginBottom="4dp"
             android:textColor="@color/black"
             android:layout_marginTop="8dp"/>
-        <RadioGroup
+        <Spinner
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:minHeight="48dp"
+            android:id="@+id/input_wilayah_jenis_konsumen_spinner"/>
+        <!--<RadioGroup
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <LinearLayout
@@ -157,11 +169,12 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"/>
             </LinearLayout>
-        </RadioGroup>
+        </RadioGroup>-->
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp"
+            android:visibility="gone"
             android:inputType="textCapWords"
             android:maxLines="1"
             android:hint="Konsumen lain"/>
@@ -170,6 +183,7 @@
             android:layout_height="wrap_content"
             android:textSize="16sp"
             android:inputType="number"
+            android:id="@+id/input_wilayah_nilai"
             android:maxLines="1"
             android:hint="Nilai"/>
         <Button
