@@ -20,13 +20,12 @@
     <string name="title_activity_input_ritase">Input Data Ritase</string>
 
     <string-array name="bahan_bakar">
-        <item>Pertamax</item>
+        <item>Pertamax, BULK</item>
         <item>Pertalite</item>
         <item>Premium</item>
-        <item>Solar</item>
+        <item>SOLAR/HSD/MGO/ADO</item>
         <item>Biosolar</item>
         <item>Bioflame</item>
-        <item>Lain</item>
     </string-array>
 
     <string-array name="jenis_konsumen">
@@ -35,6 +34,5 @@
         <item>TNI/Polri</item>
         <item>PLN</item>
         <item>Own User MT</item>
-        <item>Lain</item>
     </string-array>
 </resources>

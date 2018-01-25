@@ -29,8 +29,9 @@
             android:layout_marginTop="8dp"/>
 
         <Spinner
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:minHeight="48dp"
             android:id="@+id/input_konsumen_bb_spinner"/>
         <!--<RadioGroup
             android:layout_width="match_parent"
@@ -102,6 +103,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp"
+            android:visibility="gone"
             android:id="@+id/input_konsumen_bahan_bakar"
             android:inputType="textCapWords"
             android:maxLines="1"
@@ -169,10 +171,16 @@
                     android:layout_weight="1"/>
             </LinearLayout>
         </RadioGroup>-->
+        <Spinner
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:minHeight="48dp"
+            android:id="@+id/input_konsumen_jenis_spinner"/>
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp"
+            android:visibility="gone"
             android:id="@+id/input_konsumen_lain"
             android:inputType="textCapWords"
             android:maxLines="1"

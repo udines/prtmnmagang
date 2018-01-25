@@ -35,7 +35,6 @@
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:text="Tambah Data"
-        android:visibility="gone"
         android:drawablePadding="8dp"
         android:textColor="@color/white"
         android:id="@+id/distribusi_button_tambah"/>

@@ -25,6 +25,7 @@ import com.pertamina.pertaminatuban.distribusi.models.Ritase;
 import com.pertamina.pertaminatuban.service.UserClient;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.util.ArrayList;
 
 import okhttp3.Interceptor;
@@ -47,6 +48,9 @@ public class InputKonsumenActivity extends AppCompatActivity {
     private int year, month, day;
     private boolean tanggalSet;
 
+    private Spinner spinnerBb, spinnerKons;
+    private EditText inputNilai;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -62,6 +66,13 @@ public class InputKonsumenActivity extends AppCompatActivity {
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        /*inisialisasi view yang digunakan lebih dari satu fungsi*/
+        spinnerBb = findViewById(R.id.input_konsumen_bb_spinner);
+        spinnerKons = findViewById(R.id.input_konsumen_jenis_spinner);
+        tanggal = findViewById(R.id.input_konsumen_tanggal);
+        kirim = findViewById(R.id.input_konsumen_kirim);
+        inputNilai = findViewById(R.id.input_konsumen_nilai);
+
         /*init tanggal*/
         Calendar calendar = Calendar.getInstance();
         year = calendar.get(Calendar.YEAR);
@@ -69,6 +80,46 @@ public class InputKonsumenActivity extends AppCompatActivity {
         day = calendar.get(Calendar.DAY_OF_MONTH);
 
         handleDatePicker();
+        populateSpinner();
+        getData();
+    }
+
+    private void getData() {
+        kirim.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isDateSet() && nilaiAda()) {
+                    String fuel = spinnerBb.getSelectedItem().toString();
+                    String konsumen = spinnerKons.getSelectedItem().toString();
+                    float nilai = Float.parseFloat(inputNilai.getText().toString());
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.set(year, month, day);
+                    Date date = new Date(calendar.getTimeInMillis());
+                    String sqlDate = date.toString();
+                    ArrayList<Konsumen> konsumens = new ArrayList<>();
+                    konsumens.add(new Konsumen(
+                            sqlDate,
+                            konsumen,
+                            fuel,
+                            nilai
+                    ));
+                    sendPostRequest(konsumens);
+                }
+            }
+        });
+    }
+
+    private void populateSpinner() {
+        ArrayAdapter<CharSequence> adapterBb = ArrayAdapter.createFromResource(this,
+                R.array.bahan_bakar, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapterKons = ArrayAdapter.createFromResource(this,
+                R.array.jenis_konsumen, android.R.layout.simple_spinner_item);
+
+        adapterBb.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapterKons.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spinnerBb.setAdapter(adapterBb);
+        spinnerKons.setAdapter(adapterKons);
     }
 
     private boolean isDateSet() {
@@ -76,6 +127,16 @@ public class InputKonsumenActivity extends AppCompatActivity {
             Toast.makeText(this, "Pilih tanggal", Toast.LENGTH_SHORT).show();
         }
         return tanggalSet;
+    }
+
+    private boolean nilaiAda() {
+        boolean ada = false;
+        if (!inputNilai.getText().toString().isEmpty()) {
+            ada = true;
+        } else {
+            Toast.makeText(this, "Input nilai", Toast.LENGTH_SHORT).show();
+        }
+        return ada;
     }
 
     private void setDateButton(int year, int month, int day) {

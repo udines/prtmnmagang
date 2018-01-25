@@ -47,6 +47,7 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.pertamina.pertaminatuban.activities.MenuActivity" />
+
         </activity>
         <activity
             android:name=".distribusi.InputMatbalActivity"
@@ -105,6 +106,7 @@
         <activity
             android:name=".distribusi.InputKonsumenActivity"
             android:label="@string/title_activity_input_konsumen"
+            android:windowSoftInputMode="stateHidden"
             android:parentActivityName=".distribusi.DistribusiActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
