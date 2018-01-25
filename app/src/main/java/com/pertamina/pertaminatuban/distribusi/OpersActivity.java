@@ -39,6 +39,8 @@ public class OpersActivity extends AppCompatActivity {
     private TextView tanggal;
     private LinearLayout tanggalButton;
     private TextView sum, minJam, maxJam, jamOps;
+    private LinearLayout container;
+    private TextView emptyText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +65,8 @@ public class OpersActivity extends AppCompatActivity {
         minJam = findViewById(R.id.opers_jam_keluar_min);
         maxJam = findViewById(R.id.opers_jam_keluar_max);
         jamOps = findViewById(R.id.opers_jam_operasional);
+        container = findViewById(R.id.opers_container);
+        emptyText = findViewById(R.id.opers_empty_text);
 
         /*inisialisasi tanggal jika data tidak ada agar tidak error*/
         Calendar calendar = Calendar.getInstance();
@@ -199,16 +203,16 @@ public class OpersActivity extends AppCompatActivity {
         String today = new Date(calendar.getTimeInMillis()).toString();
         for (int i = 0; i < opers.size(); i++) {
             if (opers.get(i).getDate().equals(today)) {
+                container.setVisibility(View.VISIBLE);
+                emptyText.setVisibility(View.GONE);
                 sum.setText(String.valueOf(opers.get(i).getJumlahKeluar()));
                 minJam.setText(opers.get(i).getMinJamKeluar().toString());
                 maxJam.setText(opers.get(i).getMaxJamKeluar().toString());
                 jamOps.setText(opers.get(i).getJamOperasional().toString());
                 break;
             } else {
-                sum.setText(String.valueOf(0));
-                minJam.setText(String.valueOf("00:00"));
-                maxJam.setText(String.valueOf("00:00"));
-                jamOps.setText(String.valueOf("00:00"));
+                container.setVisibility(View.GONE);
+                emptyText.setVisibility(View.VISIBLE);
             }
         }
     }
