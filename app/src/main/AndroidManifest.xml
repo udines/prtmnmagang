@@ -126,6 +126,7 @@
         <activity
             android:name=".distribusi.InputOpersActivity"
             android:label="@string/title_activity_input_opers"
+            android:windowSoftInputMode="stateHidden"
             android:parentActivityName=".distribusi.DistribusiActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
