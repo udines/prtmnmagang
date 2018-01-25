@@ -40,7 +40,7 @@ public class WilayahPage extends Fragment {
             for (int i = 0; i < wilayahs.size(); i++) {
                 grandTotal = grandTotal + wilayahs.get(i).getNilai();
             }
-            total.setText(String.valueOf("Grand total: " + grandTotal));
+            total.setText(String.valueOf("Grand total: " + grandTotal + " KL"));
 
             WilayahTableAdapter adapter = new WilayahTableAdapter(wilayahs, getContext());
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

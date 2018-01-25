@@ -24,6 +24,6 @@ public class WilayahTableViewHolder extends RecyclerView.ViewHolder {
     public void setView(Wilayah model) {
         lokasi.setText(model.getWilayah());
         konsumen.setText(model.getKonsumen());
-        nilai.setText(String.valueOf(model.getNilai()));
+        nilai.setText(String.valueOf(model.getNilai() + " KL"));
     }
 }

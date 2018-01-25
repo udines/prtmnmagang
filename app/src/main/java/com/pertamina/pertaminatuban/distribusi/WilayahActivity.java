@@ -223,7 +223,7 @@ public class WilayahActivity extends AppCompatActivity {
         UserClient userClient = retrofit.create(UserClient.class);
         Call<ArrayList<Wilayah>> call = userClient.getWilayah(bulan + 1);
 
-        call.enqueue(new Callback<ArrayList<Wilayah>>() {
+        /*call.enqueue(new Callback<ArrayList<Wilayah>>() {
             @Override
             public void onResponse(Call<ArrayList<Wilayah>> call, Response<ArrayList<Wilayah>> response) {
                 Log.w("code", String.valueOf(response.code()));
@@ -237,7 +237,51 @@ public class WilayahActivity extends AppCompatActivity {
             public void onFailure(Call<ArrayList<Wilayah>> call, Throwable t) {
                 Log.e("Call", " failed " + t.getMessage());
             }
-        });
+        });*/
+
+        ArrayList<Wilayah> wilayahs = new ArrayList<>();
+        wilayahs.add(new Wilayah("Cepu", "SPBU", Matbal.PERTAMAX, 24));
+        wilayahs.add(new Wilayah("Cepu", "SPBU", Matbal.PREMIUM, 368));
+        wilayahs.add(new Wilayah("Lamongan", "SPBU", Matbal.PERTAMAX, 1384));
+        wilayahs.add(new Wilayah("Lamongan", "SPBU", Matbal.PREMIUM, 1248));
+        wilayahs.add(new Wilayah("Lamongan", "SPBU", Matbal.BIOSOLAR, 3272));
+        wilayahs.add(new Wilayah("Lamongan", "SPBU", Matbal.SOLAR, 2618));
+        wilayahs.add(new Wilayah("Lamongan", "TNI/Polri", Matbal.PERTAMAX, 40));
+        wilayahs.add(new Wilayah("Lamongan", "TNI/Polri", Matbal.SOLAR, 8));
+        wilayahs.add(new Wilayah("Lamongan", "SPDN", Matbal.BIOSOLAR, 400));
+        wilayahs.add(new Wilayah("Lamongan", "SPDN", Matbal.SOLAR, 320));
+        wilayahs.add(new Wilayah("Bojonegoro", "SPBU", Matbal.PERTAMAX, 892));
+        wilayahs.add(new Wilayah("Bojonegoro", "SPBU", Matbal.PREMIUM, 1032));
+        wilayahs.add(new Wilayah("Bojonegoro", "SPBU", Matbal.BIOSOLAR, 2280));
+        wilayahs.add(new Wilayah("Bojonegoro", "SPBU", Matbal.SOLAR,  1824));
+        wilayahs.add(new Wilayah("Gresik", "SPBU", Matbal.PERTAMAX,  1180));
+        wilayahs.add(new Wilayah("Gresik", "SPBU", Matbal.PREMIUM,  1528));
+        wilayahs.add(new Wilayah("Gresik", "SPBU", Matbal.BIOSOLAR,  4560));
+        wilayahs.add(new Wilayah("Gresik", "SPBU", Matbal.SOLAR,  3658));
+        wilayahs.add(new Wilayah("Gresik", "SPDN", Matbal.BIOSOLAR,  24));
+        wilayahs.add(new Wilayah("Gresik", "SPDN", Matbal.SOLAR,  19));
+        wilayahs.add(new Wilayah("Rembang", "SPBU", Matbal.PERTAMAX,  216));
+        wilayahs.add(new Wilayah("Rembang", "SPBU", Matbal.BIOSOLAR,  1816));
+        wilayahs.add(new Wilayah("Rembang", "SPBU", Matbal.SOLAR,  1453));
+        wilayahs.add(new Wilayah("Rembang", "SPDN", Matbal.BIOSOLAR,  72));
+        wilayahs.add(new Wilayah("Rembang", "SPDN", Matbal.SOLAR,  58));
+        wilayahs.add(new Wilayah("Tuban", "SPBU", Matbal.PERTAMAX, 936));
+        wilayahs.add(new Wilayah("Tuban", "SPBU", Matbal.PREMIUM, 984));
+        wilayahs.add(new Wilayah("Tuban", "SPBU", Matbal.BIOSOLAR, 4056));
+        wilayahs.add(new Wilayah("Tuban", "SPBU", Matbal.SOLAR,  3245));
+        wilayahs.add(new Wilayah("Tuban", "SPDN", Matbal.BIOSOLAR,  64));
+        wilayahs.add(new Wilayah("Tuban", "SPDN", Matbal.SOLAR,  51));
+        wilayahs.add(new Wilayah("Tuban", "Own Use MT", Matbal.SOLAR,  80));
+        wilayahs.add(new Wilayah("Tuban", "PLN", Matbal.SOLAR,  224));
+        wilayahs.add(new Wilayah("Tuban", "TNI/Polri", Matbal.PERTAMAX, 20));
+        wilayahs.add(new Wilayah("Blora", "SPBU", Matbal.PERTAMAX, 48));
+        wilayahs.add(new Wilayah("Blora", "SPBU", Matbal.PREMIUM, 72));
+        wilayahs.add(new Wilayah("Ngawi", "SPBU", Matbal.PERTAMAX, 1436));
+        wilayahs.add(new Wilayah("Magetan", "SPBU", Matbal.PERTAMAX,  152));
+        wilayahs.add(new Wilayah("Pati", "SPBU", Matbal.PERTAMAX,  24));
+        wilayahs.add(new Wilayah("Semarang", "SPBU", Matbal.PREMIUM, 8));
+
+        cekData(wilayahs);
 
     }
 }
