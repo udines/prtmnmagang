@@ -57,7 +57,12 @@ public class MenuActivity extends AppCompatActivity {
         recyclerView.setOnFlingListener(null);
         SnapHelper helper = new LinearSnapHelper();
         helper.attachToRecyclerView(recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        recyclerView.setNestedScrollingEnabled(false);
+        recyclerView.setLayoutManager(new LinearLayoutManager(
+                getApplicationContext(),
+                LinearLayoutManager.HORIZONTAL,
+                false
+        ));
 
         FirebaseFirestore.getInstance()
                 .collection("featured")
@@ -101,6 +106,7 @@ public class MenuActivity extends AppCompatActivity {
 
         /*inisialisasi awal menu dalam bentuk grid*/
         recyclerView.setLayoutManager(gridLayoutManager);
+        recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setAdapter(gridAdapter);
     }
 

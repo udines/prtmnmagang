@@ -12,7 +12,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintDimensionRatio="H, 3:2">
+        app:layout_constraintDimensionRatio="H, 16:9">
         <ImageView
             android:id="@+id/item_menu_featured_image"
             android:layout_width="match_parent"
