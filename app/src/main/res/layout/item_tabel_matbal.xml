@@ -3,15 +3,16 @@
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/item_matbal_row"
-    android:padding="8dp">
+    android:padding="12dp">
     <TextView
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="wrap_content"
         android:gravity="start"
         android:textSize="16sp"
+        android:textColor="@color/black"
         android:id="@+id/item_matbal_tanggal"
-        android:text="20 Januari"/>
+        android:text="Pertamax"/>
     <TextView
         android:layout_width="0dp"
         android:layout_weight="1"
@@ -19,5 +20,5 @@
         android:gravity="end"
         android:textSize="16sp"
         android:id="@+id/item_matbal_nilai"
-        android:text="235"/>
+        android:text="0 KL"/>
 </LinearLayout>

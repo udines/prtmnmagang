@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -16,7 +18,10 @@ import android.widget.TextView;
 import com.pertamina.pertaminatuban.R;
 import com.pertamina.pertaminatuban.distribusi.models.Konsumen;
 import com.pertamina.pertaminatuban.distribusi.models.Matbal;
+import com.pertamina.pertaminatuban.distribusi.models.Ritase;
 import com.pertamina.pertaminatuban.distribusi.page.KonsumenPage;
+import com.pertamina.pertaminatuban.distribusi.page.RitasePage;
+import com.pertamina.pertaminatuban.distribusi.tables.KonsumenContainerAdapter;
 import com.pertamina.pertaminatuban.service.UserClient;
 import com.pertamina.pertaminatuban.utils.ViewPagerAdapter;
 
@@ -39,8 +44,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class KonsumenActivity extends AppCompatActivity {
 
-    private TextView tanggal;
+    private TextView tanggal, emptyText;
     private LinearLayout tanggalButton;
+    private RecyclerView recyclerView;
     private int month;
     private int year;
     private int day;
@@ -71,6 +77,8 @@ public class KonsumenActivity extends AppCompatActivity {
         /*inisialisasi view yang digunakan lebih dari satu fungsi*/
         tanggal = findViewById(R.id.konsumen_tanggal);
         tanggalButton = findViewById(R.id.konsumen_tanggal_button);
+        recyclerView = findViewById(R.id.konsumen_recyclerview);
+        emptyText = findViewById(R.id.konsumen_empty_text);
 
         /*init view by id*/
         initView();
@@ -117,13 +125,68 @@ public class KonsumenActivity extends AppCompatActivity {
 
             Log.d("data", "data konsumen ada");
             /*data ada maka tampilkan tab dan isinya*/
-            populateData(konsumens);
+//            populateData(konsumens);
+            populateCard(konsumens);
         } else {
 
             Log.d("data", "data konsumen tidak ada");
             /*data tidak ada maka hilangkan tab dan tampilkan pesan peringatan
             * untuk tanggal gunakan month dan year yang sudah diinisialisasi*/
 
+        }
+    }
+
+    private void populateCard(ArrayList<Konsumen> kons) {
+
+        ArrayList<Konsumen> konsumens = new ArrayList<>();
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month, day);
+        String today = new Date(calendar.getTimeInMillis()).toString();
+        for (int i = 0; i < kons.size(); i++) {
+            if (kons.get(i).getDate().equals(today)) {
+                konsumens.add(kons.get(i));
+            }
+        }
+
+        if (konsumens.size() > 0) {
+            ArrayList<String> titles = new ArrayList<>();
+            ArrayList<ArrayList<Konsumen>> kumpulanKonsumens = new ArrayList<>();
+
+            titles.add(konsumens.get(0).getKonsumen());
+            for (int i = 0; i < konsumens.size(); i++) {
+                boolean ada = false;
+                for (int j = 0; j < titles.size(); j++) {
+                    if (konsumens.get(i).getKonsumen().equals(titles.get(j))) {
+                        ada = true;
+                        break;
+                    } else {
+                        ada = false;
+                    }
+                }
+                if (!ada) {
+                    titles.add(konsumens.get(i).getKonsumen());
+                }
+            }
+
+            Log.d("tabs ada", String.valueOf(titles.size()));
+
+            for (int i = 0; i < titles.size(); i++) {
+                kumpulanKonsumens.add(new ArrayList<Konsumen>());
+                for (int j = 0; j < konsumens.size(); j++) {
+                    if (titles.get(i).equals(konsumens.get(j).getKonsumen())) {
+                        kumpulanKonsumens.get(i).add(konsumens.get(j));
+                    }
+                }
+            }
+
+            recyclerView.setVisibility(View.VISIBLE);
+            emptyText.setVisibility(View.GONE);
+            KonsumenContainerAdapter adapter = new KonsumenContainerAdapter(kumpulanKonsumens);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+            recyclerView.setAdapter(adapter);
+        } else {
+            recyclerView.setVisibility(View.GONE);
+            emptyText.setVisibility(View.VISIBLE);
         }
     }
 

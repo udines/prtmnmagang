@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.pertamina.pertaminatuban.distribusi.KonsumenActivity"
-    tools:showIn="@layout/activity_konsumen">
+    tools:showIn="@layout/activity_konsumen"
+    android:orientation="vertical"
+    android:gravity="center">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:visibility="gone"
         android:padding="8dp">
         <TextView
             android:layout_width="wrap_content"
@@ -456,4 +459,22 @@
                 android:layout_weight="0.5"/>
         </LinearLayout>
     </LinearLayout>
-</ScrollView>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="6dp"
+        android:background="@color/grey_200"
+        android:id="@+id/konsumen_recyclerview"
+        android:clipToPadding="false" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:visibility="gone"
+        android:textAlignment="center"
+        android:id="@+id/konsumen_empty_text"
+        android:layout_gravity="center"
+        android:text="Tidak ditemukan data\nCoba ganti tanggal"/>
+</LinearLayout>
