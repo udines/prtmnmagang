@@ -8,6 +8,6 @@ public class ClickTuban extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        FirebaseMessaging.getInstance().subscribeToTopic("featured");
+        FirebaseMessaging.getInstance().subscribeToTopic("buzzer");
     }
 }
