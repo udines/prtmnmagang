@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.pertamina.pertaminatuban.info_umum.PostInfoActivity"
+    tools:showIn="@layout/activity_post_info">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Judul"
+            android:inputType="textCapWords"
+            android:maxLines="1"
+            android:id="@+id/info_input_judul"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Informasi"
+            android:inputType="textCapSentences|textMultiLine"
+            android:id="@+id/info_input_info"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Deskripsi"
+            android:inputType="textCapSentences|textMultiLine"
+            android:id="@+id/info_input_detail"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/info_input_button_kirim"
+            style="@style/Base.Widget.AppCompat.Button.Colored"
+            android:text="Kirim"/>
+    </LinearLayout>
+
+</ScrollView>

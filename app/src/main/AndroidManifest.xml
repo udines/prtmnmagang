@@ -38,7 +38,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.SplashActivity"
-            android:theme="@style/SplashTheme"></activity>
+            android:theme="@style/SplashTheme" />
         <activity
             android:name=".activities.RegisterActivity"
             android:label="@string/title_activity_register"
@@ -158,6 +158,15 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.pertamina.pertaminatuban.activities.MenuActivity" />
+        </activity>
+        <activity
+            android:name=".info_umum.PostInfoActivity"
+            android:label="@string/title_activity_post_info"
+            android:parentActivityName=".info_umum.InfoUmumActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.pertamina.pertaminatuban.info_umum.InfoUmumActivity" />
         </activity>
     </application>
 

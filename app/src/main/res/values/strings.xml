@@ -36,4 +36,5 @@
         <item>Own User MT</item>
     </string-array>
     <string name="title_activity_info_umum">Informasi Umum</string>
+    <string name="title_activity_post_info">Post Informasi</string>
 </resources>
