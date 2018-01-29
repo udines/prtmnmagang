@@ -35,4 +35,5 @@
         <item>PLN</item>
         <item>Own User MT</item>
     </string-array>
+    <string name="title_activity_info_umum">Informasi Umum</string>
 </resources>

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.LinearSnapHelper;
@@ -15,6 +16,7 @@ import android.support.v7.widget.SnapHelper;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -23,6 +25,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.pertamina.pertaminatuban.R;
+import com.pertamina.pertaminatuban.info_umum.InfoUmumActivity;
 import com.pertamina.pertaminatuban.models.Featured;
 import com.pertamina.pertaminatuban.models.MenuViewModel;
 import com.pertamina.pertaminatuban.utils.FeaturedAdapter;
@@ -50,6 +53,18 @@ public class MenuActivity extends AppCompatActivity {
         /*membuat daftar menu dengan judul beserta id gambarnya*/
         populateMenu();
 
+        /*handle info card*/
+        handleInfoCard();
+    }
+
+    private void handleInfoCard() {
+        CardView card = findViewById(R.id.menu_info_card);
+        card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), InfoUmumActivity.class));
+            }
+        });
     }
 
     private void populateFeatured() {
