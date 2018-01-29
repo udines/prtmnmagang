@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.NavUtils;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
@@ -40,12 +42,16 @@ import java.util.List;
 * bisa memilih divisi mana yang ingin pengguna lihat atau edit atau tambah datanya*/
 public class MenuActivity extends AppCompatActivity {
 
+    private NestedScrollView scrollView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        scrollView = findViewById(R.id.menu_nestedscrollview);
 
         /*menampilkan featured image*/
         populateFeatured();
@@ -69,6 +75,8 @@ public class MenuActivity extends AppCompatActivity {
 
     private void populateFeatured() {
         final RecyclerView recyclerView = findViewById(R.id.menu_recyclerview_featured);
+        final ConstraintLayout progress = findViewById(R.id.menu_featured_progress);
+        scrollView.scrollTo(0,0);
         recyclerView.setOnFlingListener(null);
         SnapHelper helper = new LinearSnapHelper();
         helper.attachToRecyclerView(recyclerView);
@@ -90,6 +98,9 @@ public class MenuActivity extends AppCompatActivity {
                         if (!documentSnapshots.isEmpty()) {
                             featureds = documentSnapshots.toObjects(Featured.class);
                             FeaturedAdapter adapter = new FeaturedAdapter(featureds);
+                            progress.setVisibility(View.GONE);
+                            recyclerView.setVisibility(View.VISIBLE);
+                            scrollView.scrollTo(0,0);
                             recyclerView.setAdapter(adapter);
                         }
                     }
@@ -161,5 +172,10 @@ public class MenuActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         finishAffinity();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
     }
 }
