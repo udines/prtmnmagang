@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.pertamina.pertaminatuban.R;
 
 import java.sql.Timestamp;
@@ -61,8 +63,15 @@ public class PostInfoActivity extends AppCompatActivity {
     }
 
     private void sendData(InfoUmum info) {
-        Toast.makeText(this, "Post terkirim", Toast.LENGTH_SHORT).show();
-        finish();
+        FirebaseFirestore.getInstance().collection("info_umum").document().set(info).addOnSuccessListener(
+                new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(PostInfoActivity.this, "Post terkirim", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                }
+        );
     }
 
     private boolean judulAda() {
