@@ -7,10 +7,6 @@ import android.widget.TextView;
 import com.pertamina.pertaminatuban.R;
 import com.pertamina.pertaminatuban.info_umum.InfoUmum;
 
-/**
- * Created by laptop on 1/29/2018.
- */
-
 public class InfoUmumViewHolder extends RecyclerView.ViewHolder {
 
     private final TextView judul, info, detail;

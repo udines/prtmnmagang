@@ -92,7 +92,7 @@ public class MenuActivity extends AppCompatActivity {
                 .orderBy("timestamp", Query.Direction.DESCENDING)
                 .limit(5).get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    List<Featured> featureds = new ArrayList<>();
+                    List<Featured> featureds;
                     @Override
                     public void onSuccess(QuerySnapshot documentSnapshots) {
                         if (!documentSnapshots.isEmpty()) {

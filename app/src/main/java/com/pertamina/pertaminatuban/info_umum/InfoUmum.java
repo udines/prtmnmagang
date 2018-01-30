@@ -1,24 +1,34 @@
 package com.pertamina.pertaminatuban.info_umum;
 
-import java.sql.Timestamp;
-
-/**
- * Created by laptop on 1/29/2018.
- */
+import java.sql.Date;
+import java.util.HashMap;
 
 public class InfoUmum {
     private String id;
     private String title;
     private String info;
     private String detail;
-    private Timestamp timestamp;
+//    private Date date;
+//    private HashMap<String, Object> timestamp;
+    private long time;
 
-    public InfoUmum(String id, String title, String info, String detail, Timestamp timestamp) {
+    public InfoUmum() {
+    }
+
+    public InfoUmum(String id, String title, String info, String detail, long time) {
         this.id = id;
         this.title = title;
         this.info = info;
         this.detail = detail;
-        this.timestamp = timestamp;
+        this.time = time;
+    }
+
+    public long getTime() {
+        return time;
+    }
+
+    public void setTime(long time) {
+        this.time = time;
     }
 
     public String getId() {
@@ -53,11 +63,12 @@ public class InfoUmum {
         this.detail = detail;
     }
 
-    public Timestamp getTimestamp() {
-        return timestamp;
+    /*public Date getDate() {
+        return date;
     }
 
-    public void setTimestamp(Timestamp timestamp) {
+    public void setDate(HashMap<String, Object> timestamp) {
         this.timestamp = timestamp;
-    }
+        this.date = (Date)timestamp.get("date");
+    }*/
 }

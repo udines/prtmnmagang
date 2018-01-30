@@ -8,16 +8,13 @@ import android.view.ViewGroup;
 import com.pertamina.pertaminatuban.R;
 
 import java.util.ArrayList;
-
-/**
- * Created by laptop on 1/29/2018.
- */
+import java.util.List;
 
 public class InfoUmumAdapter extends RecyclerView.Adapter<InfoUmumViewHolder> {
 
-    private ArrayList<InfoUmum> infoUmums;
+    private List<InfoUmum> infoUmums;
 
-    public InfoUmumAdapter(ArrayList<InfoUmum> infoUmums) {
+    public InfoUmumAdapter(List<InfoUmum> infoUmums) {
         this.infoUmums = infoUmums;
     }
 

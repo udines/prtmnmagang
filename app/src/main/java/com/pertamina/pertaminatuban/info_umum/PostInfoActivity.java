@@ -14,6 +14,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.pertamina.pertaminatuban.R;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Calendar;
 
@@ -54,7 +55,7 @@ public class PostInfoActivity extends AppCompatActivity {
                             inputJudul.getText().toString(),
                             inputInfo.getText().toString(),
                             inputDeskipsi.getText().toString(),
-                            new Timestamp(calendar.getTimeInMillis())
+                            calendar.getTimeInMillis()
                     );
                     sendData(infoUmum);
                 }
