@@ -37,4 +37,5 @@
     </string-array>
     <string name="title_activity_info_umum">Informasi Umum</string>
     <string name="title_activity_post_info">Post Informasi</string>
+    <string name="title_activity_marine">Marine</string>
 </resources>

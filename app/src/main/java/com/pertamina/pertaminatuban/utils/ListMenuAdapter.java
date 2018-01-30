@@ -37,18 +37,18 @@ public class ListMenuAdapter extends RecyclerView.Adapter<ListMenuViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(ListMenuViewHolder holder, final int position) {
+    public void onBindViewHolder(final ListMenuViewHolder holder, int position) {
 
         /*set text pada menu sesuai dengan teks yang sudah ditentukan dan
          sesuai dengan urutan dari daftar menu*/
         holder.title.setText(menuList.get(position).getTitle());
 
         /*handle user klik list untuk menuju ke halaman yang dipilih*/
-        if (classes != null) {
+        if (classes.size() > 0) {
             holder.card.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent activityIntent = new Intent(context, classes.get(position));
+                    Intent activityIntent = new Intent(context, classes.get(holder.getAdapterPosition()));
                     activityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(activityIntent);
                 }

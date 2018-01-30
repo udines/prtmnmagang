@@ -168,6 +168,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.pertamina.pertaminatuban.info_umum.InfoUmumActivity" />
         </activity>
+        <activity
+            android:name=".marine.MarineActivity"
+            android:label="@string/title_activity_marine"
+            android:parentActivityName=".activities.MenuActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.pertamina.pertaminatuban.activities.MenuActivity" />
+        </activity>
     </application>
 
 </manifest>

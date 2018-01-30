@@ -56,7 +56,7 @@ public class MenuActivity extends AppCompatActivity {
         scrollView = findViewById(R.id.menu_nestedscrollview);
 
         /*menampilkan featured image*/
-        populateFeatured();
+//        populateFeatured();
 
         /*membuat daftar menu dengan judul beserta id gambarnya*/
         populateMenu();
@@ -97,7 +97,8 @@ public class MenuActivity extends AppCompatActivity {
     private void populateFeatured() {
         final RecyclerView recyclerView = findViewById(R.id.menu_recyclerview_featured);
         final ConstraintLayout progress = findViewById(R.id.menu_featured_progress);
-        scrollView.scrollTo(0,0);
+        progress.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.GONE);
         recyclerView.setOnFlingListener(null);
         SnapHelper helper = new LinearSnapHelper();
         helper.attachToRecyclerView(recyclerView);
@@ -136,7 +137,7 @@ public class MenuActivity extends AppCompatActivity {
         * instansiasi memerlukan 2 parameter yaitu String untuk judul menu
         * dan int untuk id gambar menu*/
         menuList.add(new MenuViewModel("Distribusi", R.drawable.ic_tank));
-        menuList.add(new MenuViewModel("Divisi 2", R.drawable.ic_launcher_foreground));
+        menuList.add(new MenuViewModel("Marine", R.drawable.ic_cargo_ship));
         menuList.add(new MenuViewModel("Divisi 3", R.drawable.ic_launcher_foreground));
         menuList.add(new MenuViewModel("Divisi 4", R.drawable.ic_launcher_foreground));
         menuList.add(new MenuViewModel("Divisi 5", R.drawable.ic_launcher_foreground));
