@@ -19,6 +19,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -27,6 +28,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.pertamina.pertaminatuban.R;
+import com.pertamina.pertaminatuban.info_umum.InfoUmum;
 import com.pertamina.pertaminatuban.info_umum.InfoUmumActivity;
 import com.pertamina.pertaminatuban.models.Featured;
 import com.pertamina.pertaminatuban.models.MenuViewModel;
@@ -71,6 +73,25 @@ public class MenuActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), InfoUmumActivity.class));
             }
         });
+
+        final TextView informasi = findViewById(R.id.menu_info_informasi);
+        final TextView detail = findViewById(R.id.menu_info_detail);
+
+        FirebaseFirestore.getInstance()
+                .collection("info_umum")
+                .orderBy("time", Query.Direction.DESCENDING)
+                .limit(1)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot documentSnapshots) {
+                        if (!documentSnapshots.isEmpty()) {
+                            InfoUmum info = documentSnapshots.getDocuments().get(0).toObject(InfoUmum.class);
+                            informasi.setText(info.getInfo());
+                            detail.setText(info.getDetail());
+                        }
+                    }
+                });
     }
 
     private void populateFeatured() {
