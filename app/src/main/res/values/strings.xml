@@ -38,4 +38,18 @@
     <string name="title_activity_info_umum">Informasi Umum</string>
     <string name="title_activity_post_info">Post Informasi</string>
     <string name="title_activity_marine">Marine</string>
+    <string name="title_activity_input_initial_tanker">Initial Tanker</string>
+    <string name="title_activity_input_tanker_movement">Tanker Movement</string>
+    <string name="title_activity_input_ship_condition">Ship\'s Condition</string>
+    <string name="title_activity_input_waiting_time">Waiting Time/Excess Time</string>
+    <string name="title_activity_input_temporary_stop">Temporary Stop Activity</string>
+    <string name="title_activity_input_port_charges">Port Charges</string>
+    <string name="title_activity_input_ship_particular">Ship\'s Particular</string>
+    <string name="title_activity_initial_tanker">Initial Tanker</string>
+    <string name="title_activity_port_charges">Port Charges</string>
+    <string name="title_activity_ship_condition">Ship\'s Condition</string>
+    <string name="title_activity_ship_particular">Ship\'s Particular</string>
+    <string name="title_activity_tanker_movement">Tanker Movement</string>
+    <string name="title_activity_temporary_stop">Temporary Stop</string>
+    <string name="title_activity_waiting_time">Waiting Time/Excess Time</string>
 </resources>

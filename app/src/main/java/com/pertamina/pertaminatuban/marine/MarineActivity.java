@@ -35,30 +35,22 @@ public class MarineActivity extends AppCompatActivity {
     private void populateMenu() {
         RecyclerView recyclerView = findViewById(R.id.marine_recyclerview);
         ArrayList<MenuViewModel> menus = new ArrayList<>();
-        menus.add(new MenuViewModel("Ship's Movement", 0));
-        menus.add(new MenuViewModel("In/Out Operation", 0));
-        menus.add(new MenuViewModel("Cargo Quantity", 0));
-        menus.add(new MenuViewModel("Performance Record", 0));
+        menus.add(new MenuViewModel("Initial Tanker", 0));
+        menus.add(new MenuViewModel("Tanker Movement", 0));
         menus.add(new MenuViewModel("Ship's Condition", 0));
         menus.add(new MenuViewModel("Waiting/Excess Time", 0));
         menus.add(new MenuViewModel("Temporary Stop Activity", 0));
-        menus.add(new MenuViewModel("Integrated Port Time", 0));
         menus.add(new MenuViewModel("Port Charges", 0));
         menus.add(new MenuViewModel("Ship's Particular", 0));
-        menus.add(new MenuViewModel("Claim Slow Speed", 0));
-        menus.add(new MenuViewModel("Ship's Charted Party", 0));
-        menus.add(new MenuViewModel("Shore Request", 0));
-        menus.add(new MenuViewModel("Ship Request", 0));
-        menus.add(new MenuViewModel("Connection", 0));
-        menus.add(new MenuViewModel("Agreement by Request", 0));
-        menus.add(new MenuViewModel("Agreement", 0));
-        menus.add(new MenuViewModel("Actual", 0));
-        menus.add(new MenuViewModel("Claim Slow Pumping", 0));
-        menus.add(new MenuViewModel("Claim Transport Loss (R2)", 0));
-        menus.add(new MenuViewModel("Key In MMHM", 0));
-        menus.add(new MenuViewModel("Standard Time Movement", 0));
 
         ArrayList<Class> classes = new ArrayList<>();
+        classes.add(InitialTankerActivity.class);
+        classes.add(TankerMovementActivity.class);
+        classes.add(ShipConditionActivity.class);
+        classes.add(WaitingTimeActivity.class);
+        classes.add(TemporaryStopActivity.class);
+        classes.add(PortChargesActivity.class);
+        classes.add(ShipParticularActivity.class);
 
         ListMenuAdapter adapter = new ListMenuAdapter(menus, getApplicationContext());
         adapter.setClasses(classes);
