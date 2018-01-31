@@ -52,4 +52,11 @@
     <string name="title_activity_tanker_movement">Tanker Movement</string>
     <string name="title_activity_temporary_stop">Temporary Stop</string>
     <string name="title_activity_waiting_time">Waiting Time/Excess Time</string>
+    <string name="hint_light_dues">Light Dues (Rambu/Navigasi)</string>
+    <string name="hint_harbor_dues">Harbor Dues (Labuh)</string>
+    <string name="hint_quay_dues">Quay Dues (Tambat)</string>
+    <string name="hint_pilotages">Pilotages (Pandu)</string>
+    <string name="hint_towage">Towage (Tunda)</string>
+    <string name="hint_pup9a2">\'PUP - 9A2</string>
+    <string name="button_text_kirim">kirim</string>
 </resources>
