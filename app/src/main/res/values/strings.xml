@@ -144,4 +144,12 @@
     <string name="text_cargo_calculation">Cargo Calculation</string>
     <string name="text_steaming_in_out">Steaming IN / OUT</string>
     <string name="text_ship_s_unready">Ship\'s Unready</string>
+    <string name="hint_master">Master</string>
+    <string name="hint_est_hire_rate_usd_day">Est. Hire Rate (USD/Day)</string>
+    <string name="hint_type_based_activity">Type (Based Activity</string>
+    <string name="hint_type_based_call">Type (Based Call)</string>
+    <string name="hint_loa">LOA</string>
+    <string name="hint_grt">GRT</string>
+    <string name="hint_dwt">DWT</string>
+    <string name="hint_flag">Flag</string>
 </resources>
