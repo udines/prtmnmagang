@@ -113,4 +113,6 @@
     <string name="text_periode">Periode</string>
     <string name="hint_call_tanker">Call Tanker</string>
     <string name="text_solar">Solar</string>
+    <string name="radio_loading_port">Loading Port</string>
+    <string name="radio_discharge_port">Discharge Port</string>
 </resources>

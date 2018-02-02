@@ -248,50 +248,102 @@
                 android:layout_height="wrap_content"
                 android:text="@string/radio_jetty_tppi_3"/>
         </RadioGroup>
-        <android.support.design.widget.TextInputLayout
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/hint_port_of_call"
+            android:textColor="@color/black"
+            android:layout_marginTop="8dp"/>
+        <RadioGroup
+            android:id="@+id/input_initial_tanker_group_port_of_call"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_port_of_call">
-            <EditText
-                android:id="@+id/input_initial_tanker_port_of_call"
-                android:layout_width="match_parent"
+            android:orientation="horizontal">
+            <RadioButton
+                android:id="@+id/input_initial_tanker_radio_port_of_call_loading"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:inputType="textCapCharacters"
-                android:maxLines="1"/>
-        </android.support.design.widget.TextInputLayout>
-        <android.support.design.widget.TextInputLayout
+                android:text="@string/radio_loading_port"
+                android:layout_weight="1"/>
+            <RadioButton
+                android:id="@+id/input_initial_tanker_radio_port_of_call_discharge"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/radio_discharge_port"
+                android:layout_weight="1"/>
+        </RadioGroup>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/hint_port_of_call_report"
+            android:textColor="@color/black"
+            android:layout_marginTop="8dp"/>
+        <RadioGroup
+            android:id="@+id/input_initial_tanker_group_port_of_call_report"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_port_of_call_report">
-            <EditText
-                android:id="@+id/input_initial_tanker_port_of_call_report"
-                android:layout_width="match_parent"
+            android:orientation="horizontal">
+            <RadioButton
+                android:id="@+id/input_initial_tanker_radio_port_of_call_report_loading"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:inputType="textCapCharacters"
-                android:maxLines="1"/>
-        </android.support.design.widget.TextInputLayout>
-        <android.support.design.widget.TextInputLayout
+                android:text="@string/radio_loading_port"
+                android:layout_weight="1"/>
+            <RadioButton
+                android:id="@+id/input_initial_tanker_radio_port_of_call_report_discharge"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/radio_discharge_port"
+                android:layout_weight="1"/>
+        </RadioGroup>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/hint_last_port"
+            android:textColor="@color/black"
+            android:layout_marginTop="8dp"/>
+        <RadioGroup
+            android:id="@+id/input_initial_tanker_group_last_port"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_last_port">
-            <EditText
-                android:id="@+id/input_initial_tanker_last_port"
-                android:layout_width="match_parent"
+            android:orientation="horizontal">
+            <RadioButton
+                android:id="@+id/input_initial_tanker_radio_last_port_loading"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:inputType="textCapCharacters"
-                android:maxLines="1"/>
-        </android.support.design.widget.TextInputLayout>
-        <android.support.design.widget.TextInputLayout
+                android:text="@string/radio_loading_port"
+                android:layout_weight="1"/>
+            <RadioButton
+                android:id="@+id/input_initial_tanker_radio_last_port_discharge"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/radio_discharge_port"
+                android:layout_weight="1"/>
+        </RadioGroup>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/hint_next_port"
+            android:textColor="@color/black"
+            android:layout_marginTop="8dp"/>
+        <RadioGroup
+            android:id="@+id/input_initial_tanker_group_next_port"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_next_port">
-            <EditText
-                android:id="@+id/input_initial_tanker_next_port"
-                android:layout_width="match_parent"
+            android:orientation="horizontal">
+            <RadioButton
+                android:id="@+id/input_initial_tanker_radio_next_port_loading"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:inputType="textCapCharacters"
-                android:maxLines="1"/>
-        </android.support.design.widget.TextInputLayout>
+                android:text="@string/radio_loading_port"
+                android:layout_weight="1"/>
+            <RadioButton
+                android:id="@+id/input_initial_tanker_radio_next_port_discharge"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/radio_discharge_port"
+                android:layout_weight="1"/>
+        </RadioGroup>
         <Button
             android:id="@+id/input_initial_tanker_kirim"
             android:layout_width="match_parent"

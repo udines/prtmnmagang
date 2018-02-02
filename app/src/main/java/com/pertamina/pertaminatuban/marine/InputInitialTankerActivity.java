@@ -33,10 +33,11 @@ public class InputInitialTankerActivity extends AppCompatActivity {
 
     private void getData() {
         EditText inputCallTanker, inputVoyage, inputNoBill, inputHandlingAgent, inputGeneralAgent,
-                inputCargoStatus, inputPortCall, inputPortCallReport, inputLastPort, inputNextPort;
+                inputCargoStatus;
         Button inputPeriode, kirim;
         RadioGroup groupStatusTanker, groupStatusOperasional, groupGrades, groupTankerActivity,
-                groupPumpingMethod, groupBarthing;
+                groupPumpingMethod, groupBarthing, groupPortCall, groupPortCallReport, groupLastPort,
+                groupNextPort;
 
         inputCallTanker = findViewById(R.id.input_initial_tanker_call_tanker);
         inputVoyage = findViewById(R.id.input_initial_tanker_voyage_tanker);
@@ -44,10 +45,10 @@ public class InputInitialTankerActivity extends AppCompatActivity {
         inputHandlingAgent = findViewById(R.id.input_initial_tanker_handling_agent);
         inputGeneralAgent = findViewById(R.id.input_initial_tanker_general_agent);
         inputCargoStatus = findViewById(R.id.input_initial_tanker_cargo_status);
-        inputPortCall = findViewById(R.id.input_initial_tanker_port_of_call);
-        inputPortCallReport = findViewById(R.id.input_initial_tanker_port_of_call_report);
-        inputLastPort = findViewById(R.id.input_initial_tanker_last_port);
-        inputNextPort = findViewById(R.id.input_initial_tanker_next_port);
+        groupPortCall = findViewById(R.id.input_initial_tanker_group_port_of_call);
+        groupPortCallReport = findViewById(R.id.input_initial_tanker_group_port_of_call_report);
+        groupLastPort = findViewById(R.id.input_initial_tanker_group_last_port);
+        groupNextPort = findViewById(R.id.input_initial_tanker_group_next_port);
 
         inputPeriode = findViewById(R.id.input_initial_tanker_periode);
         kirim = findViewById(R.id.input_initial_tanker_kirim);
