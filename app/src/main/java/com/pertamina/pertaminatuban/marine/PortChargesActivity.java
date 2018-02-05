@@ -93,10 +93,6 @@ public class PortChargesActivity extends AppCompatActivity {
         Toast.makeText(this, String.valueOf(month + 1 + " " + year), Toast.LENGTH_SHORT).show();
     }
 
-    private void populateData() {
-
-    }
-
     private void handleInputButton() {
         Button button = findViewById(R.id.port_charges_input);
         button.setOnClickListener(new View.OnClickListener() {
