@@ -2,12 +2,15 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="4dp">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_margin="4dp"
+    android:id="@+id/item_marine_card">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <TextView
+            android:id="@+id/item_marine_call_vessel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="1 SINDANG"
@@ -18,8 +21,10 @@
             android:textSize="16sp"/>
 
         <android.support.v7.widget.RecyclerView
+            android:id="@+id/item_marine_table"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            tools:listitem="@layout/item_marine_data"
             android:padding="4dp"/>
     </LinearLayout>
 </android.support.v7.widget.CardView>
