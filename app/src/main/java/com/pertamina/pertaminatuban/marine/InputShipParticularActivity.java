@@ -10,8 +10,14 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.pertamina.pertaminatuban.R;
+import com.pertamina.pertaminatuban.marine.models.ShipParticular;
 
 public class InputShipParticularActivity extends AppCompatActivity {
+
+    private EditText inputFlag, inputDwt, inputGrt, inputLoa, inputTypeCall, inputTypeActivity, inputRate,
+            inputMaster;
+
+    private ShipParticular shipParticular;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +37,6 @@ public class InputShipParticularActivity extends AppCompatActivity {
     }
 
     private void getData() {
-        EditText inputFlag, inputDwt, inputGrt, inputLoa, inputTypeCall, inputTypeActivity, inputRate,
-                inputMaster;
         Button kirim;
         inputFlag = findViewById(R.id.input_ship_particular_flag);
         inputDwt = findViewById(R.id.input_ship_particular_dwt);
@@ -43,6 +47,50 @@ public class InputShipParticularActivity extends AppCompatActivity {
         inputRate = findViewById(R.id.input_ship_particular_rate);
         inputMaster = findViewById(R.id.input_ship_particular_master);
         kirim = findViewById(R.id.input_ship_particular_kirim);
+
+        if (currentDataExist()) {
+            getCurrentData();
+            setInitData();
+        }
     }
 
+    private void setInitData() {
+        setEditText(inputFlag, shipParticular.getFlag());
+        setEditText(inputDwt, shipParticular.getDwt());
+        setEditText(inputGrt, shipParticular.getGrt());
+        setEditText(inputLoa, shipParticular.getLoa());
+        setEditText(inputTypeCall, shipParticular.getTypeCall());
+        setEditText(inputTypeActivity, shipParticular.getTypeActivity());
+        setEditText(inputRate, shipParticular.getHireRate());
+        setEditText(inputMaster, shipParticular.getMaster());
+    }
+
+    private void getCurrentData() {
+        shipParticular = new ShipParticular(
+                "Flag",
+                0,
+                10,
+                20,
+                null,
+                "Loading",
+                0,
+                "Master"
+        );
+    }
+
+    private boolean currentDataExist() {
+        return true;
+    }
+
+    private void setEditText(EditText editText, Object value) {
+        if (value != null) {
+            if (value instanceof Float) {
+                if ((Float) value != 0) {
+                    editText.setText(String.valueOf(value));
+                }
+            } else if (value instanceof String) {
+                editText.setText((String) value);
+            }
+        }
+    }
 }
