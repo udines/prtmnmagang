@@ -1,8 +1,6 @@
 package com.pertamina.pertaminatuban.marine;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -10,8 +8,19 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.pertamina.pertaminatuban.R;
+import com.pertamina.pertaminatuban.marine.models.WaitingTime;
 
 public class InputWaitingTimeActivity extends AppCompatActivity {
+
+    private EditText pilotHour, pilotMins, labHour, labMins, tugHour, tugMins, jettyHour, jettyMins,
+            dayHour, dayMins, tideHour, tideMins, ballastHour, ballastMins, cleanHour, cleanMins,
+            nomiHour, nomiMins, powerHour, powerMins, weatherHour, weatherMins, lineHour, lineMins,
+            cargoHour, cargoMins, ullageHour, ullageMins, supplyBunkHour, supplyBunkMins,
+            supplyFreshHour, supplyFreshMins, actLoadHour, actLoadMins, prepHour, prepMins,
+            shoreOrderHour, shoreOrderMins, clearHour, clearMins, cargoDocHour, cargoDocMins,
+            pumpVessHour, pumpVessMins, pumpShoreHour, pumpShoreMins, cargoCalcHour, cargoCalcMins,
+            steamHour, steamMins, unreadyHour, unreadyMins;
+    private WaitingTime waitingTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,14 +40,7 @@ public class InputWaitingTimeActivity extends AppCompatActivity {
     }
 
     private void getData() {
-        EditText pilotHour, pilotMins, labHour, labMins, tugHour, tugMins, jettyHour, jettyMins,
-                dayHour, dayMins, tideHour, tideMins, ballastHour, ballastMins, cleanHour, cleanMins,
-                nomiHour, nomiMins, powerHour, powerMins, weatherHour, weatherMins, lineHour, lineMins,
-                cargoHour, cargoMins, ullageHour, ullageMins, supplyBunkHour, supplyBunkMins,
-                supplyFreshHour, supplyFreshMins, actLoadHour, actLoadMins, prepHour, prepMins,
-                shoreOrderHour, shoreOrderMins, clearHour, clearMins, cargoDocHour, cargoDocMins,
-                pumpVessHour, pumpVessMins, pumpShoreHour, pumpShoreMins, cargoCalcHour, cargoCalcMins,
-                steamHour, steamMins, unreadyHour, unreadyMins;
+
         Button kirim;
 
         pilotHour = findViewById(R.id.input_waiting_time_pilot_hour);
@@ -94,6 +96,84 @@ public class InputWaitingTimeActivity extends AppCompatActivity {
         unreadyHour = findViewById(R.id.input_waiting_time_unready_hour);
         unreadyMins = findViewById(R.id.input_waiting_time_unready_mins);
         kirim = findViewById(R.id.input_waiting_time_kirim);
+
+        if (currentDataExist()) {
+            getCurrentData();
+            setInitialInput();
+        }
+    }
+
+    private void setInitialInput() {
+        setEditText(pilotHour, pilotMins, waitingTime.getPilot());
+        setEditText(labHour, labMins, waitingTime.getLabAnalysis());
+        setEditText(tugHour, tugMins, waitingTime.getTugBoat());
+        setEditText(jettyHour, jettyMins, waitingTime.getJetty());
+        setEditText(dayHour, dayMins, waitingTime.getDaylight());
+        setEditText(tideHour, tideMins, waitingTime.getTide());
+        setEditText(ballastHour, ballastMins, waitingTime.getBallast());
+        setEditText(cleanHour, cleanMins, waitingTime.getTankCleaning());
+        setEditText(nomiHour, nomiMins, waitingTime.getNomination());
+        setEditText(powerHour, powerMins, waitingTime.getManPower());
+        setEditText(weatherHour, weatherMins, waitingTime.getBadWeater());
+        setEditText(lineHour, lineMins, waitingTime.getLine());
+        setEditText(cargoHour, cargoMins, waitingTime.getCargo());
+        setEditText(ullageHour, ullageMins, waitingTime.getUllage());
+        setEditText(supplyBunkHour, supplyBunkMins, waitingTime.getSupplyBunker());
+        setEditText(supplyFreshHour, supplyFreshMins, waitingTime.getSupplyFreshWater());
+        setEditText(actLoadHour, actLoadMins, waitingTime.getActLoadDate());
+        setEditText(prepHour, prepMins, waitingTime.getPreparation());
+        setEditText(shoreOrderHour, shoreOrderMins, waitingTime.getShoreOrder());
+        setEditText(clearHour, clearMins, waitingTime.getShipClearence());
+        setEditText(cargoDocHour, cargoDocMins, waitingTime.getCargoDocument());
+        setEditText(pumpVessHour, pumpVessMins, waitingTime.getSlowPumpVessel());
+        setEditText(pumpShoreHour, pumpShoreMins, waitingTime.getSlowPumpShore());
+        setEditText(cargoCalcHour, cargoCalcMins, waitingTime.getCargoCalculation());
+        setEditText(steamHour, steamMins, waitingTime.getSteamingInOut());
+        setEditText(unreadyHour, unreadyMins, waitingTime.getShipUnready());
+    }
+
+    private void setEditText(EditText inputHour, EditText inputMinute, int minutes) {
+        if (minutes > 0) {
+            int hour = minutes / 60;
+            int min = minutes % 60;
+            inputHour.setText(String.valueOf(hour));
+            inputMinute.setText(String.valueOf(min));
+        }
+    }
+
+    private void getCurrentData() {
+        waitingTime = new WaitingTime(
+                34,
+                123,
+                567,
+                123,
+                435,
+                0,
+                134,
+                98,
+                8,
+                9,
+                0,
+                32,
+                457,
+                927,
+                1000,
+                34,
+                498,
+                2183,
+                45,
+                128,
+                485,
+                34,
+                23,
+                2139,
+                3294,
+                2
+        );
+    }
+
+    private boolean currentDataExist() {
+        return true;
     }
 
 }
