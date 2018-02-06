@@ -1,8 +1,6 @@
 package com.pertamina.pertaminatuban.marine;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -10,8 +8,31 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.pertamina.pertaminatuban.R;
+import com.pertamina.pertaminatuban.marine.models.TankerMovement;
+
+import java.sql.Timestamp;
+import java.text.DateFormatSymbols;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class InputTankerMovementActivity extends AppCompatActivity {
+
+    private Button allFastDate, allFastTime, channelConnectionDate, channelConnectionTime, dryCertIssuedDate1,
+            dryCertIssuedTime1, compCargoCalcDate1, compCargoCalcTime1, labTestReleaseDate1,
+            labTestReleaseTime1, commenceDisLoadDate, commenceDisLoadTime, compDisLoadDate,
+            compDisLoadTime, compHoseDiscDate, compHoseDiscTime, dryCertIssuedDate2,
+            dryCertIssuedTime2, compCargoCalcDate2, compCargoCalcTime2, labTestReleaseDate2,
+            labTestReleaseTime2, cargoDocumentDate, cargoDocumentTime, portClearanceDate,
+            portClearanceTime, bookingPilotDate, bookingPilotTime, pilotOnUnberDate, pilotOnUnberTime,
+            castOffDate, castOffTime, anchoredDate, anchoredTime, pilotOnDepartDate, pilotOnDepartTime,
+            anchorDepartDate, anchorDepartTime, atdDate, atdTime, deliveryDate, deliveryTime,
+            redeliveryDate, redeliveryTime, onHireDate, onHireTime, offHireDate, offHireTime,
+            timeOffToOn, kirim;
+    private EditText inputRemarks;
+
+    private TankerMovement movement;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,22 +48,10 @@ public class InputTankerMovementActivity extends AppCompatActivity {
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        getData();
+        initData();
     }
 
-    private void getData() {
-        Button allFastDate, allFastTime, channelConnectionDate, channelConnectionTime, dryCertIssuedDate1,
-                dryCertIssuedTime1, compCargoCalcDate1, compCargoCalcTime1, labTestReleaseDate1,
-                labTestReleaseTime1, commenceDisLoadDate, commenceDisLoadTime, compDisLoadDate,
-                compDisLoadTime, compHoseDiscDate, compHoseDiscTime, dryCertIssuedDate2,
-                dryCertIssuedTime2, compCargoCalcDate2, compCargoCalcTime2, labTestReleaseDate2,
-                labTestReleaseTime2, cargoDocumentDate, cargoDocumentTime, portClearanceDate,
-                portClearanceTime, bookingPilotDate, bookingPilotTime, pilotOnUnberDate, pilotOnUnberTime,
-                castOffDate, castOffTime, anchoredDate, anchoredTime, pilotOnDepartDate, pilotOnDepartTime,
-                anchorDepartDate, anchorDepartTime, atdDate, atdTime, deliveryDate, deliveryTime,
-                redeliveryDate, redeliveryTime, onHireDate, onHireTime, offHireDate, offHireTime,
-                timeOffToOn, kirim;
-        EditText inputRemarks;
+    private void initData() {
 
         allFastDate = findViewById(R.id.input_tankmove_allfast_date);
         allFastTime = findViewById(R.id.input_tankmove_allfast_time);
@@ -61,6 +70,12 @@ public class InputTankerMovementActivity extends AppCompatActivity {
 
         commenceDisLoadDate = findViewById(R.id.input_tankmove_comm_disload_date);
         commenceDisLoadTime = findViewById(R.id.input_tankmove_comm_disload_time);
+
+        compDisLoadDate = findViewById(R.id.input_tankmove_comp_disload_date);
+        compDisLoadTime = findViewById(R.id.input_tankmove_comp_disload_time);
+
+        compHoseDiscDate = findViewById(R.id.input_tankmove_comp_hose_date);
+        compHoseDiscTime = findViewById(R.id.input_tankmove_comp_hose_time);
 
         dryCertIssuedDate2 = findViewById(R.id.input_tankmove_dry_cert_date_2);
         dryCertIssuedTime2 = findViewById(R.id.input_tankmove_dry_cert_time_2);
@@ -115,6 +130,99 @@ public class InputTankerMovementActivity extends AppCompatActivity {
         kirim = findViewById(R.id.input_tankmove_kirim);
 
         inputRemarks = findViewById(R.id.input_tankmove_input_remarks);
+
+        if (currentDataExist()) {
+            getCurrentData();
+            setInitialInput();
+        }
     }
 
+    private void getCurrentData() {
+        Calendar cal = Calendar.getInstance();
+        Timestamp time = new Timestamp(cal.getTimeInMillis());
+        movement = new TankerMovement(
+                time,
+                time,
+                time,
+                time,
+                time,
+                time,
+                time,
+                time,
+                time,
+                time,
+                time,
+                time,
+                time,
+                time,
+                time,
+                time,
+                time,
+                time,
+                time,
+                time,
+                time,
+                time,
+                time,
+                time,
+                time,
+                "Remarks"
+        );
+    }
+
+    private boolean currentDataExist() {
+        return true;
+    }
+
+    private void setInitialInput() {
+        setDateAndTimeButton(allFastDate, allFastTime, movement.getAllFast());
+        setDateAndTimeButton(channelConnectionDate, channelConnectionTime, movement.getChannelConnection());
+        setDateAndTimeButton(dryCertIssuedDate1, dryCertIssuedTime1, movement.getDryCertifIssued1());
+        setDateAndTimeButton(compCargoCalcDate1, compCargoCalcTime1, movement.getCompletedCargoCalculation1());
+        setDateAndTimeButton(labTestReleaseDate1, labTestReleaseTime1, movement.getLabTestReleased1());
+        setDateAndTimeButton(commenceDisLoadDate, commenceDisLoadTime, movement.getCommenceDisLoad());
+        setDateAndTimeButton(compDisLoadDate, compDisLoadTime, movement.getCompletedDisLoad());
+        setDateAndTimeButton(compHoseDiscDate, compHoseDiscTime, movement.getCompletedHoseDis());
+        setDateAndTimeButton(dryCertIssuedDate2, dryCertIssuedTime2, movement.getDryCertifIssued2());
+        setDateAndTimeButton(compCargoCalcDate2, compCargoCalcTime2, movement.getCompletedCargoCalculation2());
+        setDateAndTimeButton(labTestReleaseDate2, labTestReleaseTime2, movement.getLabTestReleased2());
+        setDateAndTimeButton(cargoDocumentDate, cargoDocumentTime, movement.getCargoDocument());
+        setDateAndTimeButton(portClearanceDate, portClearanceTime, movement.getPortClearence());
+        setDateAndTimeButton(bookingPilotDate, bookingPilotTime, movement.getBookingPilotUnberthing());
+        setDateAndTimeButton(pilotOnUnberDate, pilotOnUnberTime, movement.getPilotOnBoardUnberthing());
+        setDateAndTimeButton(castOffDate, castOffTime, movement.getCastOff());
+        setDateAndTimeButton(anchoredDate, anchoredTime, movement.getAnchoredRede());
+        setDateAndTimeButton(pilotOnDepartDate, pilotOnDepartTime, movement.getPilotOnBoardDeparture());
+        setDateAndTimeButton(anchorDepartDate, anchorDepartTime, movement.getAnchorDeparture());
+        setDateAndTimeButton(atdDate, atdTime, movement.getActualTimeDeparture());
+        setDateAndTimeButton(deliveryDate, deliveryTime, movement.getDelivery());
+        setDateAndTimeButton(redeliveryDate, redeliveryTime, movement.getRedelivery());
+        setDateAndTimeButton(onHireDate, onHireTime, movement.getOnHire());
+        setDateAndTimeButton(offHireDate, offHireTime, movement.getOffHire());
+        setDateAndTimeButton(null, timeOffToOn, movement.getOffToOn());
+
+        if (movement.getRemarksActivity() != null) {
+            inputRemarks.setText(movement.getRemarksActivity());
+        }
+    }
+
+    private void setDateAndTimeButton(Button dateButton, Button timeButton, Timestamp time) {
+        if (time != null) {
+            Calendar cal = Calendar.getInstance();
+            cal.setTimeInMillis(time.getTime());
+
+            if (dateButton != null) {
+                DateFormatSymbols symbols = new DateFormatSymbols();
+                String text = symbols.getMonths()[cal.get(Calendar.MONTH)] + " " + String.valueOf(cal.get(Calendar.YEAR));
+                dateButton.setText(text);
+            }
+
+            if (timeButton != null) {
+                Date date = new Date(cal.getTimeInMillis());
+                SimpleDateFormat format = new SimpleDateFormat("HH:mm", Locale.getDefault());
+                timeButton.setText(format.format(date));
+            }
+
+        }
+    }
 }

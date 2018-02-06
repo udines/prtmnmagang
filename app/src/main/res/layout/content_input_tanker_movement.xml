@@ -612,6 +612,7 @@
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:hint="Remarks Activity Del/Redel ON/OFF">
             <EditText
                 android:id="@+id/input_tankmove_input_remarks"
