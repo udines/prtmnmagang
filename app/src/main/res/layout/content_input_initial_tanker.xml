@@ -34,6 +34,7 @@
             android:id="@+id/input_initial_tanker_periode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:text="@string/text_input_periode"/>
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -138,6 +139,7 @@
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:hint="@string/hint_handling_agent">
             <EditText
                 android:id="@+id/input_initial_tanker_handling_agent"
