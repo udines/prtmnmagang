@@ -178,7 +178,7 @@
                 android:value="com.pertamina.pertaminatuban.activities.MenuActivity" />
         </activity>
         <activity
-            android:name=".marine.InputInitialTankerActivity"
+            android:name=".marine.input.InputInitialTankerActivity"
             android:label="@string/title_activity_input_initial_tanker"
             android:parentActivityName=".marine.InitialTankerActivity"
             android:theme="@style/AppTheme.NoActionBar"
@@ -188,7 +188,7 @@
                 android:value="com.pertamina.pertaminatuban.marine.InitialTankerActivity" />
         </activity>
         <activity
-            android:name=".marine.InputTankerMovementActivity"
+            android:name=".marine.input.InputTankerMovementActivity"
             android:label="@string/title_activity_input_tanker_movement"
             android:parentActivityName=".marine.TankerMovementActivity"
             android:theme="@style/AppTheme.NoActionBar"
@@ -198,7 +198,7 @@
                 android:value="com.pertamina.pertaminatuban.marine.TankerMovementActivity" />
         </activity>
         <activity
-            android:name=".marine.InputShipConditionActivity"
+            android:name=".marine.input.InputShipConditionActivity"
             android:label="@string/title_activity_input_ship_condition"
             android:parentActivityName=".marine.ShipConditionActivity"
             android:theme="@style/AppTheme.NoActionBar"
@@ -208,7 +208,7 @@
                 android:value="com.pertamina.pertaminatuban.marine.ShipConditionActivity" />
         </activity>
         <activity
-            android:name=".marine.InputWaitingTimeActivity"
+            android:name=".marine.input.InputWaitingTimeActivity"
             android:label="@string/title_activity_input_waiting_time"
             android:parentActivityName=".marine.WaitingTimeActivity"
             android:theme="@style/AppTheme.NoActionBar"
@@ -218,7 +218,7 @@
                 android:value="com.pertamina.pertaminatuban.marine.WaitingTimeActivity" />
         </activity>
         <activity
-            android:name=".marine.InputTemporaryStopActivity"
+            android:name=".marine.input.InputTemporaryStopActivity"
             android:label="@string/title_activity_input_temporary_stop"
             android:parentActivityName=".marine.TemporaryStopActivity"
             android:theme="@style/AppTheme.NoActionBar"
@@ -228,7 +228,7 @@
                 android:value="com.pertamina.pertaminatuban.marine.TemporaryStopActivity" />
         </activity>
         <activity
-            android:name=".marine.InputPortChargesActivity"
+            android:name=".marine.input.InputPortChargesActivity"
             android:label="@string/title_activity_input_port_charges"
             android:parentActivityName=".marine.PortChargesActivity"
             android:theme="@style/AppTheme.NoActionBar"
@@ -238,7 +238,7 @@
                 android:value="com.pertamina.pertaminatuban.marine.PortChargesActivity" />
         </activity>
         <activity
-            android:name=".marine.InputShipParticularActivity"
+            android:name=".marine.input.InputShipParticularActivity"
             android:label="@string/title_activity_input_ship_particular"
             android:parentActivityName=".marine.ShipParticularActivity"
             android:theme="@style/AppTheme.NoActionBar"

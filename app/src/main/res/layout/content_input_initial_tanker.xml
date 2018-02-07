@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.pertamina.pertaminatuban.marine.InputInitialTankerActivity"
+    tools:context="com.pertamina.pertaminatuban.marine.input.InputInitialTankerActivity"
     tools:showIn="@layout/activity_input_initial_tanker">
     <LinearLayout
         android:layout_width="match_parent"

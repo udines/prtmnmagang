@@ -2,8 +2,6 @@ package com.pertamina.pertaminatuban.marine;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -13,7 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pertamina.pertaminatuban.R;
-import com.pertamina.pertaminatuban.marine.models.ShipParticular;
+import com.pertamina.pertaminatuban.marine.input.InputShipParticularActivity;
 import com.whiteelephant.monthpicker.MonthPickerDialog;
 
 import java.text.DateFormatSymbols;
