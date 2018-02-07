@@ -1,4 +1,4 @@
-package com.pertamina.pertaminatuban.marine;
+package com.pertamina.pertaminatuban.marine.input;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
