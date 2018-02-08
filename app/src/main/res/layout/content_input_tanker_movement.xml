@@ -17,7 +17,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="All Fast"
+            android:text="@string/all_fast"
             android:textColor="@color/black"/>
         <LinearLayout
             android:layout_width="match_parent"
@@ -40,7 +40,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Channel Connection"
+            android:text="@string/channel_connection"
             android:layout_marginTop="8dp"
             android:textColor="@color/black"/>
         <LinearLayout
@@ -64,7 +64,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Dry Certificate Issued"
+            android:text="@string/dry_certificate_issued"
             android:layout_marginTop="8dp"
             android:textColor="@color/black"/>
         <LinearLayout
@@ -89,7 +89,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Completed Cargo Calculation"
+            android:text="@string/completed_cargo_calculation"
             android:textColor="@color/black"/>
         <LinearLayout
             android:layout_width="match_parent"
@@ -113,7 +113,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Lab Test Released (Before Disch)"
+            android:text="@string/lab_test_released_before_disch"
             android:textColor="@color/black"/>
         <LinearLayout
             android:layout_width="match_parent"
@@ -137,7 +137,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Commence Discharge / Loading"
+            android:text="@string/commence_discharge_loading"
             android:textColor="@color/black"/>
         <LinearLayout
             android:layout_width="match_parent"
@@ -161,7 +161,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Completed Loading / Discharge"
+            android:text="@string/completed_loading_discharge"
             android:textColor="@color/black"/>
         <LinearLayout
             android:layout_width="match_parent"
@@ -185,7 +185,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Completed Hose Disconnect"
+            android:text="@string/completed_hose_disconnect"
             android:textColor="@color/black"/>
         <LinearLayout
             android:layout_width="match_parent"
@@ -208,7 +208,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Dry Certificate Issued"
+            android:text="@string/dry_certificate_issued"
             android:layout_marginTop="8dp"
             android:textColor="@color/black"/>
         <LinearLayout
@@ -233,7 +233,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Completed Cargo Calculation"
+            android:text="@string/completed_cargo_calculation"
             android:textColor="@color/black"/>
         <LinearLayout
             android:layout_width="match_parent"
@@ -257,7 +257,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Lab Test Released (After Load)"
+            android:text="@string/lab_test_released_after_load"
             android:textColor="@color/black"/>
         <LinearLayout
             android:layout_width="match_parent"
@@ -282,7 +282,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Cargo Document On Board"
+            android:text="@string/cargo_document_on_board"
             android:textColor="@color/black"/>
         <LinearLayout
             android:layout_width="match_parent"
@@ -307,7 +307,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Port Clearance"
+            android:text="@string/port_clearance"
             android:textColor="@color/black"/>
         <LinearLayout
             android:layout_width="match_parent"
@@ -331,7 +331,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Booking Pilot For Unberthing"
+            android:text="@string/booking_pilot_for_unberthing"
             android:textColor="@color/black"/>
         <LinearLayout
             android:layout_width="match_parent"
@@ -355,7 +355,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Pilot On Board For Unberthing"
+            android:text="@string/pilot_on_board_for_unberthing"
             android:textColor="@color/black"/>
         <LinearLayout
             android:layout_width="match_parent"
@@ -379,7 +379,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Cast Off"
+            android:text="@string/cast_off"
             android:textColor="@color/black"/>
         <LinearLayout
             android:layout_width="match_parent"
@@ -403,7 +403,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Anchored @rede /On Board (Shifting)"
+            android:text="@string/anchored_rede_on_board_shifting"
             android:textColor="@color/black"/>
         <LinearLayout
             android:layout_width="match_parent"
@@ -427,7 +427,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Pilot On Board for Departure"
+            android:text="@string/pilot_on_board_for_departure"
             android:textColor="@color/black"/>
         <LinearLayout
             android:layout_width="match_parent"
@@ -451,7 +451,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Anchor for Departure"
+            android:text="@string/anchor_for_departure"
             android:textColor="@color/black"/>
         <LinearLayout
             android:layout_width="match_parent"
@@ -475,7 +475,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Actual Time Departure"
+            android:text="@string/actual_time_departure"
             android:textColor="@color/black"/>
         <LinearLayout
             android:layout_width="match_parent"
@@ -499,7 +499,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Delivery"
+            android:text="@string/delivery"
             android:textColor="@color/black"/>
         <LinearLayout
             android:layout_width="match_parent"
@@ -523,7 +523,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="ReDelivery"
+            android:text="@string/redelivery"
             android:textColor="@color/black"/>
         <LinearLayout
             android:layout_width="match_parent"
@@ -547,7 +547,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="On Hire / In Operation"
+            android:text="@string/on_hire_in_operation"
             android:textColor="@color/black"/>
         <LinearLayout
             android:layout_width="match_parent"
@@ -571,7 +571,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Off Hire / Out Operation"
+            android:text="@string/off_hire_out_operation"
             android:textColor="@color/black"/>
         <LinearLayout
             android:layout_width="match_parent"
@@ -595,7 +595,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Time OFF to ON"
+            android:text="@string/time_off_to_on"
             android:textColor="@color/black"/>
         <LinearLayout
             android:layout_width="match_parent"
@@ -613,7 +613,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:hint="Remarks Activity Del/Redel ON/OFF">
+            android:hint="@string/remarks_activity_del_redel_on_off">
             <EditText
                 android:id="@+id/input_tankmove_input_remarks"
                 android:layout_width="match_parent"
