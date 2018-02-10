@@ -288,5 +288,13 @@
     <string name="variable_port_charges_pilotages">pilotages</string>
     <string name="variable_port_charges_towage">towage</string>
     <string name="variable_port_charges_pup">pup9A2</string>
-    
+
+    <string name="variable_ship_particular_flag">Flag</string>
+    <string name="variable_ship_particular_dwt">DWT</string>
+    <string name="variable_ship_particular_grt">GRT</string>
+    <string name="variable_ship_particular_loa">LOA</string>
+    <string name="variable_ship_particular_type_call">typeBasedCall</string>
+    <string name="variable_ship_particular_type_activity">typeBasedActivity</string>
+    <string name="variable_ship_particular_hire_rate">EstHireRate</string>
+    <string name="variable_ship_particular_master">master</string>
 </resources>
