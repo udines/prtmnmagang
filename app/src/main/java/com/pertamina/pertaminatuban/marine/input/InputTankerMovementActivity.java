@@ -161,9 +161,11 @@ public class InputTankerMovementActivity extends AppCompatActivity {
 
         /*String kapal = getIntent().getStringExtra("vesselName");
         String periode = getIntent().getStringExtra("periode");
-        String callTanker = getIntent().getStringExtra("callTanker");*/
+        String callTanker = getIntent().getStringExtra("callTanker");
+        kapal = kapal.toUpperCase();*/
 
         String kapal = "John Caine";
+        kapal = kapal.toUpperCase();
         String periode = "A";
         String callTanker = "1";
 
@@ -494,8 +496,10 @@ public class InputTankerMovementActivity extends AppCompatActivity {
             cal.setTimeInMillis(time.getTime());
 
             if (dateButton != null) {
-                DateFormatSymbols symbols = new DateFormatSymbols();
-                String text = symbols.getMonths()[cal.get(Calendar.MONTH)] + " " + String.valueOf(cal.get(Calendar.YEAR));
+//                DateFormatSymbols symbols = new DateFormatSymbols();
+//                String text = symbols.getMonths()[cal.get(Calendar.MONTH)] + " " + String.valueOf(cal.get(Calendar.YEAR));
+                SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                String text = format.format(new Date(cal.getTimeInMillis()));
                 dateButton.setText(text);
             }
 
