@@ -1,12 +1,16 @@
 package com.pertamina.pertaminatuban.marine.input;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TimePicker;
 
 import com.google.gson.Gson;
 import com.pertamina.pertaminatuban.R;
@@ -490,7 +494,7 @@ public class InputTankerMovementActivity extends AppCompatActivity {
         }
     }
 
-    private void setDateAndTimeButton(Button dateButton, Button timeButton, Timestamp time) {
+    private void setDateAndTimeButton(final Button dateButton, final Button timeButton, Timestamp time) {
         if (time != null) {
             Calendar cal = Calendar.getInstance();
             cal.setTimeInMillis(time.getTime());
@@ -510,5 +514,61 @@ public class InputTankerMovementActivity extends AppCompatActivity {
             }
 
         }
+        if (dateButton != null) {
+            dateButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Log.w("date text", dateButton.getText().toString());
+                    showDatePicker(dateButton);
+                }
+            });
+        }
+        if (timeButton != null) {
+            timeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Log.w("time text", timeButton.getText().toString());
+                    showTimePicker(timeButton);
+                }
+            });
+        }
+    }
+
+    private void showTimePicker(final Button timeButton) {
+        Calendar cal = Calendar.getInstance();
+        TimePickerDialog.OnTimeSetListener listener = new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker timePicker, int i, int i1) {
+                timeButton.setText(String.valueOf(i + ":" + i1));
+            }
+        };
+        TimePickerDialog dialog = new TimePickerDialog(
+                InputTankerMovementActivity.this,
+                listener,
+                cal.get(Calendar.HOUR_OF_DAY),
+                cal.get(Calendar.MINUTE),
+                true
+        );
+        dialog.show();
+    }
+
+    private void showDatePicker(final Button dateButton) {
+        final Calendar cal = Calendar.getInstance();
+        DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+                cal.set(i, i1, i2);
+                SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                dateButton.setText(format.format(new Date(cal.getTimeInMillis())));
+            }
+        };
+        DatePickerDialog dialog = new DatePickerDialog(
+                InputTankerMovementActivity.this,
+                listener,
+                cal.get(Calendar.YEAR),
+                cal.get(Calendar.MONTH),
+                cal.get(Calendar.DAY_OF_MONTH)
+        );
+        dialog.show();
     }
 }
