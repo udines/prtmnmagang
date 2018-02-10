@@ -61,7 +61,7 @@
     <string name="button_text_kirim">kirim</string>
     <string name="hint_reason_stop_1">Reason Stop 1</string>
     <string name="text_stop_time">Stop time</string>
-    <string name="button_text_date">Date</string>
+    <string name="button_text_date">date</string>
     <string name="button_text_time">time</string>
     <string name="text_resume_time">Resume time</string>
     <string name="hint_reason_stop">Reason Stop</string>
@@ -177,7 +177,7 @@
     <string name="off_hire_out_operation">Off Hire / Out Operation</string>
     <string name="time_off_to_on">Time OFF to ON</string>
     <string name="remarks_activity_del_redel_on_off">Remarks Activity Del/Redel ON/OFF</string>
-    
+
     <string name="variable_init_tanker_call_tanker">callTanker</string>
     <string name="variable_init_tanker_period">periode</string>
     <string name="variable_init_tanker_voyage">voyageTanker</string>
@@ -208,6 +208,7 @@
     <string name="variable_tank_move_commence_dis_load">commenceDischargeLoading</string>
     <string name="variable_tank_move_completed_dis_load">completedLoadingDischarge</string>
     <string name="variable_tank_move_completed_hose">completedHoseDisconnect</string>
+    <string name="variable_tank_move_cargo_doc">cargoDocumentOnBoard</string>
     <string name="variable_tank_move_port_clearence">portClearence</string>
     <string name="variable_tank_move_book_pilot_unberthing">bookingPilotforUnberthing</string>
     <string name="variable_tank_move_pilot_onboard_unberthing">pilotOnBoardforUnberthing</string>
@@ -222,7 +223,7 @@
     <string name="variable_tank_move_off_hire">offHire</string>
     <string name="variable_tank_move_time_off_on">timeOFFtoON</string>
     <string name="variable_tank_move_remarks">remarksActivity</string>
-    
+
     <string name="variable_ship_condition_description">descriptionDraft</string>
     <string name="variable_ship_condition_draft_ata">draftActualTimeArrival</string>
     <string name="variable_ship_condition_draft_atd">draftActualTimeDeparture</string>
@@ -297,4 +298,5 @@
     <string name="variable_ship_particular_type_activity">typeBasedActivity</string>
     <string name="variable_ship_particular_hire_rate">EstHireRate</string>
     <string name="variable_ship_particular_master">master</string>
+    <string name="title_activity_pilih_tanker">Pilih Tanker</string>
 </resources>
