@@ -117,7 +117,7 @@ public class InputInitialTankerActivity extends AppCompatActivity {
     }
 
     private void getInputData() {
-
+        ArrayList<MarineInput> initTankers = new ArrayList<>();
     }
 
     private void setInitialData() {

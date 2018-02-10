@@ -3,12 +3,19 @@ package com.pertamina.pertaminatuban.marine.input;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.gson.Gson;
 import com.pertamina.pertaminatuban.R;
 import com.pertamina.pertaminatuban.marine.models.PortCharges;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class InputPortChargesActivity extends AppCompatActivity {
 
@@ -54,9 +61,108 @@ public class InputPortChargesActivity extends AppCompatActivity {
         kirim.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                
+                getInputData();
             }
         });
+    }
+
+    private void getInputData() {
+        Calendar cal = Calendar.getInstance();
+
+        /*int year, month;
+        year = getIntent().getIntExtra("yearPeriod", 2018);
+        month = getIntent().getIntExtra("monthPeriod", 0);
+        cal.set(year, month, 1);*/
+
+        Date date = new Date(cal.getTimeInMillis());
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-dd");
+        String bulan = format.format(date);
+
+        /*String kapal = getIntent().getStringExtra("vesselName");
+        String periode = getIntent().getStringExtra("periode");
+        String callTanker = getIntent().getStringExtra("callTanker");*/
+
+        String kapal = "John Caine";
+        String periode = "A";
+        String callTanker = "1";
+
+        ArrayList<MarineInput> data = new ArrayList<>();
+        MarineInput lightData, harborData, quayData, pilotageData, towageData, pupData;
+
+        lightData = new MarineInput(
+                getDataIfAvailable(inputRambu),
+                getResources().getString(R.string.variable_port_charges_light),
+                kapal,
+                periode,
+                bulan,
+                callTanker
+        );
+        data.add(lightData);
+
+        harborData = new MarineInput(
+                getDataIfAvailable(inputLabuh),
+                getResources().getString(R.string.variable_port_charges_harbour),
+                kapal,
+                periode,
+                bulan,
+                callTanker
+        );
+        data.add(harborData);
+
+        quayData = new MarineInput(
+                getDataIfAvailable(inputTambat),
+                getResources().getString(R.string.variable_port_charges_quay),
+                kapal,
+                periode,
+                bulan,
+                callTanker
+        );
+        data.add(quayData);
+
+        pilotageData = new MarineInput(
+                getDataIfAvailable(inputPandu),
+                getResources().getString(R.string.variable_port_charges_pilotages),
+                kapal,
+                periode,
+                bulan,
+                callTanker
+        );
+        data.add(pilotageData);
+
+        towageData = new MarineInput(
+                getDataIfAvailable(inputTunda),
+                getResources().getString(R.string.variable_port_charges_towage),
+                kapal,
+                periode,
+                bulan,
+                callTanker
+        );
+        data.add(towageData);
+
+        pupData = new MarineInput(
+                getDataIfAvailable(inputPup),
+                getResources().getString(R.string.variable_port_charges_pup),
+                kapal,
+                periode,
+                bulan,
+                callTanker
+        );
+        data.add(pupData);
+
+        uploadData(data);
+    }
+
+    private void uploadData(ArrayList<MarineInput> data) {
+        String json = new Gson().toJson(data);
+        Log.w("json", json);
+    }
+
+    private String getDataIfAvailable(EditText inputField) {
+        if (!inputField.getText().toString().isEmpty()) {
+            return inputField.getText().toString();
+        } else {
+            return "";
+        }
     }
 
     private void getCurrentData() {

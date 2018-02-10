@@ -5,19 +5,19 @@ import com.google.gson.annotations.SerializedName;
 
 public class MarineInput {
 
-    @SerializedName("date")
+    @SerializedName("value")
     @Expose
-    private String date;
+    private String value;
 
     @SerializedName("variable")
     @Expose
     private String variable;
 
-    @SerializedName("kapal_name")
+    @SerializedName("kapal_nama")
     @Expose
     private String kapal;
 
-    @SerializedName("period")
+    @SerializedName("periode")
     @Expose
     private String periode;
 
@@ -25,12 +25,12 @@ public class MarineInput {
     @Expose
     private String bulan;
 
-    @SerializedName("callTanker")
+    @SerializedName("call_tanker")
     @Expose
     private String callTanker;
 
-    public MarineInput(String date, String variable, String kapal, String periode, String bulan, String callTanker) {
-        this.date = date;
+    public MarineInput(String value, String variable, String kapal, String periode, String bulan, String callTanker) {
+        this.value = value;
         this.variable = variable;
         this.kapal = kapal;
         this.periode = periode;
@@ -38,12 +38,12 @@ public class MarineInput {
         this.callTanker = callTanker;
     }
 
-    public String getDate() {
-        return date;
+    public String getValue() {
+        return value;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setValue(String value) {
+        this.value = value;
     }
 
     public String getVariable() {
