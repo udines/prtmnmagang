@@ -161,8 +161,6 @@
     <string name="commence_discharge_loading">Commence Discharge / Loading</string>
     <string name="completed_loading_discharge">Completed Loading / Discharge</string>
     <string name="completed_hose_disconnect">Completed Hose Disconnect</string>
-    <string name="dry_certificate_issued">Dry Certificate Issued</string>
-    <string name="completed_cargo_calculation">Completed Cargo Calculation</string>
     <string name="lab_test_released_after_load">Lab Test Released (After Load)</string>
     <string name="cargo_document_on_board">Cargo Document On Board</string>
     <string name="port_clearance">Port Clearance</string>
@@ -179,4 +177,23 @@
     <string name="off_hire_out_operation">Off Hire / Out Operation</string>
     <string name="time_off_to_on">Time OFF to ON</string>
     <string name="remarks_activity_del_redel_on_off">Remarks Activity Del/Redel ON/OFF</string>
+    
+    <string name="variable_init_tanker_call_tanker">callTanker</string>
+    <string name="variable_init_tanker_period">periode</string>
+    <string name="variable_init_tanker_voyage">voyageTanker</string>
+    <string name="variable_init_tanker_no_bill">noBillOfLoading</string>
+    <string name="variable_init_tanker_date_bill">dateNoBillOfLoading</string>
+    <string name="variable_init_tanker_status_tanker">statusTanker</string>
+    <string name="variable_init_tanker_status_ops">statusOperasionalReport</string>
+    <string name="variable_init_tanker_grades">grades</string>
+    <string name="variable_init_tanker_handling_agent">handingAgent</string>
+    <string name="variable_init_tanker_general_agent">generalAgent</string>
+    <string name="variable_init_tanker_cargo_status">cargoStatus</string>
+    <string name="variable_init_tanker_tanker_activity">tankerActivity</string>
+    <string name="variable_init_tanker_pump_method">pumpingMethode</string>
+    <string name="variable_init_tanker_barthing_spm">barthingAtSPM</string>
+    <string name="variable_init_tanker_port_call">portOfCall</string>
+    <string name="variable_init_tanker_port_call_report">portOfCallReport</string>
+    <string name="variable_init_tanker_last_port">lastPort</string>
+    <string name="variable_init_tanker_next_port">nextPort</string>
 </resources>
