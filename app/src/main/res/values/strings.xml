@@ -238,4 +238,31 @@
     <string name="variable_ship_condition_bunker_consumption_seatime">bunkerConsumptionSeaTime</string>
     <string name="variable_ship_condition_slop_tank_ata">slopTankActualTimeArrival</string>
     <string name="variable_ship_condition_slop_tank_atd">slopTankActualTimeDeparture</string>
+
+    <string name="variable_waiting_time_pilot">pilot</string>
+    <string name="variable_waiting_time_lab_analysis">laboratoriumAnalysis</string>
+    <string name="variable_waiting_time_tug_boat">tugBoat</string>
+    <string name="variable_waiting_time_jetty">jetty</string>
+    <string name="variable_waiting_time_daylight">daylight</string>
+    <string name="variable_waiting_time_tide">tide</string>
+    <string name="variable_waiting_time_ballast">ballastingDeballasting</string>
+    <string name="variable_waiting_time_tank_cleaning">tankCleaning</string>
+    <string name="variable_waiting_time_nomination">nomination</string>
+    <string name="variable_waiting_time_man_power">manPower</string>
+    <string name="variable_waiting_time_bad_weather">badWeather</string>
+    <string name="variable_waiting_time_line">line</string>
+    <string name="variable_waiting_time_cargo">cargo</string>
+    <string name="variable_waiting_time_ullage">ullage</string>
+    <string name="variable_waiting_time_supply_bunker">supplyBunker</string>
+    <string name="variable_waiting_time_supply_fresh_water">supplyFreshWater</string>
+    <string name="variable_waiting_time_act_load">actLoadDateActDischDate</string>
+    <string name="variable_waiting_time_preparation">preparation</string>
+    <string name="variable_waiting_time_shore_order">shoreOrder</string>
+    <string name="variable_waiting_time_ship_clearence">shipClearence</string>
+    <string name="variable_waiting_time_cargo_doc">cargoDocument</string>
+    <string name="variable_waiting_time_slow_vessel">slowPumpVessel</string>
+    <string name="variable_waiting_time_slop_shore">slowPumpShore</string>
+    <string name="variable_waiting_time_cargo_calculation">cargoCalculation</string>
+    <string name="variable_waiting_time_steaming">steamingINOUT</string>
+    <string name="variable_waiting_time_unready">shipUnready</string>
 </resources>
