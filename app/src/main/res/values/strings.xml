@@ -196,4 +196,30 @@
     <string name="variable_init_tanker_port_call_report">portOfCallReport</string>
     <string name="variable_init_tanker_last_port">lastPort</string>
     <string name="variable_init_tanker_next_port">nextPort</string>
+
+    <string name="variable_tank_move_all_fast">allFast</string>
+    <string name="variable_tank_move_channel_connection">channelConnection</string>
+    <string name="variable_tank_move_dry_certif_1">dryCertificateIssued_1</string>
+    <string name="variable_tank_move_dry_certif_2">dryCertificateIssued_2</string>
+    <string name="variable_tank_move_completed_cargo_calc_1">completedCargoCalculation_1</string>
+    <string name="variable_tank_move_completed_cargo_calc_2">completedCargoCalculation_2</string>
+    <string name="variable_tank_move_lab_test_released_1">labTestReleasedBeforeDisch</string>
+    <string name="variable_tank_move_lab_test_released_2">labTestReleasedAfterLoad</string>
+    <string name="variable_tank_move_commence_dis_load">commenceDischargeLoading</string>
+    <string name="variable_tank_move_completed_dis_load">completedLoadingDischarge</string>
+    <string name="variable_tank_move_completed_hose">completedHoseDisconnect</string>
+    <string name="variable_tank_move_port_clearence">portClearence</string>
+    <string name="variable_tank_move_book_pilot_unberthing">bookingPilotforUnberthing</string>
+    <string name="variable_tank_move_pilot_onboard_unberthing">pilotOnBoardforUnberthing</string>
+    <string name="variable_tank_move_cast_off">castOff</string>
+    <string name="variable_tank_move_anchoredOnBoard">anchoredOnBoard</string>
+    <string name="variable_tank_move_pilot_onboard_departure">pilotOnBoardforDeparture</string>
+    <string name="variable_tank_move_anchor_departure">anchorforDeparture</string>
+    <string name="variable_tank_move_actual_time_departure">actualTimeDeparture</string>
+    <string name="variable_tank_move_delivery">delivery</string>
+    <string name="variable_tank_move_redelivery">reDelivery</string>
+    <string name="variable_tank_move_on_hire">onHire</string>
+    <string name="variable_tank_move_off_hire">offHire</string>
+    <string name="variable_tank_move_time_off_on">timeOFFtoON</string>
+    <string name="variable_tank_move_remarks">remarksActivity</string>
 </resources>
