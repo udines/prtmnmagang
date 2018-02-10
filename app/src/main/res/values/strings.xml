@@ -265,4 +265,20 @@
     <string name="variable_waiting_time_cargo_calculation">cargoCalculation</string>
     <string name="variable_waiting_time_steaming">steamingINOUT</string>
     <string name="variable_waiting_time_unready">shipUnready</string>
+
+    <string name="variable_temp_stop_reason_1">reasonStop_1</string>
+    <string name="variable_temp_stop_start_1">start_1</string>
+    <string name="variable_temp_stop_resume_1">resume_1</string>
+    <string name="variable_temp_stop_reason_2">reasonStop_2</string>
+    <string name="variable_temp_stop_start_2">start_2</string>
+    <string name="variable_temp_stop_resume_2">resume_2</string>
+    <string name="variable_temp_stop_reason_3">reasonStop_3</string>
+    <string name="variable_temp_stop_start_3">start_3</string>
+    <string name="variable_temp_stop_resume_3">resume_3</string>
+    <string name="variable_temp_stop_reason_4">reasonStop_4</string>
+    <string name="variable_temp_stop_start_4">start_4</string>
+    <string name="variable_temp_stop_resume_4">resume_4</string>
+    <string name="variable_temp_stop_reason_5">reasonStop_5</string>
+    <string name="variable_temp_stop_start_5">start_5</string>
+    <string name="variable_temp_stop_resume_5">resume_5</string>
 </resources>
