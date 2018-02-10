@@ -281,4 +281,12 @@
     <string name="variable_temp_stop_reason_5">reasonStop_5</string>
     <string name="variable_temp_stop_start_5">start_5</string>
     <string name="variable_temp_stop_resume_5">resume_5</string>
+
+    <string name="variable_port_charges_light">lightDues</string>
+    <string name="variable_port_charges_harbour">harbourDues</string>
+    <string name="variable_port_charges_quay">quayDues</string>
+    <string name="variable_port_charges_pilotages">pilotages</string>
+    <string name="variable_port_charges_towage">towage</string>
+    <string name="variable_port_charges_pup">pup9A2</string>
+    
 </resources>
