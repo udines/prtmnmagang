@@ -3,12 +3,19 @@ package com.pertamina.pertaminatuban.marine.input;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.gson.Gson;
 import com.pertamina.pertaminatuban.R;
 import com.pertamina.pertaminatuban.marine.models.WaitingTime;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class InputWaitingTimeActivity extends AppCompatActivity {
 
@@ -101,6 +108,298 @@ public class InputWaitingTimeActivity extends AppCompatActivity {
             getCurrentData();
             setInitialInput();
         }
+
+        kirim.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getInputData();
+            }
+        });
+    }
+
+    private void getInputData() {
+        Calendar cal = Calendar.getInstance();
+
+        /*int year, month;
+        year = getIntent().getIntExtra("yearPeriod", 2018);
+        month = getIntent().getIntExtra("monthPeriod", 0);
+        cal.set(year, month, 1);*/
+
+        Date date = new Date(cal.getTimeInMillis());
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-dd");
+        String bulan = format.format(date);
+
+        /*String kapal = getIntent().getStringExtra("vesselName");
+        String periode = getIntent().getStringExtra("periode");
+        String callTanker = getIntent().getStringExtra("callTanker");
+        kapal = kapal.toUpperCase();*/
+
+        String kapal = "John Caine";
+        kapal = kapal.toUpperCase();
+        String periode = "A";
+        String callTanker = "1";
+
+        ArrayList<MarineInput> data = new ArrayList<>();
+
+        data.add(new MarineInput(
+                getDurasi(pilotHour, pilotMins),
+                getResources().getString(R.string.variable_waiting_time_pilot),
+                kapal,
+                periode,
+                bulan,
+                callTanker
+        ));
+
+        data.add(new MarineInput(
+                getDurasi(labHour, labMins),
+                getResources().getString(R.string.variable_waiting_time_lab_analysis),
+                kapal,
+                periode,
+                bulan,
+                callTanker
+        ));
+
+        data.add(new MarineInput(
+                getDurasi(tugHour, tugMins),
+                getResources().getString(R.string.variable_waiting_time_tug_boat),
+                kapal,
+                periode,
+                bulan,
+                callTanker
+        ));
+
+        data.add(new MarineInput(
+                getDurasi(jettyHour, jettyMins),
+                getResources().getString(R.string.variable_waiting_time_jetty),
+                kapal,
+                periode,
+                bulan,
+                callTanker
+        ));
+
+        data.add(new MarineInput(
+                getDurasi(dayHour, dayMins),
+                getResources().getString(R.string.variable_waiting_time_daylight),
+                kapal,
+                periode,
+                bulan,
+                callTanker
+        ));
+
+        data.add(new MarineInput(
+                getDurasi(tideHour, tideMins),
+                getResources().getString(R.string.variable_waiting_time_tide),
+                kapal,
+                periode,
+                bulan,
+                callTanker
+        ));
+
+        data.add(new MarineInput(
+                getDurasi(ballastHour, ballastMins),
+                getResources().getString(R.string.variable_waiting_time_ballast),
+                kapal,
+                periode,
+                bulan,
+                callTanker
+        ));
+
+        data.add(new MarineInput(
+                getDurasi(cleanHour, cleanMins),
+                getResources().getString(R.string.variable_waiting_time_tank_cleaning),
+                kapal,
+                periode,
+                bulan,
+                callTanker
+        ));
+
+        data.add(new MarineInput(
+                getDurasi(nomiHour, nomiMins),
+                getResources().getString(R.string.variable_waiting_time_nomination),
+                kapal,
+                periode,
+                bulan,
+                callTanker
+        ));
+
+        data.add(new MarineInput(
+                getDurasi(powerHour, powerMins),
+                getResources().getString(R.string.variable_waiting_time_man_power),
+                kapal,
+                periode,
+                bulan,
+                callTanker
+        ));
+
+        data.add(new MarineInput(
+                getDurasi(weatherHour, weatherMins),
+                getResources().getString(R.string.variable_waiting_time_bad_weather),
+                kapal,
+                periode,
+                bulan,
+                callTanker
+        ));
+
+        data.add(new MarineInput(
+                getDurasi(lineHour, lineMins),
+                getResources().getString(R.string.variable_waiting_time_line),
+                kapal,
+                periode,
+                bulan,
+                callTanker
+        ));
+
+        data.add(new MarineInput(
+                getDurasi(cargoHour, cargoMins),
+                getResources().getString(R.string.variable_waiting_time_cargo),
+                kapal,
+                periode,
+                bulan,
+                callTanker
+        ));
+
+        data.add(new MarineInput(
+                getDurasi(ullageHour, ullageMins),
+                getResources().getString(R.string.variable_waiting_time_ullage),
+                kapal,
+                periode,
+                bulan,
+                callTanker
+        ));
+
+        data.add(new MarineInput(
+                getDurasi(supplyBunkHour, supplyBunkMins),
+                getResources().getString(R.string.variable_waiting_time_supply_bunker),
+                kapal,
+                periode,
+                bulan,
+                callTanker
+        ));
+
+        data.add(new MarineInput(
+                getDurasi(supplyFreshHour, supplyFreshMins),
+                getResources().getString(R.string.variable_waiting_time_supply_fresh_water),
+                kapal,
+                periode,
+                bulan,
+                callTanker
+        ));
+
+        data.add(new MarineInput(
+                getDurasi(actLoadHour, actLoadMins),
+                getResources().getString(R.string.variable_waiting_time_act_load),
+                kapal,
+                periode,
+                bulan,
+                callTanker
+        ));
+
+        data.add(new MarineInput(
+                getDurasi(prepHour, prepMins),
+                getResources().getString(R.string.variable_waiting_time_preparation),
+                kapal,
+                periode,
+                bulan,
+                callTanker
+        ));
+
+        data.add(new MarineInput(
+                getDurasi(shoreOrderHour, shoreOrderMins),
+                getResources().getString(R.string.variable_waiting_time_shore_order),
+                kapal,
+                periode,
+                bulan,
+                callTanker
+        ));
+
+        data.add(new MarineInput(
+                getDurasi(clearHour, clearMins),
+                getResources().getString(R.string.variable_waiting_time_ship_clearence),
+                kapal,
+                periode,
+                bulan,
+                callTanker
+        ));
+
+        data.add(new MarineInput(
+                getDurasi(cargoDocHour, cargoDocMins),
+                getResources().getString(R.string.variable_waiting_time_cargo_doc),
+                kapal,
+                periode,
+                bulan,
+                callTanker
+        ));
+
+        data.add(new MarineInput(
+                getDurasi(pumpVessHour, pumpVessMins),
+                getResources().getString(R.string.variable_waiting_time_slow_vessel),
+                kapal,
+                periode,
+                bulan,
+                callTanker
+        ));
+
+        data.add(new MarineInput(
+                getDurasi(pumpShoreHour, pumpShoreMins),
+                getResources().getString(R.string.variable_waiting_time_slow_shore),
+                kapal,
+                periode,
+                bulan,
+                callTanker
+        ));
+
+        data.add(new MarineInput(
+                getDurasi(cargoCalcHour, cargoCalcMins),
+                getResources().getString(R.string.variable_waiting_time_cargo_calculation),
+                kapal,
+                periode,
+                bulan,
+                callTanker
+        ));
+
+        data.add(new MarineInput(
+                getDurasi(steamHour, steamMins),
+                getResources().getString(R.string.variable_waiting_time_steaming),
+                kapal,
+                periode,
+                bulan,
+                callTanker
+        ));
+
+        data.add(new MarineInput(
+                getDurasi(unreadyHour, unreadyMins),
+                getResources().getString(R.string.variable_waiting_time_unready),
+                kapal,
+                periode,
+                bulan,
+                callTanker
+        ));
+
+        uploadData(data);
+    }
+
+    private void uploadData(ArrayList<MarineInput> data) {
+        Log.w("json", new Gson().toJson(data));
+    }
+
+    private String getDurasi(EditText hour, EditText min) {
+        if (!hour.getText().toString().isEmpty() && !min.getText().toString().isEmpty()) {
+            if (min.getText().length() == 1) {
+                return String.valueOf(hour.getText().toString() + ":0" + min.getText().toString());
+            } else {
+                return String.valueOf(hour.getText().toString() + ":" + min.getText().toString());
+            }
+        } else if (!hour.getText().toString().isEmpty() && min.getText().toString().isEmpty()) {
+            return String.valueOf(hour.getText().toString() + ":00");
+        } else if (hour.getText().toString().isEmpty() && !min.getText().toString().isEmpty()) {
+            if (min.getText().length() == 1) {
+                return String.valueOf("00:0" + min.getText().toString());
+            } else {
+                return String.valueOf("00:" + min.getText().toString());
+            }
+        } else {
+            return "";
+        }
     }
 
     private void setInitialInput() {
@@ -173,7 +472,7 @@ public class InputWaitingTimeActivity extends AppCompatActivity {
     }
 
     private boolean currentDataExist() {
-        return true;
+        return false;
     }
 
 }

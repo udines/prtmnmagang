@@ -115,9 +115,9 @@
     <string name="text_solar">Solar</string>
     <string name="radio_loading_port">Loading Port</string>
     <string name="radio_discharge_port">Discharge Port</string>
-    <string name="hint_hour">hh</string>
+    <string name="hint_hour">jam</string>
     <string name="text_titik_dua">:</string>
-    <string name="hint_minute">mm</string>
+    <string name="hint_minute">menit</string>
     <string name="text_pilot">Pilot</string>
     <string name="text_laboratorium_analysis">Laboratorium Analysis</string>
     <string name="text_tug_boat">Tug Boat</string>
@@ -262,7 +262,7 @@
     <string name="variable_waiting_time_ship_clearence">shipClearence</string>
     <string name="variable_waiting_time_cargo_doc">cargoDocument</string>
     <string name="variable_waiting_time_slow_vessel">slowPumpVessel</string>
-    <string name="variable_waiting_time_slop_shore">slowPumpShore</string>
+    <string name="variable_waiting_time_slow_shore">slowPumpShore</string>
     <string name="variable_waiting_time_cargo_calculation">cargoCalculation</string>
     <string name="variable_waiting_time_steaming">steamingINOUT</string>
     <string name="variable_waiting_time_unready">shipUnready</string>
