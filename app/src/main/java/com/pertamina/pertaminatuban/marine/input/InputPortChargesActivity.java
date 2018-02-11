@@ -1,5 +1,7 @@
 package com.pertamina.pertaminatuban.marine.input;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -11,11 +13,22 @@ import android.widget.EditText;
 import com.google.gson.Gson;
 import com.pertamina.pertaminatuban.R;
 import com.pertamina.pertaminatuban.marine.models.PortCharges;
+import com.pertamina.pertaminatuban.service.UserClient;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class InputPortChargesActivity extends AppCompatActivity {
 
@@ -155,6 +168,59 @@ public class InputPortChargesActivity extends AppCompatActivity {
     private void uploadData(ArrayList<MarineInput> data) {
         String json = new Gson().toJson(data);
         Log.w("json", json);
+        sendPostRequest(data);
+    }
+
+    private void sendPostRequest(ArrayList<MarineInput> data) {
+        SharedPreferences preferences = InputPortChargesActivity.this.getSharedPreferences(
+                "login",
+                Context.MODE_PRIVATE
+        );
+
+        final String key = preferences.getString("userKey", "none");
+
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(new Interceptor() {
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request original = chain.request();
+
+                Request request = original.newBuilder()
+                        .header("Authorization", key)
+                        .method(original.method(), original.body())
+                        .build();
+                return chain.proceed(request);
+            }
+        });
+
+        Log.w("json", String.valueOf(data.size()));
+
+        OkHttpClient client = httpClient.build();
+
+        String baseUrl = "http://www.api.clicktuban.com/";
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client);
+
+        Retrofit retrofit = builder.build();
+        UserClient userClient = retrofit.create(UserClient.class);
+
+        Call<Object> call = userClient.postPortCharges(data);
+        call.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, Response<Object> response) {
+                if (response.code() == 200) {
+                    Log.w("message", response.message());
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
     }
 
     private String getDataIfAvailable(EditText inputField) {
