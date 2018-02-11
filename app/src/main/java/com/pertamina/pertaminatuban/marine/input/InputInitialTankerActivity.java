@@ -15,6 +15,7 @@ import com.pertamina.pertaminatuban.marine.models.InitialTanker;
 
 import java.sql.Date;
 import java.text.DateFormatSymbols;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -117,7 +118,29 @@ public class InputInitialTankerActivity extends AppCompatActivity {
     }
 
     private void getInputData() {
-        ArrayList<MarineInput> initTankers = new ArrayList<>();
+        Calendar cal = Calendar.getInstance();
+
+        /*int year, month;
+        year = getIntent().getIntExtra("yearPeriod", 2018);
+        month = getIntent().getIntExtra("monthPeriod", 0);
+        cal.set(year, month, 1);*/
+
+        java.util.Date date = new java.util.Date(cal.getTimeInMillis());
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-dd");
+        String bulan = format.format(date);
+
+        /*String kapal = getIntent().getStringExtra("vesselName");
+        String periode = getIntent().getStringExtra("periode");
+        String callTanker = getIntent().getStringExtra("callTanker");*/
+
+        String kapal = "John Caine";
+        String periode = "A";
+        String callTanker = "1";
+
+        ArrayList<MarineInput> data = new ArrayList<>();
+
+
+
     }
 
     private void setInitialData() {

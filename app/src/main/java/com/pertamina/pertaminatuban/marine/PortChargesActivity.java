@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.pertamina.pertaminatuban.R;
 import com.pertamina.pertaminatuban.marine.input.InputPortChargesActivity;
+import com.pertamina.pertaminatuban.marine.input.PilihTankerActivity;
 import com.whiteelephant.monthpicker.MonthPickerDialog;
 
 import java.text.DateFormatSymbols;
@@ -99,7 +100,8 @@ public class PortChargesActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent inputIntent = new Intent(getApplicationContext(), InputPortChargesActivity.class);
+                Intent inputIntent = new Intent(getApplicationContext(), PilihTankerActivity.class);
+                inputIntent.putExtra("sourceActivity", "PortCharges");
                 inputIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(inputIntent);
             }
