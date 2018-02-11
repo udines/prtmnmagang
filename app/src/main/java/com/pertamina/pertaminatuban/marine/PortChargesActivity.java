@@ -1,22 +1,41 @@
 package com.pertamina.pertaminatuban.marine;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.pertamina.pertaminatuban.R;
-import com.pertamina.pertaminatuban.marine.input.InputPortChargesActivity;
 import com.pertamina.pertaminatuban.marine.input.PilihTankerActivity;
+import com.pertamina.pertaminatuban.marine.models.PortCharges;
+import com.pertamina.pertaminatuban.service.UserClient;
 import com.whiteelephant.monthpicker.MonthPickerDialog;
 
+import java.io.IOException;
 import java.text.DateFormatSymbols;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class PortChargesActivity extends AppCompatActivity {
 
@@ -45,7 +64,7 @@ public class PortChargesActivity extends AppCompatActivity {
         day = cal.get(Calendar.DAY_OF_MONTH);
 
         setDateButton(month, year);
-        populateData(month, year);
+        getMarineData(month, year);
 
         handleDateButton();
         handleInputButton();
@@ -74,7 +93,7 @@ public class PortChargesActivity extends AppCompatActivity {
                                 setDateButton(month, year);
 
                                 //get data sesuai dengan bulan dan tahun
-                                populateData(month, year);
+                                getMarineData(month, year);
                             }
                         },
                         today.get(Calendar.YEAR),
@@ -91,8 +110,61 @@ public class PortChargesActivity extends AppCompatActivity {
         });
     }
 
-    private void populateData(int month, int year) {
-        Toast.makeText(this, String.valueOf(month + 1 + " " + year), Toast.LENGTH_SHORT).show();
+    private void getMarineData(int month, int year) {
+        Calendar cal = Calendar.getInstance();
+        cal.set(year, month, 1);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM", Locale.getDefault());
+        String bulan = format.format(new Date(cal.getTimeInMillis()));
+
+        Log.w("get data untuk bulan:", bulan);
+
+        SharedPreferences preferences = PortChargesActivity.this.getSharedPreferences(
+                "login",
+                Context.MODE_PRIVATE
+        );
+        final String key = preferences.getString("userKey", "none");
+
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(new Interceptor() {
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request original = chain.request();
+
+                Request request = original.newBuilder()
+                        .header("Authorization", key)
+                        .method(original.method(), original.body())
+                        .build();
+                return chain.proceed(request);
+            }
+        });
+
+        OkHttpClient client = httpClient.build();
+
+        String baseUrl = "http://www.api.clicktuban.com/";
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client);
+
+        Retrofit retrofit = builder.build();
+        UserClient userClient = retrofit.create(UserClient.class);
+        Call<ArrayList<PortCharges>> call = userClient.getPortCharges(bulan);
+
+        call.enqueue(new Callback<ArrayList<PortCharges>>() {
+            @Override
+            public void onResponse(Call<ArrayList<PortCharges>> call, Response<ArrayList<PortCharges>> response) {
+                Log.w("code", String.valueOf(response.code()));
+                if (response.code() == 200) {
+                    Log.w("msg", response.message());
+                    Log.w("data", new Gson().toJson(response.body()));
+                } 
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<PortCharges>> call, Throwable t) {
+
+            }
+        });
     }
 
     private void handleInputButton() {

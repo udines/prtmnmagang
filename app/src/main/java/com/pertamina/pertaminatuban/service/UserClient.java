@@ -7,6 +7,7 @@ import com.pertamina.pertaminatuban.distribusi.models.Ritase;
 import com.pertamina.pertaminatuban.distribusi.models.Wilayah;
 import com.pertamina.pertaminatuban.marine.input.MarineInput;
 import com.pertamina.pertaminatuban.marine.models.InitialTanker;
+import com.pertamina.pertaminatuban.marine.models.PortCharges;
 import com.pertamina.pertaminatuban.models.LoginResponse;
 import com.pertamina.pertaminatuban.models.RegisterData;
 import com.pertamina.pertaminatuban.models.RegisterResponse;
@@ -70,4 +71,10 @@ public interface UserClient {
 
     @POST("marine/initialtanker")
     Call<Object> postInitialTanker(@Body ArrayList<MarineInput> marine);
+
+    @GET("marine/portcharges/{bulan}")
+    Call<ArrayList<PortCharges>> getPortCharges(@Path("bulan") String bulan);
+
+    @POST("marine/portcharges")
+    Call<Object> postPortCharges(@Body ArrayList<MarineInput> marine);
 }
