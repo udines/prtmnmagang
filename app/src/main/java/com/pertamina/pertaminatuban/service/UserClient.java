@@ -5,6 +5,8 @@ import com.pertamina.pertaminatuban.distribusi.models.Matbal;
 import com.pertamina.pertaminatuban.distribusi.models.Opers;
 import com.pertamina.pertaminatuban.distribusi.models.Ritase;
 import com.pertamina.pertaminatuban.distribusi.models.Wilayah;
+import com.pertamina.pertaminatuban.marine.input.MarineInput;
+import com.pertamina.pertaminatuban.marine.models.InitialTanker;
 import com.pertamina.pertaminatuban.models.LoginResponse;
 import com.pertamina.pertaminatuban.models.RegisterData;
 import com.pertamina.pertaminatuban.models.RegisterResponse;
@@ -62,4 +64,10 @@ public interface UserClient {
 
     @POST("distribusi/opers")
     Call<Object> postOpers(@Body Opers opers);
+
+    @GET("marine/initialtanker/{bulan}")
+    Call<ArrayList<InitialTanker>> getInitialTanker(@Path("bulan") String bulan);
+
+    @POST("marine/initialtanker")
+    Call<Object> postInitialTanker(@Body ArrayList<MarineInput> marine);
 }
