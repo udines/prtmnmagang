@@ -143,12 +143,63 @@ public class InputTankerMovementActivity extends AppCompatActivity {
             setInitialInput();
         }
 
+        assignButtonListener();
+
         kirim.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 getInputData();
             }
         });
+    }
+
+    private void assignButtonListener() {
+        addButtonListener(allFastDate, allFastTime);
+        addButtonListener(channelConnectionDate, channelConnectionTime);
+        addButtonListener(dryCertIssuedDate1, dryCertIssuedTime1);
+        addButtonListener(compCargoCalcDate1, compCargoCalcTime1);
+        addButtonListener(labTestReleaseDate1, labTestReleaseTime1);
+        addButtonListener(commenceDisLoadDate, commenceDisLoadTime);
+        addButtonListener(compDisLoadDate, compDisLoadTime);
+        addButtonListener(compHoseDiscDate, compHoseDiscTime);
+        addButtonListener(dryCertIssuedDate2, dryCertIssuedTime2);
+        addButtonListener(compCargoCalcDate2, compCargoCalcTime2);
+        addButtonListener(labTestReleaseDate2, labTestReleaseTime2);
+        addButtonListener(cargoDocumentDate, cargoDocumentTime);
+        addButtonListener(portClearanceDate, portClearanceTime);
+        addButtonListener(bookingPilotDate, bookingPilotTime);
+        addButtonListener(pilotOnUnberDate, pilotOnUnberTime);
+        addButtonListener(castOffDate, castOffTime);
+        addButtonListener(anchoredDate, anchoredTime);
+        addButtonListener(pilotOnDepartDate, pilotOnDepartTime);
+        addButtonListener(anchorDepartDate, anchorDepartTime);
+        addButtonListener(atdDate, atdTime);
+        addButtonListener(deliveryDate, deliveryTime);
+        addButtonListener(redeliveryDate, redeliveryTime);
+        addButtonListener(onHireDate, onHireTime);
+        addButtonListener(offHireDate, offHireTime);
+        addButtonListener(null, timeOffToOn);
+    }
+
+    private void addButtonListener(final Button dateButton, final Button timeButton) {
+        if (dateButton != null) {
+            dateButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Log.w("date text", dateButton.getText().toString());
+                    showDatePicker(dateButton);
+                }
+            });
+        }
+        if (timeButton != null) {
+            timeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Log.w("time text", timeButton.getText().toString());
+                    showTimePicker(timeButton);
+                }
+            });
+        }
     }
 
     private void getInputData() {
@@ -459,7 +510,7 @@ public class InputTankerMovementActivity extends AppCompatActivity {
     }
 
     private boolean currentDataExist() {
-        return true;
+        return false;
     }
 
     private void setInitialInput() {
@@ -523,23 +574,22 @@ public class InputTankerMovementActivity extends AppCompatActivity {
                 }
             });
         }
-        if (timeButton != null) {
-            timeButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Log.w("time text", timeButton.getText().toString());
-                    showTimePicker(timeButton);
-                }
-            });
-        }
     }
 
     private void showTimePicker(final Button timeButton) {
-        Calendar cal = Calendar.getInstance();
+        final Calendar cal = Calendar.getInstance();
         TimePickerDialog.OnTimeSetListener listener = new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int i, int i1) {
-                timeButton.setText(String.valueOf(i + ":" + i1));
+                cal.set(
+                        cal.get(Calendar.YEAR),
+                        cal.get(Calendar.MONTH),
+                        cal.get(Calendar.HOUR_OF_DAY),
+                        i,
+                        i1
+                );
+                SimpleDateFormat format = new SimpleDateFormat("HH:mm", Locale.getDefault());
+                timeButton.setText(format.format(new Date(cal.getTimeInMillis())));
             }
         };
         TimePickerDialog dialog = new TimePickerDialog(
