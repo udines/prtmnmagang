@@ -1,5 +1,7 @@
 package com.pertamina.pertaminatuban.marine.input;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -9,16 +11,30 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 
+import com.google.gson.Gson;
 import com.pertamina.pertaminatuban.R;
+import com.pertamina.pertaminatuban.distribusi.InputMatbalActivity;
 import com.pertamina.pertaminatuban.marine.models.InitialTanker;
+import com.pertamina.pertaminatuban.service.UserClient;
 
+import java.io.IOException;
 import java.sql.Date;
 import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class InputInitialTankerActivity extends AppCompatActivity {
 
@@ -104,10 +120,10 @@ public class InputInitialTankerActivity extends AppCompatActivity {
         groupPumpingMethod = findViewById(R.id.input_initial_tanker_group_pumpung_method);
         groupBarthing = findViewById(R.id.input_initial_tanker_group_barthing);
 
-        if (currentDataExist()) {
-            getInitialData();
-            setInitialData();
-        }
+//        if (currentDataExist()) {
+//            getInitialData();
+//            setInitialData();
+//        }
 
         kirim.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,11 +155,189 @@ public class InputInitialTankerActivity extends AppCompatActivity {
 
         ArrayList<MarineInput> data = new ArrayList<>();
 
+        data.add(new MarineInput(
+                getDataIfAvailable(inputCallTanker),
+                getResources().getString(R.string.variable_init_tanker_call_tanker),
+                kapal,
+                periode,
+                bulan,
+                callTanker
+        ));
 
+        /*data.add(new MarineInput(
+                getDataIfAvailable(inputCallTanker),
+                getResources().getString(R.string.variable_init_tanker_call_tanker),
+                kapal,
+                periode,
+                bulan,
+                callTanker
+        ));*/
 
+        data.add(new MarineInput(
+                getDataIfAvailable(inputVoyage),
+                getResources().getString(R.string.variable_init_tanker_voyage),
+                kapal,
+                periode,
+                bulan,
+                callTanker
+        ));
+
+        data.add(new MarineInput(
+                getDataIfAvailable(inputNoBill),
+                getResources().getString(R.string.variable_init_tanker_no_bill),
+                kapal,
+                periode,
+                bulan,
+                callTanker
+        ));
+
+        data.add(new MarineInput(
+                getRadioGroupData(groupStatusTanker),
+                getResources().getString(R.string.variable_init_tanker_status_tanker),
+                kapal,
+                periode,
+                bulan,
+                callTanker
+        ));
+
+        data.add(new MarineInput(
+                getRadioGroupData(groupStatusOperasional),
+                getResources().getString(R.string.variable_init_tanker_status_ops),
+                kapal,
+                periode,
+                bulan,
+                callTanker
+        ));
+
+        data.add(new MarineInput(
+                getRadioGroupData(groupGrades),
+                getResources().getString(R.string.variable_init_tanker_grades),
+                kapal,
+                periode,
+                bulan,
+                callTanker
+        ));
+
+        data.add(new MarineInput(
+                getDataIfAvailable(inputHandlingAgent),
+                getResources().getString(R.string.variable_init_tanker_handling_agent),
+                kapal,
+                periode,
+                bulan,
+                callTanker
+        ));
+
+        data.add(new MarineInput(
+                getDataIfAvailable(inputGeneralAgent),
+                getResources().getString(R.string.variable_init_tanker_general_agent),
+                kapal,
+                periode,
+                bulan,
+                callTanker
+        ));
+
+        data.add(new MarineInput(
+                getDataIfAvailable(inputCargoStatus),
+                getResources().getString(R.string.variable_init_tanker_cargo_status),
+                kapal,
+                periode,
+                bulan,
+                callTanker
+        ));
+
+        data.add(new MarineInput(
+                getRadioGroupData(groupTankerActivity),
+                getResources().getString(R.string.variable_init_tanker_tanker_activity),
+                kapal,
+                periode,
+                bulan,
+                callTanker
+        ));
+
+        data.add(new MarineInput(
+                getRadioGroupData(groupPumpingMethod),
+                getResources().getString(R.string.variable_init_tanker_pump_method),
+                kapal,
+                periode,
+                bulan,
+                callTanker
+        ));
+
+        data.add(new MarineInput(
+                getRadioGroupData(groupBarthing),
+                getResources().getString(R.string.variable_init_tanker_barthing_spm),
+                kapal,
+                periode,
+                bulan,
+                callTanker
+        ));
+
+        data.add(new MarineInput(
+                getRadioGroupData(groupPortCall),
+                getResources().getString(R.string.variable_init_tanker_port_call),
+                kapal,
+                periode,
+                bulan,
+                callTanker
+        ));
+
+        data.add(new MarineInput(
+                getRadioGroupData(groupPortCallReport),
+                getResources().getString(R.string.variable_init_tanker_port_call_report),
+                kapal,
+                periode,
+                bulan,
+                callTanker
+        ));
+
+        data.add(new MarineInput(
+                getRadioGroupData(groupLastPort),
+                getResources().getString(R.string.variable_init_tanker_last_port),
+                kapal,
+                periode,
+                bulan,
+                callTanker
+        ));
+
+        data.add(new MarineInput(
+                getRadioGroupData(groupNextPort),
+                getResources().getString(R.string.variable_init_tanker_next_port),
+                kapal,
+                periode,
+                bulan,
+                callTanker
+        ));
+
+        uploadData(data);
     }
 
-    private void setInitialData() {
+    private void uploadData(ArrayList<MarineInput> data) {
+        String json = new Gson().toJson(data);
+        Log.w("json", json);
+        sendPostRequest(data);
+    }
+
+    private String getRadioGroupData(RadioGroup radioGroup) {
+        if (!radioGroup.isSelected()) {
+            return "";
+        } else {
+            int id= radioGroup.getCheckedRadioButtonId();
+            View radioButton = radioGroup.findViewById(id);
+            int radioId = radioGroup.indexOfChild(radioButton);
+            RadioButton btn = (RadioButton) radioGroup.getChildAt(radioId);
+            return  (String) btn.getText();
+        }
+    }
+
+    private String getDataIfAvailable(EditText inputField) {
+        if (!inputField.getText().toString().isEmpty()) {
+            return inputField.getText().toString();
+        } else {
+            return "";
+        }
+    }
+
+    /*private void setInitialData() {
 
         setEditText(inputCallTanker, String.valueOf(initialTanker.getCall()));
         setEditText(inputVoyage, initialTanker.getVoyage());
@@ -167,7 +361,7 @@ public class InputInitialTankerActivity extends AppCompatActivity {
         setRadioSelected(groupTankerActivity, activityChoice, initialTanker.getTankerActivity());
         setRadioSelected(groupPumpingMethod, methodChoice, initialTanker.getPumpMethod());
         setRadioSelected(groupGrades, gradeChoice, initialTanker.getGrades());
-    }
+    }*/
 
     private void setRadioSelected(RadioGroup group, List<String> choices, String chosen) {
         if (chosen != null && !chosen.isEmpty()) {
@@ -208,19 +402,18 @@ public class InputInitialTankerActivity extends AppCompatActivity {
         Calendar cal = Calendar.getInstance();
 
         initialTanker = new InitialTanker(
-                "idAbc123",
-                1,
-                new Date(cal.getTimeInMillis()),
+                "",
+                "",
                 "15/D1/P.3010/VII/2017",
                 "12",
-                new Date(cal.getTimeInMillis()),
+                "",
                 "Own Tanker",
                 "Own Tanker",
                 "",
                 "PTM",
                 "PTM",
                 "Domestic",
-                null,
+                "",
                 "Simultan",
                 getResources().getString(R.string.radio_spm_35),
                 "Discharge Port",
@@ -228,5 +421,57 @@ public class InputInitialTankerActivity extends AppCompatActivity {
                 "Loading Port",
                 "Discharge Port"
         );
+    }
+
+    private void sendPostRequest(ArrayList<MarineInput> marine) {
+        SharedPreferences preferences = InputInitialTankerActivity.this.getSharedPreferences(
+                "login",
+                Context.MODE_PRIVATE
+        );
+
+        final String key = preferences.getString("userKey", "none");
+
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(new Interceptor() {
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request original = chain.request();
+
+                Request request = original.newBuilder()
+                        .header("Authorization", key)
+                        .method(original.method(), original.body())
+                        .build();
+                return chain.proceed(request);
+            }
+        });
+
+        Log.w("json", String.valueOf(marine.size()));
+
+        OkHttpClient client = httpClient.build();
+
+        String baseUrl = "http://www.api.clicktuban.com/";
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client);
+
+        Retrofit retrofit = builder.build();
+        UserClient userClient = retrofit.create(UserClient.class);
+
+        Call<Object> call = userClient.postInitialTanker(marine);
+        call.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, Response<Object> response) {
+                if (response.code() == 200) {
+                    Log.w("message", response.message());
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
     }
 }
