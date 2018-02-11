@@ -5,12 +5,20 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.gson.Gson;
 import com.pertamina.pertaminatuban.R;
 import com.pertamina.pertaminatuban.marine.models.ShipParticular;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class InputShipParticularActivity extends AppCompatActivity {
 
@@ -52,6 +60,124 @@ public class InputShipParticularActivity extends AppCompatActivity {
             getCurrentData();
             setInitData();
         }
+
+        kirim.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getInputData();
+            }
+        });
+    }
+
+    private void getInputData() {
+        Calendar cal = Calendar.getInstance();
+
+        /*int year, month;
+        year = getIntent().getIntExtra("yearPeriod", 2018);
+        month = getIntent().getIntExtra("monthPeriod", 0);
+        cal.set(year, month, 1);*/
+
+        Date date = new Date(cal.getTimeInMillis());
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-dd", Locale.getDefault());
+        String bulan = format.format(date);
+
+        /*String kapal = getIntent().getStringExtra("vesselName");
+        String periode = getIntent().getStringExtra("periode");
+        String callTanker = getIntent().getStringExtra("callTanker");
+        kapal = kapal.toUpperCase();*/
+
+        String kapal = "John Caine";
+        kapal = kapal.toUpperCase();
+        String periode = "A";
+        String callTanker = "1";
+
+        ArrayList<MarineInput> data = new ArrayList<>();
+
+        data.add(new MarineInput(
+                getDataIfAvailable(inputFlag),
+                getResources().getString(R.string.variable_ship_particular_flag),
+                kapal,
+                periode,
+                bulan,
+                callTanker
+        ));
+
+        data.add(new MarineInput(
+                getDataIfAvailable(inputDwt),
+                getResources().getString(R.string.variable_ship_particular_dwt),
+                kapal,
+                periode,
+                bulan,
+                callTanker
+        ));
+
+        data.add(new MarineInput(
+                getDataIfAvailable(inputGrt),
+                getResources().getString(R.string.variable_ship_particular_grt),
+                kapal,
+                periode,
+                bulan,
+                callTanker
+        ));
+
+        data.add(new MarineInput(
+                getDataIfAvailable(inputLoa),
+                getResources().getString(R.string.variable_ship_particular_loa),
+                kapal,
+                periode,
+                bulan,
+                callTanker
+        ));
+
+        data.add(new MarineInput(
+                getDataIfAvailable(inputTypeCall),
+                getResources().getString(R.string.variable_ship_particular_type_call),
+                kapal,
+                periode,
+                bulan,
+                callTanker
+        ));
+
+        data.add(new MarineInput(
+                getDataIfAvailable(inputTypeActivity),
+                getResources().getString(R.string.variable_ship_particular_type_activity),
+                kapal,
+                periode,
+                bulan,
+                callTanker
+        ));
+
+        data.add(new MarineInput(
+                getDataIfAvailable(inputRate),
+                getResources().getString(R.string.variable_ship_particular_hire_rate),
+                kapal,
+                periode,
+                bulan,
+                callTanker
+        ));
+
+        data.add(new MarineInput(
+                getDataIfAvailable(inputMaster),
+                getResources().getString(R.string.variable_ship_particular_master),
+                kapal,
+                periode,
+                bulan,
+                callTanker
+        ));
+
+        uploadData(data);
+    }
+
+    private void uploadData(ArrayList<MarineInput> data) {
+        Log.w("json", new Gson().toJson(data));
+    }
+
+    private String getDataIfAvailable(EditText inputField) {
+        if (!inputField.getText().toString().isEmpty()) {
+            return inputField.getText().toString();
+        } else {
+            return "";
+        }
     }
 
     private void setInitData() {
@@ -79,7 +205,7 @@ public class InputShipParticularActivity extends AppCompatActivity {
     }
 
     private boolean currentDataExist() {
-        return true;
+        return false;
     }
 
     private void setEditText(EditText editText, Object value) {
