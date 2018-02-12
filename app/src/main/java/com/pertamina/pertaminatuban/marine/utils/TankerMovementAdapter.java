@@ -18,11 +18,9 @@ import java.util.Locale;
 
 public class TankerMovementAdapter extends RecyclerView.Adapter<TankerMovementViewHolder> {
 
-    private ArrayList<Tanker> tankers;
     private ArrayList<TankerMovement> movements;
 
-    public TankerMovementAdapter(ArrayList<Tanker> tankers, ArrayList<TankerMovement> movements) {
-        this.tankers = tankers;
+    public TankerMovementAdapter(ArrayList<TankerMovement> movements) {
         this.movements = movements;
     }
 
@@ -35,7 +33,6 @@ public class TankerMovementAdapter extends RecyclerView.Adapter<TankerMovementVi
     @Override
     public void onBindViewHolder(TankerMovementViewHolder holder, int position) {
         TankerMovement model = movements.get(position);
-        Tanker tanker = tankers.get(position);
 
         setDateText(holder.allFastDate, model.getAllFast());
         setDateText(holder.channelConnectionDate, model.getChannelConnection());
@@ -73,7 +70,7 @@ public class TankerMovementAdapter extends RecyclerView.Adapter<TankerMovementVi
 
     @Override
     public int getItemCount() {
-        return tankers.size();
+        return movements.size();
     }
 
     private void setDateText(TextView text, String time) {

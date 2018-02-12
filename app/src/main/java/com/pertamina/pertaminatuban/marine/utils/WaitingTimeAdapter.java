@@ -14,11 +14,9 @@ import java.util.ArrayList;
 
 public class WaitingTimeAdapter extends RecyclerView.Adapter<WaitingTimeViewHolder> {
 
-    private ArrayList<Tanker> tankers;
     private ArrayList<WaitingTime> waitingTimes;
 
-    public WaitingTimeAdapter(ArrayList<Tanker> tankers, ArrayList<WaitingTime> waitingTimes) {
-        this.tankers = tankers;
+    public WaitingTimeAdapter(ArrayList<WaitingTime> waitingTimes) {
         this.waitingTimes = waitingTimes;
     }
 
@@ -30,7 +28,6 @@ public class WaitingTimeAdapter extends RecyclerView.Adapter<WaitingTimeViewHold
 
     @Override
     public void onBindViewHolder(WaitingTimeViewHolder holder, int position) {
-        Tanker tanker = tankers.get(position);
         WaitingTime model = waitingTimes.get(position);
 
         setTextTime(holder.pilot, model.getPilot());
@@ -77,6 +74,6 @@ public class WaitingTimeAdapter extends RecyclerView.Adapter<WaitingTimeViewHold
 
     @Override
     public int getItemCount() {
-        return tankers.size();
+        return waitingTimes.size();
     }
 }

@@ -192,16 +192,7 @@ public class InputShipParticularActivity extends AppCompatActivity {
     }
 
     private void getCurrentData() {
-        shipParticular = new ShipParticular(
-                "Flag",
-                0,
-                10,
-                20,
-                null,
-                "Loading",
-                0,
-                "Master"
-        );
+
     }
 
     private boolean currentDataExist() {

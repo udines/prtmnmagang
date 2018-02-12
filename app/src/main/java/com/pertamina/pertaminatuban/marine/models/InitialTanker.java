@@ -1,7 +1,5 @@
 package com.pertamina.pertaminatuban.marine.models;
 
-import android.content.res.Resources;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -27,7 +25,7 @@ public class InitialTanker {
     @SerializedName("callTanker")
     @Expose
     private String call;
-    @SerializedName("periode")
+    @SerializedName("period")
     @Expose
     private String period;
     @SerializedName("voyageTanker")

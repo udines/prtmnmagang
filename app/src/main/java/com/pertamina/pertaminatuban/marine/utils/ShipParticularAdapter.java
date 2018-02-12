@@ -15,11 +15,9 @@ import java.util.ArrayList;
 
 public class ShipParticularAdapter extends RecyclerView.Adapter<ShipPartcularViewHolder> {
 
-    private ArrayList<Tanker> tankers;
     private ArrayList<ShipParticular> shipParticulars;
 
-    public ShipParticularAdapter(ArrayList<Tanker> tankers, ArrayList<ShipParticular> shipParticulars) {
-        this.tankers = tankers;
+    public ShipParticularAdapter(ArrayList<ShipParticular> shipParticulars) {
         this.shipParticulars = shipParticulars;
     }
 
@@ -31,7 +29,6 @@ public class ShipParticularAdapter extends RecyclerView.Adapter<ShipPartcularVie
 
     @Override
     public void onBindViewHolder(ShipPartcularViewHolder holder, int position) {
-        Tanker tanker = tankers.get(position);
         ShipParticular model = shipParticulars.get(position);
 
         setStringText(holder.flag, model.getFlag());
@@ -64,6 +61,6 @@ public class ShipParticularAdapter extends RecyclerView.Adapter<ShipPartcularVie
     }
     @Override
     public int getItemCount() {
-        return tankers.size();
+        return shipParticulars.size();
     }
 }

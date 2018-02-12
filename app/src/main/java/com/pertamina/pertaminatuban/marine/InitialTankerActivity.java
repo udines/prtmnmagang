@@ -19,6 +19,7 @@ import com.pertamina.pertaminatuban.R;
 import com.pertamina.pertaminatuban.marine.input.PilihTankerActivity;
 import com.pertamina.pertaminatuban.marine.models.InitialTanker;
 import com.pertamina.pertaminatuban.marine.models.MarineTable;
+import com.pertamina.pertaminatuban.marine.utils.InitialTankerAdapter;
 import com.pertamina.pertaminatuban.service.UserClient;
 import com.whiteelephant.monthpicker.MonthPickerDialog;
 
@@ -121,7 +122,7 @@ public class InitialTankerActivity extends AppCompatActivity {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM", Locale.getDefault());
         String bulan = format.format(new Date(cal.getTimeInMillis()));
 
-        Log.w("get data untuk bulan:", bulan);
+        Log.w("get data bulan", bulan);
 
         SharedPreferences preferences = InitialTankerActivity.this.getSharedPreferences(
                 "login",
@@ -183,7 +184,8 @@ public class InitialTankerActivity extends AppCompatActivity {
     }
 
     private void populateData(ArrayList<InitialTanker> tankers) {
-
+        InitialTankerAdapter adapter = new InitialTankerAdapter(tankers);
+        recyclerView.setAdapter(adapter);
     }
 
     private void handleInputButton() {

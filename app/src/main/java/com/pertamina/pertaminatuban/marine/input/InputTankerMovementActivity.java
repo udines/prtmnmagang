@@ -477,36 +477,7 @@ public class InputTankerMovementActivity extends AppCompatActivity {
     }
 
     private void getCurrentData() {
-        Calendar cal = Calendar.getInstance();
-        Timestamp time = new Timestamp(cal.getTimeInMillis());
-        movement = new TankerMovement(
-                time,
-                time,
-                time,
-                time,
-                time,
-                time,
-                time,
-                time,
-                time,
-                null,
-                time,
-                time,
-                time,
-                time,
-                time,
-                time,
-                time,
-                time,
-                time,
-                time,
-                time,
-                time,
-                time,
-                time,
-                time,
-                "Remarks"
-        );
+
     }
 
     private boolean currentDataExist() {
@@ -545,23 +516,16 @@ public class InputTankerMovementActivity extends AppCompatActivity {
         }
     }
 
-    private void setDateAndTimeButton(final Button dateButton, final Button timeButton, Timestamp time) {
+    private void setDateAndTimeButton(final Button dateButton, final Button timeButton, String time) {
         if (time != null) {
-            Calendar cal = Calendar.getInstance();
-            cal.setTimeInMillis(time.getTime());
+            String[] dateTime = time.split(" ");
 
-            if (dateButton != null) {
-//                DateFormatSymbols symbols = new DateFormatSymbols();
-//                String text = symbols.getMonths()[cal.get(Calendar.MONTH)] + " " + String.valueOf(cal.get(Calendar.YEAR));
-                SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-                String text = format.format(new Date(cal.getTimeInMillis()));
-                dateButton.setText(text);
+            if (!dateTime[0].isEmpty()) {
+                dateButton.setText(dateTime[0]);
             }
 
-            if (timeButton != null) {
-                Date date = new Date(cal.getTimeInMillis());
-                SimpleDateFormat format = new SimpleDateFormat("HH:mm", Locale.getDefault());
-                timeButton.setText(format.format(date));
+            if (!dateTime[1].isEmpty()) {
+                dateButton.setText(dateTime[1]);
             }
 
         }

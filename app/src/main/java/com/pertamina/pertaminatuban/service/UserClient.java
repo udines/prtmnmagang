@@ -8,6 +8,7 @@ import com.pertamina.pertaminatuban.distribusi.models.Wilayah;
 import com.pertamina.pertaminatuban.marine.input.MarineInput;
 import com.pertamina.pertaminatuban.marine.models.InitialTanker;
 import com.pertamina.pertaminatuban.marine.models.PortCharges;
+import com.pertamina.pertaminatuban.marine.models.ShipCondition;
 import com.pertamina.pertaminatuban.models.LoginResponse;
 import com.pertamina.pertaminatuban.models.RegisterData;
 import com.pertamina.pertaminatuban.models.RegisterResponse;
@@ -77,4 +78,7 @@ public interface UserClient {
 
     @POST("marine/portcharges")
     Call<Object> postPortCharges(@Body ArrayList<MarineInput> marine);
+
+    @GET("marine/shipcondition/{bulan}")
+    Call<ArrayList<ShipCondition>> getShipCondition(@Path("bulan") String bulan);
 }

@@ -17,11 +17,9 @@ import java.util.Locale;
 
 public class ShipConditionAdapter extends RecyclerView.Adapter<ShipConditionViewHolder> {
 
-    private ArrayList<Tanker> tankers;
     private ArrayList<ShipCondition> conditions;
 
-    public ShipConditionAdapter(ArrayList<Tanker> tankers, ArrayList<ShipCondition> conditions) {
-        this.tankers = tankers;
+    public ShipConditionAdapter(ArrayList<ShipCondition> conditions) {
         this.conditions = conditions;
     }
 
@@ -33,7 +31,6 @@ public class ShipConditionAdapter extends RecyclerView.Adapter<ShipConditionView
 
     @Override
     public void onBindViewHolder(ShipConditionViewHolder holder, int position) {
-        Tanker tanker = tankers.get(position);
         ShipCondition model = conditions.get(position);
 
         setDateText(holder.ata, model.getActualTimeArrival());
@@ -63,7 +60,7 @@ public class ShipConditionAdapter extends RecyclerView.Adapter<ShipConditionView
 
     @Override
     public int getItemCount() {
-        return tankers.size();
+        return conditions.size();
     }
 
     private void setFloatText(TextView text, String value) {
