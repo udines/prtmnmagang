@@ -4,11 +4,23 @@ import android.content.res.Resources;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.pertamina.pertaminatuban.R;
 
 public class InitialTanker {
 
+    @SerializedName("unique_group")
+    @Expose
     private String id;
+    @SerializedName("bulan")
+    @Expose
+    private String bulan;
+    @SerializedName("call_tanker")
+    @Expose
+    private String kapal;
+    @SerializedName("periode")
+    @Expose
+    private String periode;
+
+
     @SerializedName("callTanker")
     @Expose
     private String call;
@@ -83,6 +95,18 @@ public class InitialTanker {
         this.portOfCallReport = portOfCallReport;
         this.lastPort = lastPort;
         this.nextPort = nextPort;
+    }
+
+    public String getBulan() {
+        return bulan;
+    }
+
+    public String getKapal() {
+        return kapal;
+    }
+
+    public String getPeriode() {
+        return periode;
     }
 
     public String getId() {

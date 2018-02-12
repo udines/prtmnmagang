@@ -1,23 +1,69 @@
 package com.pertamina.pertaminatuban.marine.models;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.sql.Timestamp;
 
 public class TemporaryStop {
+    @SerializedName("unique_group")
+    @Expose
+    private String id;
+    @SerializedName("bulan")
+    @Expose
+    private String bulan;
+    @SerializedName("call_tanker")
+    @Expose
+    private String kapal;
+    @SerializedName("periode")
+    @Expose
+    private String periode;
 
+
+    @SerializedName("reasonStop_1")
+    @Expose
     private String reason1;
+    @SerializedName("start_1")
+    @Expose
     private String stopTime1;
+    @SerializedName("resume_1")
+    @Expose
     private String resumeTime1;
+    @SerializedName("reasonStop_2")
+    @Expose
     private String reason2;
+    @SerializedName("start_2")
+    @Expose
     private String stopTime2;
+    @SerializedName("resume_2")
+    @Expose
     private String resumeTime2;
+    @SerializedName("reasonStop_3")
+    @Expose
     private String reason3;
+    @SerializedName("start_3")
+    @Expose
     private String stopTime3;
+    @SerializedName("resume_3")
+    @Expose
     private String resumeTime3;
+    @SerializedName("reasonStop_4")
+    @Expose
     private String reason4;
+    @SerializedName("start_4")
+    @Expose
     private String stopTime4;
+    @SerializedName("resume_4")
+    @Expose
     private String resumeTime4;
+    @SerializedName("reasonStop_5")
+    @Expose
     private String reason5;
+    @SerializedName("start_5")
+    @Expose
     private String stopTime5;
+    @SerializedName("resume_5")
+    @Expose
     private String resumeTime5;
 
     public TemporaryStop(String reason1, String stopTime1, String resumeTime1, String reason2, String stopTime2, String resumeTime2, String reason3, String stopTime3, String resumeTime3, String reason4, String stopTime4, String resumeTime4, String reason5, String stopTime5, String resumeTime5) {
@@ -36,6 +82,22 @@ public class TemporaryStop {
         this.reason5 = reason5;
         this.stopTime5 = stopTime5;
         this.resumeTime5 = resumeTime5;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getBulan() {
+        return bulan;
+    }
+
+    public String getKapal() {
+        return kapal;
+    }
+
+    public String getPeriode() {
+        return periode;
     }
 
     public String getReason1() {

@@ -4,7 +4,19 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class PortCharges {
+    @SerializedName("unique_group")
+    @Expose
     private String id;
+    @SerializedName("bulan")
+    @Expose
+    private String bulan;
+    @SerializedName("call_tanker")
+    @Expose
+    private String kapal;
+    @SerializedName("periode")
+    @Expose
+    private String periode;
+
 
     @SerializedName("lightDues")
     @Expose
@@ -32,6 +44,22 @@ public class PortCharges {
         this.pilotage = pilotage;
         this.towage = towage;
         this.pup9a2 = pup9a2;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getBulan() {
+        return bulan;
+    }
+
+    public String getKapal() {
+        return kapal;
+    }
+
+    public String getPeriode() {
+        return periode;
     }
 
     public String getLightDues() {

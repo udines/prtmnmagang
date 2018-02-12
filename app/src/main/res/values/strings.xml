@@ -247,8 +247,8 @@
     <string name="variable_ship_condition_rob_ata">remainingOnBoardActualTimeArrival</string>
     <string name="variable_ship_condition_rob_atd">remainingOnBoardActualTimeDeparture</string>
     <string name="variable_ship_condition_repl">repl</string>
-    <string name="variable_ship_condition_com_repl">romREPL</string>
-    <string name="variable_ship_condition_comp_repl">romPREPL</string>
+    <string name="variable_ship_condition_com_repl">comREPL</string>
+    <string name="variable_ship_condition_comp_repl">comPREPL</string>
     <string name="variable_ship_condition_location">locationOfREPL</string>
     <string name="variable_ship_condition_bunker_consumption_port">bunkerConsumptionPort</string>
     <string name="variable_ship_condition_bunker_consumption_seatime">bunkerConsumptionSeaTime</string>
@@ -313,5 +313,6 @@
     <string name="variable_ship_particular_type_activity">typeBasedActivity</string>
     <string name="variable_ship_particular_hire_rate">EstHireRate</string>
     <string name="variable_ship_particular_master">master</string>
+
     <string name="title_activity_pilih_tanker">Pilih Tanker</string>
 </resources>

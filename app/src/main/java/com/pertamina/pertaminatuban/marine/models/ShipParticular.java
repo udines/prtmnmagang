@@ -1,14 +1,48 @@
 package com.pertamina.pertaminatuban.marine.models;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class ShipParticular {
 
+    @SerializedName("unique_group")
+    @Expose
+    private String id;
+    @SerializedName("bulan")
+    @Expose
+    private String bulan;
+    @SerializedName("call_tanker")
+    @Expose
+    private String kapal;
+    @SerializedName("periode")
+    @Expose
+    private String periode;
+
+
+
+    @SerializedName("Flag")
+    @Expose
     private String flag;
+    @SerializedName("DWT")
+    @Expose
     private String dwt;
+    @SerializedName("GRT")
+    @Expose
     private String grt;
+    @SerializedName("LOA")
+    @Expose
     private String loa;
+    @SerializedName("typeBasedCall")
+    @Expose
     private String typeCall;
+    @SerializedName("typeBasedActivity")
+    @Expose
     private String typeActivity;
+    @SerializedName("EstHireRate")
+    @Expose
     private String hireRate;
+    @SerializedName("master")
+    @Expose
     private String master;
 
     public ShipParticular(String flag, String dwt, String grt, String loa, String typeCall, String typeActivity, String hireRate, String master) {

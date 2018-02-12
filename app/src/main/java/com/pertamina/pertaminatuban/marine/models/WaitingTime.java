@@ -1,31 +1,101 @@
 package com.pertamina.pertaminatuban.marine.models;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class WaitingTime {
+
+    @SerializedName("unique_group")
+    @Expose
+    private String id;
+    @SerializedName("bulan")
+    @Expose
+    private String bulan;
+    @SerializedName("call_tanker")
+    @Expose
+    private String kapal;
+    @SerializedName("periode")
+    @Expose
+    private String periode;
+
+
+    @SerializedName("pilot")
+    @Expose
     private int pilot;
+    @SerializedName("laboratoriumAnalysis")
+    @Expose
     private int labAnalysis;
+    @SerializedName("tugBoat")
+    @Expose
     private int tugBoat;
+    @SerializedName("jetty")
+    @Expose
     private int jetty;
+    @SerializedName("daylight")
+    @Expose
     private int daylight;
+    @SerializedName("tide")
+    @Expose
     private int tide;
+    @SerializedName("ballastingDeballasting")
+    @Expose
     private int ballast;
+    @SerializedName("tankCleaning")
+    @Expose
     private int tankCleaning;
+    @SerializedName("nomination")
+    @Expose
     private int nomination;
+    @SerializedName("manPower")
+    @Expose
     private int manPower;
+    @SerializedName("badWeather")
+    @Expose
     private int badWeater;
+    @SerializedName("line")
+    @Expose
     private int line;
+    @SerializedName("cargo")
+    @Expose
     private int cargo;
+    @SerializedName("ullage")
+    @Expose
     private int ullage;
+    @SerializedName("supplyBunker")
+    @Expose
     private int supplyBunker;
+    @SerializedName("supplyFreshWater")
+    @Expose
     private int supplyFreshWater;
+    @SerializedName("actLoadDateActDischDate")
+    @Expose
     private int actLoadDate;
+    @SerializedName("preparation")
+    @Expose
     private int preparation;
+    @SerializedName("shoreOrder")
+    @Expose
     private int shoreOrder;
+    @SerializedName("shipClearence")
+    @Expose
     private int shipClearence;
+    @SerializedName("cargoDocument")
+    @Expose
     private int cargoDocument;
+    @SerializedName("slowPumpVessel")
+    @Expose
     private int slowPumpVessel;
+    @SerializedName("slowPumpShore")
+    @Expose
     private int slowPumpShore;
+    @SerializedName("cargoCalculation")
+    @Expose
     private int cargoCalculation;
+    @SerializedName("steamingINOUT")
+    @Expose
     private int steamingInOut;
+    @SerializedName("shipUnready")
+    @Expose
     private int shipUnready;
 
     public WaitingTime(int pilot,
@@ -80,6 +150,22 @@ public class WaitingTime {
         this.cargoCalculation = cargoCalculation;
         this.steamingInOut = steamingInOut;
         this.shipUnready = shipUnready;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getBulan() {
+        return bulan;
+    }
+
+    public String getKapal() {
+        return kapal;
+    }
+
+    public String getPeriode() {
+        return periode;
     }
 
     public int getPilot() {

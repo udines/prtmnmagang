@@ -1,33 +1,101 @@
 package com.pertamina.pertaminatuban.marine.models;
 
-import java.sql.Timestamp;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 public class TankerMovement {
+
+    @SerializedName("unique_group")
+    @Expose
+    private String id;
+    @SerializedName("bulan")
+    @Expose
+    private String bulan;
+    @SerializedName("call_tanker")
+    @Expose
+    private String kapal;
+    @SerializedName("periode")
+    @Expose
+    private String periode;
+
+
+    @SerializedName("allFast")
+    @Expose
     private String allFast;
+    @SerializedName("channelConnection")
+    @Expose
     private String channelConnection;
+    @SerializedName("dryCertificateIssued_1")
+    @Expose
     private String dryCertifIssued1;
+    @SerializedName("completedCargoCalculation_1")
+    @Expose
     private String completedCargoCalculation1;
+    @SerializedName("labTestReleasedBeforeDisch")
+    @Expose
     private String labTestReleased1;
+    @SerializedName("commenceDischargeLoading")
+    @Expose
     private String commenceDisLoad;
+    @SerializedName("completedLoadingDischarge")
+    @Expose
     private String completedDisLoad;
+    @SerializedName("completedHoseDisconnect")
+    @Expose
     private String completedHoseDis;
+    @SerializedName("dryCertificateIssued_2")
+    @Expose
     private String dryCertifIssued2;
+    @SerializedName("completedCargoCalculation_2")
+    @Expose
     private String completedCargoCalculation2;
+    @SerializedName("labTestReleasedAfterLoad")
+    @Expose
     private String labTestReleased2;
+    @SerializedName("cargoDocumentOnBoard")
+    @Expose
     private String cargoDocument;
+    @SerializedName("portClearence")
+    @Expose
     private String portClearence;
+    @SerializedName("bookingPilotforUnberthing")
+    @Expose
     private String bookingPilotUnberthing;
+    @SerializedName("pilotOnBoardforUnberthing")
+    @Expose
     private String pilotOnBoardUnberthing;
+    @SerializedName("castOff")
+    @Expose
     private String castOff;
+    @SerializedName("anchoredOnBoard")
+    @Expose
     private String anchoredRede;
+    @SerializedName("pilotOnBoardforDeparture")
+    @Expose
     private String pilotOnBoardDeparture;
+    @SerializedName("anchorforDeparture")
+    @Expose
     private String anchorDeparture;
+    @SerializedName("actualTimeDeparture")
+    @Expose
     private String actualTimeDeparture;
+    @SerializedName("delivery")
+    @Expose
     private String delivery;
+    @SerializedName("reDelivery")
+    @Expose
     private String redelivery;
+    @SerializedName("onHire")
+    @Expose
     private String onHire;
+    @SerializedName("offHire")
+    @Expose
     private String offHire;
+    @SerializedName("timeOFFtoON")
+    @Expose
     private String offToOn;
+    @SerializedName("remarksActivity")
+    @Expose
     private String remarksActivity;
 
     public TankerMovement(String allFast, String channelConnection, String dryCertifIssued1, String completedCargoCalculation1, String labTestReleased1, String commenceDisLoad, String completedDisLoad, String completedHoseDis, String dryCertifIssued2, String completedCargoCalculation2, String labTestReleased2, String cargoDocument, String portClearence, String bookingPilotUnberthing, String pilotOnBoardUnberthing, String castOff, String anchoredRede, String pilotOnBoardDeparture, String anchorDeparture, String actualTimeDeparture, String delivery, String redelivery, String onHire, String offHire, String offToOn, String remarksActivity) {
@@ -57,6 +125,10 @@ public class TankerMovement {
         this.offHire = offHire;
         this.offToOn = offToOn;
         this.remarksActivity = remarksActivity;
+    }
+
+    public String getKapal() {
+        return kapal;
     }
 
     public String getAllFast() {

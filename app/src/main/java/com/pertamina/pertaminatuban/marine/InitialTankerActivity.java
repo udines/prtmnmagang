@@ -163,6 +163,7 @@ public class InitialTankerActivity extends AppCompatActivity {
                 if (response.code() == 200) {
                     Log.w("msg", response.message());
                     Log.w("data", new Gson().toJson(response.body()));
+                    checkData(response.body());
                 }
             }
 
@@ -182,19 +183,7 @@ public class InitialTankerActivity extends AppCompatActivity {
     }
 
     private void populateData(ArrayList<InitialTanker> tankers) {
-        ArrayList<MarineTable> vessels = new ArrayList<>();
-        for (int i = 0; i < tankers.size(); i++) {
-            MarineTable table = new MarineTable();
-            table.setVariable(String.valueOf(tankers.get(i).getCall()));
-            table.setValue(String.valueOf("Vessel ke " + i));
-        }
 
-        ArrayList<ArrayList<MarineTable>> tables = new ArrayList<>();
-        for (int i = 0; i < tankers.size(); i++) {
-            ArrayList<MarineTable> rows = new ArrayList<>();
-            InitialTanker tanker = tankers.get(i);
-
-        }
     }
 
     private void handleInputButton() {
