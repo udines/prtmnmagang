@@ -27,12 +27,12 @@ public class PortChargesAdapter extends RecyclerView.Adapter<PortChargesViewHold
     @Override
     public void onBindViewHolder(PortChargesViewHolder holder, int position) {
         PortCharges model = portCharges.get(position);
-        if (model.getLightDues() > 0) holder.lightDues.setText(String.valueOf(model.getLightDues()));
-        if (model.getHarborDues() > 0) holder.harborDues.setText(String.valueOf(model.getHarborDues()));
-        if (model.getQuayDues() > 0) holder.quayDues.setText(String.valueOf(model.getQuayDues()));
-        if (model.getPilotage() > 0) holder.pilotages.setText(String.valueOf(model.getPilotage()));
-        if (model.getTowage() > 0) holder.towage.setText(String.valueOf(model.getTowage()));
-        if (model.getPup9a2() > 0) holder.pup.setText(String.valueOf(model.getPup9a2()));
+        if (model.getLightDues() != null) holder.lightDues.setText(String.valueOf(model.getLightDues()));
+        if (model.getHarborDues() != null) holder.harborDues.setText(String.valueOf(model.getHarborDues()));
+        if (model.getQuayDues() != null) holder.quayDues.setText(String.valueOf(model.getQuayDues()));
+        if (model.getPilotage() != null) holder.pilotages.setText(String.valueOf(model.getPilotage()));
+        if (model.getTowage() != null) holder.towage.setText(String.valueOf(model.getTowage()));
+        if (model.getPup9a2() != null) holder.pup.setText(String.valueOf(model.getPup9a2()));
     }
 
     @Override

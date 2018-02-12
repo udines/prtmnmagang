@@ -33,7 +33,7 @@ public class InitialTankerAdapter extends RecyclerView.Adapter<InitialTankerView
     @Override
     public void onBindViewHolder(InitialTankerViewHolder holder, int position) {
         InitialTanker model = tankers.get(position);
-        if (model.getCall() != null) holder.callTanker.setText(String.valueOf(model.getCall()));
+        if (model.getCall() !=null) holder.callTanker.setText(String.valueOf(model.getCall()));
         if (model.getPeriod() != null) holder.periode.setText(model.getPeriod());
         if (model.getVoyage() != null) holder.voyage.setText(model.getVoyage());
         if (model.getNoBill() != null) holder.noBill.setText(model.getNoBill());

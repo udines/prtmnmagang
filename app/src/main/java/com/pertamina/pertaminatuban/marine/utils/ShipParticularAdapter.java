@@ -41,10 +41,10 @@ public class ShipParticularAdapter extends RecyclerView.Adapter<ShipPartcularVie
         setStringText(holder.typeActivity, model.getTypeActivity());
         setStringText(holder.master, model.getMaster());
 
-        setFloatText(holder.dwt, model.getDwt());
-        setFloatText(holder.grt, model.getGrt());
-        setFloatText(holder.loa, model.getLoa());
-        setFloatText(holder.hireRate, model.getHireRate());
+        setStringText(holder.dwt, model.getDwt());
+        setStringText(holder.grt, model.getGrt());
+        setStringText(holder.loa, model.getLoa());
+        setStringText(holder.hireRate, model.getHireRate());
     }
 
     private void setFloatText(TextView text, float value) {

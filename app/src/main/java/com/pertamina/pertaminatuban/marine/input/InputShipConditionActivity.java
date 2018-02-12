@@ -22,6 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class InputShipConditionActivity extends AppCompatActivity {
@@ -338,48 +339,21 @@ public class InputShipConditionActivity extends AppCompatActivity {
     }
 
     private void getCurrentData() {
-        Calendar cal = Calendar.getInstance();
-        Timestamp time = new Timestamp(cal.getTimeInMillis());
-        condition = new ShipCondition(
-                "Description draft",
-                time,
-                time,
-                null,
-                123,
-                456,
-                789,
-                0,
-                null,
-                time,
-                "Repl Location",
-                112,
-                131,
-                415,
-                167
-        );
+
     }
 
     private boolean currentDataExist() {
         return false;
     }
 
-    private void setDateAndTimeButton(final Button dateButton, final Button timeButton, Timestamp time) {
+    private void setDateAndTimeButton(final Button dateButton, final Button timeButton, String time) {
         if (time != null) {
-            Calendar cal = Calendar.getInstance();
-            cal.setTimeInMillis(time.getTime());
-
-            if (dateButton != null) {
-//                DateFormatSymbols symbols = new DateFormatSymbols();
-//                String text = symbols.getMonths()[cal.get(Calendar.MONTH)] + " " + String.valueOf(cal.get(Calendar.YEAR));
-                SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-                String text = format.format(new Date(cal.getTimeInMillis()));
-                dateButton.setText(text);
+            String[] hourMin = time.split(" ");
+            if (hourMin[0] != null) {
+                dateButton.setText(hourMin[0]);
             }
-
-            if (timeButton != null) {
-                Date date = new Date(cal.getTimeInMillis());
-                SimpleDateFormat format = new SimpleDateFormat("HH:mm", Locale.getDefault());
-                timeButton.setText(format.format(date));
+            if (hourMin[1] != null) {
+                timeButton.setText(hourMin[1]);
             }
         }
     }

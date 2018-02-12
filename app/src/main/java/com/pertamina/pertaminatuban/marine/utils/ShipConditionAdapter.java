@@ -60,8 +60,8 @@ public class ShipConditionAdapter extends RecyclerView.Adapter<ShipConditionView
         return tankers.size();
     }
 
-    private void setFloatText(TextView text, float value) {
-        if (value > 0) {
+    private void setFloatText(TextView text, String value) {
+        if (value != null) {
             text.setText(String.valueOf(value));
         }
     }
@@ -72,11 +72,12 @@ public class ShipConditionAdapter extends RecyclerView.Adapter<ShipConditionView
         }
     }
 
-    private void setDateText(TextView text, Timestamp time) {
-        if (time != null) {
+    private void setDateText(TextView text, String time) {
+        /*if (time != null) {
             java.util.Date date = new java.util.Date(time.getTime());
             SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.getDefault());
             text.setText(format.format(date));
-        }
+        }*/
+        text.setText(time);
     }
 }

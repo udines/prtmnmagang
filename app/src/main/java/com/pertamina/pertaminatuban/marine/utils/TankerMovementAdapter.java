@@ -71,17 +71,19 @@ public class TankerMovementAdapter extends RecyclerView.Adapter<TankerMovementVi
         return tankers.size();
     }
 
-    private void setDateText(TextView text, Timestamp time) {
+    private void setDateText(TextView text, String time) {
         if (time != null) {
-            java.util.Date date = new java.util.Date(time.getTime());
+            /*java.util.Date date = new java.util.Date(time.getTime());
             SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.getDefault());
-            text.setText(format.format(date));
+            text.setText(format.format(date));*/
+            text.setText(time);
         }
     }
 
-    private void setTimeText(TextView text, Timestamp time) {
-        java.util.Date date = new java.util.Date(time.getTime());
+    private void setTimeText(TextView text, String time) {
+        /*java.util.Date date = new java.util.Date(time.getTime());
         SimpleDateFormat format = new SimpleDateFormat("HH:mm", Locale.getDefault());
-        text.setText(format.format(date));
+        text.setText(format.format(date));*/
+        text.setText(time);
     }
 }
