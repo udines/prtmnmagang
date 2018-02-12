@@ -13,6 +13,9 @@ public class TankerMovement {
     private String bulan;
     @SerializedName("call_tanker")
     @Expose
+    private String call_number;
+    @SerializedName("kapal_nama")
+    @Expose
     private String kapal;
     @SerializedName("periode")
     @Expose
@@ -125,6 +128,22 @@ public class TankerMovement {
         this.offHire = offHire;
         this.offToOn = offToOn;
         this.remarksActivity = remarksActivity;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getBulan() {
+        return bulan;
+    }
+
+    public String getCall_number() {
+        return call_number;
+    }
+
+    public String getPeriode() {
+        return periode;
     }
 
     public String getKapal() {

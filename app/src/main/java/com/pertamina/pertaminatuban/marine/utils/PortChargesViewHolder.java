@@ -9,7 +9,7 @@ import com.pertamina.pertaminatuban.R;
 
 public class PortChargesViewHolder extends RecyclerView.ViewHolder {
 
-    public final TextView lightDues, harborDues, quayDues, pilotages, towage, pup, vesselName;
+    public final TextView lightDues, harborDues, quayDues, pilotages, towage, pup, vessel;
     public final CardView card;
 
     public PortChargesViewHolder(View itemView) {
@@ -22,6 +22,6 @@ public class PortChargesViewHolder extends RecyclerView.ViewHolder {
         pup = itemView.findViewById(R.id.item_port_charges_pup);
 
         card = itemView.findViewById(R.id.item_port_charges_card);
-        vesselName = itemView.findViewById(R.id.item_port_charges_vessel);
+        vessel = itemView.findViewById(R.id.item_port_charges_vessel);
     }
 }

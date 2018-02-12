@@ -34,8 +34,6 @@ public class ShipParticularAdapter extends RecyclerView.Adapter<ShipPartcularVie
         Tanker tanker = tankers.get(position);
         ShipParticular model = shipParticulars.get(position);
 
-        holder.vessel.setText(String.valueOf(tanker.getCall() + " " + tanker.getVesselName()));
-
         setStringText(holder.flag, model.getFlag());
         setStringText(holder.typeCall, model.getTypeCall());
         setStringText(holder.typeActivity, model.getTypeActivity());
@@ -45,6 +43,12 @@ public class ShipParticularAdapter extends RecyclerView.Adapter<ShipPartcularVie
         setStringText(holder.grt, model.getGrt());
         setStringText(holder.loa, model.getLoa());
         setStringText(holder.hireRate, model.getHireRate());
+
+        if (model.getCall_number() != null && model.getKapal() != null && model.getPeriode() != null) {
+            holder.vessel.setText(String.valueOf(
+                    "Call: " + model.getCall_number() + " " + model.getKapal() + " " + model.getPeriode()
+            ));
+        }
     }
 
     private void setFloatText(TextView text, float value) {

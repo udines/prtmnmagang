@@ -15,6 +15,9 @@ public class InitialTanker {
     private String bulan;
     @SerializedName("call_tanker")
     @Expose
+    private String call_number;
+    @SerializedName("kapal_nama")
+    @Expose
     private String kapal;
     @SerializedName("periode")
     @Expose
@@ -95,6 +98,10 @@ public class InitialTanker {
         this.portOfCallReport = portOfCallReport;
         this.lastPort = lastPort;
         this.nextPort = nextPort;
+    }
+
+    public String getCall_number() {
+        return call_number;
     }
 
     public String getBulan() {

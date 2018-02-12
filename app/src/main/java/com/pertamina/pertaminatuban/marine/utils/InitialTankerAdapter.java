@@ -51,6 +51,12 @@ public class InitialTankerAdapter extends RecyclerView.Adapter<InitialTankerView
         if (model.getPortOfCallReport() != null) holder.portCallReport.setText(model.getPortOfCallReport());
         if (model.getLastPort() != null) holder.lastPort.setText(model.getLastPort());
         if (model.getNextPort() != null) holder.nextPort.setText(model.getNextPort());
+
+        if (model.getCall_number() != null && model.getKapal() != null && model.getPeriode() != null) {
+            holder.vessel.setText(String.valueOf(
+                    "Call: " + model.getCall_number() + " " + model.getKapal() + " " + model.getPeriode()
+            ));
+        }
     }
 
     @Override

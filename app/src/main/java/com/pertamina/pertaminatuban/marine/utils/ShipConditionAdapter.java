@@ -34,25 +34,31 @@ public class ShipConditionAdapter extends RecyclerView.Adapter<ShipConditionView
     @Override
     public void onBindViewHolder(ShipConditionViewHolder holder, int position) {
         Tanker tanker = tankers.get(position);
-        ShipCondition condition = conditions.get(position);
+        ShipCondition model = conditions.get(position);
 
-        setDateText(holder.ata, condition.getActualTimeArrival());
-        setDateText(holder.atd, condition.getActualTimeDeparture());
-        setDateText(holder.comRepl, condition.getComRepl());
-        setDateText(holder.compRepl, condition.getCompRepl());
+        setDateText(holder.ata, model.getActualTimeArrival());
+        setDateText(holder.atd, model.getActualTimeDeparture());
+        setDateText(holder.comRepl, model.getComRepl());
+        setDateText(holder.compRepl, model.getCompRepl());
 
-        setText(holder.description, condition.getDescriptionDraft());
-        setText(holder.grades, condition.getGradeBunker());
-        setText(holder.location, condition.getReplLocation());
+        setText(holder.description, model.getDescriptionDraft());
+        setText(holder.grades, model.getGradeBunker());
+        setText(holder.location, model.getReplLocation());
 
-        setFloatText(holder.robLastPort, condition.getRobLastPort());
-        setFloatText(holder.robAta, condition.getRobAta());
-        setFloatText(holder.robAtd, condition.getRobAtd());
-        setFloatText(holder.repl, condition.getRepl());
-        setFloatText(holder.bunkerPort, condition.getBunkerConsumptionPort());
-        setFloatText(holder.bunkerSeatime, condition.getBunkerConsumptionSeatime());
-        setFloatText(holder.slopTankAta, condition.getSlopTankAta());
-        setFloatText(holder.slopTankAtd, condition.getSlopTankAtd());
+        setFloatText(holder.robLastPort, model.getRobLastPort());
+        setFloatText(holder.robAta, model.getRobAta());
+        setFloatText(holder.robAtd, model.getRobAtd());
+        setFloatText(holder.repl, model.getRepl());
+        setFloatText(holder.bunkerPort, model.getBunkerConsumptionPort());
+        setFloatText(holder.bunkerSeatime, model.getBunkerConsumptionSeatime());
+        setFloatText(holder.slopTankAta, model.getSlopTankAta());
+        setFloatText(holder.slopTankAtd, model.getSlopTankAtd());
+
+        if (model.getCall_number() != null && model.getKapal() != null && model.getPeriode() != null) {
+            holder.vessel.setText(String.valueOf(
+                    "Call: " + model.getCall_number() + " " + model.getKapal() + " " + model.getPeriode()
+            ));
+        }
     }
 
     @Override

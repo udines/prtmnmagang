@@ -33,6 +33,12 @@ public class PortChargesAdapter extends RecyclerView.Adapter<PortChargesViewHold
         if (model.getPilotage() != null) holder.pilotages.setText(String.valueOf(model.getPilotage()));
         if (model.getTowage() != null) holder.towage.setText(String.valueOf(model.getTowage()));
         if (model.getPup9a2() != null) holder.pup.setText(String.valueOf(model.getPup9a2()));
+
+        if (model.getCall_number() != null && model.getKapal() != null && model.getPeriode() != null) {
+            holder.vessel.setText(String.valueOf(
+                    "Call: " + model.getCall_number() + " " + model.getKapal() + " " + model.getPeriode()
+            ));
+        }
     }
 
     @Override

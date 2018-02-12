@@ -12,6 +12,9 @@ public class PortCharges {
     private String bulan;
     @SerializedName("call_tanker")
     @Expose
+    private String call_number;
+    @SerializedName("kapal_nama")
+    @Expose
     private String kapal;
     @SerializedName("periode")
     @Expose
@@ -44,6 +47,10 @@ public class PortCharges {
         this.pilotage = pilotage;
         this.towage = towage;
         this.pup9a2 = pup9a2;
+    }
+
+    public String getCall_number() {
+        return call_number;
     }
 
     public String getId() {

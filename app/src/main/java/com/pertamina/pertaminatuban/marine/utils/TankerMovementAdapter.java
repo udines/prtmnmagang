@@ -34,36 +34,41 @@ public class TankerMovementAdapter extends RecyclerView.Adapter<TankerMovementVi
 
     @Override
     public void onBindViewHolder(TankerMovementViewHolder holder, int position) {
-        TankerMovement movement = movements.get(position);
+        TankerMovement model = movements.get(position);
         Tanker tanker = tankers.get(position);
 
-        setDateText(holder.allFastDate, movement.getAllFast());
-        setDateText(holder.channelConnectionDate, movement.getChannelConnection());
-        setDateText(holder.dryCertIssuedDate1, movement.getDryCertifIssued1());
-        setDateText(holder.compCargoCalcDate1, movement.getCompletedCargoCalculation1());
-        setDateText(holder.labTestReleaseDate1, movement.getLabTestReleased1());
-        setDateText(holder.commenceDisLoadDate, movement.getCommenceDisLoad());
-        setDateText(holder.compDisLoadDate, movement.getCompletedDisLoad());
-        setDateText(holder.compHoseDiscDate, movement.getCompletedHoseDis());
-        setDateText(holder.dryCertIssuedDate2, movement.getDryCertifIssued2());
-        setDateText(holder.compCargoCalcDate2, movement.getCompletedCargoCalculation2());
-        setDateText(holder.labTestReleaseDate2, movement.getLabTestReleased2());
-        setDateText(holder.cargoDocumentDate, movement.getCargoDocument());
-        setDateText(holder.portClearanceDate, movement.getPortClearence());
-        setDateText(holder.bookingPilotDate, movement.getBookingPilotUnberthing());
-        setDateText(holder.pilotOnUnberDate, movement.getPilotOnBoardUnberthing());
-        setDateText(holder.castOffDate, movement.getCastOff());
-        setDateText(holder.anchoredDate, movement.getAnchoredRede());
-        setDateText(holder.pilotOnDepartDate, movement.getPilotOnBoardDeparture());
-        setDateText(holder.anchorDepartDate, movement.getAnchorDeparture());
-        setDateText(holder.atdDate, movement.getActualTimeDeparture());
-        setDateText(holder.deliveryDate, movement.getDelivery());
-        setDateText(holder.redeliveryDate, movement.getRedelivery());
-        setDateText(holder.onHireDate, movement.getOnHire());
-        setDateText(holder.offHireDate, movement.getOffHire());
-        setTimeText(holder.timeOffToOn, movement.getOffToOn());
-        holder.remarks.setText(movement.getRemarksActivity());
-        holder.vessel.setText(String.valueOf(tanker.getCall() + " " + tanker.getVesselName()));
+        setDateText(holder.allFastDate, model.getAllFast());
+        setDateText(holder.channelConnectionDate, model.getChannelConnection());
+        setDateText(holder.dryCertIssuedDate1, model.getDryCertifIssued1());
+        setDateText(holder.compCargoCalcDate1, model.getCompletedCargoCalculation1());
+        setDateText(holder.labTestReleaseDate1, model.getLabTestReleased1());
+        setDateText(holder.commenceDisLoadDate, model.getCommenceDisLoad());
+        setDateText(holder.compDisLoadDate, model.getCompletedDisLoad());
+        setDateText(holder.compHoseDiscDate, model.getCompletedHoseDis());
+        setDateText(holder.dryCertIssuedDate2, model.getDryCertifIssued2());
+        setDateText(holder.compCargoCalcDate2, model.getCompletedCargoCalculation2());
+        setDateText(holder.labTestReleaseDate2, model.getLabTestReleased2());
+        setDateText(holder.cargoDocumentDate, model.getCargoDocument());
+        setDateText(holder.portClearanceDate, model.getPortClearence());
+        setDateText(holder.bookingPilotDate, model.getBookingPilotUnberthing());
+        setDateText(holder.pilotOnUnberDate, model.getPilotOnBoardUnberthing());
+        setDateText(holder.castOffDate, model.getCastOff());
+        setDateText(holder.anchoredDate, model.getAnchoredRede());
+        setDateText(holder.pilotOnDepartDate, model.getPilotOnBoardDeparture());
+        setDateText(holder.anchorDepartDate, model.getAnchorDeparture());
+        setDateText(holder.atdDate, model.getActualTimeDeparture());
+        setDateText(holder.deliveryDate, model.getDelivery());
+        setDateText(holder.redeliveryDate, model.getRedelivery());
+        setDateText(holder.onHireDate, model.getOnHire());
+        setDateText(holder.offHireDate, model.getOffHire());
+        setTimeText(holder.timeOffToOn, model.getOffToOn());
+        holder.remarks.setText(model.getRemarksActivity());
+
+        if (model.getCall_number() != null && model.getKapal() != null && model.getPeriode() != null) {
+            holder.vessel.setText(String.valueOf(
+                    "Call: " + model.getCall_number() + " " + model.getKapal() + " " + model.getPeriode()
+            ));
+        }
     }
 
     @Override

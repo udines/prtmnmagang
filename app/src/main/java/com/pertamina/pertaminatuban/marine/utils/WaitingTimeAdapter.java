@@ -31,36 +31,40 @@ public class WaitingTimeAdapter extends RecyclerView.Adapter<WaitingTimeViewHold
     @Override
     public void onBindViewHolder(WaitingTimeViewHolder holder, int position) {
         Tanker tanker = tankers.get(position);
-        WaitingTime waitingTime = waitingTimes.get(position);
+        WaitingTime model = waitingTimes.get(position);
 
-        setTextTime(holder.pilot, waitingTime.getPilot());
-        setTextTime(holder.lab, waitingTime.getLabAnalysis());
-        setTextTime(holder.tug, waitingTime.getTugBoat());
-        setTextTime(holder.jetty, waitingTime.getJetty());
-        setTextTime(holder.daylight, waitingTime.getDaylight());
-        setTextTime(holder.tide, waitingTime.getTide());
-        setTextTime(holder.ballast, waitingTime.getBallast());
-        setTextTime(holder.cleaning, waitingTime.getTankCleaning());
-        setTextTime(holder.nomination, waitingTime.getNomination());
-        setTextTime(holder.manPower, waitingTime.getManPower());
-        setTextTime(holder.badWeather, waitingTime.getBadWeater());
-        setTextTime(holder.line, waitingTime.getLine());
-        setTextTime(holder.cargo, waitingTime.getCargo());
-        setTextTime(holder.ullage, waitingTime.getUllage());
-        setTextTime(holder.bunker, waitingTime.getSupplyBunker());
-        setTextTime(holder.fresh, waitingTime.getSupplyFreshWater());
-        setTextTime(holder.actLoad, waitingTime.getActLoadDate());
-        setTextTime(holder.preparation, waitingTime.getPreparation());
-        setTextTime(holder.shoreOrder, waitingTime.getShoreOrder());
-        setTextTime(holder.clearence, waitingTime.getShipClearence());
-        setTextTime(holder.cargoDoc, waitingTime.getCargoDocument());
-        setTextTime(holder.slowVessel, waitingTime.getSlowPumpVessel());
-        setTextTime(holder.slowShore, waitingTime.getSlowPumpShore());
-        setTextTime(holder.cargoCalc, waitingTime.getCargoCalculation());
-        setTextTime(holder.steaming, waitingTime.getSteamingInOut());
-        setTextTime(holder.unready, waitingTime.getShipUnready());
+        setTextTime(holder.pilot, model.getPilot());
+        setTextTime(holder.lab, model.getLabAnalysis());
+        setTextTime(holder.tug, model.getTugBoat());
+        setTextTime(holder.jetty, model.getJetty());
+        setTextTime(holder.daylight, model.getDaylight());
+        setTextTime(holder.tide, model.getTide());
+        setTextTime(holder.ballast, model.getBallast());
+        setTextTime(holder.cleaning, model.getTankCleaning());
+        setTextTime(holder.nomination, model.getNomination());
+        setTextTime(holder.manPower, model.getManPower());
+        setTextTime(holder.badWeather, model.getBadWeater());
+        setTextTime(holder.line, model.getLine());
+        setTextTime(holder.cargo, model.getCargo());
+        setTextTime(holder.ullage, model.getUllage());
+        setTextTime(holder.bunker, model.getSupplyBunker());
+        setTextTime(holder.fresh, model.getSupplyFreshWater());
+        setTextTime(holder.actLoad, model.getActLoadDate());
+        setTextTime(holder.preparation, model.getPreparation());
+        setTextTime(holder.shoreOrder, model.getShoreOrder());
+        setTextTime(holder.clearence, model.getShipClearence());
+        setTextTime(holder.cargoDoc, model.getCargoDocument());
+        setTextTime(holder.slowVessel, model.getSlowPumpVessel());
+        setTextTime(holder.slowShore, model.getSlowPumpShore());
+        setTextTime(holder.cargoCalc, model.getCargoCalculation());
+        setTextTime(holder.steaming, model.getSteamingInOut());
+        setTextTime(holder.unready, model.getShipUnready());
 
-        holder.vessel.setText(String.valueOf(tanker.getCall() + " " + tanker.getVesselName()));
+        if (model.getCall_number() != null && model.getKapal() != null && model.getPeriode() != null) {
+            holder.vessel.setText(String.valueOf(
+                    "Call: " + model.getCall_number() + " " + model.getKapal() + " " + model.getPeriode()
+            ));
+        }
     }
 
     private void setTextTime(TextView textTime, int minutes) {

@@ -14,6 +14,9 @@ public class TemporaryStop {
     private String bulan;
     @SerializedName("call_tanker")
     @Expose
+    private String call_number;
+    @SerializedName("kapal_nama")
+    @Expose
     private String kapal;
     @SerializedName("periode")
     @Expose
@@ -82,6 +85,10 @@ public class TemporaryStop {
         this.reason5 = reason5;
         this.stopTime5 = stopTime5;
         this.resumeTime5 = resumeTime5;
+    }
+
+    public String getCall_number() {
+        return call_number;
     }
 
     public String getId() {

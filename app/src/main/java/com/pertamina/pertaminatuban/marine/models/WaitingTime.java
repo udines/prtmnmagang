@@ -13,6 +13,9 @@ public class WaitingTime {
     private String bulan;
     @SerializedName("call_tanker")
     @Expose
+    private String call_number;
+    @SerializedName("kapal_nama")
+    @Expose
     private String kapal;
     @SerializedName("periode")
     @Expose
@@ -150,6 +153,10 @@ public class WaitingTime {
         this.cargoCalculation = cargoCalculation;
         this.steamingInOut = steamingInOut;
         this.shipUnready = shipUnready;
+    }
+
+    public String getCall_number() {
+        return call_number;
     }
 
     public String getId() {

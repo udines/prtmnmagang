@@ -14,6 +14,9 @@ public class ShipCondition {
     private String bulan;
     @SerializedName("call_tanker")
     @Expose
+    private String call_number;
+    @SerializedName("kapal_nama")
+    @Expose
     private String kapal;
     @SerializedName("periode")
     @Expose
@@ -82,6 +85,10 @@ public class ShipCondition {
         this.bunkerConsumptionSeatime = bunkerConsumptionSeatime;
         this.slopTankAta = slopTankAta;
         this.slopTankAtd = slopTankAtd;
+    }
+
+    public String getCall_number() {
+        return call_number;
     }
 
     public String getId() {

@@ -13,6 +13,9 @@ public class ShipParticular {
     private String bulan;
     @SerializedName("call_tanker")
     @Expose
+    private String call_number;
+    @SerializedName("kapal_nama")
+    @Expose
     private String kapal;
     @SerializedName("periode")
     @Expose
@@ -54,6 +57,26 @@ public class ShipParticular {
         this.typeActivity = typeActivity;
         this.hireRate = hireRate;
         this.master = master;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getBulan() {
+        return bulan;
+    }
+
+    public String getCall_number() {
+        return call_number;
+    }
+
+    public String getKapal() {
+        return kapal;
+    }
+
+    public String getPeriode() {
+        return periode;
     }
 
     public String getFlag() {
