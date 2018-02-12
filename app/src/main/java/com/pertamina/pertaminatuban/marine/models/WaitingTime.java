@@ -1,9 +1,6 @@
 package com.pertamina.pertaminatuban.marine.models;
 
 public class WaitingTime {
-    private String id;
-    private String foreignKey;
-
     private int pilot;
     private int labAnalysis;
     private int tugBoat;

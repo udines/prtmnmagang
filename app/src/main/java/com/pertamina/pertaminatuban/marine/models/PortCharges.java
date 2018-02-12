@@ -8,24 +8,24 @@ public class PortCharges {
 
     @SerializedName("lightDues")
     @Expose
-    private float lightDues;
+    private String lightDues;
     @SerializedName("harbourDues")
     @Expose
-    private float harborDues;
+    private String harborDues;
     @SerializedName("quayDues")
     @Expose
-    private float quayDues;
+    private String quayDues;
     @SerializedName("pilotages")
     @Expose
-    private float pilotage;
+    private String pilotage;
     @SerializedName("towage")
     @Expose
-    private float towage;
+    private String towage;
     @SerializedName("pup9A2")
     @Expose
-    private float pup9a2;
+    private String pup9a2;
 
-    public PortCharges(float lightDues, float harborDues, float quayDues, float pilotage, float towage, float pup9a2) {
+    public PortCharges(String lightDues, String harborDues, String quayDues, String pilotage, String towage, String pup9a2) {
         this.lightDues = lightDues;
         this.harborDues = harborDues;
         this.quayDues = quayDues;
@@ -34,55 +34,51 @@ public class PortCharges {
         this.pup9a2 = pup9a2;
     }
 
-    public void setLightDues(float lightDues) {
-        this.lightDues = lightDues;
-    }
-
-    public void setHarborDues(float harborDues) {
-        this.harborDues = harborDues;
-    }
-
-    public void setQuayDues(float quayDues) {
-        this.quayDues = quayDues;
-    }
-
-    public void setPilotage(float pilotage) {
-        this.pilotage = pilotage;
-    }
-
-    public void setTowage(float towage) {
-        this.towage = towage;
-    }
-
-    public void setPup9a2(float pup9a2) {
-        this.pup9a2 = pup9a2;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public float getLightDues() {
+    public String getLightDues() {
         return lightDues;
     }
 
-    public float getHarborDues() {
+    public void setLightDues(String lightDues) {
+        this.lightDues = lightDues;
+    }
+
+    public String getHarborDues() {
         return harborDues;
     }
 
-    public float getQuayDues() {
+    public void setHarborDues(String harborDues) {
+        this.harborDues = harborDues;
+    }
+
+    public String getQuayDues() {
         return quayDues;
     }
 
-    public float getPilotage() {
+    public void setQuayDues(String quayDues) {
+        this.quayDues = quayDues;
+    }
+
+    public String getPilotage() {
         return pilotage;
     }
 
-    public float getTowage() {
+    public void setPilotage(String pilotage) {
+        this.pilotage = pilotage;
+    }
+
+    public String getTowage() {
         return towage;
     }
 
-    public float getPup9a2() {
+    public void setTowage(String towage) {
+        this.towage = towage;
+    }
+
+    public String getPup9a2() {
         return pup9a2;
+    }
+
+    public void setPup9a2(String pup9a2) {
+        this.pup9a2 = pup9a2;
     }
 }

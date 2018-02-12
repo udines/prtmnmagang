@@ -4,36 +4,22 @@ import java.sql.Timestamp;
 
 public class ShipCondition {
     private String descriptionDraft;
-    private Timestamp actualTimeArrival;
-    private Timestamp actualTimeDeparture;
+    private String actualTimeArrival;
+    private String actualTimeDeparture;
     private String gradeBunker;
-    private float robLastPort;
-    private float robAta;
-    private float robAtd;
-    private float repl;
-    private Timestamp comRepl;
-    private Timestamp compRepl;
+    private String robLastPort;
+    private String robAta;
+    private String robAtd;
+    private String repl;
+    private String comRepl;
+    private String compRepl;
     private String replLocation;
-    private float bunkerConsumptionPort;
-    private float bunkerConsumptionSeatime;
-    private float slopTankAta;
-    private float slopTankAtd;
+    private String bunkerConsumptionPort;
+    private String bunkerConsumptionSeatime;
+    private String slopTankAta;
+    private String slopTankAtd;
 
-    public ShipCondition(String descriptionDraft,
-                         Timestamp actualTimeArrival,
-                         Timestamp actualTimeDeparture,
-                         String gradeBunker,
-                         float robLastPort,
-                         float robAta,
-                         float robAtd,
-                         float repl,
-                         Timestamp comRepl,
-                         Timestamp compRepl,
-                         String replLocation,
-                         float bunkerConsumptionPort,
-                         float bunkerConsumptionSeatime,
-                         float slopTankAta,
-                         float slopTankAtd) {
+    public ShipCondition(String descriptionDraft, String actualTimeArrival, String actualTimeDeparture, String gradeBunker, String robLastPort, String robAta, String robAtd, String repl, String comRepl, String compRepl, String replLocation, String bunkerConsumptionPort, String bunkerConsumptionSeatime, String slopTankAta, String slopTankAtd) {
         this.descriptionDraft = descriptionDraft;
         this.actualTimeArrival = actualTimeArrival;
         this.actualTimeDeparture = actualTimeDeparture;
@@ -55,59 +41,119 @@ public class ShipCondition {
         return descriptionDraft;
     }
 
-    public Timestamp getActualTimeArrival() {
+    public void setDescriptionDraft(String descriptionDraft) {
+        this.descriptionDraft = descriptionDraft;
+    }
+
+    public String getActualTimeArrival() {
         return actualTimeArrival;
     }
 
-    public Timestamp getActualTimeDeparture() {
+    public void setActualTimeArrival(String actualTimeArrival) {
+        this.actualTimeArrival = actualTimeArrival;
+    }
+
+    public String getActualTimeDeparture() {
         return actualTimeDeparture;
+    }
+
+    public void setActualTimeDeparture(String actualTimeDeparture) {
+        this.actualTimeDeparture = actualTimeDeparture;
     }
 
     public String getGradeBunker() {
         return gradeBunker;
     }
 
-    public float getRobLastPort() {
+    public void setGradeBunker(String gradeBunker) {
+        this.gradeBunker = gradeBunker;
+    }
+
+    public String getRobLastPort() {
         return robLastPort;
     }
 
-    public float getRobAta() {
+    public void setRobLastPort(String robLastPort) {
+        this.robLastPort = robLastPort;
+    }
+
+    public String getRobAta() {
         return robAta;
     }
 
-    public float getRobAtd() {
+    public void setRobAta(String robAta) {
+        this.robAta = robAta;
+    }
+
+    public String getRobAtd() {
         return robAtd;
     }
 
-    public float getRepl() {
+    public void setRobAtd(String robAtd) {
+        this.robAtd = robAtd;
+    }
+
+    public String getRepl() {
         return repl;
     }
 
-    public Timestamp getComRepl() {
+    public void setRepl(String repl) {
+        this.repl = repl;
+    }
+
+    public String getComRepl() {
         return comRepl;
     }
 
-    public Timestamp getCompRepl() {
+    public void setComRepl(String comRepl) {
+        this.comRepl = comRepl;
+    }
+
+    public String getCompRepl() {
         return compRepl;
+    }
+
+    public void setCompRepl(String compRepl) {
+        this.compRepl = compRepl;
     }
 
     public String getReplLocation() {
         return replLocation;
     }
 
-    public float getBunkerConsumptionPort() {
+    public void setReplLocation(String replLocation) {
+        this.replLocation = replLocation;
+    }
+
+    public String getBunkerConsumptionPort() {
         return bunkerConsumptionPort;
     }
 
-    public float getBunkerConsumptionSeatime() {
+    public void setBunkerConsumptionPort(String bunkerConsumptionPort) {
+        this.bunkerConsumptionPort = bunkerConsumptionPort;
+    }
+
+    public String getBunkerConsumptionSeatime() {
         return bunkerConsumptionSeatime;
     }
 
-    public float getSlopTankAta() {
+    public void setBunkerConsumptionSeatime(String bunkerConsumptionSeatime) {
+        this.bunkerConsumptionSeatime = bunkerConsumptionSeatime;
+    }
+
+    public String getSlopTankAta() {
         return slopTankAta;
     }
 
-    public float getSlopTankAtd() {
+    public void setSlopTankAta(String slopTankAta) {
+        this.slopTankAta = slopTankAta;
+    }
+
+    public String getSlopTankAtd() {
         return slopTankAtd;
+    }
+
+    public void setSlopTankAtd(String slopTankAtd) {
+        this.slopTankAtd = slopTankAtd;
     }
 }

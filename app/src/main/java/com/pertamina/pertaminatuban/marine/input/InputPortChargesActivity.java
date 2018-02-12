@@ -232,14 +232,7 @@ public class InputPortChargesActivity extends AppCompatActivity {
     }
 
     private void getCurrentData() {
-        portCharges = new PortCharges(
-                12,
-                0,
-                34,
-                45,
-                56,
-                67
-        );
+
     }
 
     private void initInputData() {

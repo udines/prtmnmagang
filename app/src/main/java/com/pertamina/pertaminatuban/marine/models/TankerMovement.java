@@ -3,59 +3,34 @@ package com.pertamina.pertaminatuban.marine.models;
 import java.sql.Timestamp;
 
 public class TankerMovement {
-    private Timestamp allFast;
-    private Timestamp channelConnection;
-    private Timestamp dryCertifIssued1;
-    private Timestamp completedCargoCalculation1;
-    private Timestamp labTestReleased1;
-    private Timestamp commenceDisLoad;
-    private Timestamp completedDisLoad;
-    private Timestamp completedHoseDis;
-    private Timestamp dryCertifIssued2;
-    private Timestamp completedCargoCalculation2;
-    private Timestamp labTestReleased2;
-    private Timestamp cargoDocument;
-    private Timestamp portClearence;
-    private Timestamp bookingPilotUnberthing;
-    private Timestamp pilotOnBoardUnberthing;
-    private Timestamp castOff;
-    private Timestamp anchoredRede;
-    private Timestamp pilotOnBoardDeparture;
-    private Timestamp anchorDeparture;
-    private Timestamp actualTimeDeparture;
-    private Timestamp delivery;
-    private Timestamp redelivery;
-    private Timestamp onHire;
-    private Timestamp offHire;
-    private Timestamp offToOn;
+    private String allFast;
+    private String channelConnection;
+    private String dryCertifIssued1;
+    private String completedCargoCalculation1;
+    private String labTestReleased1;
+    private String commenceDisLoad;
+    private String completedDisLoad;
+    private String completedHoseDis;
+    private String dryCertifIssued2;
+    private String completedCargoCalculation2;
+    private String labTestReleased2;
+    private String cargoDocument;
+    private String portClearence;
+    private String bookingPilotUnberthing;
+    private String pilotOnBoardUnberthing;
+    private String castOff;
+    private String anchoredRede;
+    private String pilotOnBoardDeparture;
+    private String anchorDeparture;
+    private String actualTimeDeparture;
+    private String delivery;
+    private String redelivery;
+    private String onHire;
+    private String offHire;
+    private String offToOn;
     private String remarksActivity;
 
-    public TankerMovement(Timestamp allFast,
-                          Timestamp channelConnection,
-                          Timestamp dryCertifIssued1,
-                          Timestamp completedCargoCalculation1,
-                          Timestamp labTestReleased1,
-                          Timestamp commenceDisLoad,
-                          Timestamp completedDisLoad,
-                          Timestamp completedHoseDis,
-                          Timestamp dryCertifIssued2,
-                          Timestamp completedCargoCalculation2,
-                          Timestamp labTestReleased2,
-                          Timestamp cargoDocument,
-                          Timestamp portClearence,
-                          Timestamp bookingPilotUnberthing,
-                          Timestamp pilotOnBoardUnberthing,
-                          Timestamp castOff,
-                          Timestamp anchoredRede,
-                          Timestamp pilotOnBoardDeparture,
-                          Timestamp anchorDeparture,
-                          Timestamp actualTimeDeparture,
-                          Timestamp delivery,
-                          Timestamp redelivery,
-                          Timestamp onHire,
-                          Timestamp offHire,
-                          Timestamp offToOn,
-                          String remarksActivity) {
+    public TankerMovement(String allFast, String channelConnection, String dryCertifIssued1, String completedCargoCalculation1, String labTestReleased1, String commenceDisLoad, String completedDisLoad, String completedHoseDis, String dryCertifIssued2, String completedCargoCalculation2, String labTestReleased2, String cargoDocument, String portClearence, String bookingPilotUnberthing, String pilotOnBoardUnberthing, String castOff, String anchoredRede, String pilotOnBoardDeparture, String anchorDeparture, String actualTimeDeparture, String delivery, String redelivery, String onHire, String offHire, String offToOn, String remarksActivity) {
         this.allFast = allFast;
         this.channelConnection = channelConnection;
         this.dryCertifIssued1 = dryCertifIssued1;
@@ -84,107 +59,211 @@ public class TankerMovement {
         this.remarksActivity = remarksActivity;
     }
 
-    public Timestamp getAllFast() {
+    public String getAllFast() {
         return allFast;
     }
 
-    public Timestamp getChannelConnection() {
+    public void setAllFast(String allFast) {
+        this.allFast = allFast;
+    }
+
+    public String getChannelConnection() {
         return channelConnection;
     }
 
-    public Timestamp getDryCertifIssued1() {
+    public void setChannelConnection(String channelConnection) {
+        this.channelConnection = channelConnection;
+    }
+
+    public String getDryCertifIssued1() {
         return dryCertifIssued1;
     }
 
-    public Timestamp getCompletedCargoCalculation1() {
+    public void setDryCertifIssued1(String dryCertifIssued1) {
+        this.dryCertifIssued1 = dryCertifIssued1;
+    }
+
+    public String getCompletedCargoCalculation1() {
         return completedCargoCalculation1;
     }
 
-    public Timestamp getLabTestReleased1() {
+    public void setCompletedCargoCalculation1(String completedCargoCalculation1) {
+        this.completedCargoCalculation1 = completedCargoCalculation1;
+    }
+
+    public String getLabTestReleased1() {
         return labTestReleased1;
     }
 
-    public Timestamp getCommenceDisLoad() {
+    public void setLabTestReleased1(String labTestReleased1) {
+        this.labTestReleased1 = labTestReleased1;
+    }
+
+    public String getCommenceDisLoad() {
         return commenceDisLoad;
     }
 
-    public Timestamp getCompletedDisLoad() {
+    public void setCommenceDisLoad(String commenceDisLoad) {
+        this.commenceDisLoad = commenceDisLoad;
+    }
+
+    public String getCompletedDisLoad() {
         return completedDisLoad;
     }
 
-    public Timestamp getCompletedHoseDis() {
+    public void setCompletedDisLoad(String completedDisLoad) {
+        this.completedDisLoad = completedDisLoad;
+    }
+
+    public String getCompletedHoseDis() {
         return completedHoseDis;
     }
 
-    public Timestamp getDryCertifIssued2() {
+    public void setCompletedHoseDis(String completedHoseDis) {
+        this.completedHoseDis = completedHoseDis;
+    }
+
+    public String getDryCertifIssued2() {
         return dryCertifIssued2;
     }
 
-    public Timestamp getCompletedCargoCalculation2() {
+    public void setDryCertifIssued2(String dryCertifIssued2) {
+        this.dryCertifIssued2 = dryCertifIssued2;
+    }
+
+    public String getCompletedCargoCalculation2() {
         return completedCargoCalculation2;
     }
 
-    public Timestamp getLabTestReleased2() {
+    public void setCompletedCargoCalculation2(String completedCargoCalculation2) {
+        this.completedCargoCalculation2 = completedCargoCalculation2;
+    }
+
+    public String getLabTestReleased2() {
         return labTestReleased2;
     }
 
-    public Timestamp getCargoDocument() {
+    public void setLabTestReleased2(String labTestReleased2) {
+        this.labTestReleased2 = labTestReleased2;
+    }
+
+    public String getCargoDocument() {
         return cargoDocument;
     }
 
-    public Timestamp getPortClearence() {
+    public void setCargoDocument(String cargoDocument) {
+        this.cargoDocument = cargoDocument;
+    }
+
+    public String getPortClearence() {
         return portClearence;
     }
 
-    public Timestamp getBookingPilotUnberthing() {
+    public void setPortClearence(String portClearence) {
+        this.portClearence = portClearence;
+    }
+
+    public String getBookingPilotUnberthing() {
         return bookingPilotUnberthing;
     }
 
-    public Timestamp getPilotOnBoardUnberthing() {
+    public void setBookingPilotUnberthing(String bookingPilotUnberthing) {
+        this.bookingPilotUnberthing = bookingPilotUnberthing;
+    }
+
+    public String getPilotOnBoardUnberthing() {
         return pilotOnBoardUnberthing;
     }
 
-    public Timestamp getCastOff() {
+    public void setPilotOnBoardUnberthing(String pilotOnBoardUnberthing) {
+        this.pilotOnBoardUnberthing = pilotOnBoardUnberthing;
+    }
+
+    public String getCastOff() {
         return castOff;
     }
 
-    public Timestamp getAnchoredRede() {
+    public void setCastOff(String castOff) {
+        this.castOff = castOff;
+    }
+
+    public String getAnchoredRede() {
         return anchoredRede;
     }
 
-    public Timestamp getPilotOnBoardDeparture() {
+    public void setAnchoredRede(String anchoredRede) {
+        this.anchoredRede = anchoredRede;
+    }
+
+    public String getPilotOnBoardDeparture() {
         return pilotOnBoardDeparture;
     }
 
-    public Timestamp getAnchorDeparture() {
+    public void setPilotOnBoardDeparture(String pilotOnBoardDeparture) {
+        this.pilotOnBoardDeparture = pilotOnBoardDeparture;
+    }
+
+    public String getAnchorDeparture() {
         return anchorDeparture;
     }
 
-    public Timestamp getActualTimeDeparture() {
+    public void setAnchorDeparture(String anchorDeparture) {
+        this.anchorDeparture = anchorDeparture;
+    }
+
+    public String getActualTimeDeparture() {
         return actualTimeDeparture;
     }
 
-    public Timestamp getDelivery() {
+    public void setActualTimeDeparture(String actualTimeDeparture) {
+        this.actualTimeDeparture = actualTimeDeparture;
+    }
+
+    public String getDelivery() {
         return delivery;
     }
 
-    public Timestamp getRedelivery() {
+    public void setDelivery(String delivery) {
+        this.delivery = delivery;
+    }
+
+    public String getRedelivery() {
         return redelivery;
     }
 
-    public Timestamp getOnHire() {
+    public void setRedelivery(String redelivery) {
+        this.redelivery = redelivery;
+    }
+
+    public String getOnHire() {
         return onHire;
     }
 
-    public Timestamp getOffHire() {
+    public void setOnHire(String onHire) {
+        this.onHire = onHire;
+    }
+
+    public String getOffHire() {
         return offHire;
     }
 
-    public Timestamp getOffToOn() {
+    public void setOffHire(String offHire) {
+        this.offHire = offHire;
+    }
+
+    public String getOffToOn() {
         return offToOn;
+    }
+
+    public void setOffToOn(String offToOn) {
+        this.offToOn = offToOn;
     }
 
     public String getRemarksActivity() {
         return remarksActivity;
+    }
+
+    public void setRemarksActivity(String remarksActivity) {
+        this.remarksActivity = remarksActivity;
     }
 }
