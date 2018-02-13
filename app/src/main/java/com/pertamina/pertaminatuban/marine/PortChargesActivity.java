@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +19,7 @@ import com.google.gson.Gson;
 import com.pertamina.pertaminatuban.R;
 import com.pertamina.pertaminatuban.marine.input.PilihTankerActivity;
 import com.pertamina.pertaminatuban.marine.models.PortCharges;
+import com.pertamina.pertaminatuban.marine.utils.PortChargesAdapter;
 import com.pertamina.pertaminatuban.service.UserClient;
 import com.whiteelephant.monthpicker.MonthPickerDialog;
 
@@ -41,6 +44,7 @@ public class PortChargesActivity extends AppCompatActivity {
 
     private int year, month, day;
     private TextView dateText;
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +61,7 @@ public class PortChargesActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         dateText = findViewById(R.id.port_charges_text_date);
+        recyclerView = findViewById(R.id.port_charges_recyclerview);
 
         Calendar cal = Calendar.getInstance();
         year = cal.get(Calendar.YEAR);
@@ -157,6 +162,7 @@ public class PortChargesActivity extends AppCompatActivity {
                 if (response.code() == 200) {
                     Log.w("msg", response.message());
                     Log.w("data", new Gson().toJson(response.body()));
+                    checkData(response.body());
                 } 
             }
 
@@ -165,6 +171,20 @@ public class PortChargesActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void checkData(ArrayList<PortCharges> data) {
+        if (data != null && data.size() > 0) {
+            populateData(data);
+        } else {
+            Log.w("list size", "0");
+        }
+    }
+
+    private void populateData(ArrayList<PortCharges> data) {
+        PortChargesAdapter adapter = new PortChargesAdapter(data);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        recyclerView.setAdapter(adapter);
     }
 
     private void handleInputButton() {
