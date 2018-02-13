@@ -2,6 +2,8 @@ package com.pertamina.pertaminatuban.marine.input;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -14,14 +16,26 @@ import android.widget.TimePicker;
 
 import com.google.gson.Gson;
 import com.pertamina.pertaminatuban.R;
+import com.pertamina.pertaminatuban.marine.models.MarineIdentifier;
 import com.pertamina.pertaminatuban.marine.models.MarineInput;
 import com.pertamina.pertaminatuban.marine.models.TankerMovement;
+import com.pertamina.pertaminatuban.service.UserClient;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class InputTankerMovementActivity extends AppCompatActivity {
 
@@ -38,7 +52,7 @@ public class InputTankerMovementActivity extends AppCompatActivity {
             timeOffToOn, kirim;
     private EditText inputRemarks;
 
-    private TankerMovement movement;
+    private String bulan, kapal, callTanker, periode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,10 +151,7 @@ public class InputTankerMovementActivity extends AppCompatActivity {
 
         inputRemarks = findViewById(R.id.input_tankmove_input_remarks);
 
-        if (currentDataExist()) {
-            getCurrentData();
-            setInitialInput();
-        }
+        getInitialData();
 
         assignButtonListener();
 
@@ -148,6 +159,64 @@ public class InputTankerMovementActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 getInputData();
+            }
+        });
+    }
+
+    private void getInitialData() {
+        bulan = getIntent().getStringExtra("bulan");
+        kapal = getIntent().getStringExtra("kapal");
+        periode = getIntent().getStringExtra("periode");
+        callTanker = getIntent().getStringExtra("call");
+
+        MarineIdentifier identifier = new MarineIdentifier(
+                bulan, callTanker, kapal, periode
+        );
+
+        SharedPreferences preferences = getSharedPreferences(
+                "login",
+                Context.MODE_PRIVATE
+        );
+        final String key = preferences.getString("userKey", "none");
+
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(new Interceptor() {
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request original = chain.request();
+
+                Request request = original.newBuilder()
+                        .header("Authorization", key)
+                        .method(original.method(), original.body())
+                        .build();
+                return chain.proceed(request);
+            }
+        });
+
+        OkHttpClient client = httpClient.build();
+
+        String baseUrl = "http://www.api.clicktuban.com/";
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client);
+
+        Retrofit retrofit = builder.build();
+        UserClient userClient = retrofit.create(UserClient.class);
+
+        Call<TankerMovement> call = userClient.getInitTankerMovement(identifier);
+        call.enqueue(new Callback<TankerMovement>() {
+            @Override
+            public void onResponse(Call<TankerMovement> call, Response<TankerMovement> response) {
+                Log.w("code", String.valueOf(response.code()));
+                if (response.code() == 200) {
+                    setInitialData(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TankerMovement> call, Throwable t) {
+                Log.w("error", t.getMessage());
             }
         });
     }
@@ -202,11 +271,6 @@ public class InputTankerMovementActivity extends AppCompatActivity {
     }
 
     private void getInputData() {
-        String bulan = getIntent().getStringExtra("bulan");
-
-        String kapal = getIntent().getStringExtra("kapal");
-        String periode = getIntent().getStringExtra("periode");
-        String callTanker = getIntent().getStringExtra("call");
 
         ArrayList<MarineInput> data = new ArrayList<>();
 
@@ -460,43 +524,37 @@ public class InputTankerMovementActivity extends AppCompatActivity {
         return timestamp;
     }
 
-    private void getCurrentData() {
+    private void setInitialData(TankerMovement movement) {
+        if (movement != null) {
+            setDateAndTimeButton(allFastDate, allFastTime, movement.getAllFast());
+            setDateAndTimeButton(channelConnectionDate, channelConnectionTime, movement.getChannelConnection());
+            setDateAndTimeButton(dryCertIssuedDate1, dryCertIssuedTime1, movement.getDryCertifIssued1());
+            setDateAndTimeButton(compCargoCalcDate1, compCargoCalcTime1, movement.getCompletedCargoCalculation1());
+            setDateAndTimeButton(labTestReleaseDate1, labTestReleaseTime1, movement.getLabTestReleased1());
+            setDateAndTimeButton(commenceDisLoadDate, commenceDisLoadTime, movement.getCommenceDisLoad());
+            setDateAndTimeButton(compDisLoadDate, compDisLoadTime, movement.getCompletedDisLoad());
+            setDateAndTimeButton(compHoseDiscDate, compHoseDiscTime, movement.getCompletedHoseDis());
+            setDateAndTimeButton(dryCertIssuedDate2, dryCertIssuedTime2, movement.getDryCertifIssued2());
+            setDateAndTimeButton(compCargoCalcDate2, compCargoCalcTime2, movement.getCompletedCargoCalculation2());
+            setDateAndTimeButton(labTestReleaseDate2, labTestReleaseTime2, movement.getLabTestReleased2());
+            setDateAndTimeButton(cargoDocumentDate, cargoDocumentTime, movement.getCargoDocument());
+            setDateAndTimeButton(portClearanceDate, portClearanceTime, movement.getPortClearence());
+            setDateAndTimeButton(bookingPilotDate, bookingPilotTime, movement.getBookingPilotUnberthing());
+            setDateAndTimeButton(pilotOnUnberDate, pilotOnUnberTime, movement.getPilotOnBoardUnberthing());
+            setDateAndTimeButton(castOffDate, castOffTime, movement.getCastOff());
+            setDateAndTimeButton(anchoredDate, anchoredTime, movement.getAnchoredRede());
+            setDateAndTimeButton(pilotOnDepartDate, pilotOnDepartTime, movement.getPilotOnBoardDeparture());
+            setDateAndTimeButton(anchorDepartDate, anchorDepartTime, movement.getAnchorDeparture());
+            setDateAndTimeButton(atdDate, atdTime, movement.getActualTimeDeparture());
+            setDateAndTimeButton(deliveryDate, deliveryTime, movement.getDelivery());
+            setDateAndTimeButton(redeliveryDate, redeliveryTime, movement.getRedelivery());
+            setDateAndTimeButton(onHireDate, onHireTime, movement.getOnHire());
+            setDateAndTimeButton(offHireDate, offHireTime, movement.getOffHire());
+            setDateAndTimeButton(null, timeOffToOn, movement.getOffToOn());
 
-    }
-
-    private boolean currentDataExist() {
-        return false;
-    }
-
-    private void setInitialInput() {
-        setDateAndTimeButton(allFastDate, allFastTime, movement.getAllFast());
-        setDateAndTimeButton(channelConnectionDate, channelConnectionTime, movement.getChannelConnection());
-        setDateAndTimeButton(dryCertIssuedDate1, dryCertIssuedTime1, movement.getDryCertifIssued1());
-        setDateAndTimeButton(compCargoCalcDate1, compCargoCalcTime1, movement.getCompletedCargoCalculation1());
-        setDateAndTimeButton(labTestReleaseDate1, labTestReleaseTime1, movement.getLabTestReleased1());
-        setDateAndTimeButton(commenceDisLoadDate, commenceDisLoadTime, movement.getCommenceDisLoad());
-        setDateAndTimeButton(compDisLoadDate, compDisLoadTime, movement.getCompletedDisLoad());
-        setDateAndTimeButton(compHoseDiscDate, compHoseDiscTime, movement.getCompletedHoseDis());
-        setDateAndTimeButton(dryCertIssuedDate2, dryCertIssuedTime2, movement.getDryCertifIssued2());
-        setDateAndTimeButton(compCargoCalcDate2, compCargoCalcTime2, movement.getCompletedCargoCalculation2());
-        setDateAndTimeButton(labTestReleaseDate2, labTestReleaseTime2, movement.getLabTestReleased2());
-        setDateAndTimeButton(cargoDocumentDate, cargoDocumentTime, movement.getCargoDocument());
-        setDateAndTimeButton(portClearanceDate, portClearanceTime, movement.getPortClearence());
-        setDateAndTimeButton(bookingPilotDate, bookingPilotTime, movement.getBookingPilotUnberthing());
-        setDateAndTimeButton(pilotOnUnberDate, pilotOnUnberTime, movement.getPilotOnBoardUnberthing());
-        setDateAndTimeButton(castOffDate, castOffTime, movement.getCastOff());
-        setDateAndTimeButton(anchoredDate, anchoredTime, movement.getAnchoredRede());
-        setDateAndTimeButton(pilotOnDepartDate, pilotOnDepartTime, movement.getPilotOnBoardDeparture());
-        setDateAndTimeButton(anchorDepartDate, anchorDepartTime, movement.getAnchorDeparture());
-        setDateAndTimeButton(atdDate, atdTime, movement.getActualTimeDeparture());
-        setDateAndTimeButton(deliveryDate, deliveryTime, movement.getDelivery());
-        setDateAndTimeButton(redeliveryDate, redeliveryTime, movement.getRedelivery());
-        setDateAndTimeButton(onHireDate, onHireTime, movement.getOnHire());
-        setDateAndTimeButton(offHireDate, offHireTime, movement.getOffHire());
-        setDateAndTimeButton(null, timeOffToOn, movement.getOffToOn());
-
-        if (movement.getRemarksActivity() != null) {
-            inputRemarks.setText(movement.getRemarksActivity());
+            if (movement.getRemarksActivity() != null) {
+                inputRemarks.setText(movement.getRemarksActivity());
+            }
         }
     }
 

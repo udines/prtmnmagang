@@ -106,7 +106,7 @@ public interface UserClient {
     @POST("marine/tankermovement")
     Call<Object> postTankerMovement(@Body ArrayList<MarineInput> marine);
     @POST("marine/tankermovement")
-    Call<TankerMovement> getInitMovement(@Body MarineIdentifier identifier);
+    Call<TankerMovement> getInitTankerMovement(@Body MarineIdentifier identifier);
 
     //temporary stop
     @GET("marine/temporarystop/{bulan}")
