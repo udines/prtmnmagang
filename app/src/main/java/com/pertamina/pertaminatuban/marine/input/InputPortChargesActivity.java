@@ -12,6 +12,7 @@ import android.widget.EditText;
 
 import com.google.gson.Gson;
 import com.pertamina.pertaminatuban.R;
+import com.pertamina.pertaminatuban.marine.models.MarineIdentifier;
 import com.pertamina.pertaminatuban.marine.models.MarineInput;
 import com.pertamina.pertaminatuban.marine.models.PortCharges;
 import com.pertamina.pertaminatuban.service.UserClient;
@@ -34,7 +35,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class InputPortChargesActivity extends AppCompatActivity {
 
     private EditText inputRambu, inputLabuh, inputTambat, inputPandu, inputTunda, inputPup;
-    private PortCharges portCharges;
+    private String bulan, kapal, periode, callTanker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,10 +67,7 @@ public class InputPortChargesActivity extends AppCompatActivity {
         inputPup = findViewById(R.id.input_port_charges_pup);
         kirim = findViewById(R.id.input_port_charges_kirim);
 
-        if (currentDataExist()) {
-            getCurrentData();
-            initInputData();
-        }
+        getInitialData();
 
         /*handle pengguna klik button kirim*/
         kirim.setOnClickListener(new View.OnClickListener() {
@@ -80,12 +78,66 @@ public class InputPortChargesActivity extends AppCompatActivity {
         });
     }
 
-    private void getInputData() {
-        String bulan = getIntent().getStringExtra("bulan");
+    private void getInitialData() {
 
-        String kapal = getIntent().getStringExtra("kapal");
-        String periode = getIntent().getStringExtra("periode");
-        String callTanker = getIntent().getStringExtra("call");
+        bulan = getIntent().getStringExtra("bulan");
+        kapal = getIntent().getStringExtra("kapal");
+        periode = getIntent().getStringExtra("periode");
+        callTanker = getIntent().getStringExtra("call");
+
+        MarineIdentifier identifier = new MarineIdentifier(
+                bulan, callTanker, kapal, periode
+        );
+
+        SharedPreferences preferences = getSharedPreferences(
+                "login",
+                Context.MODE_PRIVATE
+        );
+        final String key = preferences.getString("userKey", "none");
+
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(new Interceptor() {
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request original = chain.request();
+
+                Request request = original.newBuilder()
+                        .header("Authorization", key)
+                        .method(original.method(), original.body())
+                        .build();
+                return chain.proceed(request);
+            }
+        });
+
+        OkHttpClient client = httpClient.build();
+
+        String baseUrl = "http://www.api.clicktuban.com/";
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client);
+
+        Retrofit retrofit = builder.build();
+        UserClient userClient = retrofit.create(UserClient.class);
+
+        Call<PortCharges> call = userClient.getInitPortCharges(identifier);
+        call.enqueue(new Callback<PortCharges>() {
+            @Override
+            public void onResponse(Call<PortCharges> call, Response<PortCharges> response) {
+                Log.w("code", String.valueOf(response.code()));
+                if (response.code() == 200) {
+                    setInitialData(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<PortCharges> call, Throwable t) {
+                Log.w("error", t.getMessage());
+            }
+        });
+    }
+
+    private void getInputData() {
 
         ArrayList<MarineInput> data = new ArrayList<>();
         MarineInput lightData, harborData, quayData, pilotageData, towageData, pupData;
@@ -219,21 +271,13 @@ public class InputPortChargesActivity extends AppCompatActivity {
         }
     }
 
-    private void getCurrentData() {
-
-    }
-
-    private void initInputData() {
+    private void setInitialData(PortCharges portCharges) {
         setEditText(inputRambu, portCharges.getLightDues());
         setEditText(inputLabuh, portCharges.getHarborDues());
         setEditText(inputTambat, portCharges.getQuayDues());
         setEditText(inputPandu, portCharges.getPilotage());
         setEditText(inputTunda, portCharges.getTowage());
         setEditText(inputPup, portCharges.getPup9a2());
-    }
-
-    private boolean currentDataExist() {
-        return true;
     }
 
     private void setEditText(EditText editText, Object value) {
