@@ -73,7 +73,7 @@ public interface UserClient {
     Call<ArrayList<InitialTanker>> getInitialTanker(@Path("bulan") String bulan);
     @POST("marine/initialtanker")
     Call<Object> postInitialTanker(@Body ArrayList<MarineInput> marine);
-    @POST("marine/initialtanker")
+    @POST("marine/initialtanker/check")
     Call<InitialTanker> getInitInitialTanker(@Body MarineIdentifier identifier);
 
     //port charges
@@ -81,7 +81,7 @@ public interface UserClient {
     Call<ArrayList<PortCharges>> getPortCharges(@Path("bulan") String bulan);
     @POST("marine/portcharges")
     Call<Object> postPortCharges(@Body ArrayList<MarineInput> marine);
-    @POST("marine/portcharges")
+    @POST("marine/portcharges/check")
     Call<PortCharges> getInitPortCharges(@Body MarineIdentifier identifier);
 
     //ship condition
@@ -89,7 +89,7 @@ public interface UserClient {
     Call<ArrayList<ShipCondition>> getShipCondition(@Path("bulan") String bulan);
     @POST("marine/shipcondition")
     Call<Object> postShipCondition(@Body ArrayList<MarineInput> marine);
-    @POST("marine/shipcondition")
+    @POST("marine/shipcondition/check")
     Call<ShipCondition> getInitShipCondition(@Body MarineIdentifier identifier);
 
     //ship particular
@@ -97,7 +97,7 @@ public interface UserClient {
     Call<ArrayList<ShipParticular>> getShipParticular(@Path("bulan") String bulan);
     @POST("marine/shipparticular")
     Call<Object> postShipParticular(@Body ArrayList<MarineInput> marine);
-    @POST("marine/shipparticular")
+    @POST("marine/shipparticular/check")
     Call<ShipParticular> getInitShipParticular(@Body MarineIdentifier identifier);
 
     //tanker movement
@@ -105,7 +105,7 @@ public interface UserClient {
     Call<ArrayList<TankerMovement>> getTankerMovement(@Path("bulan") String bulan);
     @POST("marine/tankermovement")
     Call<Object> postTankerMovement(@Body ArrayList<MarineInput> marine);
-    @POST("marine/tankermovement")
+    @POST("marine/tankermovement/check")
     Call<TankerMovement> getInitTankerMovement(@Body MarineIdentifier identifier);
 
     //temporary stop
@@ -113,7 +113,7 @@ public interface UserClient {
     Call<ArrayList<TemporaryStop>> getTemporaryStop(@Path("bulan") String bulan);
     @POST("marine/temporarystop")
     Call<Object> postTemporaryStop(@Body ArrayList<MarineInput> marine);
-    @POST("marine/temporarystop")
+    @POST("marine/temporarystop/check")
     Call<TemporaryStop> getInitTemporaryStop(@Body MarineIdentifier identifier);
 
     //waiting time
@@ -121,7 +121,7 @@ public interface UserClient {
     Call<ArrayList<WaitingTime>> getWaitingTime(@Path("bulan") String bulan);
     @POST("marine/waitingtime")
     Call<Object> postWaitingTime(@Body ArrayList<MarineInput> marine);
-    @POST("marine/waitingtime")
+    @POST("marine/waitingtime/check")
     Call<WaitingTime> getInitWaitingTime(@Body MarineIdentifier identifier);
 
 
