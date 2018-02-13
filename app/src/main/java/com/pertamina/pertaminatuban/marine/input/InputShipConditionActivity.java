@@ -387,14 +387,6 @@ public class InputShipConditionActivity extends AppCompatActivity {
         return timestamp;
     }
 
-    private void getCurrentData() {
-
-    }
-
-    private boolean currentDataExist() {
-        return false;
-    }
-
     private void setDateAndTimeButton(final Button dateButton, final Button timeButton, String time) {
         if (time != null) {
             String[] hourMin = time.split(" ");
