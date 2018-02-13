@@ -3,8 +3,6 @@ package com.pertamina.pertaminatuban.marine.input;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -16,6 +14,7 @@ import android.widget.TimePicker;
 
 import com.google.gson.Gson;
 import com.pertamina.pertaminatuban.R;
+import com.pertamina.pertaminatuban.marine.models.MarineInput;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

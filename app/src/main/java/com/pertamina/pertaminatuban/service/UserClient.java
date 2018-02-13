@@ -5,7 +5,7 @@ import com.pertamina.pertaminatuban.distribusi.models.Matbal;
 import com.pertamina.pertaminatuban.distribusi.models.Opers;
 import com.pertamina.pertaminatuban.distribusi.models.Ritase;
 import com.pertamina.pertaminatuban.distribusi.models.Wilayah;
-import com.pertamina.pertaminatuban.marine.input.MarineInput;
+import com.pertamina.pertaminatuban.marine.models.MarineInput;
 import com.pertamina.pertaminatuban.marine.models.InitialTanker;
 import com.pertamina.pertaminatuban.marine.models.PortCharges;
 import com.pertamina.pertaminatuban.marine.models.ShipCondition;
@@ -108,4 +108,6 @@ public interface UserClient {
     Call<ArrayList<WaitingTime>> getWaitingTime(@Path("bulan") String bulan);
     @POST("marine/waitingtime")
     Call<Object> postWaitingTime(@Body ArrayList<MarineInput> marine);
+
+    //initial data
 }

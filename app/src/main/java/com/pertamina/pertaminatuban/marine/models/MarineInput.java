@@ -1,4 +1,4 @@
-package com.pertamina.pertaminatuban.marine.input;
+package com.pertamina.pertaminatuban.marine.models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

@@ -11,12 +11,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Spinner;
 
 import com.google.gson.Gson;
 import com.pertamina.pertaminatuban.R;
-import com.pertamina.pertaminatuban.distribusi.InputMatbalActivity;
 import com.pertamina.pertaminatuban.marine.models.InitialTanker;
+import com.pertamina.pertaminatuban.marine.models.MarineInput;
 import com.pertamina.pertaminatuban.service.UserClient;
 
 import java.io.IOException;

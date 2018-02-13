@@ -10,6 +10,7 @@ import android.widget.EditText;
 
 import com.google.gson.Gson;
 import com.pertamina.pertaminatuban.R;
+import com.pertamina.pertaminatuban.marine.models.MarineInput;
 import com.pertamina.pertaminatuban.marine.models.WaitingTime;
 
 import java.text.SimpleDateFormat;

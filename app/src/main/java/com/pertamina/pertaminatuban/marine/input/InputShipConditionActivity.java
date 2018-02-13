@@ -14,15 +14,13 @@ import android.widget.TimePicker;
 
 import com.google.gson.Gson;
 import com.pertamina.pertaminatuban.R;
+import com.pertamina.pertaminatuban.marine.models.MarineInput;
 import com.pertamina.pertaminatuban.marine.models.ShipCondition;
 
-import java.sql.Timestamp;
-import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 public class InputShipConditionActivity extends AppCompatActivity {
