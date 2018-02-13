@@ -272,12 +272,14 @@ public class InputPortChargesActivity extends AppCompatActivity {
     }
 
     private void setInitialData(PortCharges portCharges) {
-        setEditText(inputRambu, portCharges.getLightDues());
-        setEditText(inputLabuh, portCharges.getHarborDues());
-        setEditText(inputTambat, portCharges.getQuayDues());
-        setEditText(inputPandu, portCharges.getPilotage());
-        setEditText(inputTunda, portCharges.getTowage());
-        setEditText(inputPup, portCharges.getPup9a2());
+        if (portCharges != null) {
+            setEditText(inputRambu, portCharges.getLightDues());
+            setEditText(inputLabuh, portCharges.getHarborDues());
+            setEditText(inputTambat, portCharges.getQuayDues());
+            setEditText(inputPandu, portCharges.getPilotage());
+            setEditText(inputTunda, portCharges.getTowage());
+            setEditText(inputPup, portCharges.getPup9a2());
+        }
     }
 
     private void setEditText(EditText editText, Object value) {

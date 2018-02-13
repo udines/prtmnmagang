@@ -2,6 +2,8 @@ package com.pertamina.pertaminatuban.marine.input;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -14,14 +16,26 @@ import android.widget.TimePicker;
 
 import com.google.gson.Gson;
 import com.pertamina.pertaminatuban.R;
+import com.pertamina.pertaminatuban.marine.models.MarineIdentifier;
 import com.pertamina.pertaminatuban.marine.models.MarineInput;
 import com.pertamina.pertaminatuban.marine.models.ShipCondition;
+import com.pertamina.pertaminatuban.service.UserClient;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class InputShipConditionActivity extends AppCompatActivity {
 
@@ -30,7 +44,7 @@ public class InputShipConditionActivity extends AppCompatActivity {
             inputSlopTankAta, inputSlopTankAtd;
     private Button ataTime, atdTime, comReplDate, comReplTime, compReplDate, compReplTime, kirim;
 
-    private ShipCondition condition;
+    private String bulan, periode, kapal, callTanker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,10 +85,7 @@ public class InputShipConditionActivity extends AppCompatActivity {
         compReplTime = findViewById(R.id.input_ship_condition_comp_repl_time);
         kirim = findViewById(R.id.input_ship_condition_kirim);
 
-        if (currentDataExist()) {
-            getCurrentData();
-            setInitialInput();
-        }
+        getInitialData();
 
         assignButtonListener();
 
@@ -82,6 +93,64 @@ public class InputShipConditionActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 getInputData();
+            }
+        });
+    }
+
+    private void getInitialData() {
+        bulan = getIntent().getStringExtra("bulan");
+        kapal = getIntent().getStringExtra("kapal");
+        periode = getIntent().getStringExtra("periode");
+        callTanker = getIntent().getStringExtra("call");
+
+        MarineIdentifier identifier = new MarineIdentifier(
+                bulan, callTanker, kapal, periode
+        );
+
+        SharedPreferences preferences = getSharedPreferences(
+                "login",
+                Context.MODE_PRIVATE
+        );
+        final String key = preferences.getString("userKey", "none");
+
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(new Interceptor() {
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request original = chain.request();
+
+                Request request = original.newBuilder()
+                        .header("Authorization", key)
+                        .method(original.method(), original.body())
+                        .build();
+                return chain.proceed(request);
+            }
+        });
+
+        OkHttpClient client = httpClient.build();
+
+        String baseUrl = "http://www.api.clicktuban.com/";
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client);
+
+        Retrofit retrofit = builder.build();
+        UserClient userClient = retrofit.create(UserClient.class);
+
+        Call<ShipCondition> call = userClient.getInitShipCondition(identifier);
+        call.enqueue(new Callback<ShipCondition>() {
+            @Override
+            public void onResponse(Call<ShipCondition> call, Response<ShipCondition> response) {
+                Log.w("code", String.valueOf(response.code()));
+                if (response.code() == 200) {
+                    setInitialData(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ShipCondition> call, Throwable t) {
+                Log.w("error", t.getMessage());
             }
         });
     }
@@ -115,11 +184,6 @@ public class InputShipConditionActivity extends AppCompatActivity {
     }
 
     private void getInputData() {
-        String bulan = getIntent().getStringExtra("bulan");
-
-        String kapal = getIntent().getStringExtra("kapal");
-        String periode = getIntent().getStringExtra("periode");
-        String callTanker = getIntent().getStringExtra("call");
 
         ArrayList<MarineInput> data = new ArrayList<>();
 
@@ -265,23 +329,25 @@ public class InputShipConditionActivity extends AppCompatActivity {
         Log.w("json", new Gson().toJson(data));
     }
 
-    private void setInitialInput() {
-        setDateAndTimeButton(null, ataTime, condition.getActualTimeArrival());
-        setDateAndTimeButton(null, atdTime, condition.getActualTimeDeparture());
-        setDateAndTimeButton(compReplDate, compReplTime, condition.getCompRepl());
-        setDateAndTimeButton(comReplDate, comReplTime, condition.getComRepl());
+    private void setInitialData(ShipCondition condition) {
+        if (condition != null) {
+            setDateAndTimeButton(null, ataTime, condition.getActualTimeArrival());
+            setDateAndTimeButton(null, atdTime, condition.getActualTimeDeparture());
+            setDateAndTimeButton(compReplDate, compReplTime, condition.getCompRepl());
+            setDateAndTimeButton(comReplDate, comReplTime, condition.getComRepl());
 
-        setEditText(inputDescription, condition.getDescriptionDraft());
-        setEditText(inputGradesBunker, condition.getGradeBunker());
-        setEditText(inputRobAta, condition.getRobAta());
-        setEditText(inputRobAtd, condition.getRobAtd());
-        setEditText(inputRobLastPort, condition.getRobLastPort());
-        setEditText(inputRepl, condition.getRepl());
-        setEditText(inputLocationRepl, condition.getReplLocation());
-        setEditText(inputBunkerConsPort, condition.getBunkerConsumptionPort());
-        setEditText(inputBunkerConsSeatime, condition.getBunkerConsumptionSeatime());
-        setEditText(inputSlopTankAta, condition.getSlopTankAta());
-        setEditText(inputSlopTankAtd, condition.getSlopTankAtd());
+            setEditText(inputDescription, condition.getDescriptionDraft());
+            setEditText(inputGradesBunker, condition.getGradeBunker());
+            setEditText(inputRobAta, condition.getRobAta());
+            setEditText(inputRobAtd, condition.getRobAtd());
+            setEditText(inputRobLastPort, condition.getRobLastPort());
+            setEditText(inputRepl, condition.getRepl());
+            setEditText(inputLocationRepl, condition.getReplLocation());
+            setEditText(inputBunkerConsPort, condition.getBunkerConsumptionPort());
+            setEditText(inputBunkerConsSeatime, condition.getBunkerConsumptionSeatime());
+            setEditText(inputSlopTankAta, condition.getSlopTankAta());
+            setEditText(inputSlopTankAtd, condition.getSlopTankAtd());
+        }
     }
 
     private void setEditText(EditText editText, Object content) {
