@@ -196,26 +196,11 @@ public class InputTemporaryStopActivity extends AppCompatActivity {
     }
 
     private void getInputData() {
-        Calendar cal = Calendar.getInstance();
+        String bulan = getIntent().getStringExtra("bulan");
 
-        /*int year, month;
-        year = getIntent().getIntExtra("yearPeriod", 2018);
-        month = getIntent().getIntExtra("monthPeriod", 0);
-        cal.set(year, month, 1);*/
-
-        Date date = new Date(cal.getTimeInMillis());
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-dd", Locale.getDefault());
-        String bulan = format.format(date);
-
-        /*String kapal = getIntent().getStringExtra("vesselName");
+        String kapal = getIntent().getStringExtra("kapal");
         String periode = getIntent().getStringExtra("periode");
-        String callTanker = getIntent().getStringExtra("callTanker");
-        kapal = kapal.toUpperCase();*/
-
-        String kapal = "John Caine";
-        kapal = kapal.toUpperCase();
-        String periode = "A";
-        String callTanker = "1";
+        String callTanker = getIntent().getStringExtra("call");
 
         ArrayList<MarineInput> data = new ArrayList<>();
 

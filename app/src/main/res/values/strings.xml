@@ -315,4 +315,11 @@
     <string name="variable_ship_particular_master">master</string>
 
     <string name="title_activity_pilih_tanker">Pilih Tanker</string>
+
+    <string-array name="periode_array">
+        <item>Periode</item>
+        <item>A</item>
+        <item>B</item>
+        <item>C</item>
+    </string-array>
 </resources>

@@ -4,7 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -28,6 +31,8 @@ public class PilihTankerActivity extends AppCompatActivity {
     private String bulan, kapal, callTanker, periode;
 
     private String sourceActivity;
+    private boolean bulanExist = false;
+    private EditText inputCall;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,45 +53,98 @@ public class PilihTankerActivity extends AppCompatActivity {
         inputKapal = findViewById(R.id.pilih_tanker_input_kapal_baru);
         kapalSpinner = findViewById(R.id.pilih_tanker_kapal);
         periodeSpinner = findViewById(R.id.pilih_tanker_periode);
+        inputCall = findViewById(R.id.pilih_tanker_input_call);
 
+        Calendar cal = Calendar.getInstance();
+        month = cal.get(Calendar.MONTH);
+        year = cal.get(Calendar.YEAR);
         sourceActivity = getIntent().getStringExtra("sourceActivity");
 
         handleBulan();
+        handlePeriode();
         handleLanjut();
 
+    }
+
+    private void handlePeriode() {
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.periode_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        periodeSpinner.setAdapter(adapter);
+        periodeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                periode = periodeSpinner.getSelectedItem().toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
 
     private void handleLanjut() {
         buttonLanjut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent inputIntent = new Intent();
-                switch (sourceActivity) {
-                    case "InitialTanker":
-                        inputIntent = new Intent(getApplicationContext(), InputInitialTankerActivity.class);
-                        break;
-                    case "PortCharges":
-                        inputIntent = new Intent(getApplicationContext(), InputPortChargesActivity.class);
-                        break;
-                    case "ShipCondition":
-                        inputIntent = new Intent(getApplicationContext(), InputShipConditionActivity.class);
-                        break;
-                    case "ShipParticular":
-                        inputIntent = new Intent(getApplicationContext(), InputShipParticularActivity.class);
-                        break;
-                    case "TankerMovement":
-                        inputIntent = new Intent(getApplicationContext(), InputTankerMovementActivity.class);
-                        break;
-                    case "TemporaryStop":
-                        inputIntent = new Intent(getApplicationContext(), InputTemporaryStopActivity.class);
-                        break;
-                    case "WaitingTime":
-                        inputIntent = new Intent(getApplicationContext(), InputWaitingTimeActivity.class);
-                        break;
+                periode = periodeSpinner.getSelectedItem().toString();
+                if (bulanExist && callTankerExist() && kapalExist() && !periode.equals("Periode")) {
+                    goToActivity(sourceActivity);
                 }
-                startActivity(inputIntent);
+                Log.w("bool", String.valueOf(bulanExist + " " + callTankerExist() + " " + kapalExist() + " " + periode));
             }
         });
+    }
+
+    private boolean kapalExist() {
+        boolean ada = false;
+        if (!inputKapal.getText().toString().isEmpty()) {
+            ada = true;
+            kapal = inputKapal.getText().toString();
+        }
+        return ada;
+    }
+
+    private boolean callTankerExist() {
+        boolean ada = false;
+        if (!inputCall.getText().toString().isEmpty()) {
+            ada = true;
+            callTanker = inputCall.getText().toString();
+        }
+        return ada;
+    }
+
+    private void goToActivity(String sourceActivity) {
+        Intent inputIntent = new Intent();
+        switch (sourceActivity) {
+            case "InitialTanker":
+                inputIntent = new Intent(getApplicationContext(), InputInitialTankerActivity.class);
+                break;
+            case "PortCharges":
+                inputIntent = new Intent(getApplicationContext(), InputPortChargesActivity.class);
+                break;
+            case "ShipCondition":
+                inputIntent = new Intent(getApplicationContext(), InputShipConditionActivity.class);
+                break;
+            case "ShipParticular":
+                inputIntent = new Intent(getApplicationContext(), InputShipParticularActivity.class);
+                break;
+            case "TankerMovement":
+                inputIntent = new Intent(getApplicationContext(), InputTankerMovementActivity.class);
+                break;
+            case "TemporaryStop":
+                inputIntent = new Intent(getApplicationContext(), InputTemporaryStopActivity.class);
+                break;
+            case "WaitingTime":
+                inputIntent = new Intent(getApplicationContext(), InputWaitingTimeActivity.class);
+                break;
+        }
+        inputIntent.putExtra("bulan", bulan);
+        inputIntent.putExtra("kapal", kapal);
+        inputIntent.putExtra("call", callTanker);
+        inputIntent.putExtra("periode", periode);
+        startActivity(inputIntent);
     }
 
     private void handleBulan() {
@@ -107,6 +165,7 @@ public class PilihTankerActivity extends AppCompatActivity {
                                 cal.set(year, month, 1);
                                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM", Locale.getDefault());
                                 bulan = format.format(new Date(cal.getTimeInMillis()));
+                                bulanExist = true;
                             }
                         },
                         today.get(Calendar.YEAR),
@@ -114,9 +173,8 @@ public class PilihTankerActivity extends AppCompatActivity {
                 );
 
                 builder.setMinYear(1970)
-                        .setMaxYear(today.get(Calendar.YEAR))
                         .setActivatedMonth(month)
-                        .setActivatedYear(year+5)
+                        .setActivatedYear(year)
                         .build()
                         .show();
             }

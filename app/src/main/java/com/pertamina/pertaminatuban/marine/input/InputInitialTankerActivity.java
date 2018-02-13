@@ -133,24 +133,12 @@ public class InputInitialTankerActivity extends AppCompatActivity {
     }
 
     private void getInputData() {
-        Calendar cal = Calendar.getInstance();
 
-        /*int year, month;
-        year = getIntent().getIntExtra("yearPeriod", 2018);
-        month = getIntent().getIntExtra("monthPeriod", 0);
-        cal.set(year, month, 1);*/
+        String bulan = getIntent().getStringExtra("bulan");
 
-        java.util.Date date = new java.util.Date(cal.getTimeInMillis());
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-dd");
-        String bulan = format.format(date);
-
-        /*String kapal = getIntent().getStringExtra("vesselName");
+        String kapal = getIntent().getStringExtra("kapal");
         String periode = getIntent().getStringExtra("periode");
-        String callTanker = getIntent().getStringExtra("callTanker");*/
-
-        String kapal = "John Caine";
-        String periode = "A";
-        String callTanker = "1";
+        String callTanker = getIntent().getStringExtra("call");
 
         ArrayList<MarineInput> data = new ArrayList<>();
 

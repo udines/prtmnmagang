@@ -315,7 +315,9 @@
         <activity
             android:name=".marine.input.PilihTankerActivity"
             android:label="@string/title_activity_pilih_tanker"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
     </application>
 
 </manifest>

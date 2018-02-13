@@ -14,19 +14,32 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/Base.Widget.AppCompat.Button.Colored"
-        android:text="Periode Bulan"
+        android:text="Pilih Bulan"
         android:textColor="@color/white"/>
 
     <android.support.v7.widget.AppCompatSpinner
         android:id="@+id/pilih_tanker_kapal"
         android:layout_width="wrap_content"
+        android:visibility="gone"
         android:layout_height="48dp" />
+
+    <EditText
+        android:id="@+id/pilih_tanker_input_call"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:maxLines="1"
+        android:gravity="center"
+        android:hint="Call Tanker"/>
 
     <EditText
         android:id="@+id/pilih_tanker_input_kapal_baru"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Input Nama Kapal"/>
+        android:hint="Name of Vessel"
+        android:maxLines="1"
+        android:gravity="center"
+        android:inputType="textCapCharacters"/>
 
     <android.support.v7.widget.AppCompatSpinner
         android:id="@+id/pilih_tanker_periode"
