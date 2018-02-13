@@ -1,5 +1,7 @@
 package com.pertamina.pertaminatuban.marine.input;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -10,13 +12,25 @@ import android.widget.EditText;
 
 import com.google.gson.Gson;
 import com.pertamina.pertaminatuban.R;
+import com.pertamina.pertaminatuban.marine.models.MarineIdentifier;
 import com.pertamina.pertaminatuban.marine.models.MarineInput;
 import com.pertamina.pertaminatuban.marine.models.WaitingTime;
+import com.pertamina.pertaminatuban.service.UserClient;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class InputWaitingTimeActivity extends AppCompatActivity {
 
@@ -28,7 +42,7 @@ public class InputWaitingTimeActivity extends AppCompatActivity {
             shoreOrderHour, shoreOrderMins, clearHour, clearMins, cargoDocHour, cargoDocMins,
             pumpVessHour, pumpVessMins, pumpShoreHour, pumpShoreMins, cargoCalcHour, cargoCalcMins,
             steamHour, steamMins, unreadyHour, unreadyMins;
-    private WaitingTime waitingTime;
+    private String bulan, kapal, callTanker, periode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,10 +119,7 @@ public class InputWaitingTimeActivity extends AppCompatActivity {
         unreadyMins = findViewById(R.id.input_waiting_time_unready_mins);
         kirim = findViewById(R.id.input_waiting_time_kirim);
 
-        if (currentDataExist()) {
-            getCurrentData();
-            setInitialInput();
-        }
+        getInitialData();
 
         kirim.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,12 +129,65 @@ public class InputWaitingTimeActivity extends AppCompatActivity {
         });
     }
 
-    private void getInputData() {
-        String bulan = getIntent().getStringExtra("bulan");
+    private void getInitialData() {
+        bulan = getIntent().getStringExtra("bulan");
+        kapal = getIntent().getStringExtra("kapal");
+        periode = getIntent().getStringExtra("periode");
+        callTanker = getIntent().getStringExtra("call");
 
-        String kapal = getIntent().getStringExtra("kapal");
-        String periode = getIntent().getStringExtra("periode");
-        String callTanker = getIntent().getStringExtra("call");
+        MarineIdentifier identifier = new MarineIdentifier(
+                bulan, callTanker, kapal, periode
+        );
+
+        SharedPreferences preferences = getSharedPreferences(
+                "login",
+                Context.MODE_PRIVATE
+        );
+        final String key = preferences.getString("userKey", "none");
+
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(new Interceptor() {
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request original = chain.request();
+
+                Request request = original.newBuilder()
+                        .header("Authorization", key)
+                        .method(original.method(), original.body())
+                        .build();
+                return chain.proceed(request);
+            }
+        });
+
+        OkHttpClient client = httpClient.build();
+
+        String baseUrl = "http://www.api.clicktuban.com/";
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client);
+
+        Retrofit retrofit = builder.build();
+        UserClient userClient = retrofit.create(UserClient.class);
+
+        Call<WaitingTime> call = userClient.getInitWaitingTime(identifier);
+        call.enqueue(new Callback<WaitingTime>() {
+            @Override
+            public void onResponse(Call<WaitingTime> call, Response<WaitingTime> response) {
+                Log.w("code", String.valueOf(response.code()));
+                if (response.code() == 200) {
+                    setInitialData(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<WaitingTime> call, Throwable t) {
+                Log.w("error", t.getMessage());
+            }
+        });
+    }
+
+    private void getInputData() {
 
         ArrayList<MarineInput> data = new ArrayList<>();
 
@@ -388,33 +452,35 @@ public class InputWaitingTimeActivity extends AppCompatActivity {
         }
     }
 
-    private void setInitialInput() {
-        setEditText(pilotHour, pilotMins, waitingTime.getPilot());
-        setEditText(labHour, labMins, waitingTime.getLabAnalysis());
-        setEditText(tugHour, tugMins, waitingTime.getTugBoat());
-        setEditText(jettyHour, jettyMins, waitingTime.getJetty());
-        setEditText(dayHour, dayMins, waitingTime.getDaylight());
-        setEditText(tideHour, tideMins, waitingTime.getTide());
-        setEditText(ballastHour, ballastMins, waitingTime.getBallast());
-        setEditText(cleanHour, cleanMins, waitingTime.getTankCleaning());
-        setEditText(nomiHour, nomiMins, waitingTime.getNomination());
-        setEditText(powerHour, powerMins, waitingTime.getManPower());
-        setEditText(weatherHour, weatherMins, waitingTime.getBadWeater());
-        setEditText(lineHour, lineMins, waitingTime.getLine());
-        setEditText(cargoHour, cargoMins, waitingTime.getCargo());
-        setEditText(ullageHour, ullageMins, waitingTime.getUllage());
-        setEditText(supplyBunkHour, supplyBunkMins, waitingTime.getSupplyBunker());
-        setEditText(supplyFreshHour, supplyFreshMins, waitingTime.getSupplyFreshWater());
-        setEditText(actLoadHour, actLoadMins, waitingTime.getActLoadDate());
-        setEditText(prepHour, prepMins, waitingTime.getPreparation());
-        setEditText(shoreOrderHour, shoreOrderMins, waitingTime.getShoreOrder());
-        setEditText(clearHour, clearMins, waitingTime.getShipClearence());
-        setEditText(cargoDocHour, cargoDocMins, waitingTime.getCargoDocument());
-        setEditText(pumpVessHour, pumpVessMins, waitingTime.getSlowPumpVessel());
-        setEditText(pumpShoreHour, pumpShoreMins, waitingTime.getSlowPumpShore());
-        setEditText(cargoCalcHour, cargoCalcMins, waitingTime.getCargoCalculation());
-        setEditText(steamHour, steamMins, waitingTime.getSteamingInOut());
-        setEditText(unreadyHour, unreadyMins, waitingTime.getShipUnready());
+    private void setInitialData(WaitingTime waitingTime) {
+        if (waitingTime != null) {
+            setEditText(pilotHour, pilotMins, waitingTime.getPilot());
+            setEditText(labHour, labMins, waitingTime.getLabAnalysis());
+            setEditText(tugHour, tugMins, waitingTime.getTugBoat());
+            setEditText(jettyHour, jettyMins, waitingTime.getJetty());
+            setEditText(dayHour, dayMins, waitingTime.getDaylight());
+            setEditText(tideHour, tideMins, waitingTime.getTide());
+            setEditText(ballastHour, ballastMins, waitingTime.getBallast());
+            setEditText(cleanHour, cleanMins, waitingTime.getTankCleaning());
+            setEditText(nomiHour, nomiMins, waitingTime.getNomination());
+            setEditText(powerHour, powerMins, waitingTime.getManPower());
+            setEditText(weatherHour, weatherMins, waitingTime.getBadWeater());
+            setEditText(lineHour, lineMins, waitingTime.getLine());
+            setEditText(cargoHour, cargoMins, waitingTime.getCargo());
+            setEditText(ullageHour, ullageMins, waitingTime.getUllage());
+            setEditText(supplyBunkHour, supplyBunkMins, waitingTime.getSupplyBunker());
+            setEditText(supplyFreshHour, supplyFreshMins, waitingTime.getSupplyFreshWater());
+            setEditText(actLoadHour, actLoadMins, waitingTime.getActLoadDate());
+            setEditText(prepHour, prepMins, waitingTime.getPreparation());
+            setEditText(shoreOrderHour, shoreOrderMins, waitingTime.getShoreOrder());
+            setEditText(clearHour, clearMins, waitingTime.getShipClearence());
+            setEditText(cargoDocHour, cargoDocMins, waitingTime.getCargoDocument());
+            setEditText(pumpVessHour, pumpVessMins, waitingTime.getSlowPumpVessel());
+            setEditText(pumpShoreHour, pumpShoreMins, waitingTime.getSlowPumpShore());
+            setEditText(cargoCalcHour, cargoCalcMins, waitingTime.getCargoCalculation());
+            setEditText(steamHour, steamMins, waitingTime.getSteamingInOut());
+            setEditText(unreadyHour, unreadyMins, waitingTime.getShipUnready());
+        }
     }
 
     private void setEditText(EditText inputHour, EditText inputMinute, int minutes) {
@@ -424,41 +490,6 @@ public class InputWaitingTimeActivity extends AppCompatActivity {
             inputHour.setText(String.valueOf(hour));
             inputMinute.setText(String.valueOf(min));
         }
-    }
-
-    private void getCurrentData() {
-        waitingTime = new WaitingTime(
-                34,
-                123,
-                567,
-                123,
-                435,
-                0,
-                134,
-                98,
-                8,
-                9,
-                0,
-                32,
-                457,
-                927,
-                1000,
-                34,
-                498,
-                2183,
-                45,
-                128,
-                485,
-                34,
-                23,
-                2139,
-                3294,
-                2
-        );
-    }
-
-    private boolean currentDataExist() {
-        return false;
     }
 
 }

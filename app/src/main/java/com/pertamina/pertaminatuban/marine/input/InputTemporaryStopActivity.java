@@ -180,7 +180,7 @@ public class InputTemporaryStopActivity extends AppCompatActivity {
             setButtonTime(inputStopDate3, inputStopTime3, object.getStopTime3());
             setButtonTime(inputStopDate4, inputStopTime4, object.getStopTime4());
             setButtonTime(inputStopDate5, inputStopTime5, object.getStopTime5());
-            
+
             setButtonTime(inputResumeDate1, inputResumeTime1, object.getResumeTime1());
             setButtonTime(inputResumeDate2, inputResumeTime2, object.getResumeTime2());
             setButtonTime(inputResumeDate3, inputResumeTime3, object.getResumeTime3());
