@@ -2,6 +2,8 @@ package com.pertamina.pertaminatuban.marine.input;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -14,13 +16,26 @@ import android.widget.TimePicker;
 
 import com.google.gson.Gson;
 import com.pertamina.pertaminatuban.R;
+import com.pertamina.pertaminatuban.marine.models.MarineIdentifier;
 import com.pertamina.pertaminatuban.marine.models.MarineInput;
+import com.pertamina.pertaminatuban.marine.models.TemporaryStop;
+import com.pertamina.pertaminatuban.service.UserClient;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class InputTemporaryStopActivity extends AppCompatActivity {
 
@@ -30,6 +45,7 @@ public class InputTemporaryStopActivity extends AppCompatActivity {
             inputStopDate3, inputStopTime3, inputResumeDate3, inputResumeTime3,
             inputStopDate4, inputStopTime4, inputResumeDate4, inputResumeTime4,
             inputStopDate5, inputStopTime5, inputResumeDate5, inputResumeTime5;
+    private String bulan, kapal, periode, callTanker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,10 +97,7 @@ public class InputTemporaryStopActivity extends AppCompatActivity {
         inputResumeTime5 = findViewById(R.id.input_temporary_stop_time_resume5);
         kirim = findViewById(R.id.input_temporary_stop_kirim);
 
-        if (currentDataExist()) {
-            getCurrentData();
-            setInitialInput();
-        }
+        getInitialData();
 
         assignButtonListener();
 
@@ -94,6 +107,106 @@ public class InputTemporaryStopActivity extends AppCompatActivity {
                 getInputData();
             }
         });
+    }
+
+    private void getInitialData() {
+        bulan = getIntent().getStringExtra("bulan");
+        kapal = getIntent().getStringExtra("kapal");
+        periode = getIntent().getStringExtra("periode");
+        callTanker = getIntent().getStringExtra("call");
+
+        MarineIdentifier identifier = new MarineIdentifier(
+                bulan, callTanker, kapal, periode
+        );
+
+        SharedPreferences preferences = getSharedPreferences(
+                "login",
+                Context.MODE_PRIVATE
+        );
+        final String key = preferences.getString("userKey", "none");
+
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(new Interceptor() {
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request original = chain.request();
+
+                Request request = original.newBuilder()
+                        .header("Authorization", key)
+                        .method(original.method(), original.body())
+                        .build();
+                return chain.proceed(request);
+            }
+        });
+
+        OkHttpClient client = httpClient.build();
+
+        String baseUrl = "http://www.api.clicktuban.com/";
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client);
+
+        Retrofit retrofit = builder.build();
+        UserClient userClient = retrofit.create(UserClient.class);
+
+        Call<TemporaryStop> call = userClient.getInitTemporaryStop(identifier);
+        call.enqueue(new Callback<TemporaryStop>() {
+            @Override
+            public void onResponse(Call<TemporaryStop> call, Response<TemporaryStop> response) {
+                Log.w("code", String.valueOf(response.code()));
+                if (response.code() == 200) {
+                    setInitialData(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TemporaryStop> call, Throwable t) {
+                Log.w("error", t.getMessage());
+            }
+        });
+    }
+
+    private void setInitialData(TemporaryStop object) {
+        if (object != null) {
+            setEditText(inputReason1, object.getReason1());
+            setEditText(inputReason2, object.getReason2());
+            setEditText(inputReason3, object.getReason3());
+            setEditText(inputReason4, object.getReason4());
+            setEditText(inputReason5, object.getReason5());
+
+            setButtonTime(inputStopDate1, inputStopTime1, object.getStopTime1());
+            setButtonTime(inputStopDate2, inputStopTime2, object.getStopTime2());
+            setButtonTime(inputStopDate3, inputStopTime3, object.getStopTime3());
+            setButtonTime(inputStopDate4, inputStopTime4, object.getStopTime4());
+            setButtonTime(inputStopDate5, inputStopTime5, object.getStopTime5());
+            
+            setButtonTime(inputResumeDate1, inputResumeTime1, object.getResumeTime1());
+            setButtonTime(inputResumeDate2, inputResumeTime2, object.getResumeTime2());
+            setButtonTime(inputResumeDate3, inputResumeTime3, object.getResumeTime3());
+            setButtonTime(inputResumeDate4, inputResumeTime4, object.getResumeTime4());
+            setButtonTime(inputResumeDate5, inputResumeTime5, object.getResumeTime5());
+        }
+    }
+
+    private void setEditText(EditText editText, String value) {
+        if (value != null) {
+            editText.setText(value);
+        }
+    }
+
+    private void setButtonTime(Button dateButton, Button timeButton, String value) {
+        if (value != null) {
+            String[] dateTime = value.split(" ");
+
+            if (dateTime[0] != null) {
+                dateButton.setText(dateTime[0]);
+            }
+
+            if (dateTime[1] != null) {
+                timeButton.setText(dateTime[1]);
+            }
+        }
     }
 
     private String getTimeToString(Button dateButton, Button timeButton) {
@@ -196,11 +309,6 @@ public class InputTemporaryStopActivity extends AppCompatActivity {
     }
 
     private void getInputData() {
-        String bulan = getIntent().getStringExtra("bulan");
-
-        String kapal = getIntent().getStringExtra("kapal");
-        String periode = getIntent().getStringExtra("periode");
-        String callTanker = getIntent().getStringExtra("call");
 
         ArrayList<MarineInput> data = new ArrayList<>();
 
@@ -345,17 +453,4 @@ public class InputTemporaryStopActivity extends AppCompatActivity {
     private void uploadData(ArrayList<MarineInput> data) {
         Log.w("json", new Gson().toJson(data));
     }
-
-    private void setInitialInput() {
-
-    }
-
-    private void getCurrentData() {
-
-    }
-
-    private boolean currentDataExist() {
-        return false;
-    }
-
 }
