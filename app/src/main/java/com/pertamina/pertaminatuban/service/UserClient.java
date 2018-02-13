@@ -5,6 +5,7 @@ import com.pertamina.pertaminatuban.distribusi.models.Matbal;
 import com.pertamina.pertaminatuban.distribusi.models.Opers;
 import com.pertamina.pertaminatuban.distribusi.models.Ritase;
 import com.pertamina.pertaminatuban.distribusi.models.Wilayah;
+import com.pertamina.pertaminatuban.marine.models.MarineIdentifier;
 import com.pertamina.pertaminatuban.marine.models.MarineInput;
 import com.pertamina.pertaminatuban.marine.models.InitialTanker;
 import com.pertamina.pertaminatuban.marine.models.PortCharges;
@@ -72,42 +73,56 @@ public interface UserClient {
     Call<ArrayList<InitialTanker>> getInitialTanker(@Path("bulan") String bulan);
     @POST("marine/initialtanker")
     Call<Object> postInitialTanker(@Body ArrayList<MarineInput> marine);
+    @POST("marine/initialtanker")
+    Call<InitialTanker> getInitInitialTanker(@Body MarineIdentifier identifier);
 
     //port charges
     @GET("marine/portcharges/{bulan}")
     Call<ArrayList<PortCharges>> getPortCharges(@Path("bulan") String bulan);
     @POST("marine/portcharges")
     Call<Object> postPortCharges(@Body ArrayList<MarineInput> marine);
+    @POST("marine/portcharges")
+    Call<PortCharges> getInitPortCharges(@Body MarineIdentifier identifier);
 
     //ship condition
     @GET("marine/shipcondition/{bulan}")
     Call<ArrayList<ShipCondition>> getShipCondition(@Path("bulan") String bulan);
     @POST("marine/shipcondition")
     Call<Object> postShipCondition(@Body ArrayList<MarineInput> marine);
+    @POST("marine/shipcondition")
+    Call<ShipCondition> getInitShipCondition(@Body MarineIdentifier identifier);
 
     //ship particular
     @GET("marine/shipparticular/{bulan}")
     Call<ArrayList<ShipParticular>> getShipParticular(@Path("bulan") String bulan);
     @POST("marine/shipparticular")
     Call<Object> postShipParticular(@Body ArrayList<MarineInput> marine);
+    @POST("marine/shipparticular")
+    Call<ShipParticular> getInitShipParticular(@Body MarineIdentifier identifier);
 
     //tanker movement
     @GET("marine/tankermovement/{bulan}")
     Call<ArrayList<TankerMovement>> getTankerMovement(@Path("bulan") String bulan);
     @POST("marine/tankermovement")
     Call<Object> postTankerMovement(@Body ArrayList<MarineInput> marine);
+    @POST("marine/tankermovement")
+    Call<TankerMovement> getInitMovement(@Body MarineIdentifier identifier);
 
     //temporary stop
     @GET("marine/temporarystop/{bulan}")
     Call<ArrayList<TemporaryStop>> getTemporaryStop(@Path("bulan") String bulan);
     @POST("marine/temporarystop")
     Call<Object> postTemporaryStop(@Body ArrayList<MarineInput> marine);
+    @POST("marine/temporarystop")
+    Call<TemporaryStop> getInitTemporaryStop(@Body MarineIdentifier identifier);
 
     //waiting time
     @GET("marine/waitingtime/{bulan}")
     Call<ArrayList<WaitingTime>> getWaitingTime(@Path("bulan") String bulan);
     @POST("marine/waitingtime")
     Call<Object> postWaitingTime(@Body ArrayList<MarineInput> marine);
+    @POST("marine/waitingtime")
+    Call<WaitingTime> getInitWaitingTime(@Body MarineIdentifier identifier);
 
-    //initial data
+
 }

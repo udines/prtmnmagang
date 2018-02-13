@@ -14,7 +14,9 @@ import android.widget.RadioGroup;
 
 import com.google.gson.Gson;
 import com.pertamina.pertaminatuban.R;
+import com.pertamina.pertaminatuban.marine.InitialTankerActivity;
 import com.pertamina.pertaminatuban.marine.models.InitialTanker;
+import com.pertamina.pertaminatuban.marine.models.MarineIdentifier;
 import com.pertamina.pertaminatuban.marine.models.MarineInput;
 import com.pertamina.pertaminatuban.service.UserClient;
 
@@ -37,8 +39,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class InputInitialTankerActivity extends AppCompatActivity {
 
-    private InitialTanker initialTanker;
-
     private EditText inputCallTanker, inputVoyage, inputNoBill, inputHandlingAgent, inputGeneralAgent,
             inputCargoStatus;
     private Button inputPeriode, kirim;
@@ -46,6 +46,8 @@ public class InputInitialTankerActivity extends AppCompatActivity {
             groupPumpingMethod, groupBarthing, groupPortCall, groupPortCallReport, groupLastPort,
             groupNextPort;
     private List<String> portChoice, barthingChoice, statusChoice, activityChoice, methodChoice, gradeChoice;
+
+    private String bulan, callTanker, kapal, periode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +64,16 @@ public class InputInitialTankerActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         initChoices();
+        getIntentExtras();
         getData();
+    }
+
+    private void getIntentExtras() {
+
+        bulan = getIntent().getStringExtra("bulan");
+        kapal = getIntent().getStringExtra("kapal");
+        periode = getIntent().getStringExtra("periode");
+        callTanker = getIntent().getStringExtra("call");
     }
 
     private void initChoices() {
@@ -119,10 +130,7 @@ public class InputInitialTankerActivity extends AppCompatActivity {
         groupPumpingMethod = findViewById(R.id.input_initial_tanker_group_pumpung_method);
         groupBarthing = findViewById(R.id.input_initial_tanker_group_barthing);
 
-//        if (currentDataExist()) {
-//            getInitialData();
-//            setInitialData();
-//        }
+        getInitialData();
 
         kirim.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,12 +141,6 @@ public class InputInitialTankerActivity extends AppCompatActivity {
     }
 
     private void getInputData() {
-
-        String bulan = getIntent().getStringExtra("bulan");
-
-        String kapal = getIntent().getStringExtra("kapal");
-        String periode = getIntent().getStringExtra("periode");
-        String callTanker = getIntent().getStringExtra("call");
 
         ArrayList<MarineInput> data = new ArrayList<>();
 
@@ -151,14 +153,14 @@ public class InputInitialTankerActivity extends AppCompatActivity {
                 callTanker
         ));
 
-        /*data.add(new MarineInput(
-                getDataIfAvailable(inputCallTanker),
+        data.add(new MarineInput(
+                callTanker,
                 getResources().getString(R.string.variable_init_tanker_call_tanker),
                 kapal,
                 periode,
                 bulan,
                 callTanker
-        ));*/
+        ));
 
         data.add(new MarineInput(
                 getDataIfAvailable(inputVoyage),
@@ -324,31 +326,32 @@ public class InputInitialTankerActivity extends AppCompatActivity {
         }
     }
 
-    /*private void setInitialData() {
+    private void setInitialData(InitialTanker initialTanker) {
 
-        setEditText(inputCallTanker, String.valueOf(initialTanker.getCall()));
-        setEditText(inputVoyage, initialTanker.getVoyage());
-        setEditText(inputNoBill, initialTanker.getNoBill());
-        setEditText(inputHandlingAgent, initialTanker.getHandlingAgent());
-        setEditText(inputGeneralAgent, initialTanker.getGeneralAgent());
-        setEditText(inputCargoStatus, initialTanker.getCargoStatus());
+        if (initialTanker != null) {
 
-        setDateButtonText(inputPeriode, initialTanker.getPeriod());
+            setEditText(inputVoyage, initialTanker.getVoyage());
+            setEditText(inputNoBill, initialTanker.getNoBill());
+            setEditText(inputHandlingAgent, initialTanker.getHandlingAgent());
+            setEditText(inputGeneralAgent, initialTanker.getGeneralAgent());
+            setEditText(inputCargoStatus, initialTanker.getCargoStatus());
 
-        setRadioSelected(groupPortCall, portChoice, initialTanker.getPortOfCall());
-        setRadioSelected(groupPortCallReport, portChoice, initialTanker.getPortOfCallReport());
-        setRadioSelected(groupLastPort, portChoice, initialTanker.getLastPort());
-        setRadioSelected(groupNextPort, portChoice, initialTanker.getNextPort());
 
-        setRadioSelected(groupBarthing, barthingChoice, initialTanker.getBarthing());
+            setRadioSelected(groupPortCall, portChoice, initialTanker.getPortOfCall());
+            setRadioSelected(groupPortCallReport, portChoice, initialTanker.getPortOfCallReport());
+            setRadioSelected(groupLastPort, portChoice, initialTanker.getLastPort());
+            setRadioSelected(groupNextPort, portChoice, initialTanker.getNextPort());
 
-        setRadioSelected(groupStatusTanker, statusChoice, initialTanker.getStatus());
-        setRadioSelected(groupStatusOperasional, statusChoice, initialTanker.getStatusOps());
+            setRadioSelected(groupBarthing, barthingChoice, initialTanker.getBarthing());
 
-        setRadioSelected(groupTankerActivity, activityChoice, initialTanker.getTankerActivity());
-        setRadioSelected(groupPumpingMethod, methodChoice, initialTanker.getPumpMethod());
-        setRadioSelected(groupGrades, gradeChoice, initialTanker.getGrades());
-    }*/
+            setRadioSelected(groupStatusTanker, statusChoice, initialTanker.getStatus());
+            setRadioSelected(groupStatusOperasional, statusChoice, initialTanker.getStatusOps());
+
+            setRadioSelected(groupTankerActivity, activityChoice, initialTanker.getTankerActivity());
+            setRadioSelected(groupPumpingMethod, methodChoice, initialTanker.getPumpMethod());
+            setRadioSelected(groupGrades, gradeChoice, initialTanker.getGrades());
+        }
+    }
 
     private void setRadioSelected(RadioGroup group, List<String> choices, String chosen) {
         if (chosen != null && !chosen.isEmpty()) {
@@ -380,34 +383,70 @@ public class InputInitialTankerActivity extends AppCompatActivity {
         }
     }
 
-    private boolean currentDataExist() {
-        return true;
+    private void setDateButtonText(Button dateButton, String stringDate) {
+        if (stringDate != null) {
+            dateButton.setText(stringDate);
+        }
     }
 
     private void getInitialData() {
 
-        Calendar cal = Calendar.getInstance();
+        setEditText(inputCallTanker, callTanker);
+        inputPeriode.setText(String.valueOf(bulan + " " + periode));
 
-        initialTanker = new InitialTanker(
-                "",
-                "",
-                "15/D1/P.3010/VII/2017",
-                "12",
-                "",
-                "Own Tanker",
-                "Own Tanker",
-                "",
-                "PTM",
-                "PTM",
-                "Domestic",
-                "",
-                "Simultan",
-                getResources().getString(R.string.radio_spm_35),
-                "Discharge Port",
-                "Discharge Port",
-                "Loading Port",
-                "Discharge Port"
+        MarineIdentifier identifier = new MarineIdentifier(
+                bulan,
+                callTanker,
+                kapal,
+                periode
         );
+
+        SharedPreferences preferences = getSharedPreferences(
+                "login",
+                Context.MODE_PRIVATE
+        );
+        final String key = preferences.getString("userKey", "none");
+
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(new Interceptor() {
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request original = chain.request();
+
+                Request request = original.newBuilder()
+                        .header("Authorization", key)
+                        .method(original.method(), original.body())
+                        .build();
+                return chain.proceed(request);
+            }
+        });
+
+        OkHttpClient client = httpClient.build();
+
+        String baseUrl = "http://www.api.clicktuban.com/";
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client);
+
+        Retrofit retrofit = builder.build();
+        UserClient userClient = retrofit.create(UserClient.class);
+
+        Call<InitialTanker> call = userClient.getInitInitialTanker(identifier);
+        call.enqueue(new Callback<InitialTanker>() {
+            @Override
+            public void onResponse(Call<InitialTanker> call, Response<InitialTanker> response) {
+                Log.w("code", String.valueOf(response.code()));
+                if (response.code() == 200) {
+                    setInitialData(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<InitialTanker> call, Throwable t) {
+                Log.w("error", t.getMessage());
+            }
+        });
     }
 
     private void sendPostRequest(ArrayList<MarineInput> marine) {
