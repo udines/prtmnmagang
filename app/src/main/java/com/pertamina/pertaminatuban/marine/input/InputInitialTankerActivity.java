@@ -154,8 +154,8 @@ public class InputInitialTankerActivity extends AppCompatActivity {
         ));
 
         data.add(new MarineInput(
-                callTanker,
-                getResources().getString(R.string.variable_init_tanker_call_tanker),
+                periode,
+                getResources().getString(R.string.variable_init_tanker_period),
                 kapal,
                 periode,
                 bulan,
@@ -350,6 +350,8 @@ public class InputInitialTankerActivity extends AppCompatActivity {
             setRadioSelected(groupTankerActivity, activityChoice, initialTanker.getTankerActivity());
             setRadioSelected(groupPumpingMethod, methodChoice, initialTanker.getPumpMethod());
             setRadioSelected(groupGrades, gradeChoice, initialTanker.getGrades());
+        } else {
+            Log.w("init data", "null");
         }
     }
 
@@ -401,6 +403,9 @@ public class InputInitialTankerActivity extends AppCompatActivity {
                 periode
         );
 
+        String json = new Gson().toJson(identifier);
+        Log.w("identifier json", json);
+
         SharedPreferences preferences = getSharedPreferences(
                 "login",
                 Context.MODE_PRIVATE
@@ -432,18 +437,20 @@ public class InputInitialTankerActivity extends AppCompatActivity {
         Retrofit retrofit = builder.build();
         UserClient userClient = retrofit.create(UserClient.class);
 
-        Call<InitialTanker> call = userClient.getInitInitialTanker(identifier);
-        call.enqueue(new Callback<InitialTanker>() {
+        Call<Object> call = userClient.getInitInitialTanker(identifier);
+        call.enqueue(new Callback<Object>() {
             @Override
-            public void onResponse(Call<InitialTanker> call, Response<InitialTanker> response) {
-                Log.w("code", String.valueOf(response.code()));
+            public void onResponse(Call<Object> call, Response<Object> response) {
+                Log.w("get code", String.valueOf(response.code()));
                 if (response.code() == 200) {
-                    setInitialData(response.body());
+//                    setInitialData(response.body());
+                    String json = new Gson().toJson(response.body());
+                    Log.w("body json", json);
                 }
             }
 
             @Override
-            public void onFailure(Call<InitialTanker> call, Throwable t) {
+            public void onFailure(Call<Object> call, Throwable t) {
                 Log.w("error", t.getMessage());
             }
         });
@@ -488,6 +495,7 @@ public class InputInitialTankerActivity extends AppCompatActivity {
         call.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, Response<Object> response) {
+                Log.w("post code", String.valueOf(response.code()));
                 if (response.code() == 200) {
                     Log.w("message", response.message());
                     finish();
