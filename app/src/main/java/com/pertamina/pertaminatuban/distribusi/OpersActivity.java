@@ -30,6 +30,8 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -148,7 +150,7 @@ public class OpersActivity extends AppCompatActivity {
         UserClient userClient = retrofit.create(UserClient.class);
         Call<ArrayList<Opers>> call = userClient.getOpers(bulan);
 
-        /*call.enqueue(new Callback<ArrayList<Opers>>() {
+        call.enqueue(new Callback<ArrayList<Opers>>() {
             @Override
             public void onResponse(Call<ArrayList<Opers>> call, Response<ArrayList<Opers>> response) {
                 Log.w("code", String.valueOf(response.code()));
@@ -162,7 +164,7 @@ public class OpersActivity extends AppCompatActivity {
             public void onFailure(Call<ArrayList<Opers>> call, Throwable t) {
                 Log.e("Call", " failed " + t.getMessage());
             }
-        });*/
+        });
 
         Calendar calendar = Calendar.getInstance();
         Calendar calendar1 = Calendar.getInstance();

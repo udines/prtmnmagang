@@ -387,7 +387,7 @@ public class KonsumenActivity extends AppCompatActivity {
         UserClient userClient = retrofit.create(UserClient.class);
         Call<ArrayList<Konsumen>> call = userClient.getKonsumen(bulan + 1);
 
-        /*call.enqueue(new Callback<ArrayList<Konsumen>>() {
+        call.enqueue(new Callback<ArrayList<Konsumen>>() {
             @Override
             public void onResponse(Call<ArrayList<Konsumen>> call, Response<ArrayList<Konsumen>> response) {
                 Log.w("code", String.valueOf(response.code()));
@@ -401,10 +401,10 @@ public class KonsumenActivity extends AppCompatActivity {
             public void onFailure(Call<ArrayList<Konsumen>> call, Throwable t) {
                 Log.e("Call", " failed " + t.getMessage());
             }
-        });*/
+        });
 
-        ArrayList<Konsumen> konsumens = new ArrayList<>();
-/*pertamax*/
+        /*ArrayList<Konsumen> konsumens = new ArrayList<>();
+*//*pertamax*//*
         konsumens.add(new Konsumen("2017-02-01", "SPBU", Matbal.PERTAMAX, 344));
         konsumens.add(new Konsumen("2017-02-02", "SPBU", Matbal.PERTAMAX, 384));
         konsumens.add(new Konsumen("2017-02-03", "SPBU", Matbal.PERTAMAX, 240));
@@ -428,7 +428,7 @@ public class KonsumenActivity extends AppCompatActivity {
         konsumens.add(new Konsumen("2017-02-08", "TNI/Polri", Matbal.PERTAMAX, 8));
         konsumens.add(new Konsumen("2017-02-10", "TNI/Polri", Matbal.PERTAMAX, 16));
         konsumens.add(new Konsumen("2017-02-14", "TNI/Polri", Matbal.PERTAMAX, 4));
-/*pertalite*/
+*//*pertalite*//*
         konsumens.add(new Konsumen("2017-02-01","SPBU",  Matbal.PREMIUM, 360));
         konsumens.add(new Konsumen("2017-02-02","SPBU",  Matbal.PREMIUM, 272));
         konsumens.add(new Konsumen("2017-02-03","SPBU",  Matbal.PREMIUM, 264));
@@ -444,7 +444,7 @@ public class KonsumenActivity extends AppCompatActivity {
         konsumens.add(new Konsumen("2017-02-13","SPBU",  Matbal.PREMIUM, 192));
         konsumens.add(new Konsumen("2017-02-14","SPBU",  Matbal.PREMIUM, 368));
         konsumens.add(new Konsumen("2017-02-15","SPBU",  Matbal.PREMIUM, 296));
-/*biosolar*/
+*//*biosolar*//*
         konsumens.add(new Konsumen("2017-02-01","SPBU",  Matbal.BIOSOLAR, 904));
         konsumens.add(new Konsumen("2017-02-02","SPBU",  Matbal.BIOSOLAR, 872));
         konsumens.add(new Konsumen("2017-02-03","SPBU",  Matbal.BIOSOLAR, 864));
@@ -468,7 +468,7 @@ public class KonsumenActivity extends AppCompatActivity {
         konsumens.add(new Konsumen("2017-02-13","SPDN",  Matbal.BIOSOLAR, 8));
         konsumens.add(new Konsumen("2017-02-14","SPDN",  Matbal.BIOSOLAR, 88));
         konsumens.add(new Konsumen("2017-02-15","SPDN",  Matbal.BIOSOLAR, 72));
-/*solar*/
+*//*solar*//*
         konsumens.add(new Konsumen("2017-02-01","SPBU",  Matbal.SOLAR, 723));
         konsumens.add(new Konsumen("2017-02-02","SPBU",  Matbal.SOLAR, 697));
         konsumens.add(new Konsumen("2017-02-03","SPBU",  Matbal.SOLAR, 691));
@@ -508,6 +508,6 @@ public class KonsumenActivity extends AppCompatActivity {
         konsumens.add(new Konsumen("2017-02-15","SPDN",  Matbal.SOLAR, 57));
 
         konsumens.add(new Konsumen("2017-02-04","TNI/Polri",  Matbal.SOLAR, 8));
-        cekData(konsumens);
+        cekData(konsumens);*/
     }
 }

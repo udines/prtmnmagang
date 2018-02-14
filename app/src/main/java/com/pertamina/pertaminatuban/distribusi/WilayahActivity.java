@@ -223,7 +223,7 @@ public class WilayahActivity extends AppCompatActivity {
         UserClient userClient = retrofit.create(UserClient.class);
         Call<ArrayList<Wilayah>> call = userClient.getWilayah(bulan + 1);
 
-        /*call.enqueue(new Callback<ArrayList<Wilayah>>() {
+        call.enqueue(new Callback<ArrayList<Wilayah>>() {
             @Override
             public void onResponse(Call<ArrayList<Wilayah>> call, Response<ArrayList<Wilayah>> response) {
                 Log.w("code", String.valueOf(response.code()));
@@ -237,9 +237,9 @@ public class WilayahActivity extends AppCompatActivity {
             public void onFailure(Call<ArrayList<Wilayah>> call, Throwable t) {
                 Log.e("Call", " failed " + t.getMessage());
             }
-        });*/
+        });
 
-        ArrayList<Wilayah> wilayahs = new ArrayList<>();
+        /*ArrayList<Wilayah> wilayahs = new ArrayList<>();
         wilayahs.add(new Wilayah("Cepu", "SPBU", Matbal.PERTAMAX, 24));
         wilayahs.add(new Wilayah("Cepu", "SPBU", Matbal.PREMIUM, 368));
         wilayahs.add(new Wilayah("Lamongan", "SPBU", Matbal.PERTAMAX, 1384));
@@ -281,7 +281,7 @@ public class WilayahActivity extends AppCompatActivity {
         wilayahs.add(new Wilayah("Pati", "SPBU", Matbal.PERTAMAX,  24));
         wilayahs.add(new Wilayah("Semarang", "SPBU", Matbal.PREMIUM, 8));
 
-        cekData(wilayahs);
+        cekData(wilayahs);*/
 
     }
 }

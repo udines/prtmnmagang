@@ -125,4 +125,7 @@ public interface UserClient {
     Call<WaitingTime> getInitWaitingTime(@Body MarineIdentifier identifier);
 
 
+    //Experiment
+    @GET("marine/initialtanker/{bulan}")
+    Call<Object> getInitialTankerExperiment(@Path("bulan") String bulan);
 }

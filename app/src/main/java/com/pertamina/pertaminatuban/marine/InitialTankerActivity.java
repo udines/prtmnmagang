@@ -173,6 +173,21 @@ public class InitialTankerActivity extends AppCompatActivity {
                 Log.e("error", t.getMessage());
             }
         });
+
+        Call<Object> experimentCall = userClient.getInitialTankerExperiment(bulan);
+        experimentCall.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, Response<Object> response) {
+                if (response.code() == 200) {
+                    Log.w("data", new Gson().toJson(response.body()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
     }
 
     private void checkData(ArrayList<InitialTanker> tankers) {

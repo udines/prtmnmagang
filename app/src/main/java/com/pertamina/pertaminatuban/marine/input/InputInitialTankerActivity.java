@@ -302,11 +302,12 @@ public class InputInitialTankerActivity extends AppCompatActivity {
 
     private void uploadData(ArrayList<MarineInput> data) {
         String json = new Gson().toJson(data);
-        Log.w("json", json);
+        Log.w("post json", json);
         sendPostRequest(data);
     }
 
     private String getRadioGroupData(RadioGroup radioGroup) {
+        Log.w(String.valueOf(radioGroup.getId()), String.valueOf(radioGroup.isSelected()));
         if (!radioGroup.isSelected()) {
             return "";
         } else {
