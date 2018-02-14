@@ -481,6 +481,8 @@ public class InputWaitingTimeActivity extends AppCompatActivity {
             setEditText(cargoCalcHour, cargoCalcMins, waitingTime.getCargoCalculation());
             setEditText(steamHour, steamMins, waitingTime.getSteamingInOut());
             setEditText(unreadyHour, unreadyMins, waitingTime.getShipUnready());
+        } else {
+            Log.w("init data", "null");
         }
     }
 
@@ -532,6 +534,7 @@ public class InputWaitingTimeActivity extends AppCompatActivity {
         call.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, Response<Object> response) {
+                Log.w("code", String.valueOf(response.code()));
                 if (response.code() == 200) {
                     Log.w("message", response.message());
                     finish();
