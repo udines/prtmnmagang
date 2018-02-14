@@ -496,7 +496,7 @@ public class InputInitialTankerActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Object> call, Throwable t) {
-
+                Log.w("error", t.getMessage());
             }
         });
     }

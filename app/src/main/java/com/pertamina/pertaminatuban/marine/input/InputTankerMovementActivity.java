@@ -495,6 +495,7 @@ public class InputTankerMovementActivity extends AppCompatActivity {
 
     private void uploadData(ArrayList<MarineInput> data) {
         Log.w("json", new Gson().toJson(data));
+        sendPostRequest(data);
     }
 
     private String getDataIfAvailable(EditText inputField) {
@@ -626,5 +627,57 @@ public class InputTankerMovementActivity extends AppCompatActivity {
                 cal.get(Calendar.DAY_OF_MONTH)
         );
         dialog.show();
+    }
+
+    private void sendPostRequest(ArrayList<MarineInput> marine) {
+        SharedPreferences preferences = InputTankerMovementActivity.this.getSharedPreferences(
+                "login",
+                Context.MODE_PRIVATE
+        );
+
+        final String key = preferences.getString("userKey", "none");
+
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(new Interceptor() {
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request original = chain.request();
+
+                Request request = original.newBuilder()
+                        .header("Authorization", key)
+                        .method(original.method(), original.body())
+                        .build();
+                return chain.proceed(request);
+            }
+        });
+
+        Log.w("json", String.valueOf(marine.size()));
+
+        OkHttpClient client = httpClient.build();
+
+        String baseUrl = "http://www.api.clicktuban.com/";
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client);
+
+        Retrofit retrofit = builder.build();
+        UserClient userClient = retrofit.create(UserClient.class);
+
+        Call<Object> call = userClient.postTankerMovement(marine);
+        call.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, Response<Object> response) {
+                if (response.code() == 200) {
+                    Log.w("message", response.message());
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+                Log.w("error", t.getMessage());
+            }
+        });
     }
 }
