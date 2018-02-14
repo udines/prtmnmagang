@@ -220,7 +220,7 @@ public class RitaseActivity extends AppCompatActivity {
 
         Retrofit retrofit = builder.build();
         UserClient userClient = retrofit.create(UserClient.class);
-        Call<ArrayList<Ritase>> call = userClient.getRitase(month);
+        Call<ArrayList<Ritase>> call = userClient.getRitase(month + 1);
 
         call.enqueue(new Callback<ArrayList<Ritase>>() {
             @Override

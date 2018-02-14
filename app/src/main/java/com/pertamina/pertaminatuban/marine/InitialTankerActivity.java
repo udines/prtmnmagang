@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.pertamina.pertaminatuban.R;
@@ -45,6 +46,7 @@ public class InitialTankerActivity extends AppCompatActivity {
     private int year, month, day;
     private TextView dateText;
     private RecyclerView recyclerView;
+    private InitialTankerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -161,6 +163,7 @@ public class InitialTankerActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ArrayList<InitialTanker>> call, Response<ArrayList<InitialTanker>> response) {
                 Log.w("code", String.valueOf(response.code()));
+                recyclerView.setVisibility(View.VISIBLE);
                 if (response.code() == 200) {
                     Log.w("msg", response.message());
                     Log.w("data", new Gson().toJson(response.body()));
@@ -171,6 +174,8 @@ public class InitialTankerActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ArrayList<InitialTanker>> call, Throwable t) {
                 Log.e("error", t.getMessage());
+                recyclerView.setVisibility(View.GONE);
+                Toast.makeText(InitialTankerActivity.this, "Tidak ditemukan data", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -199,7 +204,7 @@ public class InitialTankerActivity extends AppCompatActivity {
     }
 
     private void populateData(ArrayList<InitialTanker> tankers) {
-        InitialTankerAdapter adapter = new InitialTankerAdapter(tankers);
+        adapter = new InitialTankerAdapter(tankers);
         recyclerView.setAdapter(adapter);
     }
 

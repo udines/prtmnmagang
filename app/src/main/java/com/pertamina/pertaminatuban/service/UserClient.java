@@ -109,19 +109,19 @@ public interface UserClient {
     Call<TankerMovement> getInitTankerMovement(@Body MarineIdentifier identifier);
 
     //temporary stop
-    @GET("marine/temporarystop/{bulan}")
+    @GET("marine/tempstopact/{bulan}")
     Call<ArrayList<TemporaryStop>> getTemporaryStop(@Path("bulan") String bulan);
-    @POST("marine/temporarystop")
+    @POST("marine/tempstopact")
     Call<Object> postTemporaryStop(@Body ArrayList<MarineInput> marine);
-    @POST("marine/temporarystop/check")
+    @POST("marine/tempstopact/check")
     Call<TemporaryStop> getInitTemporaryStop(@Body MarineIdentifier identifier);
 
     //waiting time
-    @GET("marine/waitingtime/{bulan}")
+    @GET("marine/waitingexcess/{bulan}")
     Call<ArrayList<WaitingTime>> getWaitingTime(@Path("bulan") String bulan);
-    @POST("marine/waitingtime")
+    @POST("marine/waitingexcess")
     Call<Object> postWaitingTime(@Body ArrayList<MarineInput> marine);
-    @POST("marine/waitingtime/check")
+    @POST("marine/waitingexcess/check")
     Call<WaitingTime> getInitWaitingTime(@Body MarineIdentifier identifier);
 
 

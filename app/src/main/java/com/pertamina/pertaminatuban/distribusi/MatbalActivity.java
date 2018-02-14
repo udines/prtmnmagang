@@ -90,16 +90,15 @@ public class MatbalActivity extends AppCompatActivity {
     }
 
     private void cekData(ArrayList<Matbal> matbals) {
-
+        Log.w("posisi", "cek data");
         /*cek apakah data ada atau tidak*/
         if (matbals != null && matbals.size() > 0) {
 
-            Log.d("data", "data matbal ada");
+            Log.w("data", "data matbal ada");
             /*data ada maka tampilkan tab dan isinya*/
             populateData(matbals);
         } else {
-
-            Log.d("data", "data matbal tidak ada");
+            Log.w("data", "data matbal tidak ada");
             /*data tidak ada maka hilangkan tab dan tampilkan pesan peringatan
             * untuk tanggal gunakan month dan year yang sudah diinisialisasi*/
 
@@ -156,6 +155,7 @@ public class MatbalActivity extends AppCompatActivity {
             }
         }
         grandTotal.setText(String.valueOf(total + " KL"));
+        Log.w("total", String.valueOf(total));
 
         if (total == 0) {
             container.setVisibility(View.GONE);

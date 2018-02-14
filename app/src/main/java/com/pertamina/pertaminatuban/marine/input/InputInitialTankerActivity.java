@@ -39,7 +39,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class InputInitialTankerActivity extends AppCompatActivity {
 
-    private EditText inputCallTanker, inputVoyage, inputNoBill, inputHandlingAgent, inputGeneralAgent,
+    private EditText inputCallTanker, inputVoyage, inputNoBill, inputDoBill, inputHandlingAgent, inputGeneralAgent,
             inputCargoStatus;
     private Button inputPeriode, kirim;
     private RadioGroup groupStatusTanker, groupStatusOperasional, groupGrades, groupTankerActivity,
@@ -63,8 +63,8 @@ public class InputInitialTankerActivity extends AppCompatActivity {
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        initChoices();
         getIntentExtras();
+        initChoices();
         getData();
     }
 
@@ -112,6 +112,7 @@ public class InputInitialTankerActivity extends AppCompatActivity {
         inputCallTanker = findViewById(R.id.input_initial_tanker_call_tanker);
         inputVoyage = findViewById(R.id.input_initial_tanker_voyage_tanker);
         inputNoBill = findViewById(R.id.input_initial_tanker_no_bill_of_landing);
+        inputDoBill = findViewById(R.id.input_initial_tanker_date_of_bill);
         inputHandlingAgent = findViewById(R.id.input_initial_tanker_handling_agent);
         inputGeneralAgent = findViewById(R.id.input_initial_tanker_general_agent);
         inputCargoStatus = findViewById(R.id.input_initial_tanker_cargo_status);
@@ -174,6 +175,15 @@ public class InputInitialTankerActivity extends AppCompatActivity {
         data.add(new MarineInput(
                 getDataIfAvailable(inputNoBill),
                 getResources().getString(R.string.variable_init_tanker_no_bill),
+                kapal,
+                periode,
+                bulan,
+                callTanker
+        ));
+
+        data.add(new MarineInput(
+                getDataIfAvailable(inputDoBill),
+                getResources().getString(R.string.variable_init_tanker_date_bill),
                 kapal,
                 periode,
                 bulan,

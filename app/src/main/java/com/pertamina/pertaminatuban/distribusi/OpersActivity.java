@@ -148,7 +148,7 @@ public class OpersActivity extends AppCompatActivity {
 
         Retrofit retrofit = builder.build();
         UserClient userClient = retrofit.create(UserClient.class);
-        Call<ArrayList<Opers>> call = userClient.getOpers(bulan);
+        Call<ArrayList<Opers>> call = userClient.getOpers(bulan + 1);
 
         call.enqueue(new Callback<ArrayList<Opers>>() {
             @Override

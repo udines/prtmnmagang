@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.pertamina.pertaminatuban.R;
@@ -157,6 +158,7 @@ public class ShipParticularActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ArrayList<ShipParticular>> call, Response<ArrayList<ShipParticular>> response) {
                 Log.w("code", String.valueOf(response.code()));
+                recyclerView.setVisibility(View.VISIBLE);
                 if (response.code() == 200) {
                     Log.w("msg", response.message());
                     Log.w("data", new Gson().toJson(response.body()));
@@ -166,7 +168,9 @@ public class ShipParticularActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ArrayList<ShipParticular>> call, Throwable t) {
-
+                Log.w("error", t.getMessage());
+                recyclerView.setVisibility(View.GONE);
+                Toast.makeText(ShipParticularActivity.this, "Tidak ditemukan data", Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.pertamina.pertaminatuban.R;
@@ -157,6 +158,7 @@ public class WaitingTimeActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ArrayList<WaitingTime>> call, Response<ArrayList<WaitingTime>> response) {
                 Log.w("code", String.valueOf(response.code()));
+                recyclerView.setVisibility(View.VISIBLE);
                 if (response.code() == 200) {
                     Log.w("msg", response.message());
                     Log.w("data", new Gson().toJson(response.body()));
@@ -166,7 +168,9 @@ public class WaitingTimeActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ArrayList<WaitingTime>> call, Throwable t) {
-
+                Log.w("error", t.getMessage());
+                recyclerView.setVisibility(View.GONE);
+                Toast.makeText(WaitingTimeActivity.this, "Tidak ditemukan data", Toast.LENGTH_SHORT).show();
             }
         });
     }
