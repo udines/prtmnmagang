@@ -206,7 +206,7 @@ public class MatbalActivity extends AppCompatActivity {
         UserClient userClient = retrofit.create(UserClient.class);
         Call<ArrayList<Matbal>> call = userClient.getMatbal(bulan + 1);
 
-        /*call.enqueue(new Callback<ArrayList<Matbal>>() {
+        call.enqueue(new Callback<ArrayList<Matbal>>() {
             @Override
             public void onResponse(Call<ArrayList<Matbal>> call, Response<ArrayList<Matbal>> response) {
                 Log.w("code", String.valueOf(response.code()));
@@ -220,10 +220,10 @@ public class MatbalActivity extends AppCompatActivity {
             public void onFailure(Call<ArrayList<Matbal>> call, Throwable t) {
                 Log.e("Call", " failed " + t.getMessage());
             }
-        });*/
+        });
         /*SAMPLE DATA*/
-        ArrayList<Matbal> matbalFeb = new ArrayList<>();
-/*pertamax*/
+        /*ArrayList<Matbal> matbalFeb = new ArrayList<>();
+*//*pertamax*//*
         matbalFeb.add(new Matbal("2017-02-01", Matbal.PERTAMAX, 344));
         matbalFeb.add(new Matbal("2017-02-02", Matbal.PERTAMAX, 392));
         matbalFeb.add(new Matbal("2017-02-03", Matbal.PERTAMAX, 240));
@@ -239,7 +239,7 @@ public class MatbalActivity extends AppCompatActivity {
         matbalFeb.add(new Matbal("2017-02-13", Matbal.PERTAMAX, 264));
         matbalFeb.add(new Matbal("2017-02-14", Matbal.PERTAMAX, 424));
         matbalFeb.add(new Matbal("2017-02-15", Matbal.PERTAMAX, 400));
-/*pertalite*/
+*//*pertalite*//*
         matbalFeb.add(new Matbal("2017-02-01", Matbal.PERTALITE, 360));
         matbalFeb.add(new Matbal("2017-02-02", Matbal.PERTALITE, 272));
         matbalFeb.add(new Matbal("2017-02-03", Matbal.PERTALITE, 264));
@@ -255,7 +255,7 @@ public class MatbalActivity extends AppCompatActivity {
         matbalFeb.add(new Matbal("2017-02-13", Matbal.PERTALITE, 192));
         matbalFeb.add(new Matbal("2017-02-14", Matbal.PERTALITE, 368));
         matbalFeb.add(new Matbal("2017-02-15", Matbal.PERTALITE, 296));
-/*biosolar*/
+*//*biosolar*//*
         matbalFeb.add(new Matbal("2017-02-01", Matbal.BIOSOLAR, 904));
         matbalFeb.add(new Matbal("2017-02-02", Matbal.BIOSOLAR, 928));
         matbalFeb.add(new Matbal("2017-02-03", Matbal.BIOSOLAR, 936));
@@ -271,7 +271,7 @@ public class MatbalActivity extends AppCompatActivity {
         matbalFeb.add(new Matbal("2017-02-13", Matbal.BIOSOLAR, 752));
         matbalFeb.add(new Matbal("2017-02-14", Matbal.BIOSOLAR, 1096));
         matbalFeb.add(new Matbal("2017-02-15", Matbal.BIOSOLAR, 1032));
-/*solar*/
+*//*solar*//*
         matbalFeb.add(new Matbal("2017-02-01", Matbal.SOLAR, 723));
         matbalFeb.add(new Matbal("2017-02-02", Matbal.SOLAR, 742));
         matbalFeb.add(new Matbal("2017-02-03", Matbal.SOLAR, 756));
@@ -287,6 +287,6 @@ public class MatbalActivity extends AppCompatActivity {
         matbalFeb.add(new Matbal("2017-02-13", Matbal.SOLAR, 609));
         matbalFeb.add(new Matbal("2017-02-14", Matbal.SOLAR, 972));
         matbalFeb.add(new Matbal("2017-02-15", Matbal.SOLAR, 849));
-        cekData(matbalFeb);
+        cekData(matbalFeb);*/
     }
 }
