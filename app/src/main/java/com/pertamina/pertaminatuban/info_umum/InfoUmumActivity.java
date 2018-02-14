@@ -13,6 +13,11 @@ import android.view.View;
 import android.widget.Button;
 
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -29,6 +34,9 @@ import java.util.List;
 
 public class InfoUmumActivity extends AppCompatActivity {
 
+    private DatabaseReference infoRef;
+    private ValueEventListener listener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,9 +51,29 @@ public class InfoUmumActivity extends AppCompatActivity {
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        populateInfo();
-
         handlePostButton();
+
+
+        final RecyclerView recyclerView = findViewById(R.id.info_recyclerview);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+
+        infoRef = FirebaseDatabase.getInstance().getReference("messages");
+        listener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                List<InfoUmum> infos = new ArrayList<>();
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    infos.add(dataSnapshot1.getValue(InfoUmum.class));
+                }
+                InfoUmumAdapter adapter = new InfoUmumAdapter(infos);
+                recyclerView.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
     }
 
     private void handlePostButton() {
@@ -58,32 +86,16 @@ public class InfoUmumActivity extends AppCompatActivity {
         });
     }
 
-    private void populateInfo() {
-        final RecyclerView recyclerView = findViewById(R.id.info_recyclerview);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-
-        FirebaseFirestore.getInstance()
-                .collection("info_umum")
-                .orderBy("time", Query.Direction.DESCENDING)
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot documentSnapshots) {
-                        Log.w("size", String.valueOf(documentSnapshots.size()));
-                        List<InfoUmum> infos;
-                        if (!documentSnapshots.isEmpty()) {
-                            infos = documentSnapshots.toObjects(InfoUmum.class);
-                            InfoUmumAdapter adapter = new InfoUmumAdapter(infos);
-                            recyclerView.setAdapter(adapter);
-                        }
-                    }
-                });
-    }
-
     @Override
     protected void onStart() {
         super.onStart();
-        populateInfo();
+        infoRef.addValueEventListener(listener);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        infoRef.removeEventListener(listener);
     }
 
     /*@Override

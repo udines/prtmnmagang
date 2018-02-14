@@ -1,74 +1,60 @@
 package com.pertamina.pertaminatuban.info_umum;
 
-import java.sql.Date;
-import java.util.HashMap;
-
 public class InfoUmum {
-    private String id;
-    private String title;
-    private String info;
-    private String detail;
-//    private Date date;
-//    private HashMap<String, Object> timestamp;
-    private long time;
+    private String judul;
+    private String informasi;
+    private String deskripsi;
+    private boolean isRead;
+    private String date;
 
     public InfoUmum() {
     }
 
-    public InfoUmum(String id, String title, String info, String detail, long time) {
-        this.id = id;
-        this.title = title;
-        this.info = info;
-        this.detail = detail;
-        this.time = time;
+    public InfoUmum(String judul, String informasi, String deskripsi, boolean isRead, String date) {
+        this.judul = judul;
+        this.informasi = informasi;
+        this.deskripsi = deskripsi;
+        this.isRead = isRead;
+        this.date = date;
     }
 
-    public long getTime() {
-        return time;
+    public String getJudul() {
+        return judul;
     }
 
-    public void setTime(long time) {
-        this.time = time;
+    public void setJudul(String judul) {
+        this.judul = judul;
     }
 
-    public String getId() {
-        return id;
+    public String getInformasi() {
+        return informasi;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setInformasi(String informasi) {
+        this.informasi = informasi;
     }
 
-    public String getTitle() {
-        return title;
+    public String getDeskripsi() {
+        return deskripsi;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setDeskripsi(String deskripsi) {
+        this.deskripsi = deskripsi;
     }
 
-    public String getInfo() {
-        return info;
+    public boolean isRead() {
+        return isRead;
     }
 
-    public void setInfo(String info) {
-        this.info = info;
+    public void setRead(boolean read) {
+        isRead = read;
     }
 
-    public String getDetail() {
-        return detail;
-    }
-
-    public void setDetail(String detail) {
-        this.detail = detail;
-    }
-
-    /*public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(HashMap<String, Object> timestamp) {
-        this.timestamp = timestamp;
-        this.date = (Date)timestamp.get("date");
-    }*/
+    public void setDate(String date) {
+        this.date = date;
+    }
 }

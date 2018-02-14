@@ -17,10 +17,6 @@ import com.pertamina.pertaminatuban.distribusi.tables.WilayahTableAdapter;
 
 import java.util.ArrayList;
 
-/**
- * Created by fata on 1/21/2018.
- */
-
 public class WilayahPage extends Fragment {
     private String fuel;
     private ArrayList<Wilayah> wilayahs;

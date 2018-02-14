@@ -74,7 +74,7 @@ public interface UserClient {
     @POST("marine/initialtanker")
     Call<Object> postInitialTanker(@Body ArrayList<MarineInput> marine);
     @POST("marine/initialtanker/check")
-    Call<InitialTanker> getInitInitialTanker(@Body MarineIdentifier identifier);
+    Call<Object> getInitInitialTanker(@Body MarineIdentifier identifier);
 
     //port charges
     @GET("marine/portcharges/{bulan}")

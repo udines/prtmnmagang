@@ -5,7 +5,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.pertamina.pertaminatuban.R;
-import com.pertamina.pertaminatuban.info_umum.InfoUmum;
 
 public class InfoUmumViewHolder extends RecyclerView.ViewHolder {
 
@@ -19,8 +18,8 @@ public class InfoUmumViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void setView(InfoUmum model) {
-        judul.setText(model.getTitle());
-        info.setText(model.getInfo());
-        detail.setText(model.getDetail());
+        judul.setText(model.getJudul());
+        info.setText(model.getInformasi());
+        detail.setText(model.getDeskripsi());
     }
 }
