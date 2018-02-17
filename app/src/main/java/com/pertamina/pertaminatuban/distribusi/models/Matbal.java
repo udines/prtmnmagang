@@ -13,7 +13,7 @@ public class Matbal {
     public static final String PREMIUM = "Premium";
     public static final String BIOSOLAR = "Biosolar";
     public static final String SOLAR = "SOLAR/HSD/MGO/ADO";
-    public static final String BIOFLAME = "Bioflame";
+    public static final String BIOFLAME = "Biofame";
 
     @SerializedName("id")
     @Expose
@@ -31,10 +31,6 @@ public class Matbal {
     @Expose
     private float nilai;
 
-    @SerializedName("total")
-    @Expose
-    private float total;
-
     /*constructor*/
     public Matbal() {
     }
@@ -45,13 +41,6 @@ public class Matbal {
         this.nilai = nilai;
     }
 
-    public Matbal(String date, String fuel, float nilai, float total) {
-        this.date = date;
-        this.fuel = fuel;
-        this.nilai = nilai;
-        this.total = total;
-    }
-
     /*setter*/
 
     public void setFuel(String fuel) {
@@ -60,10 +49,6 @@ public class Matbal {
 
     public void setNilai(float nilai) {
         this.nilai = nilai;
-    }
-
-    public void setTotal(float total) {
-        this.total = total;
     }
 
     public void setDate(String date) {
@@ -85,10 +70,6 @@ public class Matbal {
 
     public float getNilai() {
         return nilai;
-    }
-
-    public float getTotal() {
-        return total;
     }
 
     public String getId() {

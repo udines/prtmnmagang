@@ -4,25 +4,25 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.pertamina.pertaminatuban.R;
 import com.pertamina.pertaminatuban.distribusi.models.Matbal;
-import com.pertamina.pertaminatuban.distribusi.page.MatbalPage;
 import com.pertamina.pertaminatuban.distribusi.tables.MatbalTableAdapter;
 import com.pertamina.pertaminatuban.service.UserClient;
-import com.pertamina.pertaminatuban.utils.ViewPagerAdapter;
+import com.whiteelephant.monthpicker.MonthPickerDialog;
 
 import java.io.IOException;
 import java.sql.Date;
@@ -41,14 +41,15 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MatbalActivity extends AppCompatActivity {
 
-    private TextView tanggal;
-    private LinearLayout tanggalButton, container;
+    private TextView tanggal, bulan, tahun;
+    private LinearLayout tanggalButton, bulanButton, tahunButton, container;
     private int month;
     private int year;
     private int day;
     private TextView pertamax, pertalite, premium, solar, biosolar, bioflame, grandTotal;
     private TextView emptyText;
     private RecyclerView recyclerview;
+    private Spinner spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +69,11 @@ public class MatbalActivity extends AppCompatActivity {
 
         /*inisialisasi view yang digunakan lebih dari satu fungsi*/
         tanggal = findViewById(R.id.matbal_tanggal);
+        bulan = findViewById(R.id.matbal_bulan);
+        tahun = findViewById(R.id.matbal_tahun);
         tanggalButton = findViewById(R.id.matbal_tanggal_button);
+        bulanButton = findViewById(R.id.matbal_bulan_button);
+        tahunButton = findViewById(R.id.matbal_tahun_button);
         container = findViewById(R.id.matbal_container);
         grandTotal = findViewById(R.id.matbal_total);
         emptyText = findViewById(R.id.matbal_empty_text);
@@ -80,13 +85,25 @@ public class MatbalActivity extends AppCompatActivity {
         year = calendar.get(Calendar.YEAR);
         day = calendar.get(Calendar.DAY_OF_MONTH);
         setDateButton(day, month, year);
+        setMonthButton(month, year);
+        setYearButton(year);
 
         /*get data. jika data tidak ada maka tampilkan tulisan jika kosong. jika ada
         * maka tampilkan tab beserta isinya*/
         getMatbal(month);
 
         /*handle tanggal untuk mengubah data berdasarkan bulan*/
-        handleDate();
+        handlePeriod();
+    }
+
+    private void setYearButton(int year) {
+        tahun.setText(String.valueOf(year));
+    }
+
+    private void setMonthButton(int month, int year) {
+        DateFormatSymbols symbols = new DateFormatSymbols();
+        String text = symbols.getMonths()[month] + " " + String.valueOf(year);
+        bulan.setText(text);
     }
 
     private void cekData(ArrayList<Matbal> matbals) {
@@ -98,6 +115,8 @@ public class MatbalActivity extends AppCompatActivity {
             /*data ada maka tampilkan tab dan isinya*/
             populateData(matbals);
         } else {
+            container.setVisibility(View.GONE);
+            emptyText.setVisibility(View.VISIBLE);
             Log.w("data", "data matbal tidak ada");
             /*data tidak ada maka hilangkan tab dan tampilkan pesan peringatan
             * untuk tanggal gunakan month dan year yang sudah diinisialisasi*/
@@ -105,7 +124,42 @@ public class MatbalActivity extends AppCompatActivity {
         }
     }
 
-    private void handleDate() {
+    private void handlePeriod() {
+        spinner = findViewById(R.id.matbal_periode_spinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.pilihan_periode, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                int index = adapterView.getSelectedItemPosition();
+                ((TextView) spinner.getSelectedView()).setTextColor(getResources().getColor(R.color.white));
+                switch (index) {
+                    case 0 :
+                        tanggalButton.setVisibility(View.VISIBLE);
+                        bulanButton.setVisibility(View.GONE);
+                        tahunButton.setVisibility(View.GONE);
+                        break;
+                    case 1:
+                        bulanButton.setVisibility(View.VISIBLE);
+                        tanggalButton.setVisibility(View.GONE);
+                        tahunButton.setVisibility(View.GONE);
+                        break;
+                    default:
+                        tahunButton.setVisibility(View.VISIBLE);
+                        tanggalButton.setVisibility(View.GONE);
+                        bulanButton.setVisibility(View.GONE);
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
         tanggalButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -116,7 +170,9 @@ public class MatbalActivity extends AppCompatActivity {
                         month = i1;
                         day = i2;
                         setDateButton(day, month, year);
-                        getMatbal(month);
+                        setMonthButton(month, year);
+                        setYearButton(year);
+                        updateUi(day, month, year, 0);
                     }
                 };
 
@@ -130,6 +186,81 @@ public class MatbalActivity extends AppCompatActivity {
                 dialog.show();
             }
         });
+
+        bulanButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar today = Calendar.getInstance();
+
+                MonthPickerDialog.Builder builder = new MonthPickerDialog.Builder(
+                        MatbalActivity.this,
+                        new MonthPickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(int selectedMonth, int selectedYear) {
+                                month = selectedMonth;
+                                year = selectedYear;
+                                setDateButton(day, month, year);
+                                setMonthButton(month, year);
+                                setYearButton(year);
+                                updateUi(day, month, year, 1);
+                            }
+                        },
+                        today.get(Calendar.YEAR),
+                        today.get(Calendar.MONTH)
+                );
+
+                builder.setMinYear(1970)
+                        .setMaxYear(today.get(Calendar.YEAR))
+                        .setActivatedYear(year)
+                        .setActivatedMonth(month)
+                        .build()
+                        .show();
+            }
+        });
+
+        tahunButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar today = Calendar.getInstance();
+
+                MonthPickerDialog.Builder builder = new MonthPickerDialog.Builder(
+                        MatbalActivity.this,
+                        new MonthPickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(int selectedMonth, int selectedYear) {
+                                month = selectedMonth;
+                                year = selectedYear;
+                                setDateButton(day, month, year);
+                                setMonthButton(month, year);
+                                setYearButton(year);
+                                updateUi(day, month, year, 2);
+                            }
+                        },
+                        today.get(Calendar.YEAR),
+                        today.get(Calendar.MONTH)
+                );
+
+                builder.setMinYear(1970)
+                        .setMaxYear(today.get(Calendar.YEAR))
+                        .showYearOnly()
+                        .setActivatedYear(year)
+                        .build()
+                        .show();
+            }
+        });
+    }
+
+    private void updateUi(int day, int month, int year, int type) {
+        //type adalah 0 untuk daily, 1 untuk monthly, 2 untuk yearly
+
+        switch (type) {
+            case 0:
+                break;
+            case 1:
+                break;
+            case 2:
+                break;
+        }
     }
 
     private void setDateButton(int day, int month, int year) {
@@ -224,69 +355,69 @@ public class MatbalActivity extends AppCompatActivity {
         /*SAMPLE DATA*/
         /*ArrayList<Matbal> matbalFeb = new ArrayList<>();
 *//*pertamax*//*
-        matbalFeb.add(new Matbal("2017-02-01", Matbal.PERTAMAX, 344));
-        matbalFeb.add(new Matbal("2017-02-02", Matbal.PERTAMAX, 392));
-        matbalFeb.add(new Matbal("2017-02-03", Matbal.PERTAMAX, 240));
-        matbalFeb.add(new Matbal("2017-02-04", Matbal.PERTAMAX, 344));
-        matbalFeb.add(new Matbal("2017-02-05", Matbal.PERTAMAX, 256));
-        matbalFeb.add(new Matbal("2017-02-06", Matbal.PERTAMAX, 268));
-        matbalFeb.add(new Matbal("2017-02-07", Matbal.PERTAMAX, 516));
-        matbalFeb.add(new Matbal("2017-02-08", Matbal.PERTAMAX, 316));
-        matbalFeb.add(new Matbal("2017-02-09", Matbal.PERTAMAX, 376));
-        matbalFeb.add(new Matbal("2017-02-10", Matbal.PERTAMAX, 440));
-        matbalFeb.add(new Matbal("2017-02-11", Matbal.PERTAMAX, 324));
-        matbalFeb.add(new Matbal("2017-02-12", Matbal.PERTAMAX, 284));
-        matbalFeb.add(new Matbal("2017-02-13", Matbal.PERTAMAX, 264));
-        matbalFeb.add(new Matbal("2017-02-14", Matbal.PERTAMAX, 424));
-        matbalFeb.add(new Matbal("2017-02-15", Matbal.PERTAMAX, 400));
+        matbalFeb.add(new Matbal("2018-02-01", Matbal.PERTAMAX, 344));
+        matbalFeb.add(new Matbal("2018-02-02", Matbal.PERTAMAX, 392));
+        matbalFeb.add(new Matbal("2018-02-03", Matbal.PERTAMAX, 240));
+        matbalFeb.add(new Matbal("2018-02-04", Matbal.PERTAMAX, 344));
+        matbalFeb.add(new Matbal("2018-02-05", Matbal.PERTAMAX, 256));
+        matbalFeb.add(new Matbal("2018-02-06", Matbal.PERTAMAX, 268));
+        matbalFeb.add(new Matbal("2018-02-07", Matbal.PERTAMAX, 516));
+        matbalFeb.add(new Matbal("2018-02-08", Matbal.PERTAMAX, 316));
+        matbalFeb.add(new Matbal("2018-02-09", Matbal.PERTAMAX, 376));
+        matbalFeb.add(new Matbal("2018-02-10", Matbal.PERTAMAX, 440));
+        matbalFeb.add(new Matbal("2018-02-11", Matbal.PERTAMAX, 324));
+        matbalFeb.add(new Matbal("2018-02-12", Matbal.PERTAMAX, 284));
+        matbalFeb.add(new Matbal("2018-02-13", Matbal.PERTAMAX, 264));
+        matbalFeb.add(new Matbal("2018-02-14", Matbal.PERTAMAX, 424));
+        matbalFeb.add(new Matbal("2018-02-15", Matbal.PERTAMAX, 400));
 *//*pertalite*//*
-        matbalFeb.add(new Matbal("2017-02-01", Matbal.PERTALITE, 360));
-        matbalFeb.add(new Matbal("2017-02-02", Matbal.PERTALITE, 272));
-        matbalFeb.add(new Matbal("2017-02-03", Matbal.PERTALITE, 264));
-        matbalFeb.add(new Matbal("2017-02-04", Matbal.PERTALITE, 232));
-        matbalFeb.add(new Matbal("2017-02-05", Matbal.PERTALITE, 208));
-        matbalFeb.add(new Matbal("2017-02-06", Matbal.PERTALITE, 232));
-        matbalFeb.add(new Matbal("2017-02-07", Matbal.PERTALITE, 416));
-        matbalFeb.add(new Matbal("2017-02-08", Matbal.PERTALITE, 272));
-        matbalFeb.add(new Matbal("2017-02-09", Matbal.PERTALITE, 280));
-        matbalFeb.add(new Matbal("2017-02-10", Matbal.PERTALITE, 232));
-        matbalFeb.add(new Matbal("2017-02-11", Matbal.PERTALITE, 368));
-        matbalFeb.add(new Matbal("2017-02-12", Matbal.PERTALITE, 216));
-        matbalFeb.add(new Matbal("2017-02-13", Matbal.PERTALITE, 192));
-        matbalFeb.add(new Matbal("2017-02-14", Matbal.PERTALITE, 368));
-        matbalFeb.add(new Matbal("2017-02-15", Matbal.PERTALITE, 296));
+        matbalFeb.add(new Matbal("2018-02-01", Matbal.PERTALITE, 360));
+        matbalFeb.add(new Matbal("2018-02-02", Matbal.PERTALITE, 272));
+        matbalFeb.add(new Matbal("2018-02-03", Matbal.PERTALITE, 264));
+        matbalFeb.add(new Matbal("2018-02-04", Matbal.PERTALITE, 232));
+        matbalFeb.add(new Matbal("2018-02-05", Matbal.PERTALITE, 208));
+        matbalFeb.add(new Matbal("2018-02-06", Matbal.PERTALITE, 232));
+        matbalFeb.add(new Matbal("2018-02-07", Matbal.PERTALITE, 416));
+        matbalFeb.add(new Matbal("2018-02-08", Matbal.PERTALITE, 272));
+        matbalFeb.add(new Matbal("2018-02-09", Matbal.PERTALITE, 280));
+        matbalFeb.add(new Matbal("2018-02-10", Matbal.PERTALITE, 232));
+        matbalFeb.add(new Matbal("2018-02-11", Matbal.PERTALITE, 368));
+        matbalFeb.add(new Matbal("2018-02-12", Matbal.PERTALITE, 216));
+        matbalFeb.add(new Matbal("2018-02-13", Matbal.PERTALITE, 192));
+        matbalFeb.add(new Matbal("2018-02-14", Matbal.PERTALITE, 368));
+        matbalFeb.add(new Matbal("2018-02-15", Matbal.PERTALITE, 296));
 *//*biosolar*//*
-        matbalFeb.add(new Matbal("2017-02-01", Matbal.BIOSOLAR, 904));
-        matbalFeb.add(new Matbal("2017-02-02", Matbal.BIOSOLAR, 928));
-        matbalFeb.add(new Matbal("2017-02-03", Matbal.BIOSOLAR, 936));
-        matbalFeb.add(new Matbal("2017-02-04", Matbal.BIOSOLAR, 992));
-        matbalFeb.add(new Matbal("2017-02-05", Matbal.BIOSOLAR, 600));
-        matbalFeb.add(new Matbal("2017-02-06", Matbal.BIOSOLAR, 632));
-        matbalFeb.add(new Matbal("2017-02-07", Matbal.BIOSOLAR, 904));
-        matbalFeb.add(new Matbal("2017-02-08", Matbal.BIOSOLAR, 1008));
-        matbalFeb.add(new Matbal("2017-02-09", Matbal.BIOSOLAR, 800));
-        matbalFeb.add(new Matbal("2017-02-10", Matbal.BIOSOLAR, 840));
-        matbalFeb.add(new Matbal("2017-02-11", Matbal.BIOSOLAR, 912));
-        matbalFeb.add(new Matbal("2017-02-12", Matbal.BIOSOLAR, 672));
-        matbalFeb.add(new Matbal("2017-02-13", Matbal.BIOSOLAR, 752));
-        matbalFeb.add(new Matbal("2017-02-14", Matbal.BIOSOLAR, 1096));
-        matbalFeb.add(new Matbal("2017-02-15", Matbal.BIOSOLAR, 1032));
+        matbalFeb.add(new Matbal("2018-02-01", Matbal.BIOSOLAR, 904));
+        matbalFeb.add(new Matbal("2018-02-02", Matbal.BIOSOLAR, 928));
+        matbalFeb.add(new Matbal("2018-02-03", Matbal.BIOSOLAR, 936));
+        matbalFeb.add(new Matbal("2018-02-04", Matbal.BIOSOLAR, 992));
+        matbalFeb.add(new Matbal("2018-02-05", Matbal.BIOSOLAR, 600));
+        matbalFeb.add(new Matbal("2018-02-06", Matbal.BIOSOLAR, 632));
+        matbalFeb.add(new Matbal("2018-02-07", Matbal.BIOSOLAR, 904));
+        matbalFeb.add(new Matbal("2018-02-08", Matbal.BIOSOLAR, 1008));
+        matbalFeb.add(new Matbal("2018-02-09", Matbal.BIOSOLAR, 800));
+        matbalFeb.add(new Matbal("2018-02-10", Matbal.BIOSOLAR, 840));
+        matbalFeb.add(new Matbal("2018-02-11", Matbal.BIOSOLAR, 912));
+        matbalFeb.add(new Matbal("2018-02-12", Matbal.BIOSOLAR, 672));
+        matbalFeb.add(new Matbal("2018-02-13", Matbal.BIOSOLAR, 752));
+        matbalFeb.add(new Matbal("2018-02-14", Matbal.BIOSOLAR, 1096));
+        matbalFeb.add(new Matbal("2018-02-15", Matbal.BIOSOLAR, 1032));
 *//*solar*//*
-        matbalFeb.add(new Matbal("2017-02-01", Matbal.SOLAR, 723));
-        matbalFeb.add(new Matbal("2017-02-02", Matbal.SOLAR, 742));
-        matbalFeb.add(new Matbal("2017-02-03", Matbal.SOLAR, 756));
-        matbalFeb.add(new Matbal("2017-02-04", Matbal.SOLAR, 809));
-        matbalFeb.add(new Matbal("2017-02-05", Matbal.SOLAR, 480));
-        matbalFeb.add(new Matbal("2017-02-06", Matbal.SOLAR, 513));
-        matbalFeb.add(new Matbal("2017-02-07", Matbal.SOLAR, 835));
-        matbalFeb.add(new Matbal("2017-02-08", Matbal.SOLAR, 814));
-        matbalFeb.add(new Matbal("2017-02-09", Matbal.SOLAR, 648));
-        matbalFeb.add(new Matbal("2017-02-10", Matbal.SOLAR, 672));
-        matbalFeb.add(new Matbal("2017-02-11", Matbal.SOLAR, 737));
-        matbalFeb.add(new Matbal("2017-02-12", Matbal.SOLAR, 537));
-        matbalFeb.add(new Matbal("2017-02-13", Matbal.SOLAR, 609));
-        matbalFeb.add(new Matbal("2017-02-14", Matbal.SOLAR, 972));
-        matbalFeb.add(new Matbal("2017-02-15", Matbal.SOLAR, 849));
+        matbalFeb.add(new Matbal("2018-02-01", Matbal.SOLAR, 723));
+        matbalFeb.add(new Matbal("2018-02-02", Matbal.SOLAR, 742));
+        matbalFeb.add(new Matbal("2018-02-03", Matbal.SOLAR, 756));
+        matbalFeb.add(new Matbal("2018-02-04", Matbal.SOLAR, 809));
+        matbalFeb.add(new Matbal("2018-02-05", Matbal.SOLAR, 480));
+        matbalFeb.add(new Matbal("2018-02-06", Matbal.SOLAR, 513));
+        matbalFeb.add(new Matbal("2018-02-07", Matbal.SOLAR, 835));
+        matbalFeb.add(new Matbal("2018-02-08", Matbal.SOLAR, 814));
+        matbalFeb.add(new Matbal("2018-02-09", Matbal.SOLAR, 648));
+        matbalFeb.add(new Matbal("2018-02-10", Matbal.SOLAR, 672));
+        matbalFeb.add(new Matbal("2018-02-11", Matbal.SOLAR, 737));
+        matbalFeb.add(new Matbal("2018-02-12", Matbal.SOLAR, 537));
+        matbalFeb.add(new Matbal("2018-02-13", Matbal.SOLAR, 609));
+        matbalFeb.add(new Matbal("2018-02-14", Matbal.SOLAR, 972));
+        matbalFeb.add(new Matbal("2018-02-15", Matbal.SOLAR, 849));
         cekData(matbalFeb);*/
     }
 }

@@ -11,19 +11,29 @@ import com.pertamina.pertaminatuban.distribusi.models.Matbal;
 
 public class MatbalTableViewHolder extends RecyclerView.ViewHolder {
 
-    private final TextView tanggal;
-    private final TextView nilai;
+    public final TextView fuel;
+    public final TextView nilai, textNow;
+    public final TextView lastNilai, textLast;
+    public final TextView difference;
     public final LinearLayout row;
 
     public MatbalTableViewHolder(View itemView) {
         super(itemView);
-        tanggal = itemView.findViewById(R.id.item_matbal_tanggal);
+        fuel = itemView.findViewById(R.id.item_matbal_tanggal);
+
         nilai = itemView.findViewById(R.id.item_matbal_nilai);
+        textNow = itemView.findViewById(R.id.item_matbal_text_now);
+
+        lastNilai = itemView.findViewById(R.id.item_matbal_nilai_last);
+        textLast = itemView.findViewById(R.id.item_matbal_text_last);
+
+        difference = itemView.findViewById(R.id.item_matbal_difference);
+
         row = itemView.findViewById(R.id.item_matbal_row);
     }
 
     public void setView(Matbal model) {
-        tanggal.setText(model.getFuel());
+        fuel.setText(model.getFuel());
         nilai.setText(String.valueOf(model.getNilai() + " KL"));
 
         nilai.setOnClickListener(new View.OnClickListener() {
