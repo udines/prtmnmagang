@@ -124,8 +124,15 @@ public interface UserClient {
     @POST("marine/waitingexcess/check")
     Call<WaitingTime> getInitWaitingTime(@Body MarineIdentifier identifier);
 
-
     //Experiment
     @GET("marine/initialtanker/{bulan}")
     Call<Object> getInitialTankerExperiment(@Path("bulan") String bulan);
+
+    //distribusi
+    @GET("distribusi/matbal/{tahun}")
+    Call<ArrayList<Matbal>> getMatbalTahun(@Path("tahun") String tahun);
+    @GET("distribusi/matbal/{bulan}")
+    Call<ArrayList<Matbal>> getMatbalBulan(@Path("bulan") String bulan);
+    @GET("distribusi/matbal/{tanggal}")
+    Call<ArrayList<Matbal>> getMatbalHari(@Path("tanggal") String tanggal);
 }

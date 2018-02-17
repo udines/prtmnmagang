@@ -17,11 +17,13 @@ public class MatbalTableAdapter extends RecyclerView.Adapter<MatbalTableViewHold
 
     private ArrayList<Matbal> matbals;
     private ArrayList<Matbal> lastMatbals;
+    private String periodeType;
     private Context context;
 
-    public MatbalTableAdapter(ArrayList<Matbal> matbals, ArrayList<Matbal> lastMatbals, Context context) {
+    public MatbalTableAdapter(ArrayList<Matbal> matbals, ArrayList<Matbal> lastMatbals, String periodeType, Context context) {
         this.matbals = matbals;
         this.lastMatbals = lastMatbals;
+        this.periodeType = periodeType;
         this.context = context;
     }
 
@@ -34,7 +36,8 @@ public class MatbalTableAdapter extends RecyclerView.Adapter<MatbalTableViewHold
 
     @Override
     public void onBindViewHolder(MatbalTableViewHolder holder, int position) {
-//        holder.setView(matbals.get(position));
+
+        //set nilai sebelum dan sekarang
         setNilai(holder.fuel,
                 matbals.get(position).getFuel(),
                 holder.nilai,
@@ -43,6 +46,12 @@ public class MatbalTableAdapter extends RecyclerView.Adapter<MatbalTableViewHold
                 lastMatbals,
                 holder.difference);
 
+        //set tulisan last dan this sesuai dengan tipe periode
+        //misalnya this month dan last month
+        holder.textLast.setText(String.valueOf("Last " + periodeType));
+        holder.textNow.setText(String.valueOf("This " + periodeType));
+
+        //set row menjadi belang
         if (position % 2 == 0) {
             holder.row.setBackgroundColor(ContextCompat.getColor(context, R.color.grey_200));
         } else {
@@ -57,19 +66,24 @@ public class MatbalTableAdapter extends RecyclerView.Adapter<MatbalTableViewHold
         float nilaiLast = 0, nilaiDiff;
 
         textFuel.setText(fuel);
-        now.setText(String.valueOf(nilaiNow));
+        now.setText(String.valueOf(nilaiNow + " KL"));
 
         for (int i = 0; i < matbals.size(); i++) {
             if (matbals.get(i).getFuel().equals(fuel)) {
                 nilaiLast = matbals.get(i).getNilai();
-                last.setText(String.valueOf(nilaiLast));
+                last.setText(String.valueOf(nilaiLast + " KL"));
                 break;
             }
         }
 
         nilaiDiff = nilaiNow - nilaiLast;
         float percentage = (nilaiDiff / nilaiNow) * 100;
-        difference.setText(String.valueOf(nilaiDiff + "(" + percentage + "%)"));
+        difference.setText(String.valueOf(nilaiDiff + "KL " + "(" + percentage + "%)"));
+        if (percentage < 0) {
+            difference.setTextColor(ContextCompat.getColor(context, R.color.red_800));
+        } else {
+            difference.setTextColor(ContextCompat.getColor(context, R.color.green_800));
+        }
     }
 
     @Override

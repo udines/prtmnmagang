@@ -31,16 +31,4 @@ public class MatbalTableViewHolder extends RecyclerView.ViewHolder {
 
         row = itemView.findViewById(R.id.item_matbal_row);
     }
-
-    public void setView(Matbal model) {
-        fuel.setText(model.getFuel());
-        nilai.setText(String.valueOf(model.getNilai() + " KL"));
-
-        nilai.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d("table", "klik nilai");
-            }
-        });
-    }
 }
