@@ -78,6 +78,7 @@ public class MenuActivity extends AppCompatActivity {
 
         final TextView informasi = findViewById(R.id.menu_info_informasi);
         final TextView detail = findViewById(R.id.menu_info_detail);
+        final TextView judul = findViewById(R.id.menu_info_judul);
 
         infoRef = FirebaseDatabase.getInstance().getReference("messages");
         query = infoRef.orderByChild("date").limitToLast(1);
@@ -87,8 +88,9 @@ public class MenuActivity extends AppCompatActivity {
                 for (DataSnapshot dataSnapshot1: dataSnapshot.getChildren()) {
                     InfoUmum info = dataSnapshot1.getValue(InfoUmum.class);
                     if (info != null) {
-                        informasi.setText(info.getJudul());
-                        detail.setText(info.getInformasi());
+                        judul.setText(info.getJudul());
+                        informasi.setText(info.getInformasi());
+                        detail.setText(info.getDeskripsi());
                     }
                 }
             }
