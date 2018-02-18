@@ -336,4 +336,5 @@
         <item>B</item>
         <item>C</item>
     </string-array>
+    <string name="title_activity_new_marine">Marine</string>
 </resources>

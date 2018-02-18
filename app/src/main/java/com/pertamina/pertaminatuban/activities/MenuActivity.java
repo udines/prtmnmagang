@@ -146,8 +146,8 @@ public class MenuActivity extends AppCompatActivity {
         * dan int untuk id gambar menu*/
         menuList.add(new MenuViewModel("Distribusi", R.drawable.ic_tank));
         menuList.add(new MenuViewModel("Marine", R.drawable.ic_cargo_ship));
-        menuList.add(new MenuViewModel("Divisi 3", R.drawable.ic_launcher_foreground));
-        menuList.add(new MenuViewModel("Divisi 4", R.drawable.ic_launcher_foreground));
+        menuList.add(new MenuViewModel("QQ", R.drawable.ic_recommended));
+        menuList.add(new MenuViewModel("Keuangan", R.drawable.ic_presentation));
         menuList.add(new MenuViewModel("Divisi 5", R.drawable.ic_launcher_foreground));
         menuList.add(new MenuViewModel("Divisi 6", R.drawable.ic_launcher_foreground));
 
