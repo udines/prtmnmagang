@@ -3,8 +3,6 @@ package com.pertamina.pertaminatuban.distribusi;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -12,6 +10,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.pertamina.pertaminatuban.R;
@@ -38,11 +40,17 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class WilayahActivity extends AppCompatActivity {
 
-    private TextView tanggal;
+    private TextView bulan, tahun;
     private ViewPager viewPager;
     private TabLayout tabLayout;
     private TextView emptyText;
+    private LinearLayout bulanButton, tahunButton;
+    private Spinner spinnerPeriode, spinnerWilayah;
     private int month, year;
+
+    //menyimpan index yang dipilih oleh spinner
+    private int periode = 0, wilayah = 0;
+    private ArrayList<String> wilayahList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +69,12 @@ public class WilayahActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         /*inisialisasi view yang digunakan lebih dari satu fungsi*/
-        tanggal = findViewById(R.id.wilayah_tanggal);
+        bulan = findViewById(R.id.wilayah_bulan);
+        tahun = findViewById(R.id.wilayah_tahun);
+        bulanButton = findViewById(R.id.wilayah_bulan_button);
+        tahunButton = findViewById(R.id.wilayah_tahun_button);
+        spinnerPeriode = findViewById(R.id.wilayah_periode_spinner);
+        spinnerWilayah = findViewById(R.id.wilayah_spinner);
         viewPager = findViewById(R.id.wilayah_viewpager);
         tabLayout = findViewById(R.id.wilayah_tab);
         emptyText = findViewById(R.id.wilayah_empty_text);
@@ -70,18 +83,92 @@ public class WilayahActivity extends AppCompatActivity {
         Calendar calendar = Calendar.getInstance();
         month = calendar.get(Calendar.MONTH);
         year = calendar.get(Calendar.YEAR);
-        setDateButton(month, year);
+        setMonthButton(month, year);
+        setYearButton(year);
 
         /*get data. jika data tidak ada maka tampilkan tulisan jika kosong. jika ada
         * maka tampilkan tab beserta isinya*/
-        getWilayah(month);
+//        getWilayah(month);
 
         /*handle tanggal untuk mengubah data berdasarkan bulan*/
-        handleDate();
+        handlePeriod();
+        handleSpinnerWilayah();
     }
 
-    private void handleDate() {
-        tanggal.setOnClickListener(new View.OnClickListener() {
+    private void handleSpinnerWilayah() {
+        wilayahList = new ArrayList<>();
+        wilayahList.add("Cepu");
+        wilayahList.add("Tuban");
+        wilayahList.add("Semarang");
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                this, android.R.layout.simple_spinner_item, wilayahList
+        );
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerWilayah.setAdapter(adapter);
+        spinnerWilayah.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                int index = adapterView.getSelectedItemPosition();
+                ((TextView) spinnerWilayah.getSelectedView()).setTextColor(getResources().getColor(R.color.white));
+
+                //set wilayah terpilih sesuai dengan index
+                wilayah = index;
+
+                //update ui karena ada perubahan di jenis periode
+                updateUi(month, year, periode, wilayah);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+    }
+
+    private void setYearButton(int year) {
+        tahun.setText(String.valueOf(year));
+    }
+
+    private void setMonthButton(int month, int year) {
+        DateFormatSymbols symbols = new DateFormatSymbols();
+        String text = symbols.getMonths()[month] + " " + String.valueOf(year);
+        bulan.setText(text);
+    }
+
+    private void handlePeriod() {
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.pilihan_periode_bulan_tahun, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerPeriode.setAdapter(adapter);
+        spinnerPeriode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                int index = adapterView.getSelectedItemPosition();
+                ((TextView) spinnerPeriode.getSelectedView()).setTextColor(getResources().getColor(R.color.white));
+                switch (index) {
+                    case 0:
+                        bulanButton.setVisibility(View.VISIBLE);
+                        tahunButton.setVisibility(View.GONE);
+                        break;
+                    default:
+                        tahunButton.setVisibility(View.VISIBLE);
+                        bulanButton.setVisibility(View.GONE);
+                        break;
+                }
+                periode = index;
+                //update ui karena ada perubahan di jenis periode
+                updateUi(month, year, periode, wilayah);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        //handle klik bulan button
+        bulanButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Calendar today = Calendar.getInstance();
@@ -93,8 +180,9 @@ public class WilayahActivity extends AppCompatActivity {
                             public void onDateSet(int selectedMonth, int selectedYear) {
                                 month = selectedMonth;
                                 year = selectedYear;
-                                getWilayah(month);
-                                setDateButton(month, year);
+                                setMonthButton(month, year);
+                                setYearButton(year);
+                                updateUi(month, year, periode, wilayah);
                             }
                         },
                         today.get(Calendar.YEAR),
@@ -110,9 +198,44 @@ public class WilayahActivity extends AppCompatActivity {
                         .show();
             }
         });
+
+        //handle klik jika periode diset tahunan
+        tahunButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar today = Calendar.getInstance();
+
+                MonthPickerDialog.Builder builder = new MonthPickerDialog.Builder(
+                        WilayahActivity.this,
+                        new MonthPickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(int selectedMonth, int selectedYear) {
+                                month = selectedMonth;
+                                year = selectedYear;
+                                setMonthButton(month, year);
+                                setYearButton(year);
+                                updateUi(month, year, periode, wilayah);
+                            }
+                        },
+                        today.get(Calendar.YEAR),
+                        today.get(Calendar.MONTH)
+                );
+
+                builder.setMinYear(1970)
+                        .setMaxYear(today.get(Calendar.YEAR))
+                        .showYearOnly()
+                        .setActivatedYear(year)
+                        .build()
+                        .show();
+            }
+        });
     }
 
-    private void populateTabs(ArrayList<Wilayah> wilayahs) {
+    private void updateUi(int month, int year, int periode, int wilayah) {
+
+    }
+
+    /*private void populateTabs(ArrayList<Wilayah> wilayahs) {
 
         ArrayList<Fragment> fragments = new ArrayList<>();
         ArrayList<String> titles = new ArrayList<>();
@@ -162,11 +285,11 @@ public class WilayahActivity extends AppCompatActivity {
 
     private void cekData(ArrayList<Wilayah> wilayahs) {
 
-        /*cek apakah data ada atau tidak*/
+        *//*cek apakah data ada atau tidak*//*
         if (wilayahs != null && wilayahs.size() > 0) {
 
             Log.d("data", "data wilayah ada");
-            /*data ada maka tampilkan tab dan isinya*/
+            *//*data ada maka tampilkan tab dan isinya*//*
             viewPager.setVisibility(View.VISIBLE);
             tabLayout.setVisibility(View.VISIBLE);
             emptyText.setVisibility(View.GONE);
@@ -174,22 +297,16 @@ public class WilayahActivity extends AppCompatActivity {
         } else {
 
             Log.d("data", "data wilayah tidak ada");
-            /*data tidak ada maka hilangkan tab dan tampilkan pesan peringatan
-            * untuk tanggal gunakan month dan year yang sudah diinisialisasi*/
+            *//*data tidak ada maka hilangkan tab dan tampilkan pesan peringatan
+            * untuk tanggal gunakan month dan year yang sudah diinisialisasi*//*
             viewPager.setVisibility(View.GONE);
             tabLayout.setVisibility(View.GONE);
             emptyText.setVisibility(View.VISIBLE);
 
         }
-    }
+    }*/
 
-    private void setDateButton(int month, int year) {
-        DateFormatSymbols symbols = new DateFormatSymbols();
-        String text = symbols.getMonths()[month] + " " + String.valueOf(year);
-        tanggal.setText(text);
-    }
-
-    private void getWilayah(int bulan) {
+    /*private void getWilayah(int bulan) {
 
         SharedPreferences preferences = WilayahActivity.this.getSharedPreferences(
                 "login",
@@ -223,7 +340,7 @@ public class WilayahActivity extends AppCompatActivity {
         UserClient userClient = retrofit.create(UserClient.class);
         Call<ArrayList<Wilayah>> call = userClient.getWilayah(bulan + 1);
 
-        call.enqueue(new Callback<ArrayList<Wilayah>>() {
+        *//*call.enqueue(new Callback<ArrayList<Wilayah>>() {
             @Override
             public void onResponse(Call<ArrayList<Wilayah>> call, Response<ArrayList<Wilayah>> response) {
                 Log.w("code", String.valueOf(response.code()));
@@ -239,7 +356,7 @@ public class WilayahActivity extends AppCompatActivity {
             }
         });
 
-        /*ArrayList<Wilayah> wilayahs = new ArrayList<>();
+        ArrayList<Wilayah> wilayahs = new ArrayList<>();
         wilayahs.add(new Wilayah("Cepu", "SPBU", Matbal.PERTAMAX, 24));
         wilayahs.add(new Wilayah("Cepu", "SPBU", Matbal.PREMIUM, 368));
         wilayahs.add(new Wilayah("Lamongan", "SPBU", Matbal.PERTAMAX, 1384));
@@ -281,7 +398,7 @@ public class WilayahActivity extends AppCompatActivity {
         wilayahs.add(new Wilayah("Pati", "SPBU", Matbal.PERTAMAX,  24));
         wilayahs.add(new Wilayah("Semarang", "SPBU", Matbal.PREMIUM, 8));
 
-        cekData(wilayahs);*/
+        cekData(wilayahs);*//*
 
-    }
+    }*/
 }

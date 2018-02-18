@@ -33,6 +33,10 @@
         <item>Monthly</item>
         <item>Annually</item>
     </string-array>
+    <string-array name="pilihan_periode_bulan_tahun">
+        <item>Monthly</item>
+        <item>Annually</item>
+    </string-array>
 
     <string-array name="jenis_konsumen">
         <item>SPBU</item>
@@ -324,6 +328,7 @@
     <string name="text_matbal">Matbal</string>
     <string name="text_fuel">Fuel</string>
     <string name="text_konsumen">Konsumen</string>
+    <string name="text_wilayah">Wilayah</string>
 
     <string-array name="periode_array">
         <item>Periode</item>
