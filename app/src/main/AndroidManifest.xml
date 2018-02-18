@@ -25,16 +25,14 @@
         <activity
             android:name=".activities.MenuActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".activities.LoginActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.SplashActivity"
-            android:theme="@style/SplashTheme" >
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -315,8 +313,15 @@
         <activity
             android:name=".marine.input.PilihTankerActivity"
             android:label="@string/title_activity_pilih_tanker"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".marine.NewMarineActivity"
+            android:label="@string/title_activity_new_marine"
+            android:parentActivityName=".activities.MenuActivity"
             android:theme="@style/AppTheme.NoActionBar">
-
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.pertamina.pertaminatuban.activities.MenuActivity" />
         </activity>
     </application>
 
