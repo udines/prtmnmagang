@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import com.pertamina.pertaminatuban.R;
 import com.pertamina.pertaminatuban.distribusi.DistribusiActivity;
 import com.pertamina.pertaminatuban.marine.MarineActivity;
+import com.pertamina.pertaminatuban.marine.NewMarineActivity;
 import com.pertamina.pertaminatuban.models.MenuViewModel;
 
 import java.util.ArrayList;
@@ -54,7 +55,7 @@ public class GridMenuAdapter extends RecyclerView.Adapter<GridMenuViewHolder> {
                         holder.context.startActivity(distribusiIntent);
                         break;
                     case 1 :
-                        Intent marineIntent = new Intent(holder.context, MarineActivity.class);
+                        Intent marineIntent = new Intent(holder.context, NewMarineActivity.class);
                         marineIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         holder.context.startActivity(marineIntent);
                         break;
