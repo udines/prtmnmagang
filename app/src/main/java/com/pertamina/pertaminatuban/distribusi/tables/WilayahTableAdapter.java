@@ -30,7 +30,10 @@ public class WilayahTableAdapter extends RecyclerView.Adapter<WilayahTableViewHo
 
     @Override
     public void onBindViewHolder(WilayahTableViewHolder holder, int position) {
-        holder.setView(wilayahs.get(position));
+        Wilayah model = wilayahs.get(position);
+        holder.tanggal.setText(model.getFuel());
+        holder.nilai.setText(String.valueOf(model.getNilai() + " KL"));
+
         if (position % 2 == 0) {
             holder.row.setBackgroundColor(ContextCompat.getColor(context, R.color.grey_200));
         } else {

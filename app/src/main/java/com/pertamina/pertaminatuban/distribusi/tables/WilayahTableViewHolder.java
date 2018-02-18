@@ -10,20 +10,14 @@ import com.pertamina.pertaminatuban.distribusi.models.Wilayah;
 
 public class WilayahTableViewHolder extends RecyclerView.ViewHolder {
 
-    private final TextView lokasi, konsumen, nilai;
+    public final TextView tanggal;
+    public final TextView nilai;
     public final LinearLayout row;
 
     public WilayahTableViewHolder(View itemView) {
         super(itemView);
-        lokasi = itemView.findViewById(R.id.item_wilayah_lokasi);
-        konsumen = itemView.findViewById(R.id.item_wilayah_konsumen);
+        tanggal = itemView.findViewById(R.id.item_wilayah_tanggal);
         nilai = itemView.findViewById(R.id.item_wilayah_nilai);
         row = itemView.findViewById(R.id.item_wilayah_row);
-    }
-
-    public void setView(Wilayah model) {
-        lokasi.setText(model.getWilayah());
-        konsumen.setText(model.getKonsumen());
-        nilai.setText(String.valueOf(model.getNilai() + " KL"));
     }
 }

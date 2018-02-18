@@ -2,29 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp"
+    android:padding="12dp"
     android:id="@+id/item_wilayah_row">
     <TextView
+        android:id="@+id/item_wilayah_tanggal"
         android:layout_width="0dp"
         android:layout_weight="1"
-        android:textSize="16sp"
         android:layout_height="wrap_content"
-        android:text="Cepu"
-        android:id="@+id/item_wilayah_lokasi"/>
-    <TextView
-        android:layout_width="0dp"
-        android:layout_weight="1"
+        android:gravity="start"
         android:textSize="16sp"
-        android:gravity="center"
-        android:layout_height="wrap_content"
-        android:text="SPBU"
-        android:id="@+id/item_wilayah_konsumen"/>
+        android:textColor="@color/black"
+        android:text="Pertamax"/>
     <TextView
+        android:id="@+id/item_wilayah_nilai"
         android:layout_width="0dp"
-        android:layout_weight="1"
+        android:layout_weight="0.5"
+        android:layout_height="wrap_content"
         android:gravity="end"
         android:textSize="16sp"
-        android:id="@+id/item_wilayah_nilai"
-        android:layout_height="wrap_content"
-        android:text="1608"/>
+        android:text="0 KL"/>
 </LinearLayout>
