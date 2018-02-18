@@ -4,59 +4,49 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.pertamina.pertaminatuban.R;
 import com.pertamina.pertaminatuban.distribusi.models.Konsumen;
 import com.pertamina.pertaminatuban.distribusi.models.Matbal;
-import com.pertamina.pertaminatuban.distribusi.models.Ritase;
-import com.pertamina.pertaminatuban.distribusi.page.KonsumenPage;
-import com.pertamina.pertaminatuban.distribusi.page.RitasePage;
 import com.pertamina.pertaminatuban.distribusi.tables.KonsumenContainerAdapter;
 import com.pertamina.pertaminatuban.service.UserClient;
-import com.pertamina.pertaminatuban.utils.ViewPagerAdapter;
+import com.whiteelephant.monthpicker.MonthPickerDialog;
 
 import java.io.IOException;
 import java.sql.Date;
 import java.text.DateFormatSymbols;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.List;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class KonsumenActivity extends AppCompatActivity {
 
-    private TextView tanggal, emptyText;
-    private LinearLayout tanggalButton;
+    private TextView tanggal, bulan, tahun, emptyText;
+    private LinearLayout tanggalButton, bulanButton, tahunButton;
     private RecyclerView recyclerView;
     private int month;
     private int year;
     private int day;
 
-    private TextView pertamax_spbu, pertamax_tni, pertamax_total;
-    private TextView pertalite_spbu, pertalite_total;
-    private TextView premium_spbu, premium_total;
-    private TextView biosolar_spbu, biosolar_spdn, biosolar_total;
-    private TextView solar_mt, solar_pln, solar_spbu, solar_spdn, solar_tni, solar_total;
-    private TextView grand_total;
+    private Spinner spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,12 +66,13 @@ public class KonsumenActivity extends AppCompatActivity {
 
         /*inisialisasi view yang digunakan lebih dari satu fungsi*/
         tanggal = findViewById(R.id.konsumen_tanggal);
+        bulan = findViewById(R.id.konsumen_bulan);
+        tahun = findViewById(R.id.konsumen_tahun);
         tanggalButton = findViewById(R.id.konsumen_tanggal_button);
+        bulanButton = findViewById(R.id.konsumen_bulan_button);
+        tahunButton = findViewById(R.id.konsumen_tahun_button);
         recyclerView = findViewById(R.id.konsumen_recyclerview);
         emptyText = findViewById(R.id.konsumen_empty_text);
-
-        /*init view by id*/
-        initView();
 
         /*inisialisasi tanggal jika data tidak ada agar tidak error*/
         Calendar calendar = Calendar.getInstance();
@@ -89,33 +80,31 @@ public class KonsumenActivity extends AppCompatActivity {
         year = calendar.get(Calendar.YEAR);
         day = calendar.get(Calendar.DAY_OF_MONTH);
         setDateButton(day, month, year);
+        setMonthButton(month, year);
+        setYearButton(year);
 
         /*get data. jika data tidak ada maka tampilkan tulisan jika kosong. jika ada
         * maka tampilkan tab beserta isinya*/
-        getKonsumen(month);
+//        getKonsumen(month);
 
         /*handle tanggal untuk mengubah data berdasarkan bulan*/
-        handleDate();
+        handlePeriod();
     }
 
-    private void initView() {
-        pertamax_spbu = findViewById(R.id.konsumen_nilai_pertamax_spbu);
-        pertamax_tni = findViewById(R.id.konsumen_nilai_pertamax_tni);
-        pertamax_total = findViewById(R.id.konsumen_nilai_pertamax_total);
-        pertalite_spbu = findViewById(R.id.konsumen_nilai_pertalite_spbu);
-        pertalite_total = findViewById(R.id.konsumen_nilai_pertalite_total);
-        premium_spbu = findViewById(R.id.konsumen_nilai_premium_spbu);
-        premium_total = findViewById(R.id.konsumen_nilai_premium_total);
-        biosolar_spbu = findViewById(R.id.konsumen_nilai_biosolar_spbu);
-        biosolar_spdn = findViewById(R.id.konsumen_nilai_biosolar_spdn);
-        biosolar_total = findViewById(R.id.konsumen_nilai_biosolar_total);
-        solar_mt = findViewById(R.id.konsumen_nilai_solar_mt);
-        solar_pln = findViewById(R.id.konsumen_nilai_solar_pln);
-        solar_spbu = findViewById(R.id.konsumen_nilai_solar_spbu);
-        solar_spdn = findViewById(R.id.konsumen_nilai_solar_spdn);
-        solar_tni = findViewById(R.id.konsumen_nilai_solar_tni);
-        solar_total = findViewById(R.id.konsumen_nilai_solar_total);
-        grand_total = findViewById(R.id.konsumen_nilai_grand_total);
+    private void setDateButton(int day, int month, int year) {
+        DateFormatSymbols symbols = new DateFormatSymbols();
+        String text = String.valueOf(day) + " " + symbols.getMonths()[month] + " " + String.valueOf(year);
+        tanggal.setText(text);
+    }
+
+    private void setYearButton(int year) {
+        tahun.setText(String.valueOf(year));
+    }
+
+    private void setMonthButton(int month, int year) {
+        DateFormatSymbols symbols = new DateFormatSymbols();
+        String text = symbols.getMonths()[month] + " " + String.valueOf(year);
+        bulan.setText(text);
     }
 
     private void cekData(ArrayList<Konsumen> konsumens) {
@@ -190,7 +179,45 @@ public class KonsumenActivity extends AppCompatActivity {
         }
     }
 
-    private void handleDate() {
+    private void handlePeriod() {
+        spinner = findViewById(R.id.konsumen_periode_spinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.pilihan_periode, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                int index = adapterView.getSelectedItemPosition();
+                ((TextView) spinner.getSelectedView()).setTextColor(getResources().getColor(R.color.white));
+                switch (index) {
+                    case 0 :
+                        tanggalButton.setVisibility(View.VISIBLE);
+                        bulanButton.setVisibility(View.GONE);
+                        tahunButton.setVisibility(View.GONE);
+                        break;
+                    case 1:
+                        bulanButton.setVisibility(View.VISIBLE);
+                        tanggalButton.setVisibility(View.GONE);
+                        tahunButton.setVisibility(View.GONE);
+                        break;
+                    default:
+                        tahunButton.setVisibility(View.VISIBLE);
+                        tanggalButton.setVisibility(View.GONE);
+                        bulanButton.setVisibility(View.GONE);
+                        break;
+                }
+
+                //update ui karena ada perubahan di jenis periode
+                updateUi(day, month, year, index);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
         tanggalButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -201,7 +228,9 @@ public class KonsumenActivity extends AppCompatActivity {
                         month = i1;
                         day = i2;
                         setDateButton(day, month, year);
-                        getKonsumen(month);
+                        setMonthButton(month, year);
+                        setYearButton(year);
+                        updateUi(day, month, year, 0);
                     }
                 };
                 DatePickerDialog dialog = new DatePickerDialog(
@@ -214,15 +243,101 @@ public class KonsumenActivity extends AppCompatActivity {
                 dialog.show();
             }
         });
+
+        //handle klik jika periode diset bulanan
+        bulanButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar today = Calendar.getInstance();
+
+                MonthPickerDialog.Builder builder = new MonthPickerDialog.Builder(
+                        KonsumenActivity.this,
+                        new MonthPickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(int selectedMonth, int selectedYear) {
+                                month = selectedMonth;
+                                year = selectedYear;
+                                setDateButton(day, month, year);
+                                setMonthButton(month, year);
+                                setYearButton(year);
+                                updateUi(day, month, year, 1);
+                            }
+                        },
+                        today.get(Calendar.YEAR),
+                        today.get(Calendar.MONTH)
+                );
+
+                builder.setMinYear(1970)
+                        .setMaxYear(today.get(Calendar.YEAR))
+                        .setActivatedYear(year)
+                        .setActivatedMonth(month)
+                        .build()
+                        .show();
+            }
+        });
+
+        //handle klik jika periode diset tahunan
+        tahunButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar today = Calendar.getInstance();
+
+                MonthPickerDialog.Builder builder = new MonthPickerDialog.Builder(
+                        KonsumenActivity.this,
+                        new MonthPickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(int selectedMonth, int selectedYear) {
+                                month = selectedMonth;
+                                year = selectedYear;
+                                setDateButton(day, month, year);
+                                setMonthButton(month, year);
+                                setYearButton(year);
+                                updateUi(day, month, year, 2);
+                            }
+                        },
+                        today.get(Calendar.YEAR),
+                        today.get(Calendar.MONTH)
+                );
+
+                builder.setMinYear(1970)
+                        .setMaxYear(today.get(Calendar.YEAR))
+                        .showYearOnly()
+                        .setActivatedYear(year)
+                        .build()
+                        .show();
+            }
+        });
     }
 
-    private void setDateButton(int day, int month, int year) {
-        DateFormatSymbols symbols = new DateFormatSymbols();
-        String text = String.valueOf(day) + " " + symbols.getMonths()[month] + " " + String.valueOf(year);
-        tanggal.setText(text);
+    private void updateUi(int day, int month, int year, int type) {
+        //type adalah 0 untuk daily, 1 untuk monthly, 2 untuk yearly
+
+        switch (type) {
+            case 0:
+                getKonsumenHari(day, month, year);
+                break;
+            case 1:
+                getKonsumenBulan(month, year);
+                break;
+            case 2:
+                getKonsumenTahun(year);
+                break;
+        }
     }
 
-    private void populateData(ArrayList<Konsumen> konsumens) {
+    private void getKonsumenTahun(int year) {
+
+    }
+
+    private void getKonsumenBulan(int month, int year) {
+
+    }
+
+    private void getKonsumenHari(int day, int month, int year) {
+
+    }
+
+    /*private void populateData(ArrayList<Konsumen> konsumens) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month, day);
         Date date = new Date(calendar.getTimeInMillis());
@@ -350,7 +465,7 @@ public class KonsumenActivity extends AppCompatActivity {
             solar_spdn.setText(String.valueOf("0 KL"));
             solar_tni.setText(String.valueOf("0 KL"));
         }
-    }
+    }*/
 
     private void getKonsumen(int bulan) {
 
@@ -387,7 +502,7 @@ public class KonsumenActivity extends AppCompatActivity {
         UserClient userClient = retrofit.create(UserClient.class);
         Call<ArrayList<Konsumen>> call = userClient.getKonsumen(bulan + 1);
 
-        call.enqueue(new Callback<ArrayList<Konsumen>>() {
+        /*call.enqueue(new Callback<ArrayList<Konsumen>>() {
             @Override
             public void onResponse(Call<ArrayList<Konsumen>> call, Response<ArrayList<Konsumen>> response) {
                 Log.w("code", String.valueOf(response.code()));
@@ -401,10 +516,9 @@ public class KonsumenActivity extends AppCompatActivity {
             public void onFailure(Call<ArrayList<Konsumen>> call, Throwable t) {
                 Log.e("Call", " failed " + t.getMessage());
             }
-        });
+        });*/
 
-        /*ArrayList<Konsumen> konsumens = new ArrayList<>();
-*//*pertamax*//*
+        ArrayList<Konsumen> konsumens = new ArrayList<>();
         konsumens.add(new Konsumen("2017-02-01", "SPBU", Matbal.PERTAMAX, 344));
         konsumens.add(new Konsumen("2017-02-02", "SPBU", Matbal.PERTAMAX, 384));
         konsumens.add(new Konsumen("2017-02-03", "SPBU", Matbal.PERTAMAX, 240));
@@ -428,7 +542,6 @@ public class KonsumenActivity extends AppCompatActivity {
         konsumens.add(new Konsumen("2017-02-08", "TNI/Polri", Matbal.PERTAMAX, 8));
         konsumens.add(new Konsumen("2017-02-10", "TNI/Polri", Matbal.PERTAMAX, 16));
         konsumens.add(new Konsumen("2017-02-14", "TNI/Polri", Matbal.PERTAMAX, 4));
-*//*pertalite*//*
         konsumens.add(new Konsumen("2017-02-01","SPBU",  Matbal.PREMIUM, 360));
         konsumens.add(new Konsumen("2017-02-02","SPBU",  Matbal.PREMIUM, 272));
         konsumens.add(new Konsumen("2017-02-03","SPBU",  Matbal.PREMIUM, 264));
@@ -444,7 +557,6 @@ public class KonsumenActivity extends AppCompatActivity {
         konsumens.add(new Konsumen("2017-02-13","SPBU",  Matbal.PREMIUM, 192));
         konsumens.add(new Konsumen("2017-02-14","SPBU",  Matbal.PREMIUM, 368));
         konsumens.add(new Konsumen("2017-02-15","SPBU",  Matbal.PREMIUM, 296));
-*//*biosolar*//*
         konsumens.add(new Konsumen("2017-02-01","SPBU",  Matbal.BIOSOLAR, 904));
         konsumens.add(new Konsumen("2017-02-02","SPBU",  Matbal.BIOSOLAR, 872));
         konsumens.add(new Konsumen("2017-02-03","SPBU",  Matbal.BIOSOLAR, 864));
@@ -468,7 +580,6 @@ public class KonsumenActivity extends AppCompatActivity {
         konsumens.add(new Konsumen("2017-02-13","SPDN",  Matbal.BIOSOLAR, 8));
         konsumens.add(new Konsumen("2017-02-14","SPDN",  Matbal.BIOSOLAR, 88));
         konsumens.add(new Konsumen("2017-02-15","SPDN",  Matbal.BIOSOLAR, 72));
-*//*solar*//*
         konsumens.add(new Konsumen("2017-02-01","SPBU",  Matbal.SOLAR, 723));
         konsumens.add(new Konsumen("2017-02-02","SPBU",  Matbal.SOLAR, 697));
         konsumens.add(new Konsumen("2017-02-03","SPBU",  Matbal.SOLAR, 691));
@@ -508,6 +619,6 @@ public class KonsumenActivity extends AppCompatActivity {
         konsumens.add(new Konsumen("2017-02-15","SPDN",  Matbal.SOLAR, 57));
 
         konsumens.add(new Konsumen("2017-02-04","TNI/Polri",  Matbal.SOLAR, 8));
-        cekData(konsumens);*/
+        cekData(konsumens);
     }
 }

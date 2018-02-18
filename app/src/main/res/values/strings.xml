@@ -31,12 +31,7 @@
     <string-array name="pilihan_periode">
         <item>Daily</item>
         <item>Monthly</item>
-        <item>Quarter 1</item>
-        <item>Quarter 2</item>
-        <item>Quarter 3</item>
-        <item>Quarter 4</item>
-        <item>Semester</item>
-        <item>Yearly</item>
+        <item>Annually</item>
     </string-array>
 
     <string-array name="jenis_konsumen">
@@ -328,6 +323,7 @@
     <string name="title_activity_pilih_tanker">Pilih Tanker</string>
     <string name="text_matbal">Matbal</string>
     <string name="text_fuel">Fuel</string>
+    <string name="text_konsumen">Konsumen</string>
 
     <string-array name="periode_array">
         <item>Periode</item>
