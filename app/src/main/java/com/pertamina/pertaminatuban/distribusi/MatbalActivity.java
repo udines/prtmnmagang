@@ -46,7 +46,7 @@ public class MatbalActivity extends AppCompatActivity {
     private int month;
     private int year;
     private int day;
-    private TextView pertamax, pertalite, premium, solar, biosolar, bioflame, grandTotal;
+    private TextView pertamax, pertalite, premium, solar, biosolar, biofame, grandTotal;
     private TextView emptyText;
     private RecyclerView recyclerview;
     private Spinner spinner;

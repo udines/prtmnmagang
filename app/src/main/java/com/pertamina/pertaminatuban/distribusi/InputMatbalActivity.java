@@ -110,21 +110,11 @@ public class InputMatbalActivity extends AppCompatActivity {
 
     private void sendPostRequest(ArrayList<Matbal> matbals) {
         Log.w("input size", String.valueOf(matbals.size()));
-        float total = 0;
-        for (int i = 0; i < matbals.size(); i++) {
-            total = total + matbals.get(i).getNilai();
-        }
-        Log.w("total", String.valueOf(total));
-        for (int i = 0; i < matbals.size(); i++) {
-            matbals.get(i).setTotal(total);
-        }
 
         SharedPreferences preferences = InputMatbalActivity.this.getSharedPreferences(
                 "login",
                 Context.MODE_PRIVATE
         );
-
-        Log.w("total", String.valueOf(matbals.get(0).getTotal()));
 
         final String key = preferences.getString("userKey", "none");
 
