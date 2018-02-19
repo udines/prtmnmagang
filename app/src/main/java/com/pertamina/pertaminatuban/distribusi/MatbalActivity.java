@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,7 +17,6 @@ import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.pertamina.pertaminatuban.R;
@@ -51,6 +51,9 @@ public class MatbalActivity extends AppCompatActivity {
     private TextView emptyText;
     private RecyclerView recyclerview;
     private Spinner spinner;
+    private ArrayList<Matbal> matbalSekarang, matbalLalu;
+
+    private TextView textLalu, textNow, nilaiLalu, nilaiNow, nilaiDiff;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,8 +80,14 @@ public class MatbalActivity extends AppCompatActivity {
         tahunButton = findViewById(R.id.matbal_tahun_button);
         container = findViewById(R.id.matbal_container);
         grandTotal = findViewById(R.id.matbal_total);
-        emptyText = findViewById(R.id.matbal_empty_text);
+//        emptyText = findViewById(R.id.matbal_empty_text);
         recyclerview = findViewById(R.id.matbal_recyclerview);
+
+        textLalu = findViewById(R.id.matbal_total_text_last);
+        textNow = findViewById(R.id.matbal_total_text_now);
+        nilaiLalu = findViewById(R.id.matbal_total_last);
+        nilaiNow = findViewById(R.id.matbal_total);
+        nilaiDiff = findViewById(R.id.matbal_total_difference);
 
         /*inisialisasi tanggal jika data tidak ada agar tidak error*/
         Calendar calendar = Calendar.getInstance();
@@ -258,6 +267,9 @@ public class MatbalActivity extends AppCompatActivity {
     }
 
     private void getMatbalTahun(int year) {
+        matbalLalu = new ArrayList<>();
+        matbalSekarang = new ArrayList<>();
+
         SharedPreferences preferences = MatbalActivity.this.getSharedPreferences(
                 "login",
                 Context.MODE_PRIVATE
@@ -290,25 +302,59 @@ public class MatbalActivity extends AppCompatActivity {
         Retrofit retrofit = builder.build();
         UserClient userClient = retrofit.create(UserClient.class);
         Call<ArrayList<Matbal>> call = userClient.getMatbalTahun(String.valueOf(year));
+        Call<ArrayList<Matbal>> callTahunLalu = userClient.getMatbalTahun(String.valueOf(year - 1));
 
         call.enqueue(new Callback<ArrayList<Matbal>>() {
             @Override
             public void onResponse(Call<ArrayList<Matbal>> call, Response<ArrayList<Matbal>> response) {
-                Log.w("code", String.valueOf(response.code()));
-                Log.w("data", new Gson().toJson(response.body()));
+                Log.w("code sekarang", String.valueOf(response.code()));
+                Log.w("data sekarang", new Gson().toJson(response.body()));
                 if (response.code() == 200) {
-                    cekData(response.body());
+                    matbalSekarang = response.body();
+                    if (matbalSekarang != null && matbalLalu != null ) {
+                        cekData(matbalSekarang, matbalLalu, "year");
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<ArrayList<Matbal>> call, Throwable t) {
+                Log.e("error sekarang", t.getMessage());
+            }
+        });
 
+        callTahunLalu.enqueue(new Callback<ArrayList<Matbal>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Matbal>> call, Response<ArrayList<Matbal>> response) {
+                Log.w("code lalu", String.valueOf(response.code()));
+                Log.w("data lalu", new Gson().toJson(response.body()));
+                if (response.code() == 200) {
+                    matbalLalu = response.body();
+                    if (matbalSekarang != null && matbalLalu != null ) {
+                        cekData(matbalSekarang, matbalLalu, "year");
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Matbal>> call, Throwable t) {
+                Log.e("error lalu", t.getMessage());
             }
         });
     }
 
     private void getMatbalBulan(int month, int year) {
+        matbalLalu = new ArrayList<>();
+        matbalSekarang = new ArrayList<>();
+
+        int yearLalu, monthLalu;
+        Calendar cal = Calendar.getInstance();
+        cal.set(year, month, 1);
+        cal.add(Calendar.MONTH, -1);
+        yearLalu = cal.get(Calendar.YEAR);
+        monthLalu = cal.get(Calendar.MONTH);
+        Log.w("year month", String.valueOf(yearLalu + ", " + monthLalu));
+
         SharedPreferences preferences = MatbalActivity.this.getSharedPreferences(
                 "login",
                 Context.MODE_PRIVATE
@@ -340,32 +386,66 @@ public class MatbalActivity extends AppCompatActivity {
 
         Retrofit retrofit = builder.build();
         UserClient userClient = retrofit.create(UserClient.class);
-        Call<ArrayList<Matbal>> call = userClient.getMatbalBulan(
+        Call<ArrayList<Matbal>> callBulanIni = userClient.getMatbalBulan(
                 String.valueOf(year),
                 String.valueOf(month + 1)
         );
+        Call<ArrayList<Matbal>> callBulanLalu = userClient.getMatbalBulan(
+                String.valueOf(yearLalu),
+                String.valueOf(monthLalu + 1)
+        );
 
-        call.enqueue(new Callback<ArrayList<Matbal>>() {
+        callBulanIni.enqueue(new Callback<ArrayList<Matbal>>() {
             @Override
             public void onResponse(Call<ArrayList<Matbal>> call, Response<ArrayList<Matbal>> response) {
-                Log.w("code", String.valueOf(response.code()));
-                Log.w("data", new Gson().toJson(response.body()));
+                Log.w("code sekarang", String.valueOf(response.code()));
+                Log.w("data sekarang", new Gson().toJson(response.body()));
                 if (response.code() == 200) {
-                    cekData(response.body());
+                    matbalSekarang = response.body();
+                    if (matbalSekarang != null && matbalLalu != null ) {
+                        cekData(matbalSekarang, matbalLalu, "month");
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<ArrayList<Matbal>> call, Throwable t) {
+                Log.e("error sekarang", t.getMessage());
+            }
+        });
 
+        callBulanLalu.enqueue(new Callback<ArrayList<Matbal>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Matbal>> call, Response<ArrayList<Matbal>> response) {
+                Log.w("code lalu", String.valueOf(response.code()));
+                Log.w("data lalu", new Gson().toJson(response.body()));
+                if (response.code() == 200) {
+                    matbalLalu = response.body();
+                    if (matbalSekarang != null && matbalLalu != null ) {
+                        cekData(matbalSekarang, matbalLalu, "month");
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Matbal>> call, Throwable t) {
+                Log.e("error lalu", t.getMessage());
             }
         });
     }
 
     private void getMatbalHari(int day, int month, int year) {
+        matbalLalu = new ArrayList<>();
+        matbalSekarang = new ArrayList<>();
+
         Calendar cal = Calendar.getInstance();
         cal.set(year, month, day);
         Date date = new Date(cal.getTimeInMillis());
+        String tanggalSekarang, tanggalLalu;
+        tanggalSekarang = date.toString();
+        cal.add(Calendar.DAY_OF_MONTH, - 1);
+        date.setTime(cal.getTimeInMillis());
+        tanggalLalu = date.toString();
 
         SharedPreferences preferences = MatbalActivity.this.getSharedPreferences(
                 "login",
@@ -398,39 +478,97 @@ public class MatbalActivity extends AppCompatActivity {
 
         Retrofit retrofit = builder.build();
         UserClient userClient = retrofit.create(UserClient.class);
-        Call<ArrayList<Matbal>> call = userClient.getMatbalHari(date.toString());
+
+        Call<ArrayList<Matbal>> call = userClient.getMatbalHari(tanggalSekarang);
+        Call<ArrayList<Matbal>> callTanggalLalu = userClient.getMatbalHari(tanggalLalu);
+
         call.enqueue(new Callback<ArrayList<Matbal>>() {
             @Override
             public void onResponse(Call<ArrayList<Matbal>> call, Response<ArrayList<Matbal>> response) {
-                Log.w("code", String.valueOf(response.code()));
-                Log.w("data", new Gson().toJson(response.body()));
+                Log.w("code sekarang", String.valueOf(response.code()));
+                Log.w("data sekarang", new Gson().toJson(response.body()));
                 if (response.code() == 200) {
-                    cekData(response.body());
+                    matbalSekarang = response.body();
+                    if (matbalSekarang != null && matbalLalu != null ) {
+                        cekData(matbalSekarang, matbalLalu, "day");
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<ArrayList<Matbal>> call, Throwable t) {
+                Log.e("error sekarang", t.getMessage());
+            }
+        });
 
+        callTanggalLalu.enqueue(new Callback<ArrayList<Matbal>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Matbal>> call, Response<ArrayList<Matbal>> response) {
+                Log.w("code lalu", String.valueOf(response.code()));
+                Log.w("data lalu", new Gson().toJson(response.body()));
+                if (response.code() == 200) {
+                    matbalLalu = response.body();
+                    if (matbalSekarang != null && matbalLalu != null ) {
+                        cekData(matbalSekarang, matbalLalu, "day");
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Matbal>> call, Throwable t) {
+                Log.e("error lalu", t.getMessage());
             }
         });
     }
 
-    private void cekData(ArrayList<Matbal> matbals) {
-        Log.w("posisi", "cek data");
-        //cek apakah data ada atau tidak
-        if (matbals != null && matbals.size() > 0) {
+    private void cekData(ArrayList<Matbal> matbalSekarang, ArrayList<Matbal> matbalLalu, String periode) {
+        if (matbalSekarang.size() > 0 && matbalLalu.size() > 0) {
+            MatbalTableAdapter adapter = new MatbalTableAdapter(
+                    matbalSekarang,
+                    matbalLalu,
+                    periode,
+                    getApplicationContext()
+            );
+            recyclerview.setNestedScrollingEnabled(false);
+            recyclerview.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+            recyclerview.setAdapter(adapter);
 
-            Log.w("data", "data matbal ada");
-            //*data ada maka tampilkan tab dan isinya
-//            populateData(matbals);
+            handleGrandTotal(periode, matbalLalu, matbalSekarang);
+        }
+    }
+
+    private void handleGrandTotal(
+            String periodeType,
+            ArrayList<Matbal> matbalLalu,
+            ArrayList<Matbal> matbalSekarang) {
+        textNow.setText(String.valueOf("This " + periodeType));
+        textLalu.setText(String.valueOf("Last " + periodeType));
+
+        float totalNow = 0, totalLalu = 0;
+        for (int i = 0; i < matbalLalu.size(); i++) {
+            totalLalu = totalLalu + matbalLalu.get(i).getNilai();
+        }
+        for (int i = 0; i < matbalSekarang.size(); i++) {
+            totalNow = totalNow + matbalSekarang.get(i).getNilai();
+        }
+
+        nilaiNow.setText(String.valueOf(totalNow + " KL"));
+        nilaiLalu.setText(String.valueOf(totalLalu + " KL"));
+
+        float difference = totalNow - totalLalu;
+        float percentage = (difference / totalLalu) * 100;
+        nilaiDiff.setText(String.valueOf(difference + " KL (" + (int)percentage + "%)"));
+
+        if (totalLalu == 0 && totalNow > 0) {
+            percentage = 100;
+        } else if (totalLalu == 0 && totalNow == 0) {
+            percentage = 0;
+        }
+
+        if (percentage < 0) {
+            nilaiDiff.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red_800));
         } else {
-            container.setVisibility(View.GONE);
-            emptyText.setVisibility(View.VISIBLE);
-            Log.w("data", "data matbal tidak ada");
-            //data tidak ada maka hilangkan tab dan tampilkan pesan peringatan
-            //untuk tanggal gunakan month dan year yang sudah diinisialisasi
-
+            nilaiDiff.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.green_800));
         }
     }
 

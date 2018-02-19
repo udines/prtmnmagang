@@ -77,8 +77,15 @@ public class MatbalTableAdapter extends RecyclerView.Adapter<MatbalTableViewHold
         }
 
         nilaiDiff = nilaiNow - nilaiLast;
-        float percentage = (nilaiDiff / nilaiNow) * 100;
-        difference.setText(String.valueOf(nilaiDiff + "KL " + "(" + percentage + "%)"));
+        float percentage = (nilaiDiff / nilaiLast) * 100;
+
+        if (nilaiLast == 0 && nilaiNow > 0) {
+            percentage = 100;
+        } else if (nilaiLast == 0 && nilaiNow == 0) {
+            percentage = 0;
+        }
+
+        difference.setText(String.valueOf(nilaiDiff + " KL " + "(" + (int)percentage + "%)"));
         if (percentage < 0) {
             difference.setTextColor(ContextCompat.getColor(context, R.color.red_800));
         } else {

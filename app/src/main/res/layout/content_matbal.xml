@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -27,6 +27,9 @@
             android:text="Grand Total"
             android:textSize="18sp"
             android:textStyle="bold"
+            android:textAllCaps="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="4dp"
             android:textColor="@color/black"
@@ -34,6 +37,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             android:orientation="horizontal">
             <LinearLayout
                 android:layout_width="0dp"
@@ -46,12 +52,12 @@
                     android:layout_height="wrap_content"
                     android:text="last"/>
                 <TextView
+                    android:id="@+id/matbal_total_last"
                     android:layout_width="wrap_content"
                     android:text="0 KL"
                     android:textSize="16sp"
                     android:gravity="end"
                     android:textColor="@color/black"
-                    android:id="@+id/matbal_total_last"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
             <LinearLayout
@@ -65,12 +71,12 @@
                     android:layout_height="wrap_content"
                     android:text="now"/>
                 <TextView
+                    android:id="@+id/matbal_total"
                     android:layout_width="wrap_content"
                     android:text="0 KL"
                     android:textSize="16sp"
                     android:gravity="end"
                     android:textColor="@color/black"
-                    android:id="@+id/matbal_total"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
             <LinearLayout
@@ -84,17 +90,17 @@
                     android:layout_height="wrap_content"
                     android:text="increase"/>
                 <TextView
+                    android:id="@+id/matbal_total_difference"
                     android:layout_width="wrap_content"
                     android:text="0 KL"
                     android:textSize="16sp"
                     android:gravity="end"
                     android:textColor="@color/black"
-                    android:id="@+id/matbal_total_difference"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-    <TextView
+    <!--<TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18sp"
@@ -105,6 +111,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:text="Tidak ditemukan data\nCoba ganti periode"/>
+        android:text="Tidak ditemukan data\nCoba ganti periode"/>-->
 
-</LinearLayout>
+</android.support.v4.widget.NestedScrollView>
