@@ -4,8 +4,6 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -20,11 +18,7 @@ import com.pertamina.pertaminatuban.R;
 import com.pertamina.pertaminatuban.distribusi.models.Matbal;
 import com.pertamina.pertaminatuban.service.UserClient;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -95,7 +89,7 @@ public class InputMatbalActivity extends AppCompatActivity {
                     if (!isNull(inputPremium))matbals.add(makeObject(inputPremium, Matbal.PREMIUM));
                     if (!isNull(inputSolar))matbals.add(makeObject(inputSolar, Matbal.SOLAR));
                     if (!isNull(inputBiosolar))matbals.add(makeObject(inputBiosolar, Matbal.BIOSOLAR));
-                    if (!isNull(inputBioflame))matbals.add(makeObject(inputBioflame, Matbal.BIOFLAME));
+                    if (!isNull(inputBioflame))matbals.add(makeObject(inputBioflame, Matbal.BIOFAME));
                     if (!isNull(inputLain) && !isNull(inputLainNilai)) {
                         matbals.add(makeObject(inputLainNilai, inputLain.getText().toString()));
                     }

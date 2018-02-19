@@ -35,8 +35,16 @@ public interface UserClient {
     @POST("register")
     Call<RegisterResponse> register(@Body RegisterData data);
 
+    @POST("distribusi/matbal")
+    Call<Object> postMatbal(@Body ArrayList<Matbal> matbals);
     @GET("distribusi/matbal/{bulan}")
     Call<ArrayList<Matbal>> getMatbal(@Path("bulan") int bulan);
+    @GET("distribusi/matbal/total/tahun/{tahun}")
+    Call<ArrayList<Matbal>> getMatbalTahun(@Path("tahun") String tahun);
+    @GET("distribusi/matbal/total/bulan/{tahun}/{bulan}")
+    Call<ArrayList<Matbal>> getMatbalBulan(@Path("tahun") String tahun, @Path("bulan") String bulan);
+    @GET("distribusi/matbal/total/{tanggal}")
+    Call<ArrayList<Matbal>> getMatbalHari(@Path("tanggal") String tanggal);
 
     @GET("distribusi/konsumen/{bulan}")
     Call<ArrayList<Konsumen>> getKonsumen(@Path("bulan") int bulan);
@@ -52,9 +60,6 @@ public interface UserClient {
 
     @GET("distribusi/{data}/{bulan}")
     Call<Object> getObject(@Path("data") String jenisData, @Path("bulan") int bulan);
-
-    @POST("distribusi/matbal")
-    Call<Object> postMatbal(@Body ArrayList<Matbal> matbals);
 
     @POST("distribusi/konsumen")
     Call<Object> postKonsumen(@Body ArrayList<Konsumen> konsumens);
@@ -128,11 +133,4 @@ public interface UserClient {
     @GET("marine/initialtanker/{bulan}")
     Call<Object> getInitialTankerExperiment(@Path("bulan") String bulan);
 
-    //distribusi
-    @GET("distribusi/matbal/{tahun}")
-    Call<ArrayList<Matbal>> getMatbalTahun(@Path("tahun") String tahun);
-    @GET("distribusi/matbal/{bulan}")
-    Call<ArrayList<Matbal>> getMatbalBulan(@Path("bulan") String bulan);
-    @GET("distribusi/matbal/{tanggal}")
-    Call<ArrayList<Matbal>> getMatbalHari(@Path("tanggal") String tanggal);
 }

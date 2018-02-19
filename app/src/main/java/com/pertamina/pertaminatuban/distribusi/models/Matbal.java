@@ -13,7 +13,7 @@ public class Matbal {
     public static final String PREMIUM = "Premium";
     public static final String BIOSOLAR = "Biosolar";
     public static final String SOLAR = "SOLAR/HSD/MGO/ADO";
-    public static final String BIOFLAME = "Biofame";
+    public static final String BIOFAME = "Biofame";
 
     @SerializedName("id")
     @Expose

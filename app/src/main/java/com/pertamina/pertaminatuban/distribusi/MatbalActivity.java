@@ -18,6 +18,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.pertamina.pertaminatuban.R;
 import com.pertamina.pertaminatuban.distribusi.models.Matbal;
 import com.pertamina.pertaminatuban.distribusi.tables.MatbalTableAdapter;
@@ -257,36 +258,183 @@ public class MatbalActivity extends AppCompatActivity {
     }
 
     private void getMatbalTahun(int year) {
+        SharedPreferences preferences = MatbalActivity.this.getSharedPreferences(
+                "login",
+                Context.MODE_PRIVATE
+        );
+        final String key = preferences.getString("userKey", "none");
 
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(new Interceptor() {
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request original = chain.request();
+
+                Request request = original.newBuilder()
+                        .header("Authorization", key)
+                        .method(original.method(), original.body())
+                        .build();
+                return chain.proceed(request);
+            }
+        });
+
+        OkHttpClient client = httpClient.build();
+
+        Log.w("GET ", "start getting matbal bulan " + bulan);
+        String baseUrl = "http://www.api.clicktuban.com/";
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client);
+
+        Retrofit retrofit = builder.build();
+        UserClient userClient = retrofit.create(UserClient.class);
+        Call<ArrayList<Matbal>> call = userClient.getMatbalTahun(String.valueOf(year));
+
+        call.enqueue(new Callback<ArrayList<Matbal>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Matbal>> call, Response<ArrayList<Matbal>> response) {
+                Log.w("code", String.valueOf(response.code()));
+                Log.w("data", new Gson().toJson(response.body()));
+                if (response.code() == 200) {
+                    cekData(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Matbal>> call, Throwable t) {
+
+            }
+        });
     }
 
     private void getMatbalBulan(int month, int year) {
+        SharedPreferences preferences = MatbalActivity.this.getSharedPreferences(
+                "login",
+                Context.MODE_PRIVATE
+        );
+        final String key = preferences.getString("userKey", "none");
 
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(new Interceptor() {
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request original = chain.request();
+
+                Request request = original.newBuilder()
+                        .header("Authorization", key)
+                        .method(original.method(), original.body())
+                        .build();
+                return chain.proceed(request);
+            }
+        });
+
+        OkHttpClient client = httpClient.build();
+
+        Log.w("GET ", "start getting matbal bulan " + bulan);
+        String baseUrl = "http://www.api.clicktuban.com/";
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client);
+
+        Retrofit retrofit = builder.build();
+        UserClient userClient = retrofit.create(UserClient.class);
+        Call<ArrayList<Matbal>> call = userClient.getMatbalBulan(
+                String.valueOf(year),
+                String.valueOf(month + 1)
+        );
+
+        call.enqueue(new Callback<ArrayList<Matbal>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Matbal>> call, Response<ArrayList<Matbal>> response) {
+                Log.w("code", String.valueOf(response.code()));
+                Log.w("data", new Gson().toJson(response.body()));
+                if (response.code() == 200) {
+                    cekData(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Matbal>> call, Throwable t) {
+
+            }
+        });
     }
 
     private void getMatbalHari(int day, int month, int year) {
+        Calendar cal = Calendar.getInstance();
+        cal.set(year, month, day);
+        Date date = new Date(cal.getTimeInMillis());
 
+        SharedPreferences preferences = MatbalActivity.this.getSharedPreferences(
+                "login",
+                Context.MODE_PRIVATE
+        );
+        final String key = preferences.getString("userKey", "none");
+
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(new Interceptor() {
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request original = chain.request();
+
+                Request request = original.newBuilder()
+                        .header("Authorization", key)
+                        .method(original.method(), original.body())
+                        .build();
+                return chain.proceed(request);
+            }
+        });
+
+        OkHttpClient client = httpClient.build();
+
+        Log.w("GET ", "start getting matbal bulan " + bulan);
+        String baseUrl = "http://www.api.clicktuban.com/";
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client);
+
+        Retrofit retrofit = builder.build();
+        UserClient userClient = retrofit.create(UserClient.class);
+        Call<ArrayList<Matbal>> call = userClient.getMatbalHari(date.toString());
+        call.enqueue(new Callback<ArrayList<Matbal>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Matbal>> call, Response<ArrayList<Matbal>> response) {
+                Log.w("code", String.valueOf(response.code()));
+                Log.w("data", new Gson().toJson(response.body()));
+                if (response.code() == 200) {
+                    cekData(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Matbal>> call, Throwable t) {
+
+            }
+        });
     }
 
-    /*private void cekData(ArrayList<Matbal> matbals) {
+    private void cekData(ArrayList<Matbal> matbals) {
         Log.w("posisi", "cek data");
-        *//*cek apakah data ada atau tidak*//*
+        //cek apakah data ada atau tidak
         if (matbals != null && matbals.size() > 0) {
 
             Log.w("data", "data matbal ada");
-            *//*data ada maka tampilkan tab dan isinya*//*
-            populateData(matbals);
+            //*data ada maka tampilkan tab dan isinya
+//            populateData(matbals);
         } else {
             container.setVisibility(View.GONE);
             emptyText.setVisibility(View.VISIBLE);
             Log.w("data", "data matbal tidak ada");
-            *//*data tidak ada maka hilangkan tab dan tampilkan pesan peringatan
-            * untuk tanggal gunakan month dan year yang sudah diinisialisasi*//*
+            //data tidak ada maka hilangkan tab dan tampilkan pesan peringatan
+            //untuk tanggal gunakan month dan year yang sudah diinisialisasi
 
         }
     }
 
-    private void populateData(ArrayList<Matbal> matbals) {
+    /*private void populateData(ArrayList<Matbal> matbals) {
 
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month, day);
