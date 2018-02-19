@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.pertamina.pertaminatuban.R;
 import com.pertamina.pertaminatuban.distribusi.models.Konsumen;
 import com.pertamina.pertaminatuban.distribusi.models.Matbal;
@@ -34,6 +35,8 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -327,14 +330,165 @@ public class KonsumenActivity extends AppCompatActivity {
 
     private void getKonsumenTahun(int year) {
 
+        SharedPreferences preferences = KonsumenActivity.this.getSharedPreferences(
+                "login",
+                Context.MODE_PRIVATE
+        );
+        final String key = preferences.getString("userKey", "none");
+
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(new Interceptor() {
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request original = chain.request();
+
+                Request request = original.newBuilder()
+                        .header("Authorization", key)
+                        .method(original.method(), original.body())
+                        .build();
+                return chain.proceed(request);
+            }
+        });
+
+        OkHttpClient client = httpClient.build();
+
+        Log.w("GET ", "start getting matbal bulan " + bulan);
+        String baseUrl = "http://www.api.clicktuban.com/";
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client);
+
+        Retrofit retrofit = builder.build();
+        UserClient userClient = retrofit.create(UserClient.class);
+        Call<ArrayList<Konsumen>> call = userClient.getKonsumenTahun(String.valueOf(year));
+
+        call.enqueue(new Callback<ArrayList<Konsumen>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Konsumen>> call, Response<ArrayList<Konsumen>> response) {
+                Log.w("code", String.valueOf(response.code()));
+                Log.w("data", new Gson().toJson(response.body()));
+                if (response.code() == 200) {
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Konsumen>> call, Throwable t) {
+                Log.e("error", t.getMessage());
+            }
+        });
     }
 
     private void getKonsumenBulan(int month, int year) {
 
+        SharedPreferences preferences = KonsumenActivity.this.getSharedPreferences(
+                "login",
+                Context.MODE_PRIVATE
+        );
+        final String key = preferences.getString("userKey", "none");
+
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(new Interceptor() {
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request original = chain.request();
+
+                Request request = original.newBuilder()
+                        .header("Authorization", key)
+                        .method(original.method(), original.body())
+                        .build();
+                return chain.proceed(request);
+            }
+        });
+
+        OkHttpClient client = httpClient.build();
+
+        Log.w("GET ", "start getting matbal bulan " + bulan);
+        String baseUrl = "http://www.api.clicktuban.com/";
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client);
+
+        Retrofit retrofit = builder.build();
+        UserClient userClient = retrofit.create(UserClient.class);
+
+        Call<ArrayList<Konsumen>> call = userClient.getKonsumenBulan(
+                String.valueOf(year),
+                String.valueOf(month + 1)
+        );
+        call.enqueue(new Callback<ArrayList<Konsumen>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Konsumen>> call, Response<ArrayList<Konsumen>> response) {
+                Log.w("code", String.valueOf(response.code()));
+                Log.w("data", new Gson().toJson(response.body()));
+                if (response.code() == 200) {
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Konsumen>> call, Throwable t) {
+                Log.e("error", t.getMessage());
+            }
+        });
     }
 
     private void getKonsumenHari(int day, int month, int year) {
 
+        Calendar cal = Calendar.getInstance();
+        cal.set(year, month, day);
+        String tanggal = new Date(cal.getTimeInMillis()).toString();
+
+        SharedPreferences preferences = KonsumenActivity.this.getSharedPreferences(
+                "login",
+                Context.MODE_PRIVATE
+        );
+        final String key = preferences.getString("userKey", "none");
+
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(new Interceptor() {
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request original = chain.request();
+
+                Request request = original.newBuilder()
+                        .header("Authorization", key)
+                        .method(original.method(), original.body())
+                        .build();
+                return chain.proceed(request);
+            }
+        });
+
+        OkHttpClient client = httpClient.build();
+
+        Log.w("GET ", "start getting matbal bulan " + bulan);
+        String baseUrl = "http://www.api.clicktuban.com/";
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client);
+
+        Retrofit retrofit = builder.build();
+        UserClient userClient = retrofit.create(UserClient.class);
+
+        Call<ArrayList<Konsumen>> call = userClient.getKonsumenTanggal(tanggal);
+        call.enqueue(new Callback<ArrayList<Konsumen>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Konsumen>> call, Response<ArrayList<Konsumen>> response) {
+                Log.w("code", String.valueOf(response.code()));
+                Log.w("data", new Gson().toJson(response.body()));
+                if (response.code() == 200) {
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Konsumen>> call, Throwable t) {
+                Log.e("error", t.getMessage());
+            }
+        });
     }
 
     /*private void populateData(ArrayList<Konsumen> konsumens) {

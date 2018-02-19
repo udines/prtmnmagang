@@ -48,6 +48,14 @@ public interface UserClient {
 
     @GET("distribusi/konsumen/{bulan}")
     Call<ArrayList<Konsumen>> getKonsumen(@Path("bulan") int bulan);
+    @POST("distribusi/konsumen")
+    Call<Object> postKonsumen(@Body ArrayList<Konsumen> konsumens);
+    @GET("distribusi/konsumen/total/tahun/{tahun}")
+    Call<ArrayList<Konsumen>> getKonsumenTahun(@Path("tahun") String tahun);
+    @GET("distribusi/konsumen/total/bulan/{tahun}/{bulan}")
+    Call<ArrayList<Konsumen>> getKonsumenBulan(@Path("tahun") String tahun, @Path("bulan") String bulan);
+    @GET("distribusi/konsumen/total/{tanggal}")
+    Call<ArrayList<Konsumen>> getKonsumenTanggal(@Path("tanggal") String tanggal);
 
     @GET("distribusi/opers/{bulan}")
     Call<ArrayList<Opers>> getOpers(@Path("bulan") int bulan);
@@ -60,9 +68,6 @@ public interface UserClient {
 
     @GET("distribusi/{data}/{bulan}")
     Call<Object> getObject(@Path("data") String jenisData, @Path("bulan") int bulan);
-
-    @POST("distribusi/konsumen")
-    Call<Object> postKonsumen(@Body ArrayList<Konsumen> konsumens);
 
     @POST("distribusi/wilayah")
     Call<Object> postWilayah(@Body ArrayList<Wilayah> wilayahs);
