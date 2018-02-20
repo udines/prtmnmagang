@@ -4,9 +4,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -17,11 +18,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.pertamina.pertaminatuban.R;
-import com.pertamina.pertaminatuban.distribusi.models.Matbal;
 import com.pertamina.pertaminatuban.distribusi.models.Wilayah;
-import com.pertamina.pertaminatuban.distribusi.page.WilayahPage;
+import com.pertamina.pertaminatuban.distribusi.tables.WilayahContainerAdapter;
+import com.pertamina.pertaminatuban.models.MasterData;
 import com.pertamina.pertaminatuban.service.UserClient;
-import com.pertamina.pertaminatuban.utils.ViewPagerAdapter;
 import com.whiteelephant.monthpicker.MonthPickerDialog;
 
 import java.io.IOException;
@@ -47,6 +47,7 @@ public class WilayahActivity extends AppCompatActivity {
     private LinearLayout bulanButton, tahunButton;
     private Spinner spinnerPeriode, spinnerWilayah;
     private int month, year;
+    private RecyclerView recyclerView;
 
     //menyimpan index yang dipilih oleh spinner
     private int periode = 0, wilayah = 0;
@@ -78,6 +79,7 @@ public class WilayahActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.wilayah_viewpager);
         tabLayout = findViewById(R.id.wilayah_tab);
         emptyText = findViewById(R.id.wilayah_empty_text);
+        recyclerView = findViewById(R.id.wilayah_recyclerview);
 
         /*inisialisasi tanggal jika data tidak ada agar tidak error*/
         Calendar calendar = Calendar.getInstance();
@@ -91,18 +93,15 @@ public class WilayahActivity extends AppCompatActivity {
 //        getWilayah(month);
 
         /*handle tanggal untuk mengubah data berdasarkan bulan*/
+        getMasterUntuk("wilayah");
         handlePeriod();
-        handleSpinnerWilayah();
     }
 
-    private void handleSpinnerWilayah() {
-        wilayahList = new ArrayList<>();
-        wilayahList.add("Cepu");
-        wilayahList.add("Tuban");
-        wilayahList.add("Semarang");
+    private void handleSpinnerWilayah(ArrayList<String> list) {
+        wilayahList = list;
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                this, android.R.layout.simple_spinner_item, wilayahList
+                this, android.R.layout.simple_spinner_item, list
         );
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerWilayah.setAdapter(adapter);
@@ -231,8 +230,301 @@ public class WilayahActivity extends AppCompatActivity {
         });
     }
 
-    private void updateUi(int month, int year, int periode, int wilayah) {
+    private void updateUi(final int month, final int year, final int periode, int wilayahIndex) {
+        if (wilayahList != null && wilayahList.size() > 0) {
+            final String wilayah = wilayahList.get(wilayahIndex);
 
+            SharedPreferences preferences = WilayahActivity.this.getSharedPreferences(
+                    "login",
+                    Context.MODE_PRIVATE
+            );
+            final String key = preferences.getString("userKey", "none");
+
+            OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+            httpClient.addInterceptor(new Interceptor() {
+                @Override
+                public okhttp3.Response intercept(Chain chain) throws IOException {
+                    Request original = chain.request();
+
+                    Request request = original.newBuilder()
+                            .header("Authorization", key)
+                            .method(original.method(), original.body())
+                            .build();
+                    return chain.proceed(request);
+                }
+            });
+
+            OkHttpClient client = httpClient.build();
+
+            Log.w("GET ", "start getting matbal bulan " + bulan);
+            String baseUrl = "http://www.api.clicktuban.com/";
+            Retrofit.Builder builder = new Retrofit.Builder()
+                    .baseUrl(baseUrl)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(client);
+
+            Retrofit retrofit = builder.build();
+            UserClient userClient = retrofit.create(UserClient.class);
+
+            Call<ArrayList<MasterData>> call = userClient.getMaster();
+            call.enqueue(new Callback<ArrayList<MasterData>>() {
+                @Override
+                public void onResponse(Call<ArrayList<MasterData>> call, Response<ArrayList<MasterData>> response) {
+                    if (response.code() == 200) {
+                        //periode adalah bulanan atau tahunan. 0 untuk bulanan dan 1 untuk tahunan
+                        switch (periode) {
+                            case 0:
+                                getWilayahBulan(month, year, wilayah, getMasterUntuk("konsumen", response.body()));
+                                break;
+                            case 1:
+                                getWilayahTahun(year, wilayah, getMasterUntuk("konsumen", response.body()));
+                                break;
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ArrayList<MasterData>> call, Throwable t) {
+
+                }
+            });
+
+        }
+    }
+
+    private ArrayList<String> getMasterUntuk(String jenis, ArrayList<MasterData> masterData) {
+        ArrayList<String> kumpulanData = new ArrayList<>();
+        for (int i = 0; i < masterData.size(); i++) {
+            if (masterData.get(i).getJenis().equals(jenis)) {
+                kumpulanData.add(masterData.get(i).getVariable());
+            }
+        }
+        return kumpulanData;
+    }
+
+    private void getWilayahBulan(int month, int year, String wilayah, final ArrayList<String> masterData) {
+        SharedPreferences preferences = WilayahActivity.this.getSharedPreferences(
+                "login",
+                Context.MODE_PRIVATE
+        );
+        final String key = preferences.getString("userKey", "none");
+
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(new Interceptor() {
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request original = chain.request();
+
+                Request request = original.newBuilder()
+                        .header("Authorization", key)
+                        .method(original.method(), original.body())
+                        .build();
+                return chain.proceed(request);
+            }
+        });
+
+        OkHttpClient client = httpClient.build();
+
+        String baseUrl = "http://www.api.clicktuban.com/";
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client);
+
+        Retrofit retrofit = builder.build();
+        UserClient userClient = retrofit.create(UserClient.class);
+
+        Call<ArrayList<Wilayah>> call = userClient.getWilayahBulan(
+                wilayah,
+                String.valueOf(year),
+                String.valueOf(month)
+        );
+        call.enqueue(new Callback<ArrayList<Wilayah>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Wilayah>> call, Response<ArrayList<Wilayah>> response) {
+                Log.w("code wilayah bulan", String.valueOf(response.code()));
+                Log.w("body size", String.valueOf(response.body().size()));
+                if (response.code() == 200) {
+                    populateWilayahs(getWilayahTerindeks(masterData, response.body()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Wilayah>> call, Throwable t) {
+                Log.w("error", t.getMessage());
+            }
+        });
+    }
+
+    private void getWilayahTahun(int year, String wilayah, final ArrayList<String> masterData) {
+        SharedPreferences preferences = WilayahActivity.this.getSharedPreferences(
+                "login",
+                Context.MODE_PRIVATE
+        );
+        final String key = preferences.getString("userKey", "none");
+
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(new Interceptor() {
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request original = chain.request();
+
+                Request request = original.newBuilder()
+                        .header("Authorization", key)
+                        .method(original.method(), original.body())
+                        .build();
+                return chain.proceed(request);
+            }
+        });
+
+        OkHttpClient client = httpClient.build();
+
+        Log.w("GET ", "start getting matbal bulan " + bulan);
+        String baseUrl = "http://www.api.clicktuban.com/";
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client);
+
+        Retrofit retrofit = builder.build();
+        UserClient userClient = retrofit.create(UserClient.class);
+
+        Call<ArrayList<Wilayah>> call = userClient.getWilayahTahun(wilayah, String.valueOf(year));
+        call.enqueue(new Callback<ArrayList<Wilayah>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Wilayah>> call, Response<ArrayList<Wilayah>> response) {
+                if (response.code() == 200) {
+                    populateWilayahs(getWilayahTerindeks(masterData, response.body()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Wilayah>> call, Throwable t) {
+                Log.w("error", t.getMessage());
+            }
+        });
+    }
+
+    private ArrayList<ArrayList<Wilayah>> getWilayahTerindeks(
+            ArrayList<String> masterData,
+            ArrayList<Wilayah> wilayah
+    ) {
+        ArrayList<ArrayList<Wilayah>> kumpulanWilayah = new ArrayList<>();
+        for (int i = 0; i < masterData.size(); i++) {
+            ArrayList<Wilayah> wilayahs = new ArrayList<>();
+            for (int j = 0; j < wilayah.size(); j++) {
+                if (wilayah.get(j).getKonsumen().equals(masterData.get(i))) {
+                    wilayahs.add(wilayah.get(j));
+                }
+            }
+
+            ArrayList<String> listFuel = new ArrayList<>();
+            if (wilayahs.size() > 0) {
+                listFuel.add(wilayahs.get(0).getFuel());
+                for (int k = 0; k < wilayahs.size(); k++) {
+                    boolean ada = false;
+                    for (int l = 0; l < listFuel.size(); l++) {
+                        if (wilayahs.get(k).getFuel().equals(listFuel.get(l))) {
+                            ada = true;
+                            break;
+                        } else {
+                            ada = false;
+                        }
+                    }
+                    if (!ada) {
+                        listFuel.add(wilayahs.get(k).getFuel());
+                    }
+                }
+            }
+
+            ArrayList<Wilayah> wilayahsMerged = new ArrayList<>();
+            for (int m = 0; m < listFuel.size(); m++) {
+                float total = 0;
+                Wilayah kons = new Wilayah();
+                for (int n = 0; n < wilayahs.size(); n++) {
+                    if (wilayahs.get(n).getFuel().equals(listFuel.get(m))) {
+                        total = total + wilayahs.get(n).getNilai();
+                        kons.setKonsumen(wilayahs.get(n).getKonsumen());
+                    }
+                }
+                kons.setFuel(listFuel.get(m));
+                kons.setNilai(total);
+                wilayahsMerged.add(kons);
+            }
+            if (wilayahsMerged.size() > 0) {
+                kumpulanWilayah.add(wilayahsMerged);
+            }
+        }
+        return kumpulanWilayah;
+    }
+
+    private void populateWilayahs(ArrayList<ArrayList<Wilayah>> kumpulanWilayahs) {
+        WilayahContainerAdapter adapter = new WilayahContainerAdapter(kumpulanWilayahs, getApplicationContext());
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        recyclerView.setAdapter(adapter);
+    }
+
+    private void getMasterUntuk(final String jenis) {
+
+        SharedPreferences preferences = WilayahActivity.this.getSharedPreferences(
+                "login",
+                Context.MODE_PRIVATE
+        );
+        final String key = preferences.getString("userKey", "none");
+
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(new Interceptor() {
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request original = chain.request();
+
+                Request request = original.newBuilder()
+                        .header("Authorization", key)
+                        .method(original.method(), original.body())
+                        .build();
+                return chain.proceed(request);
+            }
+        });
+
+        OkHttpClient client = httpClient.build();
+
+        Log.w("GET ", "start getting matbal bulan " + bulan);
+        String baseUrl = "http://www.api.clicktuban.com/";
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client);
+
+        Retrofit retrofit = builder.build();
+        UserClient userClient = retrofit.create(UserClient.class);
+
+        Call<ArrayList<MasterData>> call = userClient.getMaster();
+
+        final ArrayList<String> kumpulanData = new ArrayList<>();
+
+        call.enqueue(new Callback<ArrayList<MasterData>>() {
+            @Override
+            public void onResponse(Call<ArrayList<MasterData>> call, Response<ArrayList<MasterData>> response) {
+                Log.w("code", String.valueOf(response.code()));
+                if (response.code() == 200) {
+                    if (response.body().size() > 0) {
+                        Log.w("size", String.valueOf(response.body().size()));
+                        for (int i = 0; i < response.body().size(); i++) {
+                            if (response.body().get(i).getJenis().equals(jenis)) {
+                                kumpulanData.add(response.body().get(i).getVariable());
+                            }
+                        }
+                        handleSpinnerWilayah(kumpulanData);
+//                        updateUi(month, year, 0, 0);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<MasterData>> call, Throwable t) {
+                Log.e("error", t.getMessage());
+            }
+        });
     }
 
     /*private void populateTabs(ArrayList<Wilayah> wilayahs) {

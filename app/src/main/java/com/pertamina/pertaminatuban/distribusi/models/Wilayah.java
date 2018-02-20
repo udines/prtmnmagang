@@ -29,6 +29,9 @@ public class Wilayah {
     @Expose
     private float total;
 
+    public Wilayah() {
+    }
+
     public Wilayah(String wilayah, String konsumen, String fuel, float nilai) {
         this.wilayah = wilayah;
         this.konsumen = konsumen;

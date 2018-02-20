@@ -18,6 +18,11 @@ public class WilayahContainerAdapter extends RecyclerView.Adapter<WilayahContain
     private ArrayList<ArrayList<Wilayah>> kumpulanWilayahs;
     private Context context;
 
+    public WilayahContainerAdapter(ArrayList<ArrayList<Wilayah>> kumpulanWilayahs, Context context) {
+        this.kumpulanWilayahs = kumpulanWilayahs;
+        this.context = context;
+    }
+
     @Override
     public WilayahContainerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(
