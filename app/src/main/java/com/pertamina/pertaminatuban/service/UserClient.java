@@ -15,6 +15,7 @@ import com.pertamina.pertaminatuban.marine.models.TankerMovement;
 import com.pertamina.pertaminatuban.marine.models.TemporaryStop;
 import com.pertamina.pertaminatuban.marine.models.WaitingTime;
 import com.pertamina.pertaminatuban.models.LoginResponse;
+import com.pertamina.pertaminatuban.models.MasterData;
 import com.pertamina.pertaminatuban.models.RegisterData;
 import com.pertamina.pertaminatuban.models.RegisterResponse;
 import com.pertamina.pertaminatuban.models.UserCredential;
@@ -34,6 +35,9 @@ public interface UserClient {
 
     @POST("register")
     Call<RegisterResponse> register(@Body RegisterData data);
+
+    @GET("master")
+    Call<ArrayList<MasterData>> getMaster();
 
     @POST("distribusi/matbal")
     Call<Object> postMatbal(@Body ArrayList<Matbal> matbals);

@@ -52,11 +52,11 @@ public class Konsumen {
         this.fuel = fuel;
     }
 
-    public void setNilai(int nilai) {
+    public void setNilai(float nilai) {
         this.nilai = nilai;
     }
 
-    public void setTotal(int total) {
+    public void setTotal(float total) {
         this.total = total;
     }
 
