@@ -89,7 +89,7 @@ public class KonsumenActivity extends AppCompatActivity {
 
         /*get data. jika data tidak ada maka tampilkan tulisan jika kosong. jika ada
         * maka tampilkan tab beserta isinya*/
-        updateUi(day, month, year, 0);
+//        updateUi(day, month, year, 0);
 
         /*handle tanggal untuk mengubah data berdasarkan bulan*/
         handlePeriod();
@@ -392,7 +392,7 @@ public class KonsumenActivity extends AppCompatActivity {
         return kumpulanData;
     }
 
-    private void getKonsumenTahun(int year, ArrayList<String> masterData) {
+    private void getKonsumenTahun(int year, final ArrayList<String> masterData) {
 
         SharedPreferences preferences = KonsumenActivity.this.getSharedPreferences(
                 "login",
@@ -433,7 +433,7 @@ public class KonsumenActivity extends AppCompatActivity {
                 Log.w("code", String.valueOf(response.code()));
                 Log.w("data", new Gson().toJson(response.body()));
                 if (response.code() == 200) {
-
+                    populateKonsumens(getKonsumenTerindeks(masterData, response.body()));
                 }
             }
 
@@ -444,7 +444,7 @@ public class KonsumenActivity extends AppCompatActivity {
         });
     }
 
-    private void getKonsumenBulan(int month, int year, ArrayList<String> masterData) {
+    private void getKonsumenBulan(int month, int year, final ArrayList<String> masterData) {
 
         SharedPreferences preferences = KonsumenActivity.this.getSharedPreferences(
                 "login",
@@ -488,7 +488,7 @@ public class KonsumenActivity extends AppCompatActivity {
                 Log.w("code", String.valueOf(response.code()));
                 Log.w("data", new Gson().toJson(response.body()));
                 if (response.code() == 200) {
-
+                    populateKonsumens(getKonsumenTerindeks(masterData, response.body()));
                 }
             }
 
@@ -569,25 +569,27 @@ public class KonsumenActivity extends AppCompatActivity {
             }
 
             ArrayList<String> listFuel = new ArrayList<>();
-            listFuel.add(konsumens.get(0).getFuel());
-            for (int k = 0; k < konsumens.size(); k++) {
-                boolean ada = false;
-                for (int l = 0; l < listFuel.size(); l++) {
-                    if (konsumens.get(k).getFuel().equals(listFuel.get(l))) {
-                        ada = true;
-                        break;
-                    } else {
-                        ada = false;
+            if (konsumens.size() > 0) {
+                listFuel.add(konsumens.get(0).getFuel());
+                for (int k = 0; k < konsumens.size(); k++) {
+                    boolean ada = false;
+                    for (int l = 0; l < listFuel.size(); l++) {
+                        if (konsumens.get(k).getFuel().equals(listFuel.get(l))) {
+                            ada = true;
+                            break;
+                        } else {
+                            ada = false;
+                        }
                     }
-                }
-                if (!ada) {
-                    listFuel.add(konsumens.get(k).getFuel());
+                    if (!ada) {
+                        listFuel.add(konsumens.get(k).getFuel());
+                    }
                 }
             }
 
-            float total = 0;
             ArrayList<Konsumen> konsumensMerged = new ArrayList<>();
             for (int m = 0; m < listFuel.size(); m++) {
+                float total = 0;
                 Konsumen kons = new Konsumen();
                 for (int n = 0; n < konsumens.size(); n++) {
                     if (konsumens.get(n).getFuel().equals(listFuel.get(m))) {
@@ -599,8 +601,9 @@ public class KonsumenActivity extends AppCompatActivity {
                 kons.setNilai(total);
                 konsumensMerged.add(kons);
             }
-
-            kumpulanKonsumen.add(konsumensMerged);
+            if (konsumensMerged.size() > 0) {
+                kumpulanKonsumen.add(konsumensMerged);
+            }
         }
         return kumpulanKonsumen;
     }
