@@ -4,20 +4,22 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.pertamina.pertaminatuban.R;
 import com.pertamina.pertaminatuban.distribusi.models.Opers;
-import com.pertamina.pertaminatuban.distribusi.page.OpersPage;
+import com.pertamina.pertaminatuban.distribusi.models.Ritase;
 import com.pertamina.pertaminatuban.service.UserClient;
-import com.pertamina.pertaminatuban.utils.ViewPagerAdapter;
+import com.whiteelephant.monthpicker.MonthPickerDialog;
 
 import java.io.IOException;
 import java.sql.Date;
@@ -38,11 +40,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class OpersActivity extends AppCompatActivity {
 
     private int month, year, day;
-    private TextView tanggal;
-    private LinearLayout tanggalButton;
+    private TextView tanggal, bulan, tahun;
     private TextView sum, minJam, maxJam, jamOps;
+    private TextView jumlahMobil, dayaAngkut, tpHarian, ritase;
     private LinearLayout container;
-    private TextView emptyText;
+    private Spinner spinnerPeriode;
+
+    private int index = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,13 +66,21 @@ public class OpersActivity extends AppCompatActivity {
 
         /*inisialisasi view yang digunakan lebih dari satu fungsi*/
         tanggal = findViewById(R.id.opers_tanggal);
-        tanggalButton = findViewById(R.id.opers_tanggal_button);
+        bulan = findViewById(R.id.opers_bulan);
+        tahun = findViewById(R.id.opers_tahun);
+
         sum = findViewById(R.id.opers_jumlah_keluar);
         minJam = findViewById(R.id.opers_jam_keluar_min);
         maxJam = findViewById(R.id.opers_jam_keluar_max);
         jamOps = findViewById(R.id.opers_jam_operasional);
+
+        jumlahMobil = findViewById(R.id.opers_jumlah_mobil);
+        dayaAngkut = findViewById(R.id.opers_daya_angkut);
+        tpHarian = findViewById(R.id.opers_tp_harian);
+        ritase = findViewById(R.id.opers_ritase);
+
         container = findViewById(R.id.opers_container);
-        emptyText = findViewById(R.id.opers_empty_text);
+        spinnerPeriode = findViewById(R.id.opers_spinner_periode);
 
         /*inisialisasi tanggal jika data tidak ada agar tidak error*/
         Calendar calendar = Calendar.getInstance();
@@ -77,14 +89,259 @@ public class OpersActivity extends AppCompatActivity {
         day = calendar.get(Calendar.DAY_OF_MONTH);
         setDateButton(day, month, year);
 
-        getOpers(month);
-
+        handleSpinner();
         /*handle tanggal untuk mengubah data berdasarkan bulan*/
         handleDate();
     }
 
+    private void handleSpinner() {
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.pilihan_periode, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerPeriode.setAdapter(adapter);
+        spinnerPeriode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                int indeks = adapterView.getSelectedItemPosition();
+                ((TextView) spinnerPeriode.getSelectedView()).setTextColor(getResources().getColor(R.color.white));
+                switch (i) {
+                    case 0 :
+                        tanggal.setVisibility(View.VISIBLE);
+                        bulan.setVisibility(View.GONE);
+                        tahun.setVisibility(View.GONE);
+                        minJam.setVisibility(View.VISIBLE);
+                        maxJam.setVisibility(View.VISIBLE);
+                        jamOps.setVisibility(View.VISIBLE);
+                        break;
+                    case 1:
+                        bulan.setVisibility(View.VISIBLE);
+                        tanggal.setVisibility(View.GONE);
+                        tahun.setVisibility(View.GONE);
+                        minJam.setVisibility(View.GONE);
+                        maxJam.setVisibility(View.GONE);
+                        jamOps.setVisibility(View.GONE);
+                        break;
+                    default:
+                        tahun.setVisibility(View.VISIBLE);
+                        tanggal.setVisibility(View.GONE);
+                        bulan.setVisibility(View.GONE);
+                        minJam.setVisibility(View.GONE);
+                        maxJam.setVisibility(View.GONE);
+                        jamOps.setVisibility(View.GONE);
+                        break;
+                }
+
+                index = indeks;
+                //update ui karena ada perubahan di jenis periode
+                updateUi(day, month, year, index);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+    }
+
+    private void updateUi(int day, int month, int year, int index) {
+
+        clearText();
+
+        switch (index) {
+            case 0:
+                getOpersHari(day, month, year);
+                getRitaseHari(day, month, year);
+                break;
+            case 1:
+                getOpersBulan(month, year);
+                getRitaseBulan(month, year);
+                break;
+            case 2:
+                getOpersTahun(year);
+                getRitaseTahun(year);
+                break;
+        }
+    }
+
+    private void clearText() {
+        sum.setText("0");
+        minJam.setText(R.string.zero_time);
+        maxJam.setText(R.string.zero_time);
+        jamOps.setText(R.string.zero_time);
+        jumlahMobil.setText("0");
+        dayaAngkut.setText("0");
+        tpHarian.setText("0");
+        ritase.setText("0.0");
+    }
+
+    private void setTextOpers(
+            Opers opers) {
+        sum.setText(String.valueOf(opers.getJumlahKeluar()));
+        minJam.setText(opers.getMinJamKeluar());
+        maxJam.setText(opers.getMaxJamKeluar());
+        jamOps.setText(opers.getJamOperasional());
+
+    }
+
+    private void setTextRitase(Ritase rit) {
+        jumlahMobil.setText(String.valueOf(rit.getJumlahMobil()));
+        dayaAngkut.setText(String.valueOf(rit.getDayaAngkut()));
+        tpHarian.setText(String.valueOf(rit.getTpHarian()));
+        ritase.setText(String.valueOf(rit.getRitase()));
+    }
+
+    private Opers getOpersMerged(ArrayList<Opers> operses) {
+        int jumlahKL = 0;
+        for (int i = 0; i < operses.size(); i++) {
+            jumlahKL = jumlahKL + operses.get(i).getJumlahKeluar();
+        }
+        return new Opers(
+                jumlahKL,
+                "",
+                "",
+                ""
+        );
+    }
+
+    private Ritase getRitaseMerged(ArrayList<Ritase> ritases) {
+        int jumlahMobil = 0;
+        int dayaAngkut = 0;
+        double tpHarian = 0.0;
+        double ritase = 0.0;
+        for (int i = 0; i < ritases.size(); i++) {
+            jumlahMobil = jumlahMobil + ritases.get(i).getJumlahMobil();
+            dayaAngkut = dayaAngkut + ritases.get(i).getDayaAngkut();
+            tpHarian = tpHarian + ritases.get(i).getTpHarian();
+            ritase = ritase + ritases.get(i).getRitase();
+        }
+        return new Ritase(
+                jumlahMobil,
+                dayaAngkut,
+                tpHarian,
+                ritase
+        );
+    }
+
+    private void getRitaseTahun(int year) {
+        Call<ArrayList<Ritase>> call = getUserClient().getRitaseTahun(String.valueOf(year));
+        call.enqueue(new Callback<ArrayList<Ritase>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Ritase>> call, Response<ArrayList<Ritase>> response) {
+                Log.w("code", String.valueOf(response.code()));
+                if (response.code() == 200) {
+                    setTextRitase(getRitaseMerged(response.body()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Ritase>> call, Throwable t) {
+                Log.e("error", t.getMessage());
+            }
+        });
+    }
+
+    private void getOpersTahun(int year) {
+        Call<ArrayList<Opers>> call = getUserClient().getOpersTahun(String.valueOf(tahun));
+        call.enqueue(new Callback<ArrayList<Opers>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Opers>> call, Response<ArrayList<Opers>> response) {
+                if (response.code() == 200) {
+                    setTextOpers(getOpersMerged(response.body()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Opers>> call, Throwable t) {
+                Log.e("error", t.getMessage());
+            }
+        });
+    }
+
+    private void getRitaseBulan(int month, int year) {
+        Call<ArrayList<Ritase>> call = getUserClient().getRitaseBulan(
+                String.valueOf(year),
+                String.valueOf(month + 1)
+        );
+        call.enqueue(new Callback<ArrayList<Ritase>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Ritase>> call, Response<ArrayList<Ritase>> response) {
+                Log.w("code", String.valueOf(response.code()));
+                if (response.code() == 200) {
+                    setTextRitase(getRitaseMerged(response.body()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Ritase>> call, Throwable t) {
+                Log.e("error", t.getMessage());
+            }
+        });
+    }
+
+    private void getOpersBulan(int month, int year) {
+        Call<ArrayList<Opers>> call = getUserClient().getOpersBulan(
+                String.valueOf(year),
+                String.valueOf(month + 1)
+        );
+        call.enqueue(new Callback<ArrayList<Opers>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Opers>> call, Response<ArrayList<Opers>> response) {
+                if (response.code() == 200) {
+                    setTextOpers(getOpersMerged(response.body()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Opers>> call, Throwable t) {
+                Log.e("error", t.getMessage());
+            }
+        });
+    }
+
+    private void getRitaseHari(int day, int month, int year) {
+        Calendar cal = Calendar.getInstance();
+        cal.set(year, month, day);
+        Date date = new Date(cal.getTimeInMillis());
+        String tanggal = date.toString();
+        Call<Ritase> call = getUserClient().getRitaseTanggal(tanggal);
+        call.enqueue(new Callback<Ritase>() {
+            @Override
+            public void onResponse(Call<Ritase> call, Response<Ritase> response) {
+                if (response.code() == 200) {
+                    setTextRitase(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Ritase> call, Throwable t) {
+                Log.e("error", t.getMessage());
+            }
+        });
+    }
+
+    private void getOpersHari(int day, int month, int year) {
+        Calendar cal = Calendar.getInstance();
+        cal.set(year, month, day);
+        Date date = new Date(cal.getTimeInMillis());
+        String tanggal = date.toString();
+        Call<Opers> call = getUserClient().getOpersTanggal(tanggal);
+        call.enqueue(new Callback<Opers>() {
+            @Override
+            public void onResponse(Call<Opers> call, Response<Opers> response) {
+                if (response.code() == 200) {
+                    setTextOpers(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Opers> call, Throwable t) {
+                Log.e("error", t.getMessage());
+            }
+        });
+    }
+
     private void handleDate() {
-        tanggalButton.setOnClickListener(new View.OnClickListener() {
+        tanggal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener() {
@@ -94,7 +351,9 @@ public class OpersActivity extends AppCompatActivity {
                         month = i1;
                         day = i2;
                         setDateButton(day, month, year);
-                        getOpers(month);
+                        setMonthButton(month, year);
+                        setYearButton(year);
+                        updateUi(day, month, year, index);
                     }
                 };
                 DatePickerDialog dialog = new DatePickerDialog(
@@ -107,6 +366,78 @@ public class OpersActivity extends AppCompatActivity {
                 dialog.show();
             }
         });
+
+        bulan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar today = Calendar.getInstance();
+
+                MonthPickerDialog.Builder builder = new MonthPickerDialog.Builder(
+                        OpersActivity.this,
+                        new MonthPickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(int selectedMonth, int selectedYear) {
+                                month = selectedMonth;
+                                year = selectedYear;
+                                setDateButton(day, month, year);
+                                setMonthButton(month, year);
+                                setYearButton(year);
+                                updateUi(day, month, year, index);
+                            }
+                        },
+                        today.get(Calendar.YEAR),
+                        today.get(Calendar.MONTH)
+                );
+
+                builder.setMinYear(1970)
+                        .setMaxYear(today.get(Calendar.YEAR))
+                        .setActivatedYear(year)
+                        .setActivatedMonth(month)
+                        .build()
+                        .show();
+            }
+        });
+
+        tahun.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar today = Calendar.getInstance();
+
+                MonthPickerDialog.Builder builder = new MonthPickerDialog.Builder(
+                        OpersActivity.this,
+                        new MonthPickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(int selectedMonth, int selectedYear) {
+                                month = selectedMonth;
+                                year = selectedYear;
+                                setDateButton(day, month, year);
+                                setMonthButton(month, year);
+                                setYearButton(year);
+                                updateUi(day, month, year, index);
+                            }
+                        },
+                        today.get(Calendar.YEAR),
+                        today.get(Calendar.MONTH)
+                );
+
+                builder.setMinYear(1970)
+                        .setMaxYear(today.get(Calendar.YEAR))
+                        .showYearOnly()
+                        .setActivatedYear(year)
+                        .build()
+                        .show();
+            }
+        });
+    }
+
+    private void setYearButton(int year) {
+        tahun.setText(String.valueOf(year));
+    }
+
+    private void setMonthButton(int month, int year) {
+        DateFormatSymbols symbols = new DateFormatSymbols();
+        String text = symbols.getMonths()[month] + " " + String.valueOf(year);
+        bulan.setText(text);
     }
 
     private void setDateButton(int day, int month, int year) {
@@ -115,7 +446,40 @@ public class OpersActivity extends AppCompatActivity {
         tanggal.setText(text);
     }
 
-    private void getOpers(int bulan) {
+    private UserClient getUserClient() {
+        SharedPreferences preferences = OpersActivity.this.getSharedPreferences(
+                "login",
+                Context.MODE_PRIVATE
+        );
+        final String key = preferences.getString("userKey", "none");
+
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(new Interceptor() {
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request original = chain.request();
+
+                Request request = original.newBuilder()
+                        .header("Authorization", key)
+                        .method(original.method(), original.body())
+                        .build();
+                return chain.proceed(request);
+            }
+        });
+
+        OkHttpClient client = httpClient.build();
+
+        String baseUrl = "http://www.api.clicktuban.com/";
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client);
+
+        Retrofit retrofit = builder.build();
+        return retrofit.create(UserClient.class);
+    }
+
+    private void getOpers(int year, int month) {
 
         SharedPreferences preferences = OpersActivity.this.getSharedPreferences(
                 "login",
@@ -139,7 +503,6 @@ public class OpersActivity extends AppCompatActivity {
 
         OkHttpClient client = httpClient.build();
 
-        Log.w("GET ", "start getting matbal bulan " + bulan);
         String baseUrl = "http://www.api.clicktuban.com/";
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(baseUrl)
@@ -148,7 +511,10 @@ public class OpersActivity extends AppCompatActivity {
 
         Retrofit retrofit = builder.build();
         UserClient userClient = retrofit.create(UserClient.class);
-        Call<ArrayList<Opers>> call = userClient.getOpers(bulan + 1);
+        Call<ArrayList<Opers>> call = userClient.getOpersBulan(
+                String.valueOf(year),
+                String.valueOf(month + 1)
+        );
 
         call.enqueue(new Callback<ArrayList<Opers>>() {
             @Override
@@ -162,7 +528,7 @@ public class OpersActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ArrayList<Opers>> call, Throwable t) {
-                Log.e("Call", " failed " + t.getMessage());
+                Log.e("error", t.getMessage());
             }
         });
 
@@ -173,9 +539,8 @@ public class OpersActivity extends AppCompatActivity {
         Opers opers = new Opers(
                 new Date(calendar.getTimeInMillis()).toString(),
                 1608,
-                new Time(calendar.getTimeInMillis()),
-                new Time(calendar1.getTimeInMillis()),
-                new Time(calendar1.getTimeInMillis() - calendar.getTimeInMillis())
+                new Time(calendar.getTimeInMillis()).toString(),
+                new Time(calendar1.getTimeInMillis()).toString()
         );
         ArrayList<Opers> opers1 = new ArrayList<>();
         opers1.add(opers);
@@ -206,15 +571,13 @@ public class OpersActivity extends AppCompatActivity {
         for (int i = 0; i < opers.size(); i++) {
             if (opers.get(i).getDate().equals(today)) {
                 container.setVisibility(View.VISIBLE);
-                emptyText.setVisibility(View.GONE);
                 sum.setText(String.valueOf(opers.get(i).getJumlahKeluar()));
-                minJam.setText(opers.get(i).getMinJamKeluar().toString());
-                maxJam.setText(opers.get(i).getMaxJamKeluar().toString());
-                jamOps.setText(opers.get(i).getJamOperasional().toString());
+                minJam.setText(opers.get(i).getMinJamKeluar());
+                maxJam.setText(opers.get(i).getMaxJamKeluar());
+//                jamOps.setText(opers.get(i).getJamOperasional().toString());
                 break;
             } else {
                 container.setVisibility(View.GONE);
-                emptyText.setVisibility(View.VISIBLE);
             }
         }
     }

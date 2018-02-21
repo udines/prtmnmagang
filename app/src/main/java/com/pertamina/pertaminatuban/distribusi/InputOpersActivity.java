@@ -159,9 +159,8 @@ public class InputOpersActivity extends AppCompatActivity {
                     Opers opers = new Opers(
                             date.toString(),
                             jumlah,
-                            minTime,
-                            maxTime,
-                            diffTime
+                            minTime.toString(),
+                            maxTime.toString()
                     );
                     sendPostRequest(opers);
                 }

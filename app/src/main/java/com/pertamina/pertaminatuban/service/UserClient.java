@@ -74,9 +74,21 @@ public interface UserClient {
 
     @GET("distribusi/opers/{bulan}")
     Call<ArrayList<Opers>> getOpers(@Path("bulan") int bulan);
+    @GET("distribusi/opers/bulan/{tahun}/{bulan}")
+    Call<ArrayList<Opers>> getOpersBulan(@Path("tahun") String tahun, @Path("bulan") String bulan);
+    @GET("distribusi/opers/tahun/{tahun")
+    Call<ArrayList<Opers>> getOpersTahun(@Path("tahun") String tahun);
+    @GET("distribusi/opers/tanggal/{tanggal}")
+    Call<Opers> getOpersTanggal(@Path("tanggal") String tanggal);
 
     @GET("distribusi/ritase/{bulan}")
     Call<ArrayList<Ritase>> getRitase(@Path("bulan") int bulan);
+    @GET("distribusi/ritase/tahun/{tahun}")
+    Call<ArrayList<Ritase>> getRitaseTahun(@Path("tahun") String tahun);
+    @GET("distribusi/ritase/bulan/{tahun}/{bulan}")
+    Call<ArrayList<Ritase>> getRitaseBulan(@Path("tahun") String tahun, @Path("bulan") String bulan);
+    @GET("distribusi/ritase/tanggal/{tanggal}")
+    Call<Ritase> getRitaseTanggal(@Path("tanggal") String tanggal);
 
     @GET("distribusi/{data}/{bulan}")
     Call<Object> getObject(@Path("data") String jenisData, @Path("bulan") int bulan);

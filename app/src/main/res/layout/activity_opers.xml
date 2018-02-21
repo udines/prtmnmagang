@@ -26,22 +26,73 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="12 Maret 2017"
+                    android:text="OPERASIONAL"
                     android:textSize="20sp"
-                    android:id="@+id/opers_tanggal"
                     android:textColor="@color/white"
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
                     android:fontFamily="sans-serif-medium"/>
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_date_range_black_24dp"
-                    android:padding="8dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"/>
+
             </LinearLayout>
         </android.support.v7.widget.Toolbar>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <Spinner
+                android:id="@+id/opers_spinner_periode"
+                android:layout_width="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_height="48dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="12 Maret 2017"
+                android:textSize="16sp"
+                android:id="@+id/opers_tanggal"
+                android:textColor="@color/white"
+                android:paddingTop="8dp"
+                android:drawableEnd="@drawable/ic_date_range_white_18dp"
+                android:drawablePadding="8dp"
+                android:paddingBottom="8dp"
+                android:drawableRight="@drawable/ic_date_range_white_18dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="Maret 2017"
+                android:visibility="gone"
+                android:textSize="16sp"
+                android:id="@+id/opers_bulan"
+                android:textColor="@color/white"
+                android:paddingTop="8dp"
+                android:drawableEnd="@drawable/ic_date_range_white_18dp"
+                android:drawablePadding="8dp"
+                android:paddingBottom="8dp"
+                android:drawableRight="@drawable/ic_date_range_white_18dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="2017"
+                android:visibility="gone"
+                android:textSize="16sp"
+                android:id="@+id/opers_tahun"
+                android:textColor="@color/white"
+                android:paddingTop="8dp"
+                android:drawableEnd="@drawable/ic_date_range_white_18dp"
+                android:drawablePadding="8dp"
+                android:paddingBottom="8dp"
+                android:drawableRight="@drawable/ic_date_range_white_18dp" />
+        </LinearLayout>
 
     </android.support.design.widget.AppBarLayout>
 

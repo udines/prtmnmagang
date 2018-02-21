@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.sql.Time;
 
+
 public class Opers {
 
     public static final int TYPE_JUMLAH_KELUAR = 0;
@@ -22,25 +23,31 @@ public class Opers {
 
     @SerializedName("minJamKeluar")
     @Expose
-    private Time minJamKeluar;
+    private String minJamKeluar;
 
     @SerializedName("maxJamKeluar")
     @Expose
-    private Time maxJamKeluar;
+    private String maxJamKeluar;
 
-    @SerializedName("JamOperasional")
-    @Expose
-    private Time jamOperasional;
+    /*@SerializedName("JamOperasional")
+    @Expose*/
+    private String jamOperasional;
 
     public Opers() {
     }
 
-    public Opers(String date, int jumlahKeluar, Time minJamKeluar, Time maxJamKeluar, Time jamOperasional) {
-        this.date = date;
+    public Opers(int jumlahKeluar, String minJamKeluar, String maxJamKeluar, String jamOperasional) {
         this.jumlahKeluar = jumlahKeluar;
         this.minJamKeluar = minJamKeluar;
         this.maxJamKeluar = maxJamKeluar;
         this.jamOperasional = jamOperasional;
+    }
+
+    public Opers(String date, int jumlahKeluar, String minJamKeluar, String maxJamKeluar) {
+        this.date = date;
+        this.jumlahKeluar = jumlahKeluar;
+        this.minJamKeluar = minJamKeluar;
+        this.maxJamKeluar = maxJamKeluar;
     }
 
     public String getDate() {
@@ -59,27 +66,27 @@ public class Opers {
         this.jumlahKeluar = jumlahKeluar;
     }
 
-    public Time getMinJamKeluar() {
+    public String getMinJamKeluar() {
         return minJamKeluar;
     }
 
-    public void setMinJamKeluar(Time minJamKeluar) {
+    public void setMinJamKeluar(String minJamKeluar) {
         this.minJamKeluar = minJamKeluar;
     }
 
-    public Time getMaxJamKeluar() {
+    public String getMaxJamKeluar() {
         return maxJamKeluar;
     }
 
-    public void setMaxJamKeluar(Time maxJamKeluar) {
+    public void setMaxJamKeluar(String maxJamKeluar) {
         this.maxJamKeluar = maxJamKeluar;
     }
 
-    public Time getJamOperasional() {
+    public String getJamOperasional() {
         return jamOperasional;
     }
 
-    public void setJamOperasional(Time jamOperasional) {
+    public void setJamOperasional(String jamOperasional) {
         this.jamOperasional = jamOperasional;
     }
 
