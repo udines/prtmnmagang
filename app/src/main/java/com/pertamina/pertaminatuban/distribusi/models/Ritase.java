@@ -1,77 +1,62 @@
 package com.pertamina.pertaminatuban.distribusi.models;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class Ritase {
-    private String status;
-    private String transportir;
-    private String nomobil;
-    private String date;
-    private float kapasitas;
-    private int nilai;
-    private int total;
 
-    public Ritase(String status, String transportir, String nomobil, String date, float kapasitas, int nilai, int total) {
-        this.status = status;
-        this.transportir = transportir;
-        this.nomobil = nomobil;
-        this.date = date;
-        this.kapasitas = kapasitas;
-        this.nilai = nilai;
-        this.total = total;
+    @SerializedName("jumlahMobil")
+    @Expose
+    private int jumlahMobil;
+
+    @SerializedName("dayaAngkut")
+    @Expose
+    private int dayaAngkut;
+
+    @SerializedName("tpHarian")
+    @Expose
+    private double tpHarian;
+
+    @SerializedName("ritase")
+    @Expose
+    private double ritase;
+
+    public Ritase(int jumlahMobil, int dayaAngkut, double tpHarian, double ritase) {
+        this.jumlahMobil = jumlahMobil;
+        this.dayaAngkut = dayaAngkut;
+        this.tpHarian = tpHarian;
+        this.ritase = ritase;
     }
 
-    public String getStatus() {
-        return status;
+    public int getJumlahMobil() {
+        return jumlahMobil;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setJumlahMobil(int jumlahMobil) {
+        this.jumlahMobil = jumlahMobil;
     }
 
-    public String getTransportir() {
-        return transportir;
+    public int getDayaAngkut() {
+        return dayaAngkut;
     }
 
-    public void setTransportir(String transportir) {
-        this.transportir = transportir;
+    public void setDayaAngkut(int dayaAngkut) {
+        this.dayaAngkut = dayaAngkut;
     }
 
-    public String getNomobil() {
-        return nomobil;
+    public double getTpHarian() {
+        return tpHarian;
     }
 
-    public void setNomobil(String nomobil) {
-        this.nomobil = nomobil;
+    public void setTpHarian(double tpHarian) {
+        this.tpHarian = tpHarian;
     }
 
-    public String getDate() {
-        return date;
+    public double getRitase() {
+        return ritase;
     }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public float getKapasitas() {
-        return kapasitas;
-    }
-
-    public void setKapasitas(float kapasitas) {
-        this.kapasitas = kapasitas;
-    }
-
-    public float getNilai() {
-        return nilai;
-    }
-
-    public void setNilai(int nilai) {
-        this.nilai = nilai;
-    }
-
-    public float getTotal() {
-        return total;
-    }
-
-    public void setTotal(int total) {
-        this.total = total;
+    public void setRitase(double ritase) {
+        this.ritase = ritase;
     }
 }
