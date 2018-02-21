@@ -94,15 +94,6 @@
                 android:value="com.pertamina.pertaminatuban.distribusi.DistribusiActivity" />
         </activity>
         <activity
-            android:name=".distribusi.RitaseActivity"
-            android:label="@string/title_activity_ritase"
-            android:parentActivityName=".distribusi.DistribusiActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.pertamina.pertaminatuban.distribusi.DistribusiActivity" />
-        </activity>
-        <activity
             android:name=".distribusi.WilayahActivity"
             android:label="@string/title_activity_wilayah"
             android:parentActivityName=".distribusi.DistribusiActivity"

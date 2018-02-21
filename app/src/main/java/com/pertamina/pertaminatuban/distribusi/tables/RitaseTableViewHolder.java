@@ -21,7 +21,6 @@ public class RitaseTableViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void setView(Ritase model) {
-        tanggal.setText(model.getDate());
-        nilai.setText(String.valueOf(model.getNilai()));
+        
     }
 }

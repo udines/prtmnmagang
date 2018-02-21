@@ -69,14 +69,12 @@ public class DistribusiActivity extends AppCompatActivity {
         menus.add(new MenuViewModel("Konsumen", 0));
         menus.add(new MenuViewModel("Wilayah", 0));
         menus.add(new MenuViewModel("Operasional", 0));
-        menus.add(new MenuViewModel("Ritase MT", 0));
 
         ArrayList<Class> classes = new ArrayList<>();
         classes.add(MatbalActivity.class);
         classes.add(KonsumenActivity.class);
         classes.add(WilayahActivity.class);
         classes.add(OpersActivity.class);
-        classes.add(RitaseActivity.class);
 
         ListMenuAdapter adapter = new ListMenuAdapter(menus, getApplicationContext());
         adapter.setClasses(classes);
