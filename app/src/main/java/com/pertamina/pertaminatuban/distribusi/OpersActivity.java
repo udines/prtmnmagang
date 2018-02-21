@@ -109,25 +109,16 @@ public class OpersActivity extends AppCompatActivity {
                         tanggal.setVisibility(View.VISIBLE);
                         bulan.setVisibility(View.GONE);
                         tahun.setVisibility(View.GONE);
-                        minJam.setVisibility(View.VISIBLE);
-                        maxJam.setVisibility(View.VISIBLE);
-                        jamOps.setVisibility(View.VISIBLE);
                         break;
                     case 1:
                         bulan.setVisibility(View.VISIBLE);
                         tanggal.setVisibility(View.GONE);
                         tahun.setVisibility(View.GONE);
-                        minJam.setVisibility(View.GONE);
-                        maxJam.setVisibility(View.GONE);
-                        jamOps.setVisibility(View.GONE);
                         break;
                     default:
                         tahun.setVisibility(View.VISIBLE);
                         tanggal.setVisibility(View.GONE);
                         bulan.setVisibility(View.GONE);
-                        minJam.setVisibility(View.GONE);
-                        maxJam.setVisibility(View.GONE);
-                        jamOps.setVisibility(View.GONE);
                         break;
                 }
 
@@ -164,14 +155,14 @@ public class OpersActivity extends AppCompatActivity {
     }
 
     private void clearText() {
-        sum.setText("0");
-        minJam.setText(R.string.zero_time);
-        maxJam.setText(R.string.zero_time);
-        jamOps.setText(R.string.zero_time);
-        jumlahMobil.setText("0");
-        dayaAngkut.setText("0");
-        tpHarian.setText("0");
-        ritase.setText("0.0");
+        sum.setText("");
+        minJam.setText("");
+        maxJam.setText("");
+        jamOps.setText("");
+        jumlahMobil.setText("");
+        dayaAngkut.setText("");
+        tpHarian.setText("");
+        ritase.setText("");
     }
 
     private void setTextOpers(
@@ -241,10 +232,11 @@ public class OpersActivity extends AppCompatActivity {
     }
 
     private void getOpersTahun(int year) {
-        Call<ArrayList<Opers>> call = getUserClient().getOpersTahun(String.valueOf(tahun));
+        Call<ArrayList<Opers>> call = getUserClient().getOpersTahun(String.valueOf(year));
         call.enqueue(new Callback<ArrayList<Opers>>() {
             @Override
             public void onResponse(Call<ArrayList<Opers>> call, Response<ArrayList<Opers>> response) {
+                Log.w("code", String.valueOf(response.code()));
                 if (response.code() == 200) {
                     setTextOpers(getOpersMerged(response.body()));
                 }
@@ -286,6 +278,7 @@ public class OpersActivity extends AppCompatActivity {
         call.enqueue(new Callback<ArrayList<Opers>>() {
             @Override
             public void onResponse(Call<ArrayList<Opers>> call, Response<ArrayList<Opers>> response) {
+                Log.w("code", String.valueOf(response.code()));
                 if (response.code() == 200) {
                     setTextOpers(getOpersMerged(response.body()));
                 }
@@ -307,6 +300,7 @@ public class OpersActivity extends AppCompatActivity {
         call.enqueue(new Callback<Ritase>() {
             @Override
             public void onResponse(Call<Ritase> call, Response<Ritase> response) {
+                Log.w("code", String.valueOf(response.code()));
                 if (response.code() == 200) {
                     setTextRitase(response.body());
                 }
@@ -328,6 +322,7 @@ public class OpersActivity extends AppCompatActivity {
         call.enqueue(new Callback<Opers>() {
             @Override
             public void onResponse(Call<Opers> call, Response<Opers> response) {
+                Log.w("code", String.valueOf(response.code()));
                 if (response.code() == 200) {
                     setTextOpers(response.body());
                 }
@@ -477,108 +472,5 @@ public class OpersActivity extends AppCompatActivity {
 
         Retrofit retrofit = builder.build();
         return retrofit.create(UserClient.class);
-    }
-
-    private void getOpers(int year, int month) {
-
-        SharedPreferences preferences = OpersActivity.this.getSharedPreferences(
-                "login",
-                Context.MODE_PRIVATE
-        );
-        final String key = preferences.getString("userKey", "none");
-
-        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-        httpClient.addInterceptor(new Interceptor() {
-            @Override
-            public okhttp3.Response intercept(Chain chain) throws IOException {
-                Request original = chain.request();
-
-                Request request = original.newBuilder()
-                        .header("Authorization", key)
-                        .method(original.method(), original.body())
-                        .build();
-                return chain.proceed(request);
-            }
-        });
-
-        OkHttpClient client = httpClient.build();
-
-        String baseUrl = "http://www.api.clicktuban.com/";
-        Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl(baseUrl)
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(client);
-
-        Retrofit retrofit = builder.build();
-        UserClient userClient = retrofit.create(UserClient.class);
-        Call<ArrayList<Opers>> call = userClient.getOpersBulan(
-                String.valueOf(year),
-                String.valueOf(month + 1)
-        );
-
-        call.enqueue(new Callback<ArrayList<Opers>>() {
-            @Override
-            public void onResponse(Call<ArrayList<Opers>> call, Response<ArrayList<Opers>> response) {
-                Log.w("code", String.valueOf(response.code()));
-                if (response.code() == 200 && response.body() != null) {
-                    Log.w("size", String.valueOf(response.body().size()));
-                    cekData(response.body());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ArrayList<Opers>> call, Throwable t) {
-                Log.e("error", t.getMessage());
-            }
-        });
-
-        Calendar calendar = Calendar.getInstance();
-        Calendar calendar1 = Calendar.getInstance();
-        calendar.set(2018, 0, 24, 4, 49);
-        calendar1.set(2018, 0, 24, 16, 44);
-        Opers opers = new Opers(
-                new Date(calendar.getTimeInMillis()).toString(),
-                1608,
-                new Time(calendar.getTimeInMillis()).toString(),
-                new Time(calendar1.getTimeInMillis()).toString()
-        );
-        ArrayList<Opers> opers1 = new ArrayList<>();
-        opers1.add(opers);
-        cekData(opers1);
-    }
-
-    private void cekData(ArrayList<Opers> opers) {
-
-        /*cek apakah data ada atau tidak*/
-        if (opers != null && opers.size() > 0) {
-
-            Log.d("data", "data matbal ada");
-            /*data ada maka tampilkan tab dan isinya*/
-            populateData(opers);
-        } else {
-
-            Log.d("data", "data matbal tidak ada");
-            /*data tidak ada maka hilangkan tab dan tampilkan pesan peringatan
-            * untuk tanggal gunakan month dan year yang sudah diinisialisasi*/
-        }
-    }
-
-    private void populateData(ArrayList<Opers> opers) {
-        Calendar calendar = Calendar.getInstance();
-        Log.w("tanggal", String.valueOf(day));
-        calendar.set(year, month, day);
-        String today = new Date(calendar.getTimeInMillis()).toString();
-        for (int i = 0; i < opers.size(); i++) {
-            if (opers.get(i).getDate().equals(today)) {
-                container.setVisibility(View.VISIBLE);
-                sum.setText(String.valueOf(opers.get(i).getJumlahKeluar()));
-                minJam.setText(opers.get(i).getMinJamKeluar());
-                maxJam.setText(opers.get(i).getMaxJamKeluar());
-//                jamOps.setText(opers.get(i).getJamOperasional().toString());
-                break;
-            } else {
-                container.setVisibility(View.GONE);
-            }
-        }
     }
 }

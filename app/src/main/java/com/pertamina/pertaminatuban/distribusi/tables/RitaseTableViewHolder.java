@@ -21,6 +21,6 @@ public class RitaseTableViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void setView(Ritase model) {
-        
+
     }
 }
