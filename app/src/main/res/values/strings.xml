@@ -342,4 +342,15 @@
     </string-array>
     <string name="title_activity_new_marine">Marine</string>
     <string name="zero_time">00:00</string>
+    <string name="title_activity_finance">Finance</string>
+    <string name="title_activity_perjalanan_dinas">Perjalanan Dinas</string>
+    <string name="title_activity_cost_center">Cost Center</string>
+    <string name="title_activity_qq">Quality &amp; Quantity</string>
+    <string name="title_activity_laporan_bulanan">Laporan Bulanan</string>
+    <string name="title_activity_laporan_harian">LaporanHarianActivity</string>
+    <string name="title_activity_working_loss">Working Loss</string>
+    <string name="title_activity_trucking_loss">Trucking Loss</string>
+    <string name="title_activity_uji_sample">Uji Sample Gate Out</string>
+    <string name="title_activity_test_report">Test Report</string>
+    <string name="title_activity_foto_uji">Foto Hasil Uji</string>
 </resources>

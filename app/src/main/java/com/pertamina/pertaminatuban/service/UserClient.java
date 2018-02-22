@@ -56,7 +56,7 @@ public interface UserClient {
     Call<Object> postKonsumen(@Body ArrayList<Konsumen> konsumens);
     @GET("distribusi/konsumen/tahun/{tahun}")
     Call<ArrayList<Konsumen>> getKonsumenTahun(@Path("tahun") String tahun);
-    @GET("distribusi/konsumen/bulan/{tahun}/{bulan}")
+    @GET("distribusi/konsumen/tahun/bulan/{tahun}/{bulan}")
     Call<ArrayList<Konsumen>> getKonsumenBulan(@Path("tahun") String tahun, @Path("bulan") String bulan);
     @GET("distribusi/konsumen/{tanggal}")
     Call<ArrayList<Konsumen>> getKonsumenTanggal(@Path("tanggal") String tanggal);
