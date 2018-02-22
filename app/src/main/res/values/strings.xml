@@ -353,4 +353,5 @@
     <string name="title_activity_uji_sample">Uji Sample Gate Out</string>
     <string name="title_activity_test_report">Test Report</string>
     <string name="title_activity_foto_uji">Foto Hasil Uji</string>
+    <string name="title_activity_display_pdf">PDF</string>
 </resources>

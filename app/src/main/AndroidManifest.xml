@@ -395,6 +395,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.pertamina.pertaminatuban.qualityquantity.QQActivity" />
         </activity>
+        <activity
+            android:name=".qualityquantity.DisplayPdfActivity"
+            android:label="@string/title_activity_display_pdf"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
