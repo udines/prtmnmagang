@@ -28,8 +28,10 @@ import com.whiteelephant.monthpicker.MonthPickerDialog;
 import java.io.IOException;
 import java.sql.Date;
 import java.text.DateFormatSymbols;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -43,12 +45,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MatbalActivity extends AppCompatActivity {
 
     private TextView tanggal, bulan, tahun;
-    private LinearLayout tanggalButton, bulanButton, tahunButton, container;
+    private LinearLayout tanggalButton, bulanButton, tahunButton;
     private int month;
     private int year;
     private int day;
-    private TextView pertamax, pertalite, premium, solar, biosolar, biofame, grandTotal;
-    private TextView emptyText;
     private RecyclerView recyclerview;
     private Spinner spinner;
     private ArrayList<Matbal> matbalSekarang, matbalLalu;
@@ -78,9 +78,6 @@ public class MatbalActivity extends AppCompatActivity {
         tanggalButton = findViewById(R.id.matbal_tanggal_button);
         bulanButton = findViewById(R.id.matbal_bulan_button);
         tahunButton = findViewById(R.id.matbal_tahun_button);
-        container = findViewById(R.id.matbal_container);
-        grandTotal = findViewById(R.id.matbal_total);
-//        emptyText = findViewById(R.id.matbal_empty_text);
         recyclerview = findViewById(R.id.matbal_recyclerview);
 
         textLalu = findViewById(R.id.matbal_total_text_last);
@@ -527,7 +524,10 @@ public class MatbalActivity extends AppCompatActivity {
                     matbalSekarang,
                     matbalLalu,
                     periode,
-                    getApplicationContext()
+                    getApplicationContext(),
+                    year,
+                    month,
+                    day
             );
             recyclerview.setNestedScrollingEnabled(false);
             recyclerview.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
@@ -541,8 +541,42 @@ public class MatbalActivity extends AppCompatActivity {
             String periodeType,
             ArrayList<Matbal> matbalLalu,
             ArrayList<Matbal> matbalSekarang) {
-        textNow.setText(String.valueOf("This " + periodeType));
-        textLalu.setText(String.valueOf("Last " + periodeType));
+
+        SimpleDateFormat dayFormat = new SimpleDateFormat("dd MMM", Locale.getDefault());
+        SimpleDateFormat monthFormat = new SimpleDateFormat("MMM", Locale.getDefault());
+        SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
+
+        Calendar cal = Calendar.getInstance();
+
+        switch (periodeType) {
+            case "day":
+                cal.set(year, month, day);
+                Date date = new Date(cal.getTimeInMillis());
+                textNow.setText(dayFormat.format(date));
+
+                cal.add(Calendar.DAY_OF_MONTH, -1);
+                date = new Date(cal.getTimeInMillis());
+                textLalu.setText(dayFormat.format(date));
+                break;
+            case "month":
+                cal.set(year, month, day);
+                Date dateMonth = new Date(cal.getTimeInMillis());
+                textNow.setText(monthFormat.format(dateMonth));
+
+                cal.add(Calendar.MONTH, -1);
+                dateMonth = new Date(cal.getTimeInMillis());
+                textLalu.setText(monthFormat.format(dateMonth));
+                break;
+            case "year":
+                cal.set(year, month, day);
+                Date dateYear = new Date(cal.getTimeInMillis());
+                textNow.setText(yearFormat.format(dateYear));
+
+                cal.add(Calendar.YEAR, -1);
+                dateYear = new Date(cal.getTimeInMillis());
+                textLalu.setText(yearFormat.format(dateYear));
+                break;
+        }
 
         float totalNow = 0, totalLalu = 0;
         for (int i = 0; i < matbalLalu.size(); i++) {
@@ -557,7 +591,6 @@ public class MatbalActivity extends AppCompatActivity {
 
         float difference = totalNow - totalLalu;
         float percentage = (difference / totalLalu) * 100;
-        nilaiDiff.setText(String.valueOf(difference + " KL (" + (int)percentage + "%)"));
 
         if (totalLalu == 0 && totalNow > 0) {
             percentage = 100;
@@ -565,97 +598,11 @@ public class MatbalActivity extends AppCompatActivity {
             percentage = 0;
         }
 
+        nilaiDiff.setText(String.valueOf(difference + " KL (" + (int)percentage + "%)"));
         if (percentage < 0) {
             nilaiDiff.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red_800));
         } else {
             nilaiDiff.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.green_800));
         }
     }
-
-    /*private void populateData(ArrayList<Matbal> matbals) {
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(year, month, day);
-        java.util.Date date = new Date(calendar.getTimeInMillis());
-        Log.w("date", date.toString());
-        String today = date.toString();
-
-        ArrayList<Matbal> matbalToday = new ArrayList<>();
-        ArrayList<Matbal> matbalLast = new ArrayList<>();
-        float totalToday = 0;
-        float totalLast = 0;
-        for (int i = 0; i < matbals.size(); i++) {
-            if (matbals.get(i).getDate().equals(today)) {
-                matbalToday.add(matbals.get(i));
-                totalToday = totalToday + matbals.get(i).getNilai();
-            }
-        }
-        grandTotal.setText(String.valueOf(totalToday + " KL"));
-        Log.w("total", String.valueOf(totalToday));
-
-        if (totalToday == 0) {
-            container.setVisibility(View.GONE);
-            emptyText.setVisibility(View.VISIBLE);
-        } else {
-            container.setVisibility(View.VISIBLE);
-            emptyText.setVisibility(View.GONE);
-            recyclerview.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-            recyclerview.setAdapter(new MatbalTableAdapter(
-                    matbalToday,
-                    getApplicationContext()
-            ));
-        }
-    }
-
-    private void getMatbal(int bulan) {
-
-        SharedPreferences preferences = MatbalActivity.this.getSharedPreferences(
-                "login",
-                Context.MODE_PRIVATE
-        );
-        final String key = preferences.getString("userKey", "none");
-
-        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-        httpClient.addInterceptor(new Interceptor() {
-            @Override
-            public okhttp3.Response intercept(Chain chain) throws IOException {
-                Request original = chain.request();
-
-                Request request = original.newBuilder()
-                        .header("Authorization", key)
-                        .method(original.method(), original.body())
-                        .build();
-                return chain.proceed(request);
-            }
-        });
-
-        OkHttpClient client = httpClient.build();
-
-        Log.w("GET ", "start getting matbal bulan " + bulan);
-        String baseUrl = "http://www.api.clicktuban.com/";
-        Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl(baseUrl)
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(client);
-
-        Retrofit retrofit = builder.build();
-        UserClient userClient = retrofit.create(UserClient.class);
-        Call<ArrayList<Matbal>> call = userClient.getMatbal(bulan + 1);
-
-        call.enqueue(new Callback<ArrayList<Matbal>>() {
-            @Override
-            public void onResponse(Call<ArrayList<Matbal>> call, Response<ArrayList<Matbal>> response) {
-                Log.w("code", String.valueOf(response.code()));
-                if (response.code() == 200 && response.body() != null) {
-                    Log.w("size", String.valueOf(response.body().size()));
-                    cekData(response.body());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ArrayList<Matbal>> call, Throwable t) {
-                Log.e("Call", " failed " + t.getMessage());
-            }
-        });
-    }*/
 }

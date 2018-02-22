@@ -559,10 +559,21 @@ public class KonsumenActivity extends AppCompatActivity {
             ArrayList<String> masterData,
             ArrayList<Konsumen> konsumen
     ) {
+        if (masterData != null) {
+            Log.w("master data size", String.valueOf(masterData.size()));
+        } else {
+            Log.w("master data", "null");
+        }
+        if (konsumen != null) {
+            Log.w("konsumen size", String.valueOf(konsumen.size()));
+        } else {
+            Log.w("konsumen", "null");
+        }
         ArrayList<ArrayList<Konsumen>> kumpulanKonsumen = new ArrayList<>();
         for (int i = 0; i < masterData.size(); i++) {
             ArrayList<Konsumen> konsumens = new ArrayList<>();
             for (int j = 0; j < konsumen.size(); j++) {
+                Log.w("konsumen ke", String.valueOf(j) + " = " + konsumen.get(j).getKonsumen());
                 if (konsumen.get(j).getKonsumen().equals(masterData.get(i))) {
                     konsumens.add(konsumen.get(j));
                 }

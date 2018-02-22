@@ -11,7 +11,11 @@ import android.widget.TextView;
 import com.pertamina.pertaminatuban.R;
 import com.pertamina.pertaminatuban.distribusi.models.Matbal;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class MatbalTableAdapter extends RecyclerView.Adapter<MatbalTableViewHolder> {
 
@@ -19,12 +23,16 @@ public class MatbalTableAdapter extends RecyclerView.Adapter<MatbalTableViewHold
     private ArrayList<Matbal> lastMatbals;
     private String periodeType;
     private Context context;
+    private int year, month, day;
 
-    public MatbalTableAdapter(ArrayList<Matbal> matbals, ArrayList<Matbal> lastMatbals, String periodeType, Context context) {
+    public MatbalTableAdapter(ArrayList<Matbal> matbals, ArrayList<Matbal> lastMatbals, String periodeType, Context context, int year, int month, int day) {
         this.matbals = matbals;
         this.lastMatbals = lastMatbals;
         this.periodeType = periodeType;
         this.context = context;
+        this.year = year;
+        this.month = month;
+        this.day = day;
     }
 
     @Override
@@ -48,8 +56,44 @@ public class MatbalTableAdapter extends RecyclerView.Adapter<MatbalTableViewHold
 
         //set tulisan last dan this sesuai dengan tipe periode
         //misalnya this month dan last month
-        holder.textLast.setText(String.valueOf("Last " + periodeType));
-        holder.textNow.setText(String.valueOf("This " + periodeType));
+//        holder.textLast.setText(String.valueOf("Last " + periodeType));
+//        holder.textNow.setText(String.valueOf("This " + periodeType));
+
+        SimpleDateFormat dayFormat = new SimpleDateFormat("dd MMM", Locale.getDefault());
+        SimpleDateFormat monthFormat = new SimpleDateFormat("MMM", Locale.getDefault());
+        SimpleDateFormat yearFormat = new SimpleDateFormat("yyyy", Locale.getDefault());
+
+        Calendar cal = Calendar.getInstance();
+
+        switch (periodeType) {
+            case "day":
+                cal.set(year, month, day);
+                Date date = new Date(cal.getTimeInMillis());
+                holder.textNow.setText(dayFormat.format(date));
+
+                cal.add(Calendar.DAY_OF_MONTH, -1);
+                date = new Date(cal.getTimeInMillis());
+                holder.textLast.setText(dayFormat.format(date));
+                break;
+            case "month":
+                cal.set(year, month, day);
+                Date dateMonth = new Date(cal.getTimeInMillis());
+                holder.textNow.setText(monthFormat.format(dateMonth));
+
+                cal.add(Calendar.MONTH, -1);
+                dateMonth = new Date(cal.getTimeInMillis());
+                holder.textLast.setText(monthFormat.format(dateMonth));
+                break;
+            case "year":
+                cal.set(year, month, day);
+                Date dateYear = new Date(cal.getTimeInMillis());
+                holder.textNow.setText(yearFormat.format(dateYear));
+
+                cal.add(Calendar.YEAR, -1);
+                dateYear = new Date(cal.getTimeInMillis());
+                holder.textLast.setText(yearFormat.format(dateYear));
+                break;
+        }
 
         //set row menjadi belang
         if (position % 2 == 0) {
