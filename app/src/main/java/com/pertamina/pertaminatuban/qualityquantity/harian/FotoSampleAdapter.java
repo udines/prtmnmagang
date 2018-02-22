@@ -17,8 +17,9 @@ public class FotoSampleAdapter extends RecyclerView.Adapter<FotoSampleViewHolder
     private ArrayList<ItemFotoSample> fotoSamples;
     private Context context;
 
-    public FotoSampleAdapter(ArrayList<ItemFotoSample> fotoSamples) {
+    public FotoSampleAdapter(ArrayList<ItemFotoSample> fotoSamples, Context context) {
         this.fotoSamples = fotoSamples;
+        this.context = context;
     }
 
     @Override
@@ -33,6 +34,7 @@ public class FotoSampleAdapter extends RecyclerView.Adapter<FotoSampleViewHolder
         holder.info.setText(fotoSamples.get(position).getInfo());
         Glide.with(context)
                 .load(fotoSamples.get(position).getUrl())
+                .asBitmap()
                 .into(holder.image);
     }
 

@@ -6,6 +6,12 @@ public class ItemFotoSample {
     private String info;
     private String date;
 
+    public ItemFotoSample(String url, String info, String date) {
+        this.url = url;
+        this.info = info;
+        this.date = date;
+    }
+
     public String getDate() {
         return date;
     }
