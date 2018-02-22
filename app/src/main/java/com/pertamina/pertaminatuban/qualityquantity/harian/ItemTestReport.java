@@ -5,8 +5,7 @@ public class ItemTestReport {
     private String date;
     private String url;
 
-    public ItemTestReport(String id, String date, String url) {
-        this.id = id;
+    public ItemTestReport(String date, String url) {
         this.date = date;
         this.url = url;
     }

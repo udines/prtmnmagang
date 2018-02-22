@@ -31,6 +31,7 @@ public class TestReportAdapter extends RecyclerView.Adapter<TestReportViewHolder
                 //masuk ke halaman display pdf yang dipilih
                 Intent intent = new Intent(parent.getContext(), DisplayPdfActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("url", report.getUrl());
                 parent.getContext().startActivity(intent);
             }
         });

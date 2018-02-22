@@ -24,6 +24,12 @@ public class DisplayPdfActivity extends AppCompatActivity {
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        displayPdf();
+    }
+
+    private void displayPdf() {
+        String url = getIntent().getStringExtra("url");
     }
 
 }

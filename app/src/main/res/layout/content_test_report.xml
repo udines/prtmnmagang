@@ -6,6 +6,13 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.pertamina.pertaminatuban.qualityquantity.harian.TestReportActivity"
-    tools:showIn="@layout/activity_test_report">
+    tools:showIn="@layout/activity_test_report"
+    android:background="@color/grey_200">
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/test_report_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:clipToPadding="false"/>
 </android.support.constraint.ConstraintLayout>
