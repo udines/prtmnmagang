@@ -37,6 +37,10 @@
         <item>Monthly</item>
         <item>Annually</item>
     </string-array>
+    <string-array name="pilihan_periode_tanggal_bulan">
+        <item>Daily</item>
+        <item>Monthly</item>
+    </string-array>
 
     <string-array name="jenis_konsumen">
         <item>SPBU</item>

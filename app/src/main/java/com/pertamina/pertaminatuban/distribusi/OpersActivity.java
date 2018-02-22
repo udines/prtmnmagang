@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -88,15 +89,49 @@ public class OpersActivity extends AppCompatActivity {
         year = calendar.get(Calendar.YEAR);
         day = calendar.get(Calendar.DAY_OF_MONTH);
         setDateButton(day, month, year);
+        updateUi(day, month, year, 0);
 
         handleSpinner();
         /*handle tanggal untuk mengubah data berdasarkan bulan*/
         handleDate();
+        handleNavButton();
+    }
+
+    private void handleNavButton() {
+        Button next, prev;
+        prev = findViewById(R.id.opers_prev_day);
+        next = findViewById(R.id.opers_next_day);
+        prev.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar cal = Calendar.getInstance();
+                cal.set(year, month, day);
+                cal.add(Calendar.DAY_OF_MONTH, -1);
+                month = cal.get(Calendar.MONTH);
+                year = cal.get(Calendar.YEAR);
+                day = cal.get(Calendar.DAY_OF_MONTH);
+                setDateButton(day, month, year);
+                updateUi(day, month, year, 0);
+            }
+        });
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar cal = Calendar.getInstance();
+                cal.set(year, month, day);
+                cal.add(Calendar.DAY_OF_MONTH, 1);
+                month = cal.get(Calendar.MONTH);
+                year = cal.get(Calendar.YEAR);
+                day = cal.get(Calendar.DAY_OF_MONTH);
+                setDateButton(day, month, year);
+                updateUi(day, month, year, 0);
+            }
+        });
     }
 
     private void handleSpinner() {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.pilihan_periode, android.R.layout.simple_spinner_item);
+                R.array.pilihan_periode_tanggal_bulan, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerPeriode.setAdapter(adapter);
         spinnerPeriode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -140,17 +175,19 @@ public class OpersActivity extends AppCompatActivity {
 
         switch (index) {
             case 0:
+                container.setVisibility(View.VISIBLE);
                 getOpersHari(day, month, year);
                 getRitaseHari(day, month, year);
                 break;
             case 1:
+                container.setVisibility(View.GONE);
                 getOpersBulan(month, year);
                 getRitaseBulan(month, year);
                 break;
-            case 2:
+            /*case 2:
                 getOpersTahun(year);
                 getRitaseTahun(year);
-                break;
+                break;*/
         }
     }
 

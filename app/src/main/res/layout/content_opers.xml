@@ -8,11 +8,11 @@
     tools:context="com.pertamina.pertaminatuban.distribusi.OpersActivity"
     tools:showIn="@layout/activity_opers"
     android:orientation="vertical"
-    android:gravity="center"
+    android:scrollbars="none"
     android:padding="16dp">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/opers_container"
         android:orientation="vertical">
         <LinearLayout
@@ -201,6 +201,29 @@
                 android:id="@+id/opers_ritase"
                 android:text="0.0"
                 android:padding="12dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/opers_prev_day"
+                android:layout_width="0dp"
+                android:layout_margin="4dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                style="@style/Base.Widget.AppCompat.Button.Colored"
+                android:text="Prev Day"/>
+            <Button
+                android:id="@+id/opers_next_day"
+                android:layout_width="0dp"
+                android:layout_margin="4dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                style="@style/Base.Widget.AppCompat.Button.Colored"
+                android:text="Next Day"/>
         </LinearLayout>
     </LinearLayout>
 </ScrollView>
