@@ -34,7 +34,6 @@ public class FotoSampleAdapter extends RecyclerView.Adapter<FotoSampleViewHolder
         holder.info.setText(fotoSamples.get(position).getInfo());
         Glide.with(context)
                 .load(fotoSamples.get(position).getUrl())
-                .asBitmap()
                 .into(holder.image);
     }
 
