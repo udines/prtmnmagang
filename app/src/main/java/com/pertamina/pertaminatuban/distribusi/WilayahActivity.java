@@ -337,7 +337,7 @@ public class WilayahActivity extends AppCompatActivity {
         Call<ArrayList<Wilayah>> call = userClient.getWilayahBulan(
                 wilayah,
                 String.valueOf(year),
-                String.valueOf(month)
+                String.valueOf(month + 1)
         );
         call.enqueue(new Callback<ArrayList<Wilayah>>() {
             @Override
