@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.pertamina.pertaminatuban.qualityquantity.bulanan.WorkingLossActivity">
+    tools:context="com.pertamina.pertaminatuban.qualityquantity.bulanan.InputWorkingLossActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -20,18 +20,6 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_working_loss" />
-
-    <Button
-        android:id="@+id/working_loss_input_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        android:text="Input Data"
-        android:textColor="@color/white"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:background="@drawable/round_corner_24dp_accent"/>
+    <include layout="@layout/content_input_working_loss" />
 
 </android.support.design.widget.CoordinatorLayout>

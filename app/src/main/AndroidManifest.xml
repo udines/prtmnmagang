@@ -398,7 +398,16 @@
         <activity
             android:name=".qualityquantity.DisplayPdfActivity"
             android:label="@string/title_activity_display_pdf"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".qualityquantity.bulanan.InputWorkingLossActivity"
+            android:label="@string/title_activity_input_working_loss"
+            android:parentActivityName=".qualityquantity.bulanan.WorkingLossActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.pertamina.pertaminatuban.qualityquantity.bulanan.WorkingLossActivity" />
+        </activity>
     </application>
 
 </manifest>
