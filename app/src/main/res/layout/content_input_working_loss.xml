@@ -29,6 +29,7 @@
             android:textColor="@color/black"/>
 
         <Spinner
+            android:id="@+id/input_working_loss_spinner"
             android:layout_width="wrap_content"
             android:layout_height="48dp" />
 
@@ -38,7 +39,9 @@
             android:layout_marginTop="8dp"
             android:hint="Stok Awal">
             <EditText
+                android:id="@+id/input_working_loss_stock_awal"
                 android:layout_width="match_parent"
+                android:inputType="number"
                 android:layout_height="wrap_content"/>
         </android.support.design.widget.TextInputLayout>
 
@@ -48,7 +51,9 @@
             android:layout_marginTop="8dp"
             android:hint="Act. Receipt">
             <EditText
+                android:id="@+id/input_working_loss_receipt"
                 android:layout_width="match_parent"
+                android:inputType="number"
                 android:layout_height="wrap_content"/>
         </android.support.design.widget.TextInputLayout>
 
@@ -58,7 +63,9 @@
             android:layout_marginTop="8dp"
             android:hint="Blending In">
             <EditText
+                android:id="@+id/input_working_loss_blending_in"
                 android:layout_width="match_parent"
+                android:inputType="number"
                 android:layout_height="wrap_content"/>
         </android.support.design.widget.TextInputLayout>
 
@@ -69,9 +76,10 @@
             android:text="Total Tersedia"
             android:textSize="12sp"/>
         <TextView
+            android:id="@+id/input_working_loss_total_tersedia"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="125.000.000"
+            android:text="0"
             android:layout_marginTop="4dp"
             android:textSize="18sp"
             android:textColor="@color/black"/>
@@ -82,7 +90,9 @@
             android:layout_marginTop="8dp"
             android:hint="Sales PSO">
             <EditText
+                android:id="@+id/input_working_loss_sales_pso"
                 android:layout_width="match_parent"
+                android:inputType="number"
                 android:layout_height="wrap_content"/>
         </android.support.design.widget.TextInputLayout>
 
@@ -92,7 +102,9 @@
             android:layout_marginTop="8dp"
             android:hint="Sales NPSO">
             <EditText
+                android:id="@+id/input_working_loss_sales_npso"
                 android:layout_width="match_parent"
+                android:inputType="number"
                 android:layout_height="wrap_content"/>
         </android.support.design.widget.TextInputLayout>
 
@@ -102,7 +114,9 @@
             android:layout_marginTop="8dp"
             android:hint="Konsinyasi">
             <EditText
+                android:id="@+id/input_working_loss_konsinyasi"
                 android:layout_width="match_parent"
+                android:inputType="number"
                 android:layout_height="wrap_content"/>
         </android.support.design.widget.TextInputLayout>
 
@@ -112,7 +126,9 @@
             android:layout_marginTop="8dp"
             android:hint="Own Use TBBM">
             <EditText
+                android:id="@+id/input_working_loss_ownuse_tbbm"
                 android:layout_width="match_parent"
+                android:inputType="number"
                 android:layout_height="wrap_content"/>
         </android.support.design.widget.TextInputLayout>
 
@@ -122,7 +138,9 @@
             android:layout_marginTop="8dp"
             android:hint="Own Use Kapal">
             <EditText
+                android:id="@+id/input_working_loss_ownuse_kapal"
                 android:layout_width="match_parent"
+                android:inputType="number"
                 android:layout_height="wrap_content"/>
         </android.support.design.widget.TextInputLayout>
 
@@ -133,9 +151,10 @@
             android:text="Total Penyaluran"
             android:textSize="12sp"/>
         <TextView
+            android:id="@+id/input_working_loss_total_penyaluran"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="125.000.000"
+            android:text="0"
             android:layout_marginTop="4dp"
             android:textSize="18sp"
             android:textColor="@color/black"/>
@@ -146,7 +165,9 @@
             android:layout_marginTop="8dp"
             android:hint="Blending Out">
             <EditText
+                android:id="@+id/input_working_loss_blending_out"
                 android:layout_width="match_parent"
+                android:inputType="number"
                 android:layout_height="wrap_content"/>
         </android.support.design.widget.TextInputLayout>
 
@@ -156,7 +177,9 @@
             android:layout_marginTop="8dp"
             android:hint="Stock Akhir">
             <EditText
+                android:id="@+id/input_working_loss_stock_akhir"
                 android:layout_width="match_parent"
+                android:inputType="number"
                 android:layout_height="wrap_content"/>
         </android.support.design.widget.TextInputLayout>
 
@@ -167,9 +190,10 @@
             android:text="Working Losses Quantity"
             android:textSize="12sp"/>
         <TextView
+            android:id="@+id/input_working_loss_quantity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="500.000"
+            android:text="0"
             android:layout_marginTop="4dp"
             android:textSize="18sp"
             android:textColor="@color/black"/>
@@ -181,15 +205,17 @@
             android:text="Working Loss Percentage"
             android:textSize="12sp"/>
         <TextView
+            android:id="@+id/input_working_loss_percentage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0.2 %"
+            android:text="%"
             android:layout_marginTop="4dp"
             android:layout_marginBottom="8dp"
             android:textSize="18sp"
             android:textColor="@color/black"/>
 
         <Button
+            android:id="@+id/input_working_loss_kirim"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/Base.Widget.AppCompat.Button.Colored"
