@@ -28,8 +28,11 @@ import com.pertamina.pertaminatuban.service.UserClient;
 
 import java.io.IOException;
 import java.text.DateFormatSymbols;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -74,6 +77,7 @@ public class InputWorkingLossActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         initView();
+        getMasterUntuk("fuel");
         handleInputChange();
         handleKirim();
     }
@@ -89,11 +93,9 @@ public class InputWorkingLossActivity extends AppCompatActivity {
         produkInput.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                int index = adapterView.getSelectedItemPosition();
-                ((TextView) produkInput.getSelectedView()).setTextColor(getResources().getColor(R.color.white));
 
                 //set wilayah terpilih sesuai dengan index
-                fuelIndex = index;
+                fuelIndex = adapterView.getSelectedItemPosition();
 
                 //update ui karena ada perubahan di jenis periode
             }
@@ -171,9 +173,9 @@ public class InputWorkingLossActivity extends AppCompatActivity {
         kirim.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Calendar cal = Calendar.getInstance();
-                DateFormatSymbols symbols = new DateFormatSymbols();
-                String text = symbols.getMonths()[cal.get(Calendar.MONTH)] + "-" + String.valueOf(cal.get(Calendar.YEAR));
+                Date date = new Date();
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                String text = format.format(date);
                 workingLoss = new WorkingLoss(
                         text,
                         "Tuban",
@@ -243,7 +245,7 @@ public class InputWorkingLossActivity extends AppCompatActivity {
         call.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, Response<Object> response) {
-                Log.w("code", String.valueOf(response.code()));
+                Log.w("post req code", String.valueOf(response.code()));
                 if (response.code() == 200) {
                     Log.w("response size", response.body().toString());
                     Toast.makeText(InputWorkingLossActivity.this, "Data berhasil ditambahkan", Toast.LENGTH_LONG).show();
@@ -267,9 +269,9 @@ public class InputWorkingLossActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                setTotalTersedia();
                 if (!charSequence.toString().isEmpty())
-                stockAwal = Double.parseDouble(charSequence.toString());
+                    stockAwal = Double.parseDouble(charSequence.toString());
+                setTotalTersedia();
             }
 
             @Override
@@ -286,9 +288,9 @@ public class InputWorkingLossActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                setTotalTersedia();
                 if (!charSequence.toString().isEmpty())
-                actReceipt = Double.parseDouble(charSequence.toString());
+                    actReceipt = Double.parseDouble(charSequence.toString());
+                setTotalTersedia();
             }
 
             @Override
@@ -305,9 +307,9 @@ public class InputWorkingLossActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                setTotalTersedia();
                 if (!charSequence.toString().isEmpty())
-                blendingIn = Double.parseDouble(charSequence.toString());
+                    blendingIn = Double.parseDouble(charSequence.toString());
+                setTotalTersedia();
             }
 
             @Override
@@ -324,9 +326,9 @@ public class InputWorkingLossActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                setTotalPenyaluran();
                 if (!charSequence.toString().isEmpty())
-                salesPso = Double.parseDouble(charSequence.toString());
+                    salesPso = Double.parseDouble(charSequence.toString());
+                setTotalPenyaluran();
             }
 
             @Override
@@ -343,9 +345,9 @@ public class InputWorkingLossActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                setTotalPenyaluran();
                 if (!charSequence.toString().isEmpty())
-                salesNpso = Double.parseDouble(charSequence.toString());
+                    salesNpso = Double.parseDouble(charSequence.toString());
+                setTotalPenyaluran();
             }
 
             @Override
@@ -362,9 +364,9 @@ public class InputWorkingLossActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                setTotalPenyaluran();
                 if (!charSequence.toString().isEmpty())
-                konsinyasi = Double.parseDouble(charSequence.toString());
+                    konsinyasi = Double.parseDouble(charSequence.toString());
+                setTotalPenyaluran();
             }
 
             @Override
@@ -381,9 +383,9 @@ public class InputWorkingLossActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                setTotalPenyaluran();
                 if (!charSequence.toString().isEmpty())
-                ownUseTbbm = Double.parseDouble(charSequence.toString());
+                    ownUseTbbm = Double.parseDouble(charSequence.toString());
+                setTotalPenyaluran();
             }
 
             @Override
@@ -400,9 +402,9 @@ public class InputWorkingLossActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                setTotalPenyaluran();
                 if (!charSequence.toString().isEmpty())
-                ownUseKapal = Double.parseDouble(charSequence.toString());
+                    ownUseKapal = Double.parseDouble(charSequence.toString());
+                setTotalPenyaluran();
             }
 
             @Override
@@ -419,9 +421,9 @@ public class InputWorkingLossActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                setWorkingLoss();
                 if (!charSequence.toString().isEmpty())
-                blendingOut = Double.parseDouble(charSequence.toString());
+                    blendingOut = Double.parseDouble(charSequence.toString());
+                setWorkingLoss();
             }
 
             @Override
@@ -438,9 +440,9 @@ public class InputWorkingLossActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                setWorkingLoss();
                 if (!charSequence.toString().isEmpty())
-                stockAkhir = Double.parseDouble(charSequence.toString());
+                    stockAkhir = Double.parseDouble(charSequence.toString());
+                setWorkingLoss();
             }
 
             @Override

@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -48,6 +49,7 @@ public class WorkingLossActivity extends AppCompatActivity {
     private ArrayList<String> fuelList;
     private int fuelIndex = 0;
     private int month, year;
+    private LinearLayout container;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -257,6 +259,7 @@ public class WorkingLossActivity extends AppCompatActivity {
                     for (int i = 0; i < workingLosses.size(); i++) {
                         if (workingLosses.get(i).getProduk().equals(produk)) {
                             Log.w("fuel data", "ada");
+                            container.setVisibility(View.VISIBLE);
                             setWorkingLoss(workingLosses.get(i));
                         }
                     }
@@ -271,6 +274,7 @@ public class WorkingLossActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        container = findViewById(R.id.working_loss_container);
         lokasi = findViewById(R.id.working_loss_lokasi);
         produk = findViewById(R.id.working_loss_produk);
         stockAwal = findViewById(R.id.working_loss_stock_awal);
@@ -319,11 +323,12 @@ public class WorkingLossActivity extends AppCompatActivity {
         totalPenyaluran.setText(model.getPenyaluran());
         blendingOut.setText(model.getBlendingOut());
         quantity.setText(model.getWlQuantity());
-        percentage.setText(model.getWlPercentage());
+        percentage.setText(String.valueOf(Double.parseDouble(model.getWlPercentage()) * 100 + " %"));
         stockAkhir.setText(model.getStokAkhir());
     }
 
     private void clearData() {
+        container.setVisibility(View.GONE);
         WorkingLoss model = new WorkingLoss(
                 "", "Tuban", "Produk", "", "", "",
                 "","","","","","",
