@@ -1,8 +1,10 @@
 package com.pertamina.pertaminatuban.qualityquantity.bulanan;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -249,7 +251,7 @@ public class InputWorkingLossActivity extends AppCompatActivity {
                 if (response.code() == 200) {
                     Log.w("response size", response.body().toString());
                     Toast.makeText(InputWorkingLossActivity.this, "Data berhasil ditambahkan", Toast.LENGTH_LONG).show();
-                    finish();
+                    NavUtils.navigateUpTo(InputWorkingLossActivity.this, new Intent(getApplicationContext(), WorkingLossActivity.class));
                 }
             }
 

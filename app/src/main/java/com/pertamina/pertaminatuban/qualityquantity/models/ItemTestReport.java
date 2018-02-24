@@ -1,13 +1,33 @@
 package com.pertamina.pertaminatuban.qualityquantity.models;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+import java.util.Date;
+
 public class ItemTestReport {
+
+    public static final String TYPE_TRUCKING_LOSS = "Trucking Loss";
+    public static final String TYPE_TEST_REPORT = "Test Report";
+
+    @SerializedName("id")
+    @Expose
     private String id;
-    private String date;
+
+    @SerializedName("dateTs")
+    @Expose
+    private Date date;
+
+    @SerializedName("urlPdf")
+    @Expose
     private String url;
 
-    public ItemTestReport(String date, String url) {
-        this.date = date;
-        this.url = url;
+    @SerializedName("type")
+    @Expose
+    private String type;
+
+    public String getType() {
+        return type;
     }
 
     public String getId() {
@@ -18,12 +38,16 @@ public class ItemTestReport {
         this.id = id;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getUrl() {

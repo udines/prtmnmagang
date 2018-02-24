@@ -1,6 +1,7 @@
 package com.pertamina.pertaminatuban.service;
 
 import com.pertamina.pertaminatuban.qualityquantity.models.ItemFotoSample;
+import com.pertamina.pertaminatuban.qualityquantity.models.ItemTestReport;
 import com.pertamina.pertaminatuban.qualityquantity.models.WorkingLoss;
 
 import java.util.ArrayList;
@@ -24,4 +25,9 @@ public interface QqClient {
     Call<ArrayList<ItemFotoSample>> getFotoSampleBulan(@Path("tahun") String tahun, @Path("bulan") String bulan);
     @POST("quality/ujisample")
     Call<Object> postFotoSample();
+
+    @GET("quality/truckingloss/{tahun}/{bulan}")
+    Call<ArrayList<ItemTestReport>> getTestReportBulan(@Path("tahun") String tahun, @Path("bulan") String bulan);
+    @GET("quality/truckingloss/{tahun}")
+    Call<ArrayList<ItemTestReport>> getTruckingLossTahun(@Path("tahun") String tahun);
 }

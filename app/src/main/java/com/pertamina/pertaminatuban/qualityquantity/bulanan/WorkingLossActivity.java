@@ -352,11 +352,4 @@ public class WorkingLossActivity extends AppCompatActivity {
         percentage.setText(model.getWlPercentage());
         stockAkhir.setText(model.getStokAkhir());
     }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        String tuban = "Tuban";
-        updateUi(month, year, tuban, fuelList.get(fuelIndex));
-    }
 }

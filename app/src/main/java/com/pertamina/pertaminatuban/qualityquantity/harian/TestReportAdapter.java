@@ -2,6 +2,7 @@ package com.pertamina.pertaminatuban.qualityquantity.harian;
 
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +11,9 @@ import com.pertamina.pertaminatuban.R;
 import com.pertamina.pertaminatuban.qualityquantity.DisplayPdfActivity;
 import com.pertamina.pertaminatuban.qualityquantity.models.ItemTestReport;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 
 public class TestReportAdapter extends RecyclerView.Adapter<TestReportViewHolder> {
@@ -41,7 +44,16 @@ public class TestReportAdapter extends RecyclerView.Adapter<TestReportViewHolder
 
     @Override
     public void onBindViewHolder(TestReportViewHolder holder, int position) {
-        holder.date.setText(testReports.get(position).getDate());
+        SimpleDateFormat formatBulan = new SimpleDateFormat("dd - MM - yyyy", Locale.getDefault());
+        SimpleDateFormat formatTahun = new SimpleDateFormat("MMMM yyyy", Locale.getDefault());
+        switch (testReports.get(position).getType()) {
+            case ItemTestReport.TYPE_TRUCKING_LOSS :
+                holder.date.setText(formatTahun.format(testReports.get(position).getDate()));
+                break;
+            case ItemTestReport.TYPE_TEST_REPORT:
+                holder.date.setText(formatBulan.format(testReports.get(position).getDate()));
+                break;
+        }
     }
 
     @Override
