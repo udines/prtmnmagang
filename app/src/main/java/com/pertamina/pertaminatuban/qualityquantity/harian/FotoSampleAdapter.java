@@ -10,7 +10,9 @@ import com.bumptech.glide.Glide;
 import com.pertamina.pertaminatuban.R;
 import com.pertamina.pertaminatuban.qualityquantity.models.ItemFotoSample;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 
 public class FotoSampleAdapter extends RecyclerView.Adapter<FotoSampleViewHolder> {
@@ -31,7 +33,8 @@ public class FotoSampleAdapter extends RecyclerView.Adapter<FotoSampleViewHolder
 
     @Override
     public void onBindViewHolder(FotoSampleViewHolder holder, int position) {
-        holder.date.setText(fotoSamples.get(position).getDate().toString());
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        holder.date.setText(format.format(fotoSamples.get(position).getDate()));
         holder.info.setText(fotoSamples.get(position).getInfo());
         Glide.with(context)
                 .load(fotoSamples.get(position).getUrl())
