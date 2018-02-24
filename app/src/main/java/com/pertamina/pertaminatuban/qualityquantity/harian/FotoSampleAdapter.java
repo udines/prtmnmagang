@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.pertamina.pertaminatuban.R;
+import com.pertamina.pertaminatuban.qualityquantity.models.ItemFotoSample;
 
 import java.util.ArrayList;
 
@@ -30,7 +31,7 @@ public class FotoSampleAdapter extends RecyclerView.Adapter<FotoSampleViewHolder
 
     @Override
     public void onBindViewHolder(FotoSampleViewHolder holder, int position) {
-        holder.date.setText(fotoSamples.get(position).getDate());
+        holder.date.setText(fotoSamples.get(position).getDate().toString());
         holder.info.setText(fotoSamples.get(position).getInfo());
         Glide.with(context)
                 .load(fotoSamples.get(position).getUrl())

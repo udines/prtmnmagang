@@ -1,21 +1,43 @@
 package com.pertamina.pertaminatuban.qualityquantity.harian;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.pertamina.pertaminatuban.R;
+import com.pertamina.pertaminatuban.qualityquantity.bulanan.WorkingLossActivity;
+import com.pertamina.pertaminatuban.qualityquantity.models.ItemFotoSample;
+import com.pertamina.pertaminatuban.service.QqClient;
+import com.whiteelephant.monthpicker.MonthPickerDialog;
 
+import java.io.IOException;
+import java.text.DateFormatSymbols;
 import java.util.ArrayList;
+import java.util.Calendar;
+
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class FotoSampleActivity extends AppCompatActivity {
+
+    private TextView bulan;
+    private int year, month, day;
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +52,51 @@ public class FotoSampleActivity extends AppCompatActivity {
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        displayFoto();
+
+        bulan = findViewById(R.id.foto_sampel_bulan);
+        recyclerView = findViewById(R.id.foto_sample_recyclerview);
+
+        Calendar cal = Calendar.getInstance();
+        year = cal.get(Calendar.YEAR);
+        month = cal.get(Calendar.MONTH);
+        day = cal.get(Calendar.DAY_OF_MONTH);
+        setMonthButton(month, year);
+
+        updateUi(year, month);
+        handleDateButton();
         handleUploadButton();
+    }
+
+    private void handleDateButton() {
+        bulan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar today = Calendar.getInstance();
+
+                MonthPickerDialog.Builder builder = new MonthPickerDialog.Builder(
+                        FotoSampleActivity.this,
+                        new MonthPickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(int selectedMonth, int selectedYear) {
+                                month = selectedMonth;
+                                year = selectedYear;
+                                setMonthButton(month, year);
+                                updateUi(year, month);
+                            }
+                        },
+                        today.get(Calendar.YEAR),
+                        today.get(Calendar.MONTH)
+                );
+
+                builder.setMinYear(1970)
+                        .setMaxYear(today.get(Calendar.YEAR))
+                        .setTitle("Pilih bulan dan tahun")
+                        .setActivatedMonth(month)
+                        .setActivatedYear(year)
+                        .build()
+                        .show();
+            }
+        });
     }
 
     private void handleUploadButton() {
@@ -46,38 +111,71 @@ public class FotoSampleActivity extends AppCompatActivity {
         });
     }
 
-    private void displayFoto() {
-        ArrayList<ItemFotoSample> fotoSamples = new ArrayList<>();
-        fotoSamples.add(new ItemFotoSample(
-                "https://firebasestorage.googleapis.com/v0/b/click-tuban.appspot.com/o/Foto%20Sample%20Gate%20Out%2012%20Feb%202018.jpg?alt=media&token=c613f78f-69f3-44c5-a4f9-e28c15354849",
-                "Berikut kami sampaikan hasil sample GO Minggu, 11 Feb 2018 pukul 05.00 WIB =\n" +
-                        "P = 709/27/719.9\n" +
-                        "Pt = 731/27/741.7\n" +
-                        "Px = 749/28/760.4\n" +
-                        "BS = 841/28/850.0 FP = 65",
-                "11 - 02 - 2018"
-        ));
-        fotoSamples.add(new ItemFotoSample(
-                "https://firebasestorage.googleapis.com/v0/b/click-tuban.appspot.com/o/Foto%20Sample%20Gate%20Out%2012%20Feb%202018.jpg?alt=media&token=c613f78f-69f3-44c5-a4f9-e28c15354849",
-                "Berikut kami sampaikan hasil sample GO Minggu, 11 Feb 2018 pukul 05.00 WIB =\n" +
-                        "P = 709/27/719.9\n" +
-                        "Pt = 731/27/741.7\n" +
-                        "Px = 749/28/760.4\n" +
-                        "BS = 841/28/850.0 FP = 65",
-                "10 - 02 - 2018"
-        ));
-        fotoSamples.add(new ItemFotoSample(
-                "https://firebasestorage.googleapis.com/v0/b/click-tuban.appspot.com/o/Foto%20Sample%20Gate%20Out%2012%20Feb%202018.jpg?alt=media&token=c613f78f-69f3-44c5-a4f9-e28c15354849",
-                "Berikut kami sampaikan hasil sample GO Minggu, 11 Feb 2018 pukul 05.00 WIB =\n" +
-                        "P = 709/27/719.9\n" +
-                        "Pt = 731/27/741.7\n" +
-                        "Px = 749/28/760.4\n" +
-                        "BS = 841/28/850.0 FP = 65",
-                "09 - 02 - 2018"
-        ));
-        RecyclerView recyclerView = findViewById(R.id.foto_sample_recyclerview);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        recyclerView.setAdapter(new FotoSampleAdapter(fotoSamples, getApplicationContext()));
+    private void setMonthButton(int month, int year) {
+        DateFormatSymbols symbols = new DateFormatSymbols();
+        String text = symbols.getMonths()[month] + " " + String.valueOf(year);
+        bulan.setText(text);
+    }
+
+    private void updateUi(int year, int month) {
+        SharedPreferences preferences = FotoSampleActivity.this.getSharedPreferences(
+                "login",
+                Context.MODE_PRIVATE
+        );
+        final String key = preferences.getString("userKey", "none");
+
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(new Interceptor() {
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request original = chain.request();
+
+                Request request = original.newBuilder()
+                        .header("Authorization", key)
+                        .method(original.method(), original.body())
+                        .build();
+                return chain.proceed(request);
+            }
+        });
+
+        OkHttpClient client = httpClient.build();
+
+        Log.w("GET ", "start getting matbal bulan " + bulan);
+        String baseUrl = "http://www.api.clicktuban.com/";
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client);
+
+        Retrofit retrofit = builder.build();
+        QqClient qqClient = retrofit.create(QqClient.class);
+
+        Call<ArrayList<ItemFotoSample>> call = qqClient.getFotoSampleBulan(
+                String.valueOf(year),
+                String.valueOf(month + 1)
+        );
+        call.enqueue(new Callback<ArrayList<ItemFotoSample>>() {
+            @Override
+            public void onResponse(Call<ArrayList<ItemFotoSample>> call, Response<ArrayList<ItemFotoSample>> response) {
+                Log.w("code", String.valueOf(response.code()));
+                if (response.code() == 200) {
+                    Log.w("size", String.valueOf(response.body().size()));
+                    ArrayList<ItemFotoSample> fotoSamples = response.body();
+                    if (fotoSamples != null) {
+                        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                        recyclerView.setAdapter(new FotoSampleAdapter(
+                                fotoSamples,
+                                getApplicationContext()
+                        ));
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<ItemFotoSample>> call, Throwable t) {
+
+            }
+        });
     }
 
 }
