@@ -1,4 +1,4 @@
-package com.pertamina.pertaminatuban.qualityquantity.harian;
+package com.pertamina.pertaminatuban.qualityquantity.models;
 
 public class ItemTestReport {
     private String id;

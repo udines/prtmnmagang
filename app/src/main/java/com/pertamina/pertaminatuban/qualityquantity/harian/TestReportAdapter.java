@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import com.pertamina.pertaminatuban.R;
 import com.pertamina.pertaminatuban.qualityquantity.DisplayPdfActivity;
+import com.pertamina.pertaminatuban.qualityquantity.models.ItemTestReport;
 
 import java.util.ArrayList;
 
