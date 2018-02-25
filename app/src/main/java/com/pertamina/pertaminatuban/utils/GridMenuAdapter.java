@@ -10,9 +10,7 @@ import android.view.ViewGroup;
 
 import com.pertamina.pertaminatuban.R;
 import com.pertamina.pertaminatuban.distribusi.DistribusiActivity;
-import com.pertamina.pertaminatuban.finance.FinanceActivity;
-import com.pertamina.pertaminatuban.finance.PerjalananDinasActivity;
-import com.pertamina.pertaminatuban.marine.MarineActivity;
+import com.pertamina.pertaminatuban.finance.perjalanan_dinas.PerjalananDinasActivity;
 import com.pertamina.pertaminatuban.marine.NewMarineActivity;
 import com.pertamina.pertaminatuban.models.MenuViewModel;
 import com.pertamina.pertaminatuban.qualityquantity.QQActivity;

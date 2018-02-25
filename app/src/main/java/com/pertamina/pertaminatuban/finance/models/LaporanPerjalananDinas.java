@@ -1,4 +1,4 @@
-package com.pertamina.pertaminatuban.finance;
+package com.pertamina.pertaminatuban.finance.models;
 
 import java.sql.Timestamp;
 

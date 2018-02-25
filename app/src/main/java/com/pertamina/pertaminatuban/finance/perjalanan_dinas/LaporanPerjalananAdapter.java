@@ -1,4 +1,4 @@
-package com.pertamina.pertaminatuban.finance;
+package com.pertamina.pertaminatuban.finance.perjalanan_dinas;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.pertamina.pertaminatuban.R;
+import com.pertamina.pertaminatuban.finance.models.LaporanPerjalananDinas;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
