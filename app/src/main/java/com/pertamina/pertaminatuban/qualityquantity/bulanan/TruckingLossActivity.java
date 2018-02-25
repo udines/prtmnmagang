@@ -1,6 +1,7 @@
 package com.pertamina.pertaminatuban.qualityquantity.bulanan;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,9 +10,11 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.pertamina.pertaminatuban.R;
+import com.pertamina.pertaminatuban.qualityquantity.UploadFileActivity;
 import com.pertamina.pertaminatuban.qualityquantity.harian.TestReportAdapter;
 import com.pertamina.pertaminatuban.qualityquantity.models.ItemTestReport;
 import com.pertamina.pertaminatuban.service.QqClient;
@@ -35,6 +38,7 @@ public class TruckingLossActivity extends AppCompatActivity {
     private TextView tahun;
     private RecyclerView recyclerView;
     private int year;
+    private Button upload;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +56,7 @@ public class TruckingLossActivity extends AppCompatActivity {
 
         tahun = findViewById(R.id.trucking_loss_tahun);
         recyclerView = findViewById(R.id.trucking_loss_recyclerview);
+        upload = findViewById(R.id.trucking_loss_upload_button);
 
         Calendar cal = Calendar.getInstance();
         year = cal.get(Calendar.YEAR);
@@ -59,6 +64,19 @@ public class TruckingLossActivity extends AppCompatActivity {
 
         handleTahunButton();
         updateUi(year);
+        handleUploadButton();
+    }
+
+    private void handleUploadButton() {
+        upload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent uploadIntent = new Intent(getApplicationContext(), UploadFileActivity.class);
+                uploadIntent.putExtra("type", ItemTestReport.TYPE_TRUCKING_LOSS);
+                uploadIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(uploadIntent);
+            }
+        });
     }
 
     private void handleTahunButton() {

@@ -1,6 +1,7 @@
 package com.pertamina.pertaminatuban.qualityquantity.harian;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,9 +10,11 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.pertamina.pertaminatuban.R;
+import com.pertamina.pertaminatuban.qualityquantity.UploadFileActivity;
 import com.pertamina.pertaminatuban.qualityquantity.bulanan.TruckingLossActivity;
 import com.pertamina.pertaminatuban.qualityquantity.models.ItemTestReport;
 import com.pertamina.pertaminatuban.service.QqClient;
@@ -36,6 +39,7 @@ public class TestReportActivity extends AppCompatActivity {
     private TextView bulan;
     private RecyclerView recyclerView;
     private int year, month;
+    private Button upload;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +57,7 @@ public class TestReportActivity extends AppCompatActivity {
 
         bulan = findViewById(R.id.test_report_bulan);
         recyclerView = findViewById(R.id.test_report_recyclerview);
+        upload = findViewById(R.id.test_report_upload_button);
 
         Calendar cal = Calendar.getInstance();
         year = cal.get(Calendar.YEAR);
@@ -61,6 +66,19 @@ public class TestReportActivity extends AppCompatActivity {
 
         handleBulanButton();
         updateUi(month, year);
+        handleUploadButton();
+    }
+
+    private void handleUploadButton() {
+        upload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent uploadIntent = new Intent(getApplicationContext(), UploadFileActivity.class);
+                uploadIntent.putExtra("type", ItemTestReport.TYPE_TEST_REPORT);
+                uploadIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(uploadIntent);
+            }
+        });
     }
 
     private void handleBulanButton() {

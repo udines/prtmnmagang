@@ -36,4 +36,7 @@ public interface QqClient {
     Call<ArrayList<ItemTestReport>> getTestReportBulan(@Path("tahun") String tahun, @Path("bulan") String bulan);
     @GET("quality/truckingloss/{tahun}")
     Call<ArrayList<ItemTestReport>> getTruckingLossTahun(@Path("tahun") String tahun);
+    @Multipart
+    @POST("quality/truckingloss")
+    Call<Object> postFilePdf(@Part MultipartBody.Part file, @Part("type") RequestBody type, @Part("deskripsi") RequestBody deskripsi);
 }
