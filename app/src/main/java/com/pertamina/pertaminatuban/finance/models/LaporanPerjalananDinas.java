@@ -1,8 +1,11 @@
 package com.pertamina.pertaminatuban.finance.models;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.sql.Timestamp;
 
 public class LaporanPerjalananDinas {
+    private String id;
     private String nama;
     private String noPekerja;
     private String noPerjalanan;
