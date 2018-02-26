@@ -5,15 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.pertamina.pertaminatuban.finance.perjalanan_dinas.PerjalananDinasActivity"
-    tools:showIn="@layout/activity_perjalanan_dinas"
+    tools:context="com.pertamina.pertaminatuban.finance.perjalanan_dinas.UraianPerjalananActivity"
+    tools:showIn="@layout/activity_uraian_perjalanan"
     android:background="@color/grey_200">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/perjalanan_dinas_recycler"
+        android:id="@+id/uraian_perjalanan_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="6dp"
         android:clipToPadding="false" />
-
 </android.support.constraint.ConstraintLayout>

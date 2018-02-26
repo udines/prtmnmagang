@@ -439,7 +439,16 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".finance.perjalanan_dinas.UraianPerjalananActivity"
+            android:label="@string/title_activity_uraian_perjalanan"
+            android:parentActivityName=".finance.perjalanan_dinas.PerjalananDinasActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.pertamina.pertaminatuban.finance.perjalanan_dinas.PerjalananDinasActivity" />
+        </activity>
     </application>
 
 </manifest>

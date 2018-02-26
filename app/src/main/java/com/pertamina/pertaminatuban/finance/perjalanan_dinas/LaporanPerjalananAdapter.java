@@ -1,5 +1,6 @@
 package com.pertamina.pertaminatuban.finance.perjalanan_dinas;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +8,7 @@ import android.view.ViewGroup;
 
 import com.pertamina.pertaminatuban.R;
 import com.pertamina.pertaminatuban.finance.models.LaporanPerjalananDinas;
+import com.pertamina.pertaminatuban.finance.models.UraianPerjalanan;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -21,13 +23,16 @@ public class LaporanPerjalananAdapter extends RecyclerView.Adapter<LaporanPerjal
     }
 
     @Override
-    public LaporanPerjalananViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public LaporanPerjalananViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_laporan_perjalanan_dinas, parent, false);
         final LaporanPerjalananViewHolder holder = new LaporanPerjalananViewHolder(view);
         holder.card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(parent.getContext(), UraianPerjalananActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra(laporans.get(holder.getAdapterPosition()).getNoPekerja(), "noPekerja");
+                parent.getContext().startActivity(intent);
             }
         });
         return holder;
