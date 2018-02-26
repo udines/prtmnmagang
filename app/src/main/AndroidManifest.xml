@@ -417,7 +417,25 @@
         <activity
             android:name=".qualityquantity.UploadFileActivity"
             android:label="@string/title_activity_upload_file"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".finance.perjalanan_dinas.InputPerjalananDinasActivity"
+            android:label="@string/title_activity_input_perjalanan_dinas"
+            android:parentActivityName=".finance.perjalanan_dinas.PerjalananDinasActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.pertamina.pertaminatuban.finance.perjalanan_dinas.PerjalananDinasActivity" />
+        </activity>
+        <activity
+            android:name=".finance.perjalanan_dinas.InputRincianActivity"
+            android:label="@string/title_activity_input_rincian"
+            android:parentActivityName=".finance.perjalanan_dinas.InputPerjalananDinasActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.pertamina.pertaminatuban.finance.perjalanan_dinas.InputPerjalananDinasActivity" />
+        </activity>
     </application>
 
 </manifest>
