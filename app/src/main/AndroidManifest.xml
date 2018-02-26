@@ -449,6 +449,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.pertamina.pertaminatuban.finance.perjalanan_dinas.PerjalananDinasActivity" />
         </activity>
+        <activity
+            android:name=".finance.realisasi_anggaran.RealisasiAnggaranActivity"
+            android:label="@string/title_activity_realisasi_anggaran"
+            android:parentActivityName=".finance.FinanceActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.pertamina.pertaminatuban.finance.FinanceActivity" />
+        </activity>
     </application>
 
 </manifest>
