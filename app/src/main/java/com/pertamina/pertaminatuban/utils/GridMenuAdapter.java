@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.pertamina.pertaminatuban.R;
 import com.pertamina.pertaminatuban.distribusi.DistribusiActivity;
+import com.pertamina.pertaminatuban.finance.FinanceActivity;
 import com.pertamina.pertaminatuban.finance.perjalanan_dinas.PerjalananDinasActivity;
 import com.pertamina.pertaminatuban.marine.NewMarineActivity;
 import com.pertamina.pertaminatuban.models.MenuViewModel;
@@ -66,7 +67,7 @@ public class GridMenuAdapter extends RecyclerView.Adapter<GridMenuViewHolder> {
                         holder.context.startActivity(qqIntent);
                         break;
                     case 3:
-                        Intent keuanganIntent = new Intent(holder.context, PerjalananDinasActivity.class);
+                        Intent keuanganIntent = new Intent(holder.context, FinanceActivity.class);
                         keuanganIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         holder.context.startActivity(keuanganIntent);
                         break;

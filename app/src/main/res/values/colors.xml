@@ -10,4 +10,7 @@
     <color name="grey_200">#eeeeee</color>
     <color name="red_800">#C62828</color>
     <color name="green_800">#2E7D32</color>
+    <color name="blue_pertamina">#175e9c</color>
+    <color name="red_pertamina">#e43134</color>
+    <color name="green_pertamina">#a9be33</color>
 </resources>
