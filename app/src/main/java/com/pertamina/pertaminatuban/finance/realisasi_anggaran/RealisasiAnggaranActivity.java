@@ -11,16 +11,20 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.pertamina.pertaminatuban.R;
 import com.pertamina.pertaminatuban.distribusi.MatbalActivity;
+import com.pertamina.pertaminatuban.finance.costperliter.CostPerLiterActivity;
 import com.pertamina.pertaminatuban.finance.models.PostRealisasiAnggaran;
 import com.pertamina.pertaminatuban.finance.models.RealisasiAnggaran;
 import com.pertamina.pertaminatuban.service.FinanceClient;
+import com.whiteelephant.monthpicker.MonthPickerDialog;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -34,6 +38,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RealisasiAnggaranActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
+    private int year;
+    private TextView tahun;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,11 +57,51 @@ public class RealisasiAnggaranActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.realisasi_anggaran_recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        tahun = findViewById(R.id.realisasi_anggaran_tahun);
 
-        getRealisasiAnggaran();
+        Calendar cal = Calendar.getInstance();
+        year = cal.get(Calendar.YEAR);
+        setTahunButton(year);
+
+        getRealisasiAnggaran(year);
+        handleTahunButton();
     }
 
-    private void getRealisasiAnggaran() {
+    private void handleTahunButton() {
+        tahun.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar today = Calendar.getInstance();
+
+                MonthPickerDialog.Builder builder = new MonthPickerDialog.Builder(
+                        RealisasiAnggaranActivity.this,
+                        new MonthPickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(int selectedMonth, int selectedYear) {
+                                year = selectedYear;
+                                setTahunButton(year);
+                                getRealisasiAnggaran(year);
+                            }
+                        },
+                        today.get(Calendar.YEAR),
+                        today.get(Calendar.MONTH)
+                );
+
+                builder.setMinYear(1970)
+                        .setMaxYear(today.get(Calendar.YEAR))
+                        .showYearOnly()
+                        .setActivatedYear(year)
+                        .build()
+                        .show();
+            }
+        });
+    }
+
+    private void setTahunButton(int year) {
+        tahun.setText(String.valueOf(year));
+    }
+
+    private void getRealisasiAnggaran(int year) {
         SharedPreferences preferences = RealisasiAnggaranActivity.this.getSharedPreferences(
                 "login",
                 Context.MODE_PRIVATE
@@ -88,7 +134,7 @@ public class RealisasiAnggaranActivity extends AppCompatActivity {
         FinanceClient financeClient = retrofit.create(FinanceClient.class);
 
         Call<ArrayList<RealisasiAnggaran>> call = financeClient.getRealisasiAnggaran(
-                new PostRealisasiAnggaran("A0903880","Terminal BBM Tuban")
+                String.valueOf(year)
         );
         Log.w("event","start enqueue");
         call.enqueue(new Callback<ArrayList<RealisasiAnggaran>>() {
