@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.pertamina.pertaminatuban.marine.NewMarineActivity"
-    tools:showIn="@layout/activity_new_marine">
+    tools:showIn="@layout/activity_new_marine"
+    android:background="@color/grey_200">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/new_marine_recyclerview"

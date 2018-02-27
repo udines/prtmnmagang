@@ -10,8 +10,11 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -73,6 +76,32 @@ public class PortChargesActivity extends AppCompatActivity {
 
         handleDateButton();
         handleInputButton();
+        handleSpinner();
+    }
+
+    private void handleSpinner() {
+        final Spinner spinner = findViewById(R.id.port_charges_no_bill_spinner);
+
+        ArrayList<String> noBill = getIntent().getStringArrayListExtra("noBill");
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                this, android.R.layout.simple_spinner_item, noBill
+        );
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                int index = adapterView.getSelectedItemPosition();
+                ((TextView) spinner.getSelectedView()).setTextColor(getResources().getColor(R.color.white));
+
+                //update ui sesuai dengan no bill
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
 
     private void setDateButton(int month, int year) {
