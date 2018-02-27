@@ -362,4 +362,5 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_uraian_perjalanan">Uraian Perjalanan Dinas</string>
     <string name="title_activity_realisasi_anggaran">Realisasi Anggaran</string>
+    <string name="title_activity_cost_per_liter">Cost Per Liter</string>
 </resources>

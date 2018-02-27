@@ -59,6 +59,7 @@
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
+        android:id="@+id/finance_menu_cost_per_liter"
         android:layout_width="match_parent"
         android:layout_margin="6dp"
         android:layout_height="wrap_content">
@@ -71,7 +72,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Hmm"
+                android:text="Cost Per Liter"
                 android:textColor="@color/white"
                 android:textSize="18sp"/>
             <ImageView

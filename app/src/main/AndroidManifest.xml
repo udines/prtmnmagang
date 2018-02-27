@@ -458,6 +458,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.pertamina.pertaminatuban.finance.FinanceActivity" />
         </activity>
+        <activity
+            android:name=".finance.costperliter.CostPerLiterActivity"
+            android:label="@string/title_activity_cost_per_liter"
+            android:parentActivityName=".finance.FinanceActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.pertamina.pertaminatuban.finance.FinanceActivity" />
+        </activity>
     </application>
 
 </manifest>

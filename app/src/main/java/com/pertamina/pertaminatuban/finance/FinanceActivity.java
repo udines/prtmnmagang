@@ -10,12 +10,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.pertamina.pertaminatuban.R;
+import com.pertamina.pertaminatuban.finance.costperliter.CostPerLiterActivity;
 import com.pertamina.pertaminatuban.finance.perjalanan_dinas.PerjalananDinasActivity;
 import com.pertamina.pertaminatuban.finance.realisasi_anggaran.RealisasiAnggaranActivity;
 
 public class FinanceActivity extends AppCompatActivity {
 
-    private CardView realisasiAnggaran, perjalananDinas;
+    private CardView realisasiAnggaran, perjalananDinas, costPerLiter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +34,7 @@ public class FinanceActivity extends AppCompatActivity {
 
         realisasiAnggaran = findViewById(R.id.finance_menu_realisasi_anggaran);
         perjalananDinas = findViewById(R.id.finance_menu_laporan_perjalanan);
+        costPerLiter = findViewById(R.id.finance_menu_cost_per_liter);
 
         perjalananDinas.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,6 +48,14 @@ public class FinanceActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), RealisasiAnggaranActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+        });
+        costPerLiter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), CostPerLiterActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
