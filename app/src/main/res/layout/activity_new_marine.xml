@@ -21,7 +21,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:gravity="center_horizontal">
 
             <Spinner
                 android:id="@+id/new_marine_periode_spinner"
@@ -36,7 +37,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
                 android:gravity="center_vertical"
-                android:text="PERIODE: Maret 2017"
+                android:text="Maret 2017"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
                 android:textSize="16sp"
