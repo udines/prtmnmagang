@@ -37,6 +37,17 @@ public class RealisasiAnggaran {
     @Expose
     private double available;
 
+    public RealisasiAnggaran(String cost_center, String cost_group, String cost_elements, double actual, double commitment, double allotted, double plan, double available) {
+        this.cost_center = cost_center;
+        this.cost_group = cost_group;
+        this.cost_elements = cost_elements;
+        this.actual = actual;
+        this.commitment = commitment;
+        this.allotted = allotted;
+        this.plan = plan;
+        this.available = available;
+    }
+
     public String getCost_center() {
         return cost_center;
     }

@@ -12,4 +12,6 @@ import retrofit2.http.POST;
 public interface FinanceClient {
     @POST("financecsv/getData")
     Call<ArrayList<RealisasiAnggaran>> getRealisasiAnggaran(@Body PostRealisasiAnggaran post);
+    @POST("financecsv/getData")
+    Call<Object> getRealisasiAnggaranRaw(@Body PostRealisasiAnggaran post);
 }

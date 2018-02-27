@@ -11,6 +11,7 @@ import android.view.View;
 
 import com.pertamina.pertaminatuban.R;
 import com.pertamina.pertaminatuban.finance.perjalanan_dinas.PerjalananDinasActivity;
+import com.pertamina.pertaminatuban.finance.realisasi_anggaran.RealisasiAnggaranActivity;
 
 public class FinanceActivity extends AppCompatActivity {
 
@@ -37,6 +38,14 @@ public class FinanceActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), PerjalananDinasActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+        });
+        realisasiAnggaran.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), RealisasiAnggaranActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
