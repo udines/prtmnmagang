@@ -49,6 +49,16 @@
         <item>PLN</item>
         <item>Own User MT</item>
     </string-array>
+    <string-array name="jenis_claim_trip">
+        <item>Transport antar kota</item>
+        <item>Transport Bandara/stasiun/pelabuhan/Terminal</item>
+        <item>Akomodasi dan Laundry</item>
+        <item>Uang Makan Harian</item>
+        <item>Transport Lokal </item>
+        <item>Uang Harian</item>
+        <item>Tiket Pesawat</item>
+    </string-array>
+
     <string name="title_activity_info_umum">Informasi Umum</string>
     <string name="title_activity_post_info">Post Informasi</string>
     <string name="title_activity_marine">Marine</string>
@@ -363,4 +373,5 @@
     <string name="title_activity_uraian_perjalanan">Uraian Perjalanan Dinas</string>
     <string name="title_activity_realisasi_anggaran">Realisasi Anggaran</string>
     <string name="title_activity_cost_per_liter">Cost Per Liter</string>
+    <string name="title_activity_tambah_rincian">Tambah Rincian</string>
 </resources>

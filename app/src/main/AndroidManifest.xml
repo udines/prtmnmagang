@@ -467,6 +467,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.pertamina.pertaminatuban.finance.FinanceActivity" />
         </activity>
+        <activity
+            android:name=".finance.perjalanan_dinas.TambahRincianActivity"
+            android:label="@string/title_activity_tambah_rincian"
+            android:parentActivityName=".finance.perjalanan_dinas.InputRincianActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.pertamina.pertaminatuban.finance.perjalanan_dinas.InputRincianActivity" />
+        </activity>
     </application>
 
 </manifest>

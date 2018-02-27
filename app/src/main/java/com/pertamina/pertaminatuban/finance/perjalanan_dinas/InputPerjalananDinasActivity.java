@@ -1,6 +1,7 @@
 package com.pertamina.pertaminatuban.finance.perjalanan_dinas;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -106,6 +107,15 @@ public class InputPerjalananDinasActivity extends AppCompatActivity {
                         daySelesai
                 );
                 dialog.show();
+            }
+        });
+
+        buttonLanjut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), InputRincianActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
             }
         });
     }

@@ -1,8 +1,5 @@
 package com.pertamina.pertaminatuban.info_umum;
 
-import java.sql.Time;
-import java.sql.Timestamp;
-
 public class InfoUmum {
     private String judul;
     private String informasi;
