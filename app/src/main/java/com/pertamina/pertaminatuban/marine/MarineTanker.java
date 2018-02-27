@@ -1,13 +1,14 @@
 package com.pertamina.pertaminatuban.marine;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MarineTanker {
     private String call;
     private String vesselName;
-    private List<String> noBill;
+    private ArrayList<String> noBill;
 
-    public MarineTanker(String call, String vesselName, List<String> noBill) {
+    public MarineTanker(String call, String vesselName, ArrayList<String> noBill) {
         this.call = call;
         this.vesselName = vesselName;
         this.noBill = noBill;
@@ -21,7 +22,7 @@ public class MarineTanker {
         return vesselName;
     }
 
-    public List<String> getNoBill() {
+    public ArrayList<String> getNoBill() {
         return noBill;
     }
 }

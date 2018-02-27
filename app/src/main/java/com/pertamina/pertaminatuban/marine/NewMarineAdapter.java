@@ -32,6 +32,8 @@ public class NewMarineAdapter extends RecyclerView.Adapter<NewMarineViewHolder> 
             public void onClick(View view) {
                 Intent marineIntent = new Intent(parent.getContext(), MarineActivity.class);
                 marineIntent.putExtra("call", tankers.get(holder.getAdapterPosition()).getCall());
+                marineIntent.putExtra("vesselName", tankers.get(holder.getAdapterPosition()).getVesselName());
+                marineIntent.putStringArrayListExtra("noBill", tankers.get(holder.getAdapterPosition()).getNoBill());
                 parent.getContext().startActivity(marineIntent);
             }
         });

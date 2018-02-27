@@ -1,5 +1,7 @@
 package com.pertamina.pertaminatuban.models;
 
+import java.util.ArrayList;
+
 public class MenuViewModel {
     private String title;
 
@@ -7,6 +9,8 @@ public class MenuViewModel {
     * menggunakan tipe int agar mudah dalam mencari aset gambar
     * yang ada di folder drawable*/
     private int idDrawable;
+
+    private ArrayList<String> noBill;
 
     public MenuViewModel(String title, int idDrawable) {
         this.title = title;
@@ -19,5 +23,13 @@ public class MenuViewModel {
 
     public int getIdDrawable() {
         return idDrawable;
+    }
+
+    public ArrayList<String> getNoBill() {
+        return noBill;
+    }
+
+    public void setNoBill(ArrayList<String> noBill) {
+        this.noBill = noBill;
     }
 }

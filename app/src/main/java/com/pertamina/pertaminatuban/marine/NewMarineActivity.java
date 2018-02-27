@@ -65,6 +65,7 @@ public class NewMarineActivity extends AppCompatActivity {
         setBulanButton(month, year);
 
         handlePeriode();
+        displayDummy();
     }
 
     private void handlePeriode() {
@@ -148,7 +149,9 @@ public class NewMarineActivity extends AppCompatActivity {
     }
 
     private void populateData(ArrayList<InitialTanker> tankers) {
+        Log.w("posisi", "populateData");
         if (tankers.size() > 0) {
+            Log.w("tankers", "ada");
             ArrayList<String> listCall = new ArrayList<>();
             listCall.add(tankers.get(0).getCall());
             for (int k = 0; k < tankers.size(); k++) {
@@ -179,7 +182,7 @@ public class NewMarineActivity extends AppCompatActivity {
 
             ArrayList<MarineTanker> marineTankers= new ArrayList<>();
             for (int i = 0; i < kumpulanTankers.size(); i++) {
-                List<String> noBill = new ArrayList<>();
+                ArrayList<String> noBill = new ArrayList<>();
                 for (int j = 0; j < kumpulanTankers.get(i).size(); j++) {
                     noBill.add(kumpulanTankers.get(i).get(j).getNoBill());
                 }
@@ -193,6 +196,34 @@ public class NewMarineActivity extends AppCompatActivity {
             recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
             recyclerView.setAdapter(new NewMarineAdapter(marineTankers));
         }
+    }
+
+    private void displayDummy() {
+        Log.w("tankers", "tidak ada");
+        ArrayList<MarineTanker> hmm = new ArrayList<>();
+        ArrayList<String> noBL = new ArrayList<>();
+        noBL.add("ABCDEFGHIJ");
+        noBL.add("KLMNOPQRST");
+        noBL.add("UVWXYZABCD");
+
+        hmm.add(new MarineTanker(
+                "1",
+                "Sindang",
+                noBL
+        ));
+        hmm.add(new MarineTanker(
+                "2",
+                "John Caine",
+                noBL
+        ));
+        hmm.add(new MarineTanker(
+                "3",
+                "Titanic",
+                noBL
+        ));
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        recyclerView.setAdapter(new NewMarineAdapter(hmm));
     }
 
     private void setBulanButton(int month, int year) {
