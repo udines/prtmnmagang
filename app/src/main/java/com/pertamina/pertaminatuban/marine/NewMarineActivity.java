@@ -53,6 +53,12 @@ public class NewMarineActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         periodeBulan = findViewById(R.id.new_marine_bulan);
         periodeSpinner = findViewById(R.id.new_marine_periode_spinner);

@@ -30,11 +30,12 @@ import com.pertamina.pertaminatuban.R;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 
 public class InfoUmumActivity extends AppCompatActivity {
 
-    private DatabaseReference infoRef;
+    private com.google.firebase.database.Query infoRef;
     private ValueEventListener listener;
 
     @Override
@@ -57,7 +58,8 @@ public class InfoUmumActivity extends AppCompatActivity {
         final RecyclerView recyclerView = findViewById(R.id.info_recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
-        infoRef = FirebaseDatabase.getInstance().getReference("messages");
+        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("messages");
+        infoRef = dbRef.limitToLast(10);
         listener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -65,6 +67,7 @@ public class InfoUmumActivity extends AppCompatActivity {
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                     infos.add(dataSnapshot1.getValue(InfoUmum.class));
                 }
+                Collections.reverse(infos);
                 InfoUmumAdapter adapter = new InfoUmumAdapter(infos);
                 recyclerView.setAdapter(adapter);
             }

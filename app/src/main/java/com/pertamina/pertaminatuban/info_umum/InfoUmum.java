@@ -1,21 +1,24 @@
 package com.pertamina.pertaminatuban.info_umum;
 
+import java.sql.Time;
+import java.sql.Timestamp;
+
 public class InfoUmum {
     private String judul;
     private String informasi;
     private String deskripsi;
     private boolean isRead;
-    private String date;
+    private String time;
 
     public InfoUmum() {
     }
 
-    public InfoUmum(String judul, String informasi, String deskripsi, boolean isRead, String date) {
+    public InfoUmum(String judul, String informasi, String deskripsi, boolean isRead, String time) {
         this.judul = judul;
         this.informasi = informasi;
         this.deskripsi = deskripsi;
         this.isRead = isRead;
-        this.date = date;
+        this.time = time;
     }
 
     public String getJudul() {
@@ -50,11 +53,11 @@ public class InfoUmum {
         isRead = read;
     }
 
-    public String getDate() {
-        return date;
+    public String getTime() {
+        return time;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setTime(String time) {
+        this.time = time;
     }
 }
