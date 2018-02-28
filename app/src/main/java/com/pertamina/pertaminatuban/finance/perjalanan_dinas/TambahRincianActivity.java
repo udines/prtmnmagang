@@ -82,7 +82,7 @@ public class TambahRincianActivity extends AppCompatActivity {
 //                        getDataTransport();
                         break;
                     case 2:
-//                        getDataAkomodasi();
+                        getDataAkomodasi();
                         break;
                     case 3:
 //                        getDataMakanHarian();
@@ -100,6 +100,10 @@ public class TambahRincianActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void getDataAkomodasi() {
+        EditText inputKeterangan = findViewById(R.id.tambah_rincian_akomodasi_laundry_keterangan);
     }
 
     private void getDataAntarKota() {
@@ -184,6 +188,7 @@ public class TambahRincianActivity extends AppCompatActivity {
                     case 2:
                         clearContainer();
                         containerAkomodasiLaundry.setVisibility(View.VISIBLE);
+                        handleAkomodasiLaundry();
                         break;
                     case 3:
                         clearContainer();
@@ -213,6 +218,61 @@ public class TambahRincianActivity extends AppCompatActivity {
         });
     }
 
+    private void handleAkomodasiLaundry() {
+        final EditText inputAkomodasi = findViewById(R.id.tambah_rincian_akomodasi);
+        final EditText inputLaundry = findViewById(R.id.tambah_rincian_laundry);
+        inputAkomodasi.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                long totalLaundry = 0;
+                if (inputLaundry.getText().length() > 0) {{
+                    totalLaundry = Long.parseLong(inputLaundry.getText().toString());
+                }}
+                if (charSequence.length() > 0) {
+                    total = Long.parseLong(charSequence.toString()) + totalLaundry;
+                } else {
+                    total = totalLaundry;
+                }
+                updateTotal();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+        inputLaundry.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                long totalAkomodasi = 0;
+                if (inputAkomodasi.getText().length() > 0) {{
+                    totalAkomodasi = Long.parseLong(inputAkomodasi.getText().toString());
+                }}
+                if (charSequence.length() > 0) {
+                    total = Long.parseLong(charSequence.toString()) + totalAkomodasi;
+                } else {
+                    total = totalAkomodasi;
+                }
+                updateTotal();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+    }
+
     private void handleAntarKota() {
         final EditText inputJarak = findViewById(R.id.tambah_rincian_antar_kota_jarak);
         inputJarak.addTextChangedListener(new TextWatcher() {
@@ -224,7 +284,7 @@ public class TambahRincianActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (charSequence.length() > 0) {
-                    total = Long.parseLong(inputJarak.getText().toString()) * 2000;
+                    total = Long.parseLong(charSequence.toString()) * 2000;
                     if (total > 750000) {
                         total = 750000;
                     }

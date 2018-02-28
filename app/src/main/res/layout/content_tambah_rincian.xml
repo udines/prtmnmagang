@@ -139,6 +139,7 @@
                 android:layout_marginTop="4dp"
                 android:text="Akomodasi"/>
             <EditText
+                android:id="@+id/tambah_rincian_akomodasi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="number"
@@ -150,6 +151,7 @@
                 android:layout_marginTop="4dp"
                 android:text="Laundry"/>
             <EditText
+                android:id="@+id/tambah_rincian_laundry"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Nominal (Rp)"
@@ -161,6 +163,7 @@
                 android:layout_marginTop="4dp"
                 android:text="Keterangan"/>
             <EditText
+                android:id="@+id/tambah_rincian_akomodasi_laundry_keterangan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textCapSentences"/>
