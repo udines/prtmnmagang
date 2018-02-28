@@ -23,6 +23,7 @@
             android:layout_height="48dp" />
 
         <Button
+            android:id="@+id/tambah_rincian_button_tanggal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="tanggal"/>
@@ -39,13 +40,15 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <EditText
+                    android:id="@+id/tambah_rincian_antar_kota_jarak"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_weight="0.5"
                     android:hint="Jarak (km)"
                     android:inputType="number"
                     android:layout_height="wrap_content" />
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.5"
                     android:layout_height="wrap_content"
                     android:text="x Rp2,000"
                     android:textSize="18sp"
@@ -60,6 +63,7 @@
                 android:layout_marginTop="4dp"
                 android:text="Keterangan"/>
             <EditText
+                android:id="@+id/tambah_rincian_antar_kota_keterangan"
                 android:layout_width="match_parent"
                 android:inputType="textCapSentences"
                 android:layout_height="wrap_content" />
@@ -287,6 +291,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/tambah_rincian_total"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18sp"
@@ -294,6 +299,7 @@
             android:textColor="@color/black"
             android:text="Total: Rp450,000"/>
         <Button
+            android:id="@+id/tambah_rincian_button_tambahkan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Tambahkan"
