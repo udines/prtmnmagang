@@ -228,6 +228,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <EditText
+                    android:id="@+id/tambah_rincian_uang_harian_jml_hari"
                     android:layout_width="0dp"
                     android:layout_weight="0.5"
                     android:inputType="number"
@@ -241,6 +242,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"/>
                 <EditText
+                    android:id="@+id/tambah_rincian_uang_harian_nominal"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:inputType="number"
@@ -253,6 +255,7 @@
                 android:layout_marginTop="4dp"
                 android:text="Keterangan"/>
             <EditText
+                android:id="@+id/tambah_rincian_uang_harian_keterangan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textCapSentences"/>

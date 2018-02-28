@@ -93,7 +93,7 @@ public class TambahRincianActivity extends AppCompatActivity {
                     case 4:
                         break;
                     case 5:
-//                        getDataUangHarian();
+                        getDataUangHarian();
                         break;
                     case 6:
 //                        getDataTiketPesawat();
@@ -103,6 +103,10 @@ public class TambahRincianActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void getDataUangHarian() {
+        EditText inputKeterangan = findViewById(R.id.tambah_rincian_uang_harian_keterangan);
     }
 
     private void getDataMakanHarian() {
@@ -224,6 +228,7 @@ public class TambahRincianActivity extends AppCompatActivity {
                     case 5:
                         clearContainer();
                         containerUangHarian.setVisibility(View.VISIBLE);
+                        handleUangHarian();
                         break;
                     case 6:
                         clearContainer();
@@ -237,6 +242,58 @@ public class TambahRincianActivity extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+    }
+
+    private void handleUangHarian() {
+        final EditText inputJumlahHari, inputNominal;
+        inputJumlahHari = findViewById(R.id.tambah_rincian_uang_harian_jml_hari);
+        inputNominal = findViewById(R.id.tambah_rincian_uang_harian_nominal);
+        inputJumlahHari.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                int jumlahHari;
+                if (charSequence.length() > 0) {
+                    jumlahHari = Integer.parseInt(charSequence.toString());
+                    if (inputNominal.getText().length() > 0) {
+                        total = jumlahHari * Long.parseLong(inputNominal.getText().toString());
+                    }
+                }
+                updateTotal();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+        inputNominal.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                int nominal;
+                if (charSequence.length() > 0) {
+                    nominal = Integer.parseInt(charSequence.toString());
+                    if (inputJumlahHari.getText().length() > 0) {
+                        total = nominal * Long.parseLong(inputJumlahHari.getText().toString());
+                    }
+                }
+                updateTotal();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
 
             }
         });
