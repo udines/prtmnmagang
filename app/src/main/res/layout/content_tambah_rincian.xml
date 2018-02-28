@@ -22,29 +22,284 @@
             android:layout_width="wrap_content"
             android:layout_height="48dp" />
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="tanggal"/>
+
         <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/tambah_rincian_container_antar_kota"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:hint="Jarak (km)"
+                    android:inputType="number"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="x Rp2,000"
+                    android:textSize="18sp"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="4dp"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Keterangan"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:inputType="textCapSentences"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/tambah_rincian_container_transport"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_marginTop="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Provinsi"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Kota"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="48dp" />
+                <Spinner
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="48dp" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_height="wrap_content"
+                android:text="Dari/Ke"/>
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="48dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Keterangan"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textCapSentences"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/tambah_rincian_container_akomodasi_laundry"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Dari"/>
-            <AutoCompleteTextView
-                android:id="@+id/tambah_rincian_antar_kota_dari"
+                android:layout_marginTop="4dp"
+                android:text="Akomodasi"/>
+            <EditText
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:hint="Nominal (Rp)"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Ke"/>
-            <AutoCompleteTextView
-                android:id="@+id/tambah_rincian_antar_kota_ke"
+                android:layout_marginTop="4dp"
+                android:text="Laundry"/>
+            <EditText
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:hint="Nominal (Rp)"
+                android:inputType="number"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Keterangan"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textCapSentences"/>
         </LinearLayout>
+
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/tambah_rincian_container_tiket_pesawat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:hint="Jml Tiket"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="x"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:textColor="@color/black"/>
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:hint="Harga Tiket"/>
+            </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Keterangan"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textCapSentences"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/tambah_rincian_container_uang_harian"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Uang Harian" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_weight="0.5"
+                    android:inputType="number"
+                    android:layout_height="wrap_content"
+                    android:hint="Jml Hari"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="x"
+                    android:textColor="@color/black"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"/>
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:inputType="number"
+                    android:layout_height="wrap_content"
+                    android:hint="Nominal"/>
+            </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Keterangan"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textCapSentences"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/tambah_rincian_container_uang_makan_harian"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Uang Makan Harian" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <CheckBox
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Pagi"/>
+                <CheckBox
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Siang"/>
+                <CheckBox
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Malam"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_marginTop="4dp"
+            android:textColor="@color/black"
+            android:text="Total: Rp450,000"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tambahkan"
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="4dp"
+            style="@style/Base.Widget.AppCompat.Button.Colored"/>
     </LinearLayout>
 
 </ScrollView>
