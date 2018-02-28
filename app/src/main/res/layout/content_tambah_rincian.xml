@@ -276,16 +276,19 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <CheckBox
+                    android:id="@+id/tambah_rincian_uang_makan_checkbox_pagi"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:text="Pagi"/>
                 <CheckBox
+                    android:id="@+id/tambah_rincian_uang_makan_checkbox_siang"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:text="Siang"/>
                 <CheckBox
+                    android:id="@+id/tambah_rincian_uang_makan_checkbox_malam"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"

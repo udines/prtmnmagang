@@ -8,11 +8,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -85,7 +88,7 @@ public class TambahRincianActivity extends AppCompatActivity {
                         getDataAkomodasi();
                         break;
                     case 3:
-//                        getDataMakanHarian();
+                        getDataMakanHarian();
                         break;
                     case 4:
                         break;
@@ -100,6 +103,26 @@ public class TambahRincianActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void getDataMakanHarian() {
+        CheckBox pagi, siang, malam;
+        pagi = findViewById(R.id.tambah_rincian_uang_makan_checkbox_pagi);
+        siang = findViewById(R.id.tambah_rincian_uang_makan_checkbox_siang);
+        malam = findViewById(R.id.tambah_rincian_uang_makan_checkbox_malam);
+
+        String keterangan = "";
+        if (pagi.isChecked()) {
+            keterangan = keterangan + "pagi ";
+        }
+        if (siang.isChecked()) {
+            keterangan = keterangan + "siang ";
+        }
+        if (malam.isChecked()) {
+            keterangan = keterangan + "malam ";
+        }
+
+        Log.w("keterangan", keterangan);
     }
 
     private void getDataAkomodasi() {
@@ -193,6 +216,7 @@ public class TambahRincianActivity extends AppCompatActivity {
                     case 3:
                         clearContainer();
                         containerUangMakan.setVisibility(View.VISIBLE);
+                        handleUangMakan();
                         break;
                     case 4:
                         clearContainer();
@@ -214,6 +238,48 @@ public class TambahRincianActivity extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
 
+            }
+        });
+    }
+
+    private void handleUangMakan() {
+        CheckBox pagi, siang, malam;
+        pagi = findViewById(R.id.tambah_rincian_uang_makan_checkbox_pagi);
+        siang = findViewById(R.id.tambah_rincian_uang_makan_checkbox_siang);
+        malam = findViewById(R.id.tambah_rincian_uang_makan_checkbox_malam);
+        final long biayaMakan = 75000;
+
+        pagi.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    total = total + biayaMakan;
+                } else {
+                    total = total - biayaMakan;
+                }
+                updateTotal();
+            }
+        });
+        siang.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    total = total + biayaMakan;
+                } else {
+                    total = total - biayaMakan;
+                }
+                updateTotal();
+            }
+        });
+        malam.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    total = total + biayaMakan;
+                } else {
+                    total = total - biayaMakan;
+                }
+                updateTotal();
             }
         });
     }
