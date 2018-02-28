@@ -225,6 +225,7 @@ public class TambahRincianActivity extends AppCompatActivity {
                     case 4:
                         clearContainer();
                         break;
+
                     case 5:
                         clearContainer();
                         containerUangHarian.setVisibility(View.VISIBLE);
@@ -233,6 +234,7 @@ public class TambahRincianActivity extends AppCompatActivity {
                     case 6:
                         clearContainer();
                         containerTiketPesawat.setVisibility(View.VISIBLE);
+                        handleTiketPesawat();
                         break;
                     case 7:
                         clearContainer();
@@ -242,6 +244,59 @@ public class TambahRincianActivity extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+    }
+
+    private void handleTiketPesawat() {
+        final EditText inputJumlahTiket, inputHargaTiket;
+        inputJumlahTiket = findViewById(R.id.tambah_rincian_tiket_pesawat_jumlah);
+        inputHargaTiket = findViewById(R.id.tambah_rincian_tiket_pesawat_harga);
+        inputJumlahTiket.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                int jumlahTiket;
+                if (charSequence.length() > 0) {
+                    jumlahTiket = Integer.parseInt(charSequence.toString());
+                    if (inputHargaTiket.getText().length() > 0) {
+                        total = jumlahTiket * Long.parseLong(inputHargaTiket.getText().toString());
+                    }
+                }
+                updateTotal();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        inputHargaTiket.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                int hargaTiket;
+                if (charSequence.length() > 0) {
+                    hargaTiket = Integer.parseInt(charSequence.toString());
+                    if (inputJumlahTiket.getText().length() > 0) {
+                        total = hargaTiket * Long.parseLong(inputJumlahTiket.getText().toString());
+                    }
+                }
+                updateTotal();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
 
             }
         });
