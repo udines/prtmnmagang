@@ -1,60 +1,40 @@
 package com.pertamina.pertaminatuban.models;
 
 public class Featured {
-    private String id;
-    private String imageUrl;
-    private String title;
-    private long timestamp;
-    private String content;
+    private String judul;
+    private String informasi;
+    private String deskripsi;
 
     public Featured() {
     }
 
-    public Featured(String id, String imageUrl, String title, long timestamp, String content) {
-        this.id = id;
-        this.imageUrl = imageUrl;
-        this.title = title;
-        this.timestamp = timestamp;
-        this.content = content;
+    public Featured(String judul, String informasi, String deskripsi) {
+        this.judul = judul;
+        this.informasi = informasi;
+        this.deskripsi = deskripsi;
     }
 
-    public long getTimestamp() {
-        return timestamp;
+    public String getJudul() {
+        return judul;
     }
 
-    public void setTimestamp(long timestamp) {
-        this.timestamp = timestamp;
+    public void setJudul(String judul) {
+        this.judul = judul;
     }
 
-    public String getId() {
-        return id;
+    public String getInformasi() {
+        return informasi;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setInformasi(String informasi) {
+        this.informasi = informasi;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getDeskripsi() {
+        return deskripsi;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
+    public void setDeskripsi(String deskripsi) {
+        this.deskripsi = deskripsi;
     }
 }

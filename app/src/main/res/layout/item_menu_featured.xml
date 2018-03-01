@@ -13,10 +13,47 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintDimensionRatio="H, 16:9">
-        <ImageView
-            android:id="@+id/item_menu_featured_image"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop" />
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/item_menu_featured_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:background="#85ffffff"
+                android:padding="16dp">
+                <TextView
+                    android:id="@+id/item_menu_featured_judul"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Judul"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black" />
+                <TextView
+                    android:id="@+id/item_menu_featured_informasi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:textSize="18sp"
+                    android:text="Informasi"
+                    android:fontFamily="sans-serif-medium"
+                    android:textColor="@color/black"/>
+                <TextView
+                    android:id="@+id/item_menu_featured_deskripsi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:lineSpacingMultiplier="1.2"
+                    android:text=""/>
+            </LinearLayout>
+        </FrameLayout>
     </android.support.v7.widget.CardView>
 </android.support.constraint.ConstraintLayout>

@@ -14,6 +14,7 @@ import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,11 +33,13 @@ import com.pertamina.pertaminatuban.R;
 import com.pertamina.pertaminatuban.info_umum.InfoUmum;
 import com.pertamina.pertaminatuban.info_umum.InfoUmumActivity;
 import com.pertamina.pertaminatuban.models.Featured;
+import com.pertamina.pertaminatuban.models.ImageUrl;
 import com.pertamina.pertaminatuban.models.MenuViewModel;
 import com.pertamina.pertaminatuban.utils.FeaturedAdapter;
 import com.pertamina.pertaminatuban.utils.GridMenuAdapter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /*Tujuan activity ini adalah menampilkan menu kepada pengguna agar pengguna
@@ -46,7 +49,13 @@ public class MenuActivity extends AppCompatActivity {
     private NestedScrollView scrollView;
     private DatabaseReference infoRef;
     private ValueEventListener listener;
+    private ValueEventListener urlListener;
     private com.google.firebase.database.Query query;
+    private com.google.firebase.database.Query urlquery;
+    private ArrayList<Featured> featureds;
+    private ArrayList<ImageUrl> urls;
+    private DatabaseReference urlRef;
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,13 +67,14 @@ public class MenuActivity extends AppCompatActivity {
         scrollView = findViewById(R.id.menu_nestedscrollview);
 
         /*menampilkan featured image*/
-//        populateFeatured();
+        populateFeatured();
+        getImageUrl();
 
         /*membuat daftar menu dengan judul beserta id gambarnya*/
         populateMenu();
 
         /*handle info card*/
-        handleInfoCard();
+//        handleInfoCard();
     }
 
     private void handleInfoCard() {
@@ -102,11 +112,39 @@ public class MenuActivity extends AppCompatActivity {
         };
     }
 
+    private void getImageUrl() {
+        Log.w("menu", "getting image urls");
+        urlRef = FirebaseDatabase.getInstance().getReference("sliderimages");
+        urlquery = urlRef.limitToLast(3);
+        urlListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                urls = new ArrayList<>();
+                for (DataSnapshot dataSnapshot1: dataSnapshot.getChildren()) {
+                    urls.add(dataSnapshot1.getValue(ImageUrl.class));
+                }
+                Log.w("url size", String.valueOf(urls.size()));
+                if (featureds != null && urls != null) {
+                    displayFeatured(featureds, urls);
+                }
+                for (int i = 0; i < urls.size(); i++) {
+                    Log.w("url", urls.get(i).getUrl());
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e("menu", databaseError.getMessage());
+            }
+        };
+    }
+
+    private void displayFeatured(ArrayList<Featured> featureds, ArrayList<ImageUrl> urls) {
+        recyclerView.setAdapter(new FeaturedAdapter(featureds, getApplicationContext(), urls));
+    }
+
     private void populateFeatured() {
-        final RecyclerView recyclerView = findViewById(R.id.menu_recyclerview_featured);
-        final ConstraintLayout progress = findViewById(R.id.menu_featured_progress);
-        progress.setVisibility(View.VISIBLE);
-        recyclerView.setVisibility(View.GONE);
+        recyclerView = findViewById(R.id.menu_recyclerview_featured);
         recyclerView.setOnFlingListener(null);
         SnapHelper helper = new LinearSnapHelper();
         helper.attachToRecyclerView(recyclerView);
@@ -117,7 +155,28 @@ public class MenuActivity extends AppCompatActivity {
                 false
         ));
 
-        FirebaseFirestore.getInstance()
+        infoRef = FirebaseDatabase.getInstance().getReference("messages");
+        query = infoRef.orderByChild("date").limitToLast(3);
+        listener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                featureds = new ArrayList<>();
+                for (DataSnapshot dataSnapshot1: dataSnapshot.getChildren()) {
+                    featureds.add(dataSnapshot1.getValue(Featured.class));
+                }
+                Collections.reverse(featureds);
+                if (featureds != null && urls != null) {
+                    displayFeatured(featureds, urls);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+
+        /*FirebaseFirestore.getInstance()
                 .collection("featured")
                 .orderBy("timestamp", Query.Direction.DESCENDING)
                 .limit(5).get()
@@ -134,7 +193,7 @@ public class MenuActivity extends AppCompatActivity {
                             recyclerView.setAdapter(adapter);
                         }
                     }
-                });
+                });*/
     }
 
     private void populateMenu() {
@@ -148,8 +207,8 @@ public class MenuActivity extends AppCompatActivity {
         menuList.add(new MenuViewModel("Marine", R.drawable.ic_cargo_ship));
         menuList.add(new MenuViewModel("QQ", R.drawable.ic_recommended));
         menuList.add(new MenuViewModel("Keuangan", R.drawable.ic_presentation));
-        menuList.add(new MenuViewModel("Divisi 5", R.drawable.ic_launcher_foreground));
-        menuList.add(new MenuViewModel("Divisi 6", R.drawable.ic_launcher_foreground));
+//        menuList.add(new MenuViewModel("Divisi 5", R.drawable.ic_launcher_foreground));
+//        menuList.add(new MenuViewModel("Divisi 6", R.drawable.ic_launcher_foreground));
 
         /*membuat obyek dari GridMenuAdapter untuk menampilkan menu bentuk gridLayoutManager 2 kolom*/
         GridMenuAdapter gridAdapter = new GridMenuAdapter(menuList, getApplicationContext());
@@ -208,11 +267,13 @@ public class MenuActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         query.addValueEventListener(listener);
+        urlquery.addListenerForSingleValueEvent(urlListener);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         query.removeEventListener(listener);
+        urlquery.removeEventListener(urlListener);
     }
 }
