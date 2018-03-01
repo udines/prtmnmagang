@@ -11,6 +11,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.pertamina.pertaminatuban.R;
@@ -59,6 +60,10 @@ public class RegisterActivity extends AppCompatActivity {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                //tampilkan progressbar dan hilangkan button
+                toggleProgressbar();
+
                 if (dataTerisi() && usernameCukup() && emailSesuai() && passwordCukup() && passwordSama()) {
 
                     RegisterData data = new RegisterData(
@@ -69,6 +74,8 @@ public class RegisterActivity extends AppCompatActivity {
                     );
 
                     sendAuthRequest(data);
+                } else {
+                    toggleProgressbar();
                 }
             }
         });
@@ -88,6 +95,10 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
                 Log.w("code", String.valueOf(response.code()));
+
+                //hilangkan progressbar dan tampilkan button
+                toggleProgressbar();
+
                 if (response.code() == 200) {
                     Log.w("msg", response.body().getMsg());
                     Log.w("success", String.valueOf(response.body().isSuccess()));
@@ -103,6 +114,8 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<RegisterResponse> call, Throwable t) {
                 Log.e("register", "error " + t.getMessage());
+                //hilangkan progressbar dan tampilkan button
+                toggleProgressbar();
             }
         });
     }
@@ -134,6 +147,19 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(this, "Password tidak sama", Toast.LENGTH_SHORT).show();
         }
         return sama;
+    }
+
+    private void toggleProgressbar() {
+        ProgressBar progressBar = findViewById(R.id.register_progressbar);
+        Button button = findViewById(R.id.register_button);
+
+        if (progressBar.getVisibility() == View.GONE) {
+            progressBar.setVisibility(View.VISIBLE);
+            button.setVisibility(View.GONE);
+        } else {
+            progressBar.setVisibility(View.GONE);
+            button.setVisibility(View.VISIBLE);
+        }
     }
 
     private boolean passwordCukup() {

@@ -45,13 +45,14 @@ public class LoginActivity extends AppCompatActivity {
 
     private void toggleProgressbar() {
         ProgressBar progressBar = findViewById(R.id.login_progress_bar);
-        Button loginButton = findViewById(R.id.login_button);
+        Button button = findViewById(R.id.login_button);
+
         if (progressBar.getVisibility() == View.GONE) {
             progressBar.setVisibility(View.VISIBLE);
-            loginButton.setVisibility(View.GONE);
+            button.setVisibility(View.GONE);
         } else {
             progressBar.setVisibility(View.GONE);
-            loginButton.setVisibility(View.VISIBLE);
+            button.setVisibility(View.VISIBLE);
         }
     }
 
@@ -104,6 +105,8 @@ public class LoginActivity extends AppCompatActivity {
                     /*lakukan otentikasi dengan username dan password yang sudah terisi data*/
                     otentikasi(username, password);
                 } else {
+
+                    toggleProgressbar();
 
                     /*menampilkan peringatan jika salah satu input tidak diisi*/
                     if (inputUsername.getText().length() == 0) {
