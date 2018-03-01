@@ -1,6 +1,7 @@
 package com.pertamina.pertaminatuban.service;
 
 import com.pertamina.pertaminatuban.finance.models.CostPerLiter;
+import com.pertamina.pertaminatuban.finance.models.LaporanPerjalananDinas;
 import com.pertamina.pertaminatuban.finance.models.PostRealisasiAnggaran;
 import com.pertamina.pertaminatuban.finance.models.RealisasiAnggaran;
 
@@ -22,4 +23,8 @@ public interface FinanceClient {
     //CPL
     @GET("financecsv/cpl/{tahun}")
     Call<ArrayList<CostPerLiter>> getCpl(@Path("tahun") String tahun);
+
+    //Perjalanan Dinas
+    @POST("laporandinas/masterperjalanan")
+    Call<Object> postPerjalananDinas(@Body LaporanPerjalananDinas laporan);
 }

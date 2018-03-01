@@ -1,21 +1,41 @@
 package com.pertamina.pertaminatuban.finance.models;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.sql.Timestamp;
 
 public class LaporanPerjalananDinas {
-    private String id;
-    private String nama;
-    private String noPekerja;
-    private String noPerjalanan;
-    private String rangka;
-    private String tujuan;
-    private Timestamp waktuMulai;
-    private Timestamp waktuSelesai;
-    private String totalBiaya;
 
-    public LaporanPerjalananDinas(String nama, String noPekerja, String noPerjalanan, String rangka, String tujuan, Timestamp waktuMulai, Timestamp waktuSelesai, String totalBiaya) {
+    @SerializedName("namaPegawai")
+    @Expose
+    private String nama;
+
+    @SerializedName("username")
+    @Expose
+    private String noPekerja;
+
+    @SerializedName("id")
+    @Expose
+    private String noPerjalanan;
+
+    @SerializedName("dalam_rangka")
+    @Expose
+    private String rangka;
+
+    @SerializedName("tujuan")
+    @Expose
+    private String tujuan;
+
+    @SerializedName("start_date")
+    @Expose
+    private String waktuMulai;
+
+    @SerializedName("end_date")
+    @Expose
+    private String waktuSelesai;
+
+    public LaporanPerjalananDinas(String nama, String noPekerja, String noPerjalanan, String rangka, String tujuan, String waktuMulai, String waktuSelesai) {
         this.nama = nama;
         this.noPekerja = noPekerja;
         this.noPerjalanan = noPerjalanan;
@@ -23,7 +43,6 @@ public class LaporanPerjalananDinas {
         this.tujuan = tujuan;
         this.waktuMulai = waktuMulai;
         this.waktuSelesai = waktuSelesai;
-        this.totalBiaya = totalBiaya;
     }
 
     public String getNama() {
@@ -46,15 +65,11 @@ public class LaporanPerjalananDinas {
         return tujuan;
     }
 
-    public Timestamp getWaktuMulai() {
+    public String getWaktuMulai() {
         return waktuMulai;
     }
 
-    public Timestamp getWaktuSelesai() {
+    public String getWaktuSelesai() {
         return waktuSelesai;
-    }
-
-    public String getTotalBiaya() {
-        return totalBiaya;
     }
 }

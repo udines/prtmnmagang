@@ -16,6 +16,7 @@ import com.pertamina.pertaminatuban.R;
 public class InputRincianActivity extends AppCompatActivity {
 
     private TextView nama, noPekerja, noPerjalanan, rangka, ke, waktuMulai, waktuSelesai;
+    private String intentNama, intentNoPekerja, intentNoPerjalanan, intentRangka, intentKe, intentWaktuMulai, intentWaktuSelesai;
     private RecyclerView recyclerView;
     private Button tambah;
 
@@ -43,15 +44,38 @@ public class InputRincianActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.input_rincian_recyclerview);
         tambah = findViewById(R.id.input_rincian_tambah);
 
+        handleIntentExtras();
         handleTambah();
     }
 
+    private void handleIntentExtras() {
+        if (getIntentString("namaPekerja") != null) intentNama = getIntentString("namaPekerja");
+        if (getIntentString("noPekerja") != null) intentNoPekerja = getIntentString("noPekerja");
+        if (getIntentString("noPerjalanan") != null) intentNoPerjalanan = getIntentString("noPerjalanan");
+        if (getIntentString("rangka") != null) intentRangka = getIntentString("rangka");
+        if (getIntentString("tujuan") != null) intentKe = getIntentString("tujuan");
+        if (getIntentString("waktuMulai") != null) intentWaktuMulai = getIntentString("waktuMulai");
+        if (getIntentString("waktuSelesai") != null) intentWaktuSelesai = getIntentString("waktuSelesai");
+
+        nama.setText(intentNama);
+        noPekerja.setText(intentNoPekerja);
+        noPerjalanan.setText(intentNoPerjalanan);
+        rangka.setText(intentRangka);
+        ke.setText(intentKe);
+        waktuMulai.setText(intentWaktuMulai);
+        waktuSelesai.setText(intentWaktuSelesai);
+    }
+
+    private String getIntentString(String key) {
+        return getIntent().getStringExtra(key);
+    }
     private void handleTambah() {
         tambah.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), TambahRincianActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("noPerjalanan", intentNoPerjalanan);
                 startActivity(intent);
             }
         });

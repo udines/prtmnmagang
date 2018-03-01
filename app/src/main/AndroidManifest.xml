@@ -422,7 +422,8 @@
             android:name=".finance.perjalanan_dinas.InputPerjalananDinasActivity"
             android:label="@string/title_activity_input_perjalanan_dinas"
             android:parentActivityName=".finance.perjalanan_dinas.PerjalananDinasActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.pertamina.pertaminatuban.finance.perjalanan_dinas.PerjalananDinasActivity" />

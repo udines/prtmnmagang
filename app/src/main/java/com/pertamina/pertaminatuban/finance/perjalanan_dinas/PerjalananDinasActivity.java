@@ -39,31 +39,6 @@ public class PerjalananDinasActivity extends AppCompatActivity {
         inputButton = findViewById(R.id.perjalanan_dinas_tambah);
 
         handleInputButton();
-
-        ArrayList<LaporanPerjalananDinas> laporans = new ArrayList<>();
-        Calendar cal = Calendar.getInstance();
-        laporans.add(new LaporanPerjalananDinas(
-                "Firdan Islamy",
-                "900753331",
-                "020/SPD/F15432/SPD/2018-S0",
-                "Fire Fighting Competition MOR V 2018",
-                "Gresik & Surabaya",
-                new Timestamp(cal.getTimeInMillis()),
-                new Timestamp(cal.getTimeInMillis()),
-                "Rp1,382,000"
-        ));
-        laporans.add(new LaporanPerjalananDinas(
-                "Firdan Islamy",
-                "900753331",
-                "020/SPD/F15432/SPD/2018-S0",
-                "Fire Fighting Competition MOR V 2018",
-                "Gresik & Surabaya",
-                new Timestamp(cal.getTimeInMillis()),
-                new Timestamp(cal.getTimeInMillis()),
-                "Rp1,382,000"
-        ));
-        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        recyclerView.setAdapter(new LaporanPerjalananAdapter(laporans));
     }
 
     private void handleInputButton() {

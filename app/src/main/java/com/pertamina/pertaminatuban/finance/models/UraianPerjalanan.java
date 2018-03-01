@@ -1,42 +1,48 @@
 package com.pertamina.pertaminatuban.finance.models;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class UraianPerjalanan {
-    private String id;
+    @SerializedName("trip_id")
+    @Expose
     private String idPerjalanan;
-    private String kodeAnggaran;
-    private String costCenter;
-    private String kodeBagian;
-    private String uraian;
+
+    @SerializedName("date")
+    @Expose
+    private String date;
+
+    @SerializedName("claim_fee")
+    @Expose
     private String jumlah;
+
+    @SerializedName("keterangan_claim")
+    @Expose
     private String keterangan;
 
-    public UraianPerjalanan(String kodeAnggaran, String costCenter, String kodeBagian, String uraian, String jumlah, String keterangan) {
-        this.kodeAnggaran = kodeAnggaran;
-        this.costCenter = costCenter;
-        this.kodeBagian = kodeBagian;
-        this.uraian = uraian;
+    @SerializedName("status")
+    @Expose
+    private String status;
+
+    @SerializedName("claim_type")
+    @Expose
+    private String claimType;
+
+    public UraianPerjalanan(String idPerjalanan, String date, String jumlah, String keterangan, String status, String claimType) {
+        this.idPerjalanan = idPerjalanan;
+        this.date = date;
         this.jumlah = jumlah;
         this.keterangan = keterangan;
+        this.status = status;
+        this.claimType = claimType;
     }
 
     public String getIdPerjalanan() {
         return idPerjalanan;
     }
 
-    public String getKodeAnggaran() {
-        return kodeAnggaran;
-    }
-
-    public String getCostCenter() {
-        return costCenter;
-    }
-
-    public String getKodeBagian() {
-        return kodeBagian;
-    }
-
-    public String getUraian() {
-        return uraian;
+    public String getDate() {
+        return date;
     }
 
     public String getJumlah() {
@@ -45,5 +51,13 @@ public class UraianPerjalanan {
 
     public String getKeterangan() {
         return keterangan;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public String getClaimType() {
+        return claimType;
     }
 }

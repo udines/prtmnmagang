@@ -50,7 +50,6 @@ public class LaporanPerjalananAdapter extends RecyclerView.Adapter<LaporanPerjal
         holder.ke.setText(laporan.getTujuan());
         holder.waktuMulai.setText(format.format(laporan.getWaktuMulai()));
         holder.waktuSelesai.setText(format.format(laporan.getWaktuSelesai()));
-        holder.totalBiaya.setText(laporan.getTotalBiaya());
     }
 
     @Override
