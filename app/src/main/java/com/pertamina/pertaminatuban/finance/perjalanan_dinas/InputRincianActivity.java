@@ -20,6 +20,7 @@ import com.pertamina.pertaminatuban.finance.models.UraianPerjalanan;
 import com.pertamina.pertaminatuban.service.FinanceClient;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -40,6 +41,7 @@ public class InputRincianActivity extends AppCompatActivity {
     private String intentNama, intentNoPekerja, intentNoPerjalanan, intentRangka, intentKe, intentWaktuMulai, intentWaktuSelesai;
     private RecyclerView recyclerView;
     private Button tambah;
+    private TextView total;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +66,7 @@ public class InputRincianActivity extends AppCompatActivity {
         waktuSelesai = findViewById(R.id.input_rincian_waktu_selesai);
         recyclerView = findViewById(R.id.input_rincian_recyclerview);
         tambah = findViewById(R.id.input_rincian_tambah);
+        total = findViewById(R.id.input_rincian_total);
 
         handleIntentExtras();
         handleTambah();
@@ -157,6 +160,7 @@ public class InputRincianActivity extends AppCompatActivity {
                 if (response.code() == 200) {
                     Log.w("body", new Gson().toJson(response.body()));
                     recyclerView.setAdapter(new UraianPerjalananAdapter(response.body()));
+                    setTotal(response.body());
                 }
             }
 
@@ -165,6 +169,18 @@ public class InputRincianActivity extends AppCompatActivity {
                 Log.e("error", t.getMessage());
             }
         });
+    }
+
+    private void setTotal(ArrayList<UraianPerjalanan> uraians) {
+        Log.w("size", String.valueOf(uraians.size()));
+        if (uraians.size() > 0) {
+            long total = 0;
+            for (int i = 0; i < uraians.size(); i++) {
+                total = total + Long.parseLong(uraians.get(i).getJumlah());
+            }
+            DecimalFormat format = new DecimalFormat("#,###");
+            this.total.setText(String.valueOf("Total : Rp" + format.format(total)));
+        }
     }
 
     @Override
