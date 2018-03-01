@@ -20,7 +20,10 @@ import com.pertamina.pertaminatuban.finance.models.UraianPerjalanan;
 import com.pertamina.pertaminatuban.service.FinanceClient;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -75,13 +78,21 @@ public class InputRincianActivity extends AppCompatActivity {
         if (getIntentString("waktuMulai") != null) intentWaktuMulai = getIntentString("waktuMulai");
         if (getIntentString("waktuSelesai") != null) intentWaktuSelesai = getIntentString("waktuSelesai");
 
+        SimpleDateFormat format = new SimpleDateFormat("dd - MM - yyyy", Locale.getDefault());
+        SimpleDateFormat parseFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+
         nama.setText(intentNama);
         noPekerja.setText(intentNoPekerja);
         noPerjalanan.setText(intentNoPerjalanan);
         rangka.setText(intentRangka);
         ke.setText(intentKe);
-        waktuMulai.setText(intentWaktuMulai);
-        waktuSelesai.setText(intentWaktuSelesai);
+
+        try {
+            waktuMulai.setText(format.format(parseFormat.parse(intentWaktuMulai)));
+            waktuSelesai.setText(format.format(parseFormat.parse(intentWaktuSelesai)));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     private String getIntentString(String key) {

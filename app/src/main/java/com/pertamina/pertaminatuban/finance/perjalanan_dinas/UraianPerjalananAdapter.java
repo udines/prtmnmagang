@@ -8,7 +8,11 @@ import android.view.ViewGroup;
 import com.pertamina.pertaminatuban.R;
 import com.pertamina.pertaminatuban.finance.models.UraianPerjalanan;
 
+import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 
 public class UraianPerjalananAdapter extends RecyclerView.Adapter<UraianPerjalananViewHolder> {
@@ -28,9 +32,18 @@ public class UraianPerjalananAdapter extends RecyclerView.Adapter<UraianPerjalan
     @Override
     public void onBindViewHolder(UraianPerjalananViewHolder holder, int position) {
         UraianPerjalanan model = uraians.get(position);
-        holder.jumlah.setText(String.valueOf("Jumlah: Rp" + model.getJumlah()));
+        DecimalFormat formatter = new DecimalFormat("#,###");
+        holder.jumlah.setText(String.valueOf("Rp" + formatter.format(Double.parseDouble(model.getJumlah()))));
         holder.uraian.setText(model.getClaimType());
         holder.keterangan.setText(model.getKeterangan());
+
+        SimpleDateFormat format = new SimpleDateFormat("dd - MM - yyyy", Locale.getDefault());
+        SimpleDateFormat parseFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        try {
+            holder.tanggal.setText(format.format(parseFormat.parse(model.getDate())));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
