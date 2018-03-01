@@ -11,16 +11,22 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.pertamina.pertaminatuban.R;
+import com.pertamina.pertaminatuban.distribusi.MatbalActivity;
 import com.pertamina.pertaminatuban.finance.models.LaporanPerjalananDinas;
 import com.pertamina.pertaminatuban.service.FinanceClient;
+import com.whiteelephant.monthpicker.MonthPickerDialog;
 
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -36,6 +42,7 @@ public class PerjalananDinasActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private Button inputButton;
     private int year, month;
+    private TextView bulan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,12 +60,53 @@ public class PerjalananDinasActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.perjalanan_dinas_recycler);
         inputButton = findViewById(R.id.perjalanan_dinas_tambah);
+        bulan = findViewById(R.id.perjalanan_dinas_bulan);
 
         Calendar cal = Calendar.getInstance();
         year = cal.get(Calendar.YEAR);
         month = cal.get(Calendar.MONTH);
+        setBulanButton(year, month);
 
         handleInputButton();
+        handleBulanButton();
+    }
+
+    private void handleBulanButton() {
+        bulan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar today = Calendar.getInstance();
+
+                MonthPickerDialog.Builder builder = new MonthPickerDialog.Builder(
+                        PerjalananDinasActivity.this,
+                        new MonthPickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(int selectedMonth, int selectedYear) {
+                                month = selectedMonth;
+                                year = selectedYear;
+                                setBulanButton(year, month);
+                                displayPerjalananDinas();
+                            }
+                        },
+                        today.get(Calendar.YEAR),
+                        today.get(Calendar.MONTH)
+                );
+
+                builder.setMinYear(1970)
+                        .setMaxYear(today.get(Calendar.YEAR))
+                        .setActivatedYear(year)
+                        .setActivatedMonth(month)
+                        .build()
+                        .show();
+            }
+        });
+    }
+
+    private void setBulanButton(int year, int month) {
+        SimpleDateFormat format = new SimpleDateFormat("MMMM yyyy", Locale.getDefault());
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month, 1);
+        bulan.setText(format.format(new Date(calendar.getTimeInMillis())));
     }
 
     private void handleInputButton() {
@@ -109,6 +157,7 @@ public class PerjalananDinasActivity extends AppCompatActivity {
                 String.valueOf(year),
                 String.valueOf(month + 1)
         );
+        Log.w("year month", String.valueOf(year) + " " + String.valueOf(month + 1));
         call.enqueue(new Callback<ArrayList<LaporanPerjalananDinas>>() {
             @Override
             public void onResponse(Call<ArrayList<LaporanPerjalananDinas>> call, Response<ArrayList<LaporanPerjalananDinas>> response) {
