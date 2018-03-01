@@ -29,8 +29,13 @@ public interface FinanceClient {
     //Perjalanan Dinas
     @POST("laporandinas/masterperjalanan")
     Call<Object> postPerjalananDinas(@Body LaporanPerjalananDinas laporan);
+    @GET("laporandinas/masterperjalanan/{tahun}/{bulan}")
+    Call<ArrayList<LaporanPerjalananDinas>> getPerjalananDinas(@Path("tahun") String tahun, @Path("bulan") String bulan);
+    @GET("laporandinas/masterperjalanan/{tahun}/{bulan}")
+    Call<Object> getPerjalananDinasRaw(@Path("tahun") String tahun, @Path("bulan") String bulan);
+
     @POST("laporandinas/claimer")
     Call<Object> postUraianPerjalanan(@Body UraianPerjalanan uraian);
     @POST("laporandinas/claimer/get")
-    Call<ArrayList<UraianPerjalanan>> getUraianPerjalananRaw(@Body NoPerjalanan noPerjalanan);
+    Call<ArrayList<UraianPerjalanan>> getUraianPerjalanan(@Body NoPerjalanan noPerjalanan);
 }

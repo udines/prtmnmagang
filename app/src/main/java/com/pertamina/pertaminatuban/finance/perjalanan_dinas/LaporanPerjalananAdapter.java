@@ -10,6 +10,7 @@ import com.pertamina.pertaminatuban.R;
 import com.pertamina.pertaminatuban.finance.models.LaporanPerjalananDinas;
 import com.pertamina.pertaminatuban.finance.models.UraianPerjalanan;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -29,9 +30,16 @@ public class LaporanPerjalananAdapter extends RecyclerView.Adapter<LaporanPerjal
         holder.card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(parent.getContext(), UraianPerjalananActivity.class);
+                LaporanPerjalananDinas laporan = laporans.get(holder.getAdapterPosition());
+                Intent intent = new Intent(parent.getContext(), InputRincianActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra(laporans.get(holder.getAdapterPosition()).getNoPekerja(), "noPekerja");
+                intent.putExtra("noPekerja", laporan.getNoPekerja());
+                intent.putExtra("namaPekerja", laporan.getNama());
+                intent.putExtra("noPerjalanan", laporan.getNoPerjalanan());
+                intent.putExtra("rangka", laporan.getRangka());
+                intent.putExtra("tujuan", laporan.getTujuan());
+                intent.putExtra("waktuMulai", laporan.getWaktuMulai());
+                intent.putExtra("waktuSelesai", laporan.getWaktuSelesai());
                 parent.getContext().startActivity(intent);
             }
         });
@@ -42,14 +50,21 @@ public class LaporanPerjalananAdapter extends RecyclerView.Adapter<LaporanPerjal
     public void onBindViewHolder(LaporanPerjalananViewHolder holder, int position) {
         LaporanPerjalananDinas laporan = laporans.get(position);
         SimpleDateFormat format = new SimpleDateFormat("dd - MM - yyyy", Locale.getDefault());
+        SimpleDateFormat parseFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
         holder.nama.setText(laporan.getNama());
         holder.noPekerja.setText(laporan.getNoPekerja());
         holder.noPerjalanan.setText(laporan.getNoPerjalanan());
         holder.rangka.setText(laporan.getRangka());
         holder.ke.setText(laporan.getTujuan());
-        holder.waktuMulai.setText(format.format(laporan.getWaktuMulai()));
-        holder.waktuSelesai.setText(format.format(laporan.getWaktuSelesai()));
+//        holder.waktuMulai.setText(laporan.getWaktuMulai());
+//        holder.waktuSelesai.setText(laporan.getWaktuSelesai());
+        try {
+            holder.waktuMulai.setText(format.format(parseFormat.parse(laporan.getWaktuMulai())));
+            holder.waktuSelesai.setText(format.format(parseFormat.parse(laporan.getWaktuSelesai())));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

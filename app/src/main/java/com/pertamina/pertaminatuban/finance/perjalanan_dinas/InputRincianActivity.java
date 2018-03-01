@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -137,8 +135,7 @@ public class InputRincianActivity extends AppCompatActivity {
         Retrofit retrofit = builder.build();
         FinanceClient financeClient = retrofit.create(FinanceClient.class);
 
-        Log.w("no perjalanan", intentNoPerjalanan);
-        Call<ArrayList<UraianPerjalanan>> call = financeClient.getUraianPerjalananRaw(
+        Call<ArrayList<UraianPerjalanan>> call = financeClient.getUraianPerjalanan(
                 new NoPerjalanan(intentNoPerjalanan)
         );
         Log.w("gson", new Gson().toJson(new NoPerjalanan(intentNoPerjalanan)));

@@ -7,7 +7,7 @@ import java.sql.Timestamp;
 
 public class LaporanPerjalananDinas {
 
-    @SerializedName("namaPegawai")
+    @SerializedName("nama")
     @Expose
     private String nama;
 

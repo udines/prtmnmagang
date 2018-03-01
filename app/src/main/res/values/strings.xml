@@ -368,7 +368,7 @@
     <string name="title_activity_input_foto_sample">Input Foto Sampel</string>
     <string name="title_activity_upload_file">Upload PDF</string>
     <string name="title_activity_input_perjalanan_dinas">Input Perjalanan Dinas</string>
-    <string name="title_activity_input_rincian">Input Rincian</string>
+    <string name="title_activity_input_rincian">Rincian</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_uraian_perjalanan">Uraian Perjalanan Dinas</string>
     <string name="title_activity_realisasi_anggaran">Realisasi Anggaran</string>
