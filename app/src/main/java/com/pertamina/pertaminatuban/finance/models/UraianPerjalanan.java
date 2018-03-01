@@ -28,12 +28,11 @@ public class UraianPerjalanan {
     @Expose
     private String claimType;
 
-    public UraianPerjalanan(String idPerjalanan, String date, String jumlah, String keterangan, String status, String claimType) {
+    public UraianPerjalanan(String idPerjalanan, String date, String jumlah, String keterangan, String claimType) {
         this.idPerjalanan = idPerjalanan;
         this.date = date;
         this.jumlah = jumlah;
         this.keterangan = keterangan;
-        this.status = status;
         this.claimType = claimType;
     }
 

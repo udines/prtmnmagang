@@ -4,6 +4,7 @@ import com.pertamina.pertaminatuban.finance.models.CostPerLiter;
 import com.pertamina.pertaminatuban.finance.models.LaporanPerjalananDinas;
 import com.pertamina.pertaminatuban.finance.models.PostRealisasiAnggaran;
 import com.pertamina.pertaminatuban.finance.models.RealisasiAnggaran;
+import com.pertamina.pertaminatuban.finance.models.UraianPerjalanan;
 
 import java.util.ArrayList;
 
@@ -27,4 +28,6 @@ public interface FinanceClient {
     //Perjalanan Dinas
     @POST("laporandinas/masterperjalanan")
     Call<Object> postPerjalananDinas(@Body LaporanPerjalananDinas laporan);
+    @POST("laporandinas/claimer")
+    Call<Object> postUraianPerjalanan(@Body UraianPerjalanan uraian);
 }

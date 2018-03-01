@@ -32,34 +32,7 @@ public class UraianPerjalananActivity extends AppCompatActivity {
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        recyclerView = findViewById(R.id.uraian_perjalanan_recyclerview);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        ArrayList<UraianPerjalanan> uraians = new ArrayList<>();
-        uraians.add(new UraianPerjalanan(
-                "6001008100",
-                "A1502246",
-                "F16430",
-                "Transport antar kota *)",
-                "432000",
-                "TBN GRS SBY, PP"
-        ));
-        uraians.add(new UraianPerjalanan(
-                "6001008100",
-                "A1502246",
-                "F16430",
-                "Transport Bandara/stasiun/pelabuhan/Terminal",
-                "0",
-                "TBN GRS SBY, PP"
-        ));
-        uraians.add(new UraianPerjalanan(
-                "6001008100",
-                "A1502246",
-                "F16430",
-                "Uang Makan Harian",
-                "450000",
-                "P,S,M"
-        ));
-        recyclerView.setAdapter(new UraianPerjalananAdapter(uraians));
+
     }
 
 }

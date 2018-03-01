@@ -1,6 +1,8 @@
 package com.pertamina.pertaminatuban.finance.perjalanan_dinas;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -21,16 +23,30 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.pertamina.pertaminatuban.R;
 import com.pertamina.pertaminatuban.distribusi.MatbalActivity;
+import com.pertamina.pertaminatuban.finance.models.UraianPerjalanan;
+import com.pertamina.pertaminatuban.service.FinanceClient;
 
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class TambahRincianActivity extends AppCompatActivity {
 
@@ -42,6 +58,8 @@ public class TambahRincianActivity extends AppCompatActivity {
 
     private long total = 0;
     private int year, month, day;
+    private String noPerjalanan;
+    private SimpleDateFormat dateFormat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +85,9 @@ public class TambahRincianActivity extends AppCompatActivity {
         buttonTambahkan = findViewById(R.id.tambah_rincian_button_tambahkan);
         buttonTanggal = findViewById(R.id.tambah_rincian_button_tanggal);
         textTotal = findViewById(R.id.tambah_rincian_total);
+
+        noPerjalanan = getIntent().getStringExtra("noPerjalanan");
+        dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
         handleSpinnerJenis();
         handleButtonTanggal();
@@ -96,7 +117,7 @@ public class TambahRincianActivity extends AppCompatActivity {
                         getDataUangHarian();
                         break;
                     case 6:
-//                        getDataTiketPesawat();
+                        getDataTiketPesawat();
                         break;
                     case 7:
                         break;
@@ -105,8 +126,40 @@ public class TambahRincianActivity extends AppCompatActivity {
         });
     }
 
+    private void getDataTiketPesawat() {
+        EditText inputKeterangan = findViewById(R.id.tambah_rincian_tiket_pesawat_keterangan);
+        String keterangan = "";
+        if (inputKeterangan.getText().length() > 0) {
+            keterangan = inputKeterangan.getText().toString();
+        }
+        Calendar cal = Calendar.getInstance();
+        cal.set(year, month, day);
+        UraianPerjalanan uraian = new UraianPerjalanan(
+                noPerjalanan,
+                dateFormat.format(new Date(cal.getTimeInMillis())),
+                String.valueOf(total),
+                keterangan,
+                spinnerJenis.getSelectedItem().toString()
+        );
+        sendPostRequest(uraian);
+    }
+
     private void getDataUangHarian() {
         EditText inputKeterangan = findViewById(R.id.tambah_rincian_uang_harian_keterangan);
+        String keterangan = "";
+        if (inputKeterangan.getText().length() > 0) {
+            keterangan = inputKeterangan.getText().toString();
+        }
+        Calendar cal = Calendar.getInstance();
+        cal.set(year, month, day);
+        UraianPerjalanan uraian = new UraianPerjalanan(
+                noPerjalanan,
+                dateFormat.format(new Date(cal.getTimeInMillis())),
+                String.valueOf(total),
+                keterangan,
+                spinnerJenis.getSelectedItem().toString()
+        );
+        sendPostRequest(uraian);
     }
 
     private void getDataMakanHarian() {
@@ -127,14 +180,107 @@ public class TambahRincianActivity extends AppCompatActivity {
         }
 
         Log.w("keterangan", keterangan);
+
+        Calendar cal = Calendar.getInstance();
+        cal.set(year, month, day);
+        UraianPerjalanan uraian = new UraianPerjalanan(
+                noPerjalanan,
+                dateFormat.format(new Date(cal.getTimeInMillis())),
+                String.valueOf(total),
+                keterangan,
+                spinnerJenis.getSelectedItem().toString()
+        );
+        sendPostRequest(uraian);
     }
 
     private void getDataAkomodasi() {
         EditText inputKeterangan = findViewById(R.id.tambah_rincian_akomodasi_laundry_keterangan);
+        String keterangan = "";
+        if (inputKeterangan.getText().length() > 0) {
+            keterangan = inputKeterangan.getText().toString();
+        }
+        Calendar cal = Calendar.getInstance();
+        cal.set(year, month, day);
+        UraianPerjalanan uraian = new UraianPerjalanan(
+                noPerjalanan,
+                dateFormat.format(new Date(cal.getTimeInMillis())),
+                String.valueOf(total),
+                keterangan,
+                spinnerJenis.getSelectedItem().toString()
+        );
+
+        sendPostRequest(uraian);
     }
 
     private void getDataAntarKota() {
         EditText inputKeterangan = findViewById(R.id.tambah_rincian_antar_kota_keterangan);
+        String keterangan = "";
+        if (inputKeterangan.getText().length() > 0) {
+            keterangan = inputKeterangan.getText().toString();
+        }
+        Calendar cal = Calendar.getInstance();
+        cal.set(year, month, day);
+        UraianPerjalanan uraian = new UraianPerjalanan(
+                noPerjalanan,
+                dateFormat.format(new Date(cal.getTimeInMillis())),
+                String.valueOf(total),
+                keterangan,
+                spinnerJenis.getSelectedItem().toString()
+        );
+
+        sendPostRequest(uraian);
+    }
+
+    private void sendPostRequest(UraianPerjalanan uraian) {
+        Log.w("uraian json", new Gson().toJson(uraian));
+
+        SharedPreferences preferences = TambahRincianActivity.this.getSharedPreferences(
+                "login",
+                Context.MODE_PRIVATE
+        );
+
+        final String key = preferences.getString("userKey", "none");
+
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(new Interceptor() {
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request original = chain.request();
+
+                Request request = original.newBuilder()
+                        .header("Authorization", key)
+                        .method(original.method(), original.body())
+                        .build();
+                return chain.proceed(request);
+            }
+        });
+
+        OkHttpClient client = httpClient.build();
+
+        String baseUrl = "http://www.api.clicktuban.com/";
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client);
+
+        Retrofit retrofit = builder.build();
+        FinanceClient financeClient = retrofit.create(FinanceClient.class);
+        Call<Object> call = financeClient.postUraianPerjalanan(uraian);
+        call.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, Response<Object> response) {
+                Log.w("code", String.valueOf(response.code()));
+                if (response.code() == 200) {
+                    Log.w("response", response.body().toString());
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+                Toast.makeText(TambahRincianActivity.this, "Gagal mengirim claim", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void handleButtonTanggal() {
