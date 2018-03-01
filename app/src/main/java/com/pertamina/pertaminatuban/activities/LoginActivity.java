@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +41,18 @@ public class LoginActivity extends AppCompatActivity {
 
         /*respons pengguna ketika klik daftar*/
         handleRegister();
+    }
+
+    private void toggleProgressbar() {
+        ProgressBar progressBar = findViewById(R.id.login_progress_bar);
+        Button loginButton = findViewById(R.id.login_button);
+        if (progressBar.getVisibility() == View.GONE) {
+            progressBar.setVisibility(View.VISIBLE);
+            loginButton.setVisibility(View.GONE);
+        } else {
+            progressBar.setVisibility(View.GONE);
+            loginButton.setVisibility(View.VISIBLE);
+        }
     }
 
     private void handleRegister() {
@@ -73,6 +86,9 @@ public class LoginActivity extends AppCompatActivity {
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                //tampilkan progressbar dan hilangkan button
+                toggleProgressbar();
 
                 /*deklarasi variable untuk menyimpan data input username dan password*/
                 String username, password;
@@ -125,6 +141,10 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 Log.d("request", "Success");
                 Log.d("response code", String.valueOf(response.code()) + " " + response.message());
+
+                //hilangkan progressbar lalu proses response
+                toggleProgressbar();
+
                 if (response.code() == 200 && response.body() != null) {
                     Intent menuIntent = new Intent(getApplicationContext(), MenuActivity.class);
                     menuIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -153,6 +173,8 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
                 Log.d("request", "Failure");
+                //hilangkan progresbar
+                toggleProgressbar();
             }
         });
     }
