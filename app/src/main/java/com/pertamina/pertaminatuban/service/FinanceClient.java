@@ -2,6 +2,7 @@ package com.pertamina.pertaminatuban.service;
 
 import com.pertamina.pertaminatuban.finance.models.CostPerLiter;
 import com.pertamina.pertaminatuban.finance.models.LaporanPerjalananDinas;
+import com.pertamina.pertaminatuban.finance.models.NoPerjalanan;
 import com.pertamina.pertaminatuban.finance.models.PostRealisasiAnggaran;
 import com.pertamina.pertaminatuban.finance.models.RealisasiAnggaran;
 import com.pertamina.pertaminatuban.finance.models.UraianPerjalanan;
@@ -30,4 +31,6 @@ public interface FinanceClient {
     Call<Object> postPerjalananDinas(@Body LaporanPerjalananDinas laporan);
     @POST("laporandinas/claimer")
     Call<Object> postUraianPerjalanan(@Body UraianPerjalanan uraian);
+    @POST("laporandinas/claimer/get")
+    Call<ArrayList<UraianPerjalanan>> getUraianPerjalananRaw(@Body NoPerjalanan noPerjalanan);
 }

@@ -29,6 +29,7 @@ public class UraianPerjalananAdapter extends RecyclerView.Adapter<UraianPerjalan
     public void onBindViewHolder(UraianPerjalananViewHolder holder, int position) {
         UraianPerjalanan model = uraians.get(position);
         holder.jumlah.setText(String.valueOf("Jumlah: Rp" + model.getJumlah()));
+        holder.uraian.setText(model.getClaimType());
         holder.keterangan.setText(model.getKeterangan());
     }
 
