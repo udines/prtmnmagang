@@ -5,6 +5,7 @@ import com.pertamina.pertaminatuban.finance.models.LaporanPerjalananDinas;
 import com.pertamina.pertaminatuban.finance.models.NoPerjalanan;
 import com.pertamina.pertaminatuban.finance.models.PostRealisasiAnggaran;
 import com.pertamina.pertaminatuban.finance.models.RealisasiAnggaran;
+import com.pertamina.pertaminatuban.finance.models.TarifAntarkota;
 import com.pertamina.pertaminatuban.finance.models.UraianPerjalanan;
 
 import java.util.ArrayList;
@@ -38,4 +39,7 @@ public interface FinanceClient {
     Call<Object> postUraianPerjalanan(@Body UraianPerjalanan uraian);
     @POST("laporandinas/claimer/get")
     Call<ArrayList<UraianPerjalanan>> getUraianPerjalanan(@Body NoPerjalanan noPerjalanan);
+
+    @GET("laporandinas/antarkota")
+    Call<ArrayList<TarifAntarkota>> getTarif();
 }

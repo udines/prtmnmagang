@@ -202,7 +202,13 @@ public class InputFotoSampleActivity extends AppCompatActivity {
     }
 
     private void addThemToView(ArrayList<String> photoPaths) {
-        imagePreview.setImageURI(Uri.parse(photoPaths.get(0)));
+        if (photoPaths != null) {
+            if (photoPaths.get(0) != null) {
+                if (Uri.parse(photoPaths.get(0)) != null) {
+                    imagePreview.setImageURI(Uri.parse(photoPaths.get(0)));
+                }
+            }
+        }
     }
 
 }

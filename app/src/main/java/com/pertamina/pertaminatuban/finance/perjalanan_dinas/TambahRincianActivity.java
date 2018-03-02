@@ -4,8 +4,6 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -14,7 +12,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -27,7 +24,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.pertamina.pertaminatuban.R;
-import com.pertamina.pertaminatuban.distribusi.MatbalActivity;
+import com.pertamina.pertaminatuban.finance.models.TarifAntarkota;
 import com.pertamina.pertaminatuban.finance.models.UraianPerjalanan;
 import com.pertamina.pertaminatuban.service.FinanceClient;
 
@@ -37,7 +34,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Locale;
+import java.util.Set;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -60,6 +60,9 @@ public class TambahRincianActivity extends AppCompatActivity {
     private int year, month, day;
     private String noPerjalanan;
     private SimpleDateFormat dateFormat;
+    private Spinner spinnerProvinsi, spinnerKota, spinnerDarike;
+
+    private HashMap<String, String> jenisClaimValueKey, jenisClaimKeyValue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,9 +92,30 @@ public class TambahRincianActivity extends AppCompatActivity {
         noPerjalanan = getIntent().getStringExtra("noPerjalanan");
         dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
+        setHashMaps();
         handleSpinnerJenis();
         handleButtonTanggal();
         handleButtonTambahkan();
+    }
+
+    private void setHashMaps() {
+        jenisClaimValueKey = new HashMap<>();
+        jenisClaimValueKey.put("Transport antar kota", "kota");
+        jenisClaimValueKey.put("Transport Bandara/stasiun/pelabuhan/Terminal", "umum");
+        jenisClaimValueKey.put("Akomodasi dan Laundry", "akomodasi");
+        jenisClaimValueKey.put("Uang Harian", "hari");
+        jenisClaimValueKey.put("Transport Lokal", "lokal");
+        jenisClaimValueKey.put("Tiket Pesawat", "tiket");
+        jenisClaimValueKey.put("Uang Makan Harian", "makan");
+
+        jenisClaimKeyValue = new HashMap<>();
+        jenisClaimKeyValue.put("kota", "Transport antar kota");
+        jenisClaimKeyValue.put("umum", "Transport Bandara/stasiun/pelabuhan/Terminal");
+        jenisClaimKeyValue.put("akomodasi", "Akomodasi dan Laundry");
+        jenisClaimKeyValue.put("hari", "Uang Harian");
+        jenisClaimKeyValue.put("lokal", "Transport Lokal");
+        jenisClaimKeyValue.put("tiket", "Tiket Pesawat");
+        jenisClaimKeyValue.put("makan", "Uang Makan Harian");
     }
 
     private void handleButtonTambahkan() {
@@ -103,7 +127,7 @@ public class TambahRincianActivity extends AppCompatActivity {
                         getDataAntarKota();
                         break;
                     case 1:
-//                        getDataTransport();
+                        getDataTransport();
                         break;
                     case 2:
                         getDataAkomodasi();
@@ -126,6 +150,24 @@ public class TambahRincianActivity extends AppCompatActivity {
         });
     }
 
+    private void getDataTransport() {
+        EditText inputKeterangan = findViewById(R.id.tambah_rincian_transport_keterangan);
+        String keterangan = "";
+        if (inputKeterangan.getText().length() > 0) {
+            keterangan = inputKeterangan.getText().toString();
+        }
+        Calendar cal = Calendar.getInstance();
+        cal.set(year, month, day);
+        UraianPerjalanan uraian = new UraianPerjalanan(
+                noPerjalanan,
+                dateFormat.format(new Date(cal.getTimeInMillis())),
+                String.valueOf(total),
+                keterangan,
+                jenisClaimValueKey.get(spinnerJenis.getSelectedItem().toString())
+        );
+        sendPostRequest(uraian);
+    }
+
     private void getDataTiketPesawat() {
         EditText inputKeterangan = findViewById(R.id.tambah_rincian_tiket_pesawat_keterangan);
         String keterangan = "";
@@ -139,7 +181,7 @@ public class TambahRincianActivity extends AppCompatActivity {
                 dateFormat.format(new Date(cal.getTimeInMillis())),
                 String.valueOf(total),
                 keterangan,
-                spinnerJenis.getSelectedItem().toString()
+                jenisClaimValueKey.get(spinnerJenis.getSelectedItem().toString())
         );
         sendPostRequest(uraian);
     }
@@ -157,7 +199,7 @@ public class TambahRincianActivity extends AppCompatActivity {
                 dateFormat.format(new Date(cal.getTimeInMillis())),
                 String.valueOf(total),
                 keterangan,
-                spinnerJenis.getSelectedItem().toString()
+                jenisClaimValueKey.get(spinnerJenis.getSelectedItem().toString())
         );
         sendPostRequest(uraian);
     }
@@ -188,7 +230,7 @@ public class TambahRincianActivity extends AppCompatActivity {
                 dateFormat.format(new Date(cal.getTimeInMillis())),
                 String.valueOf(total),
                 keterangan,
-                spinnerJenis.getSelectedItem().toString()
+                jenisClaimValueKey.get(spinnerJenis.getSelectedItem().toString())
         );
         sendPostRequest(uraian);
     }
@@ -206,7 +248,7 @@ public class TambahRincianActivity extends AppCompatActivity {
                 dateFormat.format(new Date(cal.getTimeInMillis())),
                 String.valueOf(total),
                 keterangan,
-                spinnerJenis.getSelectedItem().toString()
+                jenisClaimValueKey.get(spinnerJenis.getSelectedItem().toString())
         );
 
         sendPostRequest(uraian);
@@ -225,7 +267,7 @@ public class TambahRincianActivity extends AppCompatActivity {
                 dateFormat.format(new Date(cal.getTimeInMillis())),
                 String.valueOf(total),
                 keterangan,
-                spinnerJenis.getSelectedItem().toString()
+                jenisClaimValueKey.get(spinnerJenis.getSelectedItem().toString())
         );
 
         sendPostRequest(uraian);
@@ -357,6 +399,7 @@ public class TambahRincianActivity extends AppCompatActivity {
                     case 1:
                         clearContainer();
                         containerTransport.setVisibility(View.VISIBLE);
+                        handleTransport();
                         break;
                     case 2:
                         clearContainer();
@@ -371,7 +414,6 @@ public class TambahRincianActivity extends AppCompatActivity {
                     case 4:
                         clearContainer();
                         break;
-
                     case 5:
                         clearContainer();
                         containerUangHarian.setVisibility(View.VISIBLE);
@@ -386,6 +428,151 @@ public class TambahRincianActivity extends AppCompatActivity {
                         clearContainer();
                         break;
                 }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+    }
+
+    private void handleTransport() {
+        spinnerProvinsi = findViewById(R.id.tambah_rincian_transport_spinner_provinsi);
+        spinnerKota = findViewById(R.id.tambah_rincian_transport_spinner_kota);
+        spinnerDarike = findViewById(R.id.tambah_rincian_transport_spinner_darike);
+
+        SharedPreferences preferences = TambahRincianActivity.this.getSharedPreferences(
+                "login",
+                Context.MODE_PRIVATE
+        );
+
+        final String key = preferences.getString("userKey", "none");
+
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(new Interceptor() {
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request original = chain.request();
+
+                Request request = original.newBuilder()
+                        .header("Authorization", key)
+                        .method(original.method(), original.body())
+                        .build();
+                return chain.proceed(request);
+            }
+        });
+
+        OkHttpClient client = httpClient.build();
+
+        String baseUrl = "http://www.api.clicktuban.com/";
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client);
+
+        Retrofit retrofit = builder.build();
+        FinanceClient financeClient = retrofit.create(FinanceClient.class);
+        Call<ArrayList<TarifAntarkota>> call = financeClient.getTarif();
+        call.enqueue(new Callback<ArrayList<TarifAntarkota>>() {
+            @Override
+            public void onResponse(Call<ArrayList<TarifAntarkota>> call, Response<ArrayList<TarifAntarkota>> response) {
+                Log.w("code", String.valueOf(response.code()));
+                if (response.code() == 200) {
+                    Log.w("body", new Gson().toJson(response.body()));
+                    handleSpinnerProvinsi(response.body(), spinnerProvinsi);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<TarifAntarkota>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void handleSpinnerProvinsi(final ArrayList<TarifAntarkota> tarifList, final Spinner spinner) {
+
+        ArrayList<String> list = new ArrayList<>();
+        for (int i = 0; i < tarifList.size(); i++) {
+            list.add(tarifList.get(i).getProvinsi());
+        }
+        Set<String> uniqueList = new HashSet<String>(list);
+        list = new ArrayList<>();
+        list.addAll(uniqueList);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                this, android.R.layout.simple_spinner_item, list
+        );
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String provinsi = spinner.getSelectedItem().toString();
+                ArrayList<TarifAntarkota> tarifListKota = new ArrayList<>();
+                for (int j = 0; j < tarifList.size(); j++) {
+                    if (tarifList.get(j).getProvinsi().equals(provinsi)) {
+                        tarifListKota.add(tarifList.get(j));
+                    }
+                }
+                handleSpinnerKota(tarifListKota, spinnerKota);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+    }
+
+    private void handleSpinnerKota(final ArrayList<TarifAntarkota> tarifList, final Spinner spinner) {
+        ArrayList<String> list = new ArrayList<>();
+        for (int i = 0; i < tarifList.size(); i++) {
+            list.add(tarifList.get(i).getKota());
+        }
+        Set<String> uniqueList = new HashSet<String>(list);
+        list = new ArrayList<>();
+        list.addAll(uniqueList);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                this, android.R.layout.simple_spinner_item, list
+        );
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String kota = spinner.getSelectedItem().toString();
+                ArrayList<TarifAntarkota> tarifListNode = new ArrayList<>();
+                for (int j = 0; j < tarifList.size(); j++) {
+                    if (tarifList.get(j).getKota().equals(kota)) {
+                        tarifListNode.add(tarifList.get(j));
+                    }
+                }
+                handleSpinnerNode(tarifListNode, spinnerDarike);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+    }
+
+    private void handleSpinnerNode(final ArrayList<TarifAntarkota> tarifList, Spinner spinner) {
+        ArrayList<String> list = new ArrayList<>();
+        for (int i = 0; i < tarifList.size(); i++) {
+            list.add(tarifList.get(i).getDarike());
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                this, android.R.layout.simple_spinner_item, list
+        );
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                total = tarifList.get(i).getTarif();
+                updateTotal();
             }
 
             @Override

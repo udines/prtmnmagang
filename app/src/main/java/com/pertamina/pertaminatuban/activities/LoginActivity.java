@@ -142,8 +142,8 @@ public class LoginActivity extends AppCompatActivity {
         call.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                Log.d("request", "Success");
-                Log.d("response code", String.valueOf(response.code()) + " " + response.message());
+                Log.w("request", "Success");
+                Log.w("response code", String.valueOf(response.code()) + " " + response.message());
 
                 //hilangkan progressbar lalu proses response
                 toggleProgressbar();
@@ -175,7 +175,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<LoginResponse> call, Throwable t) {
-                Log.d("request", "Failure");
+                Log.w("error", t.getMessage());
                 //hilangkan progresbar
                 toggleProgressbar();
             }
