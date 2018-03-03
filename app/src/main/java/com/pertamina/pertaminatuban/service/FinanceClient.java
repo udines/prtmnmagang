@@ -14,6 +14,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface FinanceClient {
@@ -39,6 +40,8 @@ public interface FinanceClient {
     Call<Object> postUraianPerjalanan(@Body UraianPerjalanan uraian);
     @POST("laporandinas/claimer/get")
     Call<ArrayList<UraianPerjalanan>> getUraianPerjalanan(@Body NoPerjalanan noPerjalanan);
+    @PUT("laporandinas/claimer")
+    Call<Object> updateUraianPerjalanan(@Body UraianPerjalanan uraian);
 
     @GET("laporandinas/antarkota")
     Call<ArrayList<TarifAntarkota>> getTarif();

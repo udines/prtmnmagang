@@ -335,15 +335,6 @@
                 android:value="com.pertamina.pertaminatuban.finance.FinanceActivity" />
         </activity>
         <activity
-            android:name=".finance.CostCenterActivity"
-            android:label="@string/title_activity_cost_center"
-            android:parentActivityName=".finance.FinanceActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.pertamina.pertaminatuban.finance.FinanceActivity" />
-        </activity>
-        <activity
             android:name=".qualityquantity.QQActivity"
             android:label="@string/title_activity_qq"
             android:parentActivityName=".activities.MenuActivity"
@@ -438,14 +429,10 @@
                 android:value="com.pertamina.pertaminatuban.finance.perjalanan_dinas.InputPerjalananDinasActivity" />
         </activity>
         <activity
-            android:name=".MainActivity"
-            android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".finance.perjalanan_dinas.UraianPerjalananActivity"
             android:label="@string/title_activity_uraian_perjalanan"
             android:parentActivityName=".finance.perjalanan_dinas.PerjalananDinasActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/Theme.AppCompat">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.pertamina.pertaminatuban.finance.perjalanan_dinas.PerjalananDinasActivity" />

@@ -159,7 +159,7 @@ public class InputRincianActivity extends AppCompatActivity {
                 Log.w("code", String.valueOf(response.code()));
                 if (response.code() == 200) {
                     Log.w("body", new Gson().toJson(response.body()));
-                    recyclerView.setAdapter(new UraianPerjalananAdapter(response.body()));
+                    recyclerView.setAdapter(new UraianPerjalananAdapter(response.body(), InputRincianActivity.this));
                     setTotal(response.body());
                 }
             }
@@ -186,6 +186,13 @@ public class InputRincianActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        if (getIntentString("noPerjalanan") != null) intentNoPerjalanan = getIntentString("noPerjalanan");
+        displayRincianList();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         if (getIntentString("noPerjalanan") != null) intentNoPerjalanan = getIntentString("noPerjalanan");
         displayRincianList();
     }

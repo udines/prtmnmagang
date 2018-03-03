@@ -4,6 +4,11 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class UraianPerjalanan {
+
+    @SerializedName("id")
+    @Expose
+    private String id;
+
     @SerializedName("trip_id")
     @Expose
     private String idPerjalanan;
@@ -58,5 +63,17 @@ public class UraianPerjalanan {
 
     public String getClaimType() {
         return claimType;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setKeterangan(String keterangan) {
+        this.keterangan = keterangan;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

@@ -72,6 +72,16 @@ public class PerjalananDinasActivity extends AppCompatActivity {
     }
 
     private void handleBulanButton() {
+        SharedPreferences preferences = this.getSharedPreferences(
+                "login",
+                Context.MODE_PRIVATE
+        );
+        String role = preferences.getString("userRole", "none");
+        if (role.equals("admin")) {
+            bulan.setVisibility(View.VISIBLE);
+        } else {
+            bulan.setVisibility(View.GONE);
+        }
         bulan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

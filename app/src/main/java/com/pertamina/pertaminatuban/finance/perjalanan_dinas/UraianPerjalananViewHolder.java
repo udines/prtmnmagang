@@ -9,7 +9,7 @@ import com.pertamina.pertaminatuban.R;
 
 public class UraianPerjalananViewHolder extends RecyclerView.ViewHolder {
 
-    public final TextView jumlah, uraian, keterangan, kodeAnggaran, costCenter, kodeBagian, tanggal;
+    public final TextView jumlah, uraian, keterangan, kodeAnggaran, costCenter, kodeBagian, tanggal, status;
 
     public UraianPerjalananViewHolder(View itemView) {
         super(itemView);
@@ -20,5 +20,6 @@ public class UraianPerjalananViewHolder extends RecyclerView.ViewHolder {
         costCenter = itemView.findViewById(R.id.item_uraian_perjalanan_cost_center);
         kodeBagian = itemView.findViewById(R.id.item_uraian_perjalanan_kode_bagian);
         tanggal = itemView.findViewById(R.id.item_uraian_perjalanan_tanggal);
+        status = itemView.findViewById(R.id.item_uraian_perjalanan_status);
     }
 }
