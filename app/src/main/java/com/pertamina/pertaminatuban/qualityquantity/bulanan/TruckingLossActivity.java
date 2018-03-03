@@ -68,6 +68,16 @@ public class TruckingLossActivity extends AppCompatActivity {
     }
 
     private void handleUploadButton() {
+        SharedPreferences preferences = this.getSharedPreferences(
+                "login",
+                Context.MODE_PRIVATE
+        );
+        String role = preferences.getString("userRole", "none");
+        if (role.equals("distribusi") || role.equals("admin")) {
+            upload.setVisibility(View.VISIBLE);
+        } else {
+            upload.setVisibility(View.GONE);
+        }
         upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

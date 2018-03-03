@@ -47,7 +47,7 @@ public class DistribusiActivity extends AppCompatActivity {
                 Context.MODE_PRIVATE
         );
         String role = preferences.getString("userRole", "none");
-        if (role.equals("distribusi")) {
+        if (role.equals("distribusi") || role.equals("admin")) {
             addButton.setVisibility(View.VISIBLE);
         } else {
             addButton.setVisibility(View.GONE);

@@ -298,6 +298,16 @@ public class WorkingLossActivity extends AppCompatActivity {
 
     private void handleInputButton() {
         Button button = findViewById(R.id.working_loss_input_button);
+        SharedPreferences preferences = this.getSharedPreferences(
+                "login",
+                Context.MODE_PRIVATE
+        );
+        String role = preferences.getString("userRole", "none");
+        if (role.equals("distribusi") || role.equals("admin")) {
+            button.setVisibility(View.VISIBLE);
+        } else {
+            button.setVisibility(View.GONE);
+        }
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

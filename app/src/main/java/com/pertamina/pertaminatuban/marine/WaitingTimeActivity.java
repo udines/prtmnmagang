@@ -225,7 +225,7 @@ public class WaitingTimeActivity extends AppCompatActivity {
                 Context.MODE_PRIVATE
         );
         String role = preferences.getString("userRole", "none");
-        if (role.equals("marine")) {
+        if (role.equals("marine") || role.equals("admin")) {
             button.setVisibility(View.VISIBLE);
         } else {
             button.setVisibility(View.GONE);

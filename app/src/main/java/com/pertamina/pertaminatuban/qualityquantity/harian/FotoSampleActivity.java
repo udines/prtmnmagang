@@ -101,6 +101,16 @@ public class FotoSampleActivity extends AppCompatActivity {
 
     private void handleUploadButton() {
         Button upload = findViewById(R.id.foto_sampel_upload_button);
+        SharedPreferences preferences = this.getSharedPreferences(
+                "login",
+                Context.MODE_PRIVATE
+        );
+        String role = preferences.getString("userRole", "none");
+        if (role.equals("distribusi") || role.equals("admin")) {
+            upload.setVisibility(View.VISIBLE);
+        } else {
+            upload.setVisibility(View.GONE);
+        }
         upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
