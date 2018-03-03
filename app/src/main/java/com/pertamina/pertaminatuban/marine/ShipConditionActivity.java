@@ -221,6 +221,16 @@ public class ShipConditionActivity extends AppCompatActivity {
 
     private void handleInputButton() {
         Button button = findViewById(R.id.ship_condition_input);
+        SharedPreferences preferences = this.getSharedPreferences(
+                "login",
+                Context.MODE_PRIVATE
+        );
+        String role = preferences.getString("userRole", "none");
+        if (role.equals("marine")) {
+            button.setVisibility(View.VISIBLE);
+        } else {
+            button.setVisibility(View.GONE);
+        }
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
