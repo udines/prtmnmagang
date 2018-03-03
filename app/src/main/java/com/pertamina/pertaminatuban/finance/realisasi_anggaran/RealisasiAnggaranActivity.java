@@ -142,9 +142,16 @@ public class RealisasiAnggaranActivity extends AppCompatActivity {
             public void onResponse(Call<ArrayList<RealisasiAnggaran>> call, Response<ArrayList<RealisasiAnggaran>> response) {
                 Log.w("code", String.valueOf(response.code()));
                 if (response.code() == 200) {
-                    recyclerView.setAdapter(new RealisasiAnggaranAdapter(
-                            response.body(), getApplicationContext()
-                    ));
+                    ArrayList<RealisasiAnggaran> realisasiAnggarans =  response.body();
+                    for (int i = 0; i < realisasiAnggarans.size(); i++) {
+                        if (realisasiAnggarans.get(i).getCost_elements().equals("Over/Underabsorption")) {
+                            ArrayList<RealisasiAnggaran> overUnderAnggaran = new ArrayList<>();
+                            overUnderAnggaran.add(realisasiAnggarans.get(i));
+                            recyclerView.setAdapter(new RealisasiAnggaranAdapter(
+                                    overUnderAnggaran, getApplicationContext()
+                            ));
+                        }
+                    }
                 }
             }
 
