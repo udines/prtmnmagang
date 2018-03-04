@@ -8,8 +8,9 @@
     tools:context="com.pertamina.pertaminatuban.distribusi.KonsumenActivity"
     tools:showIn="@layout/activity_konsumen"
     android:orientation="vertical"
+    android:background="@color/grey_200"
     android:gravity="center">
-    <LinearLayout
+    <!--<LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -458,23 +459,29 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"/>
         </LinearLayout>
-    </LinearLayout>
-
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="6dp"
-        android:background="@color/grey_200"
-        android:id="@+id/konsumen_recyclerview"
-        android:clipToPadding="false" />
+    </LinearLayout>-->
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/konsumen_empty_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
         android:textSize="18sp"
         android:visibility="gone"
         android:textAlignment="center"
-        android:id="@+id/konsumen_empty_text"
         android:layout_gravity="center"
-        android:text="Tidak ditemukan data\nCoba ganti tanggal"/>
+        android:text="Tidak ditemukan data"/>
+    <ProgressBar
+        android:id="@+id/konsumen_progressbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:layout_gravity="center_horizontal"/>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/konsumen_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="6dp"
+        android:clipToPadding="false" />
+
 </LinearLayout>

@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -51,6 +52,7 @@ public class KonsumenActivity extends AppCompatActivity {
     private int day;
 
     private Spinner spinner;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +79,7 @@ public class KonsumenActivity extends AppCompatActivity {
         tahunButton = findViewById(R.id.konsumen_tahun_button);
         recyclerView = findViewById(R.id.konsumen_recyclerview);
         emptyText = findViewById(R.id.konsumen_empty_text);
+        progressBar = findViewById(R.id.konsumen_progressbar);
 
         /*inisialisasi tanggal jika data tidak ada agar tidak error*/
         Calendar calendar = Calendar.getInstance();
@@ -130,9 +133,18 @@ public class KonsumenActivity extends AppCompatActivity {
     }
 
     private void populateKonsumens(ArrayList<ArrayList<Konsumen>> kumpulanKonsumens) {
+        progressBar.setVisibility(View.GONE);
+
         KonsumenContainerAdapter adapter = new KonsumenContainerAdapter(kumpulanKonsumens);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         recyclerView.setAdapter(adapter);
+
+        TextView emptyText = findViewById(R.id.konsumen_empty_text);
+        if (adapter.getItemCount() <= 0) {
+            emptyText.setVisibility(View.VISIBLE);
+        } else {
+            emptyText.setVisibility(View.GONE);
+        }
     }
 
     /*private void populateCard(ArrayList<Konsumen> kons) {
@@ -320,6 +332,7 @@ public class KonsumenActivity extends AppCompatActivity {
     }
 
     private void updateUi(final int day, final int month, final int year, final int type) {
+        progressBar.setVisibility(View.VISIBLE);
         //type adalah 0 untuk daily, 1 untuk monthly, 2 untuk yearly
 
         SharedPreferences preferences = KonsumenActivity.this.getSharedPreferences(
@@ -358,6 +371,7 @@ public class KonsumenActivity extends AppCompatActivity {
         call.enqueue(new Callback<ArrayList<MasterData>>() {
             @Override
             public void onResponse(Call<ArrayList<MasterData>> call, Response<ArrayList<MasterData>> response) {
+
                 if (response.code() == 200) {
 
                     switch (type) {
@@ -432,6 +446,7 @@ public class KonsumenActivity extends AppCompatActivity {
             public void onResponse(Call<ArrayList<Konsumen>> call, Response<ArrayList<Konsumen>> response) {
                 Log.w("code", String.valueOf(response.code()));
                 Log.w("data", new Gson().toJson(response.body()));
+                progressBar.setVisibility(View.GONE);
                 if (response.code() == 200) {
                     populateKonsumens(getKonsumenTerindeks(masterData, response.body()));
                 }
@@ -440,6 +455,7 @@ public class KonsumenActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ArrayList<Konsumen>> call, Throwable t) {
                 Log.e("error", t.getMessage());
+                progressBar.setVisibility(View.GONE);
             }
         });
     }
@@ -487,6 +503,7 @@ public class KonsumenActivity extends AppCompatActivity {
             public void onResponse(Call<ArrayList<Konsumen>> call, Response<ArrayList<Konsumen>> response) {
                 Log.w("code", String.valueOf(response.code()));
                 Log.w("data", new Gson().toJson(response.body()));
+                progressBar.setVisibility(View.GONE);
                 if (response.code() == 200) {
                     populateKonsumens(getKonsumenTerindeks(masterData, response.body()));
                 }
@@ -495,6 +512,7 @@ public class KonsumenActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ArrayList<Konsumen>> call, Throwable t) {
                 Log.e("error", t.getMessage());
+                progressBar.setVisibility(View.GONE);
             }
         });
     }
@@ -541,6 +559,7 @@ public class KonsumenActivity extends AppCompatActivity {
         call.enqueue(new Callback<ArrayList<Konsumen>>() {
             @Override
             public void onResponse(Call<ArrayList<Konsumen>> call, Response<ArrayList<Konsumen>> response) {
+                progressBar.setVisibility(View.GONE);
                 Log.w("code", String.valueOf(response.code()));
                 Log.w("data", new Gson().toJson(response.body()));
                 if (response.code() == 200) {
@@ -550,7 +569,7 @@ public class KonsumenActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ArrayList<Konsumen>> call, Throwable t) {
-                Log.e("error", t.getMessage());
+                progressBar.setVisibility(View.GONE);
             }
         });
     }
