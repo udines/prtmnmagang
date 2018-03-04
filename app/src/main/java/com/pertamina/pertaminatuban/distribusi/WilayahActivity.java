@@ -466,7 +466,7 @@ public class WilayahActivity extends AppCompatActivity {
 
     private void populateWilayahs(ArrayList<ArrayList<Wilayah>> kumpulanWilayahs) {
         progressBar.setVisibility(View.GONE);
-        
+
         WilayahContainerAdapter adapter = new WilayahContainerAdapter(kumpulanWilayahs, getApplicationContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         recyclerView.setAdapter(adapter);

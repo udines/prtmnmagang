@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.pertamina.pertaminatuban.R;
@@ -38,6 +39,8 @@ public class FotoSampleActivity extends AppCompatActivity {
     private TextView bulan;
     private int year, month, day;
     private RecyclerView recyclerView;
+    private TextView emptyText;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +58,8 @@ public class FotoSampleActivity extends AppCompatActivity {
 
         bulan = findViewById(R.id.foto_sampel_bulan);
         recyclerView = findViewById(R.id.foto_sample_recyclerview);
+        emptyText = findViewById(R.id.foto_sample_empty_text);
+        progressBar = findViewById(R.id.foto_sample_progressbar);
 
         Calendar cal = Calendar.getInstance();
         year = cal.get(Calendar.YEAR);
@@ -128,6 +133,8 @@ public class FotoSampleActivity extends AppCompatActivity {
     }
 
     private void updateUi(int year, int month) {
+        progressBar.setVisibility(View.VISIBLE);
+
         SharedPreferences preferences = FotoSampleActivity.this.getSharedPreferences(
                 "login",
                 Context.MODE_PRIVATE
@@ -168,22 +175,30 @@ public class FotoSampleActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ArrayList<ItemFotoSample>> call, Response<ArrayList<ItemFotoSample>> response) {
                 Log.w("code", String.valueOf(response.code()));
+                progressBar.setVisibility(View.GONE);
                 if (response.code() == 200) {
                     Log.w("size", String.valueOf(response.body().size()));
                     ArrayList<ItemFotoSample> fotoSamples = response.body();
                     if (fotoSamples != null) {
                         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                        recyclerView.setAdapter(new FotoSampleAdapter(
+                        FotoSampleAdapter adapter = new FotoSampleAdapter(
                                 fotoSamples,
                                 getApplicationContext()
-                        ));
+                        );
+                        recyclerView.setAdapter(adapter);
+
+                        if (adapter.getItemCount() <= 0) {
+                            emptyText.setVisibility(View.VISIBLE);
+                        } else {
+                            emptyText.setVisibility(View.GONE);
+                        }
                     }
                 }
             }
 
             @Override
             public void onFailure(Call<ArrayList<ItemFotoSample>> call, Throwable t) {
-
+                progressBar.setVisibility(View.GONE);
             }
         });
     }
