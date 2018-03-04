@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -103,6 +104,18 @@ public class MatbalActivity extends AppCompatActivity {
         DateFormatSymbols symbols = new DateFormatSymbols();
         String text = String.valueOf(day) + " " + symbols.getMonths()[month] + " " + String.valueOf(year);
         tanggal.setText(text);
+    }
+
+    private void toggleProgressBar() {
+        LinearLayout grandTotal = findViewById(R.id.matbal_container_grand_total);
+        ProgressBar progressBar = findViewById(R.id.matbal_progress_bar);
+        if (progressBar.getVisibility() == View.GONE) {
+            progressBar.setVisibility(View.VISIBLE);
+            grandTotal.setVisibility(View.GONE);
+        } else {
+            progressBar.setVisibility(View.GONE);
+            grandTotal.setVisibility(View.VISIBLE);
+        }
     }
 
     private void setYearButton(int year) {
@@ -248,6 +261,9 @@ public class MatbalActivity extends AppCompatActivity {
     }
 
     private void updateUi(int day, int month, int year, int type) {
+        //tampilkan progressbar
+        toggleProgressBar();
+
         //type adalah 0 untuk daily, 1 untuk monthly, 2 untuk yearly
 
         switch (type) {
@@ -317,6 +333,8 @@ public class MatbalActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ArrayList<Matbal>> call, Throwable t) {
                 Log.e("error sekarang", t.getMessage());
+                //hilangkan progressbar
+                toggleProgressBar();
             }
         });
 
@@ -336,6 +354,8 @@ public class MatbalActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ArrayList<Matbal>> call, Throwable t) {
                 Log.e("error lalu", t.getMessage());
+                //hilangkan progressbar
+                toggleProgressBar();
             }
         });
     }
@@ -408,6 +428,8 @@ public class MatbalActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ArrayList<Matbal>> call, Throwable t) {
                 Log.e("error sekarang", t.getMessage());
+                //hilangkan progressbar
+                toggleProgressBar();
             }
         });
 
@@ -427,6 +449,8 @@ public class MatbalActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ArrayList<Matbal>> call, Throwable t) {
                 Log.e("error lalu", t.getMessage());
+                //hilangkan progressbar
+                toggleProgressBar();
             }
         });
     }
@@ -484,6 +508,7 @@ public class MatbalActivity extends AppCompatActivity {
             public void onResponse(Call<ArrayList<Matbal>> call, Response<ArrayList<Matbal>> response) {
                 Log.w("code sekarang", String.valueOf(response.code()));
                 Log.w("data sekarang", new Gson().toJson(response.body()));
+
                 if (response.code() == 200) {
                     matbalSekarang = response.body();
                     if (matbalSekarang != null && matbalLalu != null ) {
@@ -495,6 +520,8 @@ public class MatbalActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ArrayList<Matbal>> call, Throwable t) {
                 Log.e("error sekarang", t.getMessage());
+                //hilangkan progressbar
+                toggleProgressBar();
             }
         });
 
@@ -514,12 +541,17 @@ public class MatbalActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<ArrayList<Matbal>> call, Throwable t) {
                 Log.e("error lalu", t.getMessage());
+                //hilangkan progressbar
+                toggleProgressBar();
             }
         });
     }
 
     private void cekData(ArrayList<Matbal> matbalSekarang, ArrayList<Matbal> matbalLalu, String periode) {
         if (matbalSekarang.size() > 0 && matbalLalu.size() > 0) {
+            //hilangkan progressbar
+            toggleProgressBar();
+
             MatbalTableAdapter adapter = new MatbalTableAdapter(
                     matbalSekarang,
                     matbalLalu,
