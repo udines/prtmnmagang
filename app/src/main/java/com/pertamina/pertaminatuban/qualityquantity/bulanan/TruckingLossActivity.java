@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.pertamina.pertaminatuban.R;
@@ -40,6 +41,9 @@ public class TruckingLossActivity extends AppCompatActivity {
     private int year;
     private Button upload;
 
+    private TextView emptyText;
+    private ProgressBar progressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +61,9 @@ public class TruckingLossActivity extends AppCompatActivity {
         tahun = findViewById(R.id.trucking_loss_tahun);
         recyclerView = findViewById(R.id.trucking_loss_recyclerview);
         upload = findViewById(R.id.trucking_loss_upload_button);
+
+        emptyText = findViewById(R.id.trucking_loss_empty_text);
+        progressBar = findViewById(R.id.trucking_loss_progressbar);
 
         Calendar cal = Calendar.getInstance();
         year = cal.get(Calendar.YEAR);
@@ -120,6 +127,7 @@ public class TruckingLossActivity extends AppCompatActivity {
     }
 
     private void updateUi(int year) {
+        progressBar.setVisibility(View.VISIBLE);
         SharedPreferences preferences = TruckingLossActivity.this.getSharedPreferences(
                 "login",
                 Context.MODE_PRIVATE
@@ -156,6 +164,7 @@ public class TruckingLossActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ArrayList<ItemTestReport>> call, Response<ArrayList<ItemTestReport>> response) {
                 Log.w("code", String.valueOf(response.code()));
+                progressBar.setVisibility(View.GONE);
                 if (response.code() == 200) {
                     ArrayList<ItemTestReport> truckingLosses = new ArrayList<>();
                     for (int i = 0; i < response.body().size(); i++) {
@@ -164,13 +173,20 @@ public class TruckingLossActivity extends AppCompatActivity {
                         }
                     }
                     recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                    recyclerView.setAdapter(new TestReportAdapter(truckingLosses));
+                    TestReportAdapter adapter = new TestReportAdapter(truckingLosses);
+                    recyclerView.setAdapter(adapter);
+
+                    if (adapter.getItemCount() <= 0) {
+                        emptyText.setVisibility(View.VISIBLE);
+                    } else {
+                        emptyText.setVisibility(View.GONE);
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<ArrayList<ItemTestReport>> call, Throwable t) {
-
+                progressBar.setVisibility(View.GONE);
             }
         });
     }
