@@ -1,38 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.pertamina.pertaminatuban.distribusi.WilayahActivity"
-    tools:showIn="@layout/activity_wilayah">
+    tools:showIn="@layout/activity_wilayah"
+    android:orientation="vertical"
+    android:background="@color/grey_200">
 
-    <android.support.v4.view.ViewPager
+    <ProgressBar
+        android:id="@+id/wilayah_progressbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:visibility="gone"
+        android:layout_gravity="center_horizontal"/>
+    <TextView
+        android:id="@+id/wilayah_empty_text"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="center"
+        android:textSize="18sp"
         android:visibility="gone"
-        android:id="@+id/wilayah_viewpager"/>
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="Tidak ditemukan data"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/wilayah_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="6dp"
-        android:background="@color/grey_200"
         android:clipToPadding="false"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:visibility="gone"
-        android:textAlignment="center"
-        android:id="@+id/wilayah_empty_text"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:text="Tidak ditemukan data\nCoba ganti bulan atau tahun"/>
-
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

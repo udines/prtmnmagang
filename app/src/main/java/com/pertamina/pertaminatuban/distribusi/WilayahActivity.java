@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -52,6 +53,7 @@ public class WilayahActivity extends AppCompatActivity {
     //menyimpan index yang dipilih oleh spinner
     private int periode = 0, wilayah = 0;
     private ArrayList<String> wilayahList;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,10 +78,10 @@ public class WilayahActivity extends AppCompatActivity {
         tahunButton = findViewById(R.id.wilayah_tahun_button);
         spinnerPeriode = findViewById(R.id.wilayah_periode_spinner);
         spinnerWilayah = findViewById(R.id.wilayah_spinner);
-        viewPager = findViewById(R.id.wilayah_viewpager);
         tabLayout = findViewById(R.id.wilayah_tab);
         emptyText = findViewById(R.id.wilayah_empty_text);
         recyclerView = findViewById(R.id.wilayah_recyclerview);
+        progressBar = findViewById(R.id.wilayah_progressbar);
 
         /*inisialisasi tanggal jika data tidak ada agar tidak error*/
         Calendar calendar = Calendar.getInstance();
@@ -230,7 +232,11 @@ public class WilayahActivity extends AppCompatActivity {
         });
     }
 
+
+
     private void updateUi(final int month, final int year, final int periode, int wilayahIndex) {
+        progressBar.setVisibility(View.VISIBLE);
+
         if (wilayahList != null && wilayahList.size() > 0) {
             final String wilayah = wilayahList.get(wilayahIndex);
 
@@ -459,9 +465,18 @@ public class WilayahActivity extends AppCompatActivity {
     }
 
     private void populateWilayahs(ArrayList<ArrayList<Wilayah>> kumpulanWilayahs) {
+        progressBar.setVisibility(View.GONE);
+        
         WilayahContainerAdapter adapter = new WilayahContainerAdapter(kumpulanWilayahs, getApplicationContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         recyclerView.setAdapter(adapter);
+
+        TextView emptyText = findViewById(R.id.wilayah_empty_text);
+        if (adapter.getItemCount() <= 0) {
+            emptyText.setVisibility(View.VISIBLE);
+        } else {
+            emptyText.setVisibility(View.GONE);
+        }
     }
 
     private void getMasterUntuk(final String jenis) {
