@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.pertamina.pertaminatuban.R;
@@ -40,6 +41,8 @@ public class TestReportActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private int year, month;
     private Button upload;
+    private TextView emptyText;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +61,8 @@ public class TestReportActivity extends AppCompatActivity {
         bulan = findViewById(R.id.test_report_bulan);
         recyclerView = findViewById(R.id.test_report_recyclerview);
         upload = findViewById(R.id.test_report_upload_button);
+        progressBar = findViewById(R.id.test_report_progressbar);
+        emptyText = findViewById(R.id.test_report_empty_text);
 
         Calendar cal = Calendar.getInstance();
         year = cal.get(Calendar.YEAR);
@@ -124,6 +129,8 @@ public class TestReportActivity extends AppCompatActivity {
     }
 
     private void updateUi(int month, int year) {
+        progressBar.setVisibility(View.VISIBLE);
+
         SharedPreferences preferences = TestReportActivity.this.getSharedPreferences(
                 "login",
                 Context.MODE_PRIVATE
@@ -162,6 +169,7 @@ public class TestReportActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ArrayList<ItemTestReport>> call, Response<ArrayList<ItemTestReport>> response) {
                 Log.w("code", String.valueOf(response.code()));
+                progressBar.setVisibility(View.GONE);
                 if (response.code() == 200) {
                     ArrayList<ItemTestReport> testReports = new ArrayList<>();
                     for (int i = 0; i < response.body().size(); i++) {
@@ -170,13 +178,20 @@ public class TestReportActivity extends AppCompatActivity {
                         }
                     }
                     recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                    recyclerView.setAdapter(new TestReportAdapter(testReports));
+                    TestReportAdapter adapter = new TestReportAdapter(testReports);
+                    recyclerView.setAdapter(adapter);
+
+                    if (adapter.getItemCount() <= 0) {
+                        emptyText.setVisibility(View.VISIBLE);
+                    } else {
+                        emptyText.setVisibility(View.GONE);
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<ArrayList<ItemTestReport>> call, Throwable t) {
-
+                progressBar.setVisibility(View.GONE);
             }
         });
     }
