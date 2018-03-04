@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,21 +7,142 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.pertamina.pertaminatuban.finance.realisasi_anggaran.RealisasiAnggaranActivity"
     tools:showIn="@layout/activity_realisasi_anggaran"
-    android:background="@color/grey_200">
+    android:background="@color/grey_200"
+    android:scrollbars="none"
+    android:overScrollMode="never">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/realisasi_anggaran_recyclerview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:overScrollMode="never"
-        android:scrollbars="none"
-        android:padding="6dp"
-        android:clipToPadding="false"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/realisasi_anggaran_recyclerview">
-        
+        android:orientation="vertical">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/realisasi_anggaran_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:overScrollMode="never"
+            android:scrollbars="none"
+            android:padding="6dp"
+            android:clipToPadding="false"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="12dp">
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="10dp">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:text="Actual"/>
+                <TextView
+                    android:id="@+id/realisasi_anggaran_actual"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:textSize="16sp"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:text=""/>
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/grey_100"
+                android:padding="10dp">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:text="Commitment"/>
+                <TextView
+                    android:id="@+id/realisasi_anggaran_commitment"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:textSize="16sp"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:text=""/>
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="10dp">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:text="Allotted"/>
+                <TextView
+                    android:id="@+id/realisasi_anggaran_allotted"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:textSize="16sp"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:text=""/>
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/grey_100"
+                android:padding="10dp">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:textSize="16sp"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:textColor="@color/black"
+                    android:text="Plan"/>
+                <TextView
+                    android:id="@+id/realisasi_anggaran_plan"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:textSize="16sp"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:text=""/>
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="10dp">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:textSize="16sp"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:textColor="@color/black"
+                    android:text="Available"/>
+                <TextView
+                    android:id="@+id/realisasi_anggaran_available"
+                    android:layout_width="0dp"
+                    android:textSize="16sp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:text=""/>
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
-</android.support.constraint.ConstraintLayout>
+</ScrollView>

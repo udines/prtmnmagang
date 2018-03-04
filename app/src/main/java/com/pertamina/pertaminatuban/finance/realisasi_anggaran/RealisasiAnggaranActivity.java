@@ -23,6 +23,7 @@ import com.pertamina.pertaminatuban.service.FinanceClient;
 import com.whiteelephant.monthpicker.MonthPickerDialog;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -41,6 +42,8 @@ public class RealisasiAnggaranActivity extends AppCompatActivity {
     private int year;
     private TextView tahun;
 
+    private TextView actual, commitment, allotted, plan, available;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +60,14 @@ public class RealisasiAnggaranActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.realisasi_anggaran_recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        recyclerView.setNestedScrollingEnabled(false);
         tahun = findViewById(R.id.realisasi_anggaran_tahun);
+
+        actual = findViewById(R.id.realisasi_anggaran_actual);
+        commitment = findViewById(R.id.realisasi_anggaran_commitment);
+        allotted = findViewById(R.id.realisasi_anggaran_allotted);
+        plan = findViewById(R.id.realisasi_anggaran_plan);
+        available = findViewById(R.id.realisasi_anggaran_available);
 
         Calendar cal = Calendar.getInstance();
         year = cal.get(Calendar.YEAR);
@@ -150,6 +160,11 @@ public class RealisasiAnggaranActivity extends AppCompatActivity {
                             recyclerView.setAdapter(new RealisasiAnggaranAdapter(
                                     overUnderAnggaran, getApplicationContext()
                             ));
+                            actual.setText(currencyFor(realisasiAnggarans.get(i).getActual()));
+                            commitment.setText(currencyFor(realisasiAnggarans.get(i).getCommitment()));
+                            allotted.setText(currencyFor(realisasiAnggarans.get(i).getAllotted()));
+                            plan.setText(currencyFor(realisasiAnggarans.get(i).getPlan()));
+                            available.setText(currencyFor(realisasiAnggarans.get(i).getAvailable()));
                         }
                     }
                 }
@@ -181,4 +196,8 @@ public class RealisasiAnggaranActivity extends AppCompatActivity {
         });
     }
 
+    private String currencyFor(double amount) {
+        DecimalFormat format = new DecimalFormat("#,###");
+        return format.format(amount);
+    }
 }
