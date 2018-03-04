@@ -19,6 +19,7 @@ import com.pertamina.pertaminatuban.distribusi.models.Matbal;
 import com.pertamina.pertaminatuban.service.UserClient;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -35,7 +36,10 @@ public class InputMatbalActivity extends AppCompatActivity {
 
     private int year, month, day;
     private Button dateButton;
-    private boolean tanggalSet;
+    private boolean tanggalSet, isUpdate;
+
+    private EditText inputPertamax, inputPertalite, inputPremium, inputSolar, inputBiosolar, inputBioflame,
+            inputLain, inputLainNilai;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,8 +71,6 @@ public class InputMatbalActivity extends AppCompatActivity {
     }
 
     private void getData() {
-        final EditText inputPertamax, inputPertalite, inputPremium, inputSolar, inputBiosolar, inputBioflame,
-                inputLain, inputLainNilai;
         Button send = findViewById(R.id.input_matbal_kirim);
         inputPertamax = findViewById(R.id.input_matbal_pertamax);
         inputPertalite = findViewById(R.id.input_matbal_pertalite);
@@ -94,12 +96,103 @@ public class InputMatbalActivity extends AppCompatActivity {
                         matbals.add(makeObject(inputLainNilai, inputLain.getText().toString()));
                     }
 
-                    sendPostRequest(matbals);
+                    if (isUpdate) {
+                        sendUpdateRequest(matbals);
+                    } else {
+                        sendPostRequest(matbals);
+                    }
                 } else {
                     Toast.makeText(InputMatbalActivity.this, "Belum memilih tanggal", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+    }
+
+    private void sendUpdateRequest(ArrayList<Matbal> matbals) {
+        //update matbals
+    }
+
+    private void getInitialInputData() {
+        isUpdate = true;
+
+        Calendar cal = Calendar.getInstance();
+        cal.set(year, month, day);
+        Date date = new Date(cal.getTimeInMillis());
+        String tanggalSekarang;
+        tanggalSekarang = date.toString();
+
+        SharedPreferences preferences = InputMatbalActivity.this.getSharedPreferences(
+                "login",
+                Context.MODE_PRIVATE
+        );
+        final String key = preferences.getString("userKey", "none");
+
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(new Interceptor() {
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request original = chain.request();
+
+                Request request = original.newBuilder()
+                        .header("Authorization", key)
+                        .method(original.method(), original.body())
+                        .build();
+                return chain.proceed(request);
+            }
+        });
+
+        OkHttpClient client = httpClient.build();
+
+        String baseUrl = "http://www.api.clicktuban.com/";
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client);
+
+        Retrofit retrofit = builder.build();
+        UserClient userClient = retrofit.create(UserClient.class);
+
+        Call<ArrayList<Matbal>> call = userClient.getMatbalHari(tanggalSekarang);
+        call.enqueue(new Callback<ArrayList<Matbal>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Matbal>> call, Response<ArrayList<Matbal>> response) {
+                Log.w("code", String.valueOf(response.code()));
+                if (response.code() == 200 && response.body().size() > 0) {
+                    setInitialInputData(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Matbal>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void setInitialInputData(ArrayList<Matbal> matbals) {
+        for (int i = 0; i < matbals.size(); i++) {
+            String nilai = String.valueOf(matbals.get(i).getNilai());
+            switch (matbals.get(i).getFuel()) {
+                case Matbal.BIOFAME:
+                    inputBioflame.setText(nilai);
+                    break;
+                case Matbal.BIOSOLAR:
+                    inputBiosolar.setText(nilai);
+                    break;
+                case Matbal.PERTALITE:
+                    inputPertalite.setText(nilai);
+                    break;
+                case Matbal.PERTAMAX:
+                    inputPertamax.setText(nilai);
+                    break;
+                case Matbal.PREMIUM:
+                    inputPremium.setText(nilai);
+                    break;
+                case Matbal.SOLAR:
+                    inputSolar.setText(nilai);
+                    break;
+            }
+        }
     }
 
     private void sendPostRequest(ArrayList<Matbal> matbals) {
@@ -191,6 +284,7 @@ public class InputMatbalActivity extends AppCompatActivity {
                 day = i2;
                 setDateButton(year, month, day);
                 tanggalSet = true;
+                getInitialInputData();
             }
         };
 
