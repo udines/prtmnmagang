@@ -11,461 +11,487 @@
     android:background="@color/grey_200"
     android:clipToPadding="false">
     <LinearLayout
-        android:id="@+id/working_loss_container"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="6dp">
+        android:orientation="vertical">
+        <ProgressBar
+            android:id="@+id/working_loss_progressbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:visibility="gone"
+            android:layout_gravity="center_horizontal"/>
+        <TextView
+            android:id="@+id/working_loss_empty_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:visibility="gone"
+            android:textAlignment="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="Tidak ditemukan data"/>
 
-        <android.support.v7.widget.CardView
+        <LinearLayout
+            android:id="@+id/working_loss_container"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="6dp">
-            <LinearLayout
+            android:orientation="vertical"
+            android:padding="6dp">
+
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="12dp"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Lokasi"
-                    android:textSize="12sp"/>
-                <TextView
-                    android:id="@+id/working_loss_lokasi"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Tuban"
-                    android:layout_marginTop="4dp"
-                    android:textSize="18sp"
-                    android:layout_marginBottom="8dp"
-                    android:textColor="@color/black"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Produk"
-                    android:textSize="12sp"/>
-                <TextView
-                    android:id="@+id/working_loss_produk"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="AVTUR"
-                    android:layout_marginTop="4dp"
-                    android:textSize="18sp"
-                    android:layout_marginBottom="8dp"
-                    android:textColor="@color/black"/>
-
+                android:layout_margin="6dp">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="8dp"
-                    android:background="@color/grey_200"
-                    android:paddingBottom="8dp"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp"
-                    android:orientation="horizontal">
+                    android:padding="12dp"
+                    android:orientation="vertical">
                     <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="start"
-                        android:textSize="16sp"
-                        android:textColor="@color/black"
-                        android:text="Stock Awal"/>
+                        android:text="Lokasi"
+                        android:textSize="12sp"/>
                     <TextView
-                        android:id="@+id/working_loss_stock_awal"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:textSize="16sp"
+                        android:id="@+id/working_loss_lokasi"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="end"
-                        android:text="0"/>
-                </LinearLayout>
+                        android:text="Tuban"
+                        android:layout_marginTop="4dp"
+                        android:textSize="18sp"
+                        android:layout_marginBottom="8dp"
+                        android:textColor="@color/black"/>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp"
-                    android:orientation="horizontal">
                     <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:textSize="16sp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="start"
-                        android:textColor="@color/black"
-                        android:text="Act. Receipt"/>
+                        android:text="Produk"
+                        android:textSize="12sp"/>
                     <TextView
-                        android:id="@+id/working_loss_act_receipt"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:textSize="16sp"
+                        android:id="@+id/working_loss_produk"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="end"
-                        android:text="0"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="8dp"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp"
-                    android:background="@color/grey_200"
-                    android:paddingBottom="8dp"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:textSize="16sp"
-                        android:layout_height="wrap_content"
-                        android:gravity="start"
-                        android:textColor="@color/black"
-                        android:text="Blending In"/>
-                    <TextView
-                        android:id="@+id/working_loss_blending_in"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:textSize="16sp"
-                        android:layout_height="wrap_content"
-                        android:gravity="end"
-                        android:text="0"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="8dp"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp"
-                    android:paddingBottom="8dp"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:textSize="16sp"
-                        android:layout_height="wrap_content"
-                        android:gravity="start"
-                        android:textColor="@color/black"
-                        android:text="Total Tersedia"/>
-                    <TextView
-                        android:id="@+id/working_loss_total_tersedia"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:textSize="16sp"
-                        android:layout_height="wrap_content"
-                        android:gravity="end"
-                        android:text="0"/>
-                </LinearLayout>
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
+                        android:text="AVTUR"
+                        android:layout_marginTop="4dp"
+                        android:textSize="18sp"
+                        android:layout_marginBottom="8dp"
+                        android:textColor="@color/black"/>
 
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="6dp">
-            <LinearLayout
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="8dp"
+                        android:background="@color/grey_200"
+                        android:paddingBottom="8dp"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:gravity="start"
+                            android:textSize="16sp"
+                            android:textColor="@color/black"
+                            android:text="Stock Awal"/>
+                        <TextView
+                            android:id="@+id/working_loss_stock_awal"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:textSize="16sp"
+                            android:layout_height="wrap_content"
+                            android:gravity="end"
+                            android:text="0"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:textSize="16sp"
+                            android:layout_height="wrap_content"
+                            android:gravity="start"
+                            android:textColor="@color/black"
+                            android:text="Act. Receipt"/>
+                        <TextView
+                            android:id="@+id/working_loss_act_receipt"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:textSize="16sp"
+                            android:layout_height="wrap_content"
+                            android:gravity="end"
+                            android:text="0"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="8dp"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
+                        android:background="@color/grey_200"
+                        android:paddingBottom="8dp"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:textSize="16sp"
+                            android:layout_height="wrap_content"
+                            android:gravity="start"
+                            android:textColor="@color/black"
+                            android:text="Blending In"/>
+                        <TextView
+                            android:id="@+id/working_loss_blending_in"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:textSize="16sp"
+                            android:layout_height="wrap_content"
+                            android:gravity="end"
+                            android:text="0"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="8dp"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
+                        android:paddingBottom="8dp"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:textSize="16sp"
+                            android:layout_height="wrap_content"
+                            android:gravity="start"
+                            android:textColor="@color/black"
+                            android:text="Total Tersedia"/>
+                        <TextView
+                            android:id="@+id/working_loss_total_tersedia"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:textSize="16sp"
+                            android:layout_height="wrap_content"
+                            android:gravity="end"
+                            android:text="0"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="12dp"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Penyaluran"
-                    android:textAllCaps="true"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:textSize="18sp"
-                    android:textColor="@color/black"/>
-
+                android:layout_margin="6dp">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp"
-                    android:background="@color/grey_200"
-                    android:orientation="horizontal">
+                    android:padding="12dp"
+                    android:orientation="vertical">
                     <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:textSize="16sp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="start"
-                        android:textColor="@color/black"
-                        android:text="Sales PSO"/>
-                    <TextView
-                        android:id="@+id/working_loss_sales_pso"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:textSize="16sp"
-                        android:layout_height="wrap_content"
-                        android:gravity="end"
-                        android:text="0"/>
-                </LinearLayout>
+                        android:text="Penyaluran"
+                        android:textAllCaps="true"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:textSize="18sp"
+                        android:textColor="@color/black"/>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:textSize="16sp"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="start"
-                        android:textColor="@color/black"
-                        android:text="Sales NPSO"/>
-                    <TextView
-                        android:id="@+id/working_loss_sales_npso"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:textSize="16sp"
-                        android:layout_height="wrap_content"
-                        android:gravity="end"
-                        android:text="0"/>
-                </LinearLayout>
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
+                        android:background="@color/grey_200"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:textSize="16sp"
+                            android:layout_height="wrap_content"
+                            android:gravity="start"
+                            android:textColor="@color/black"
+                            android:text="Sales PSO"/>
+                        <TextView
+                            android:id="@+id/working_loss_sales_pso"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:textSize="16sp"
+                            android:layout_height="wrap_content"
+                            android:gravity="end"
+                            android:text="0"/>
+                    </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="8dp"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp"
-                    android:background="@color/grey_200"
-                    android:paddingBottom="8dp"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:textSize="16sp"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="start"
-                        android:textColor="@color/black"
-                        android:text="Konsinyasi"/>
-                    <TextView
-                        android:id="@+id/working_loss_konsinyasi"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:textSize="16sp"
-                        android:layout_height="wrap_content"
-                        android:gravity="end"
-                        android:text="0"/>
-                </LinearLayout>
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:textSize="16sp"
+                            android:layout_height="wrap_content"
+                            android:gravity="start"
+                            android:textColor="@color/black"
+                            android:text="Sales NPSO"/>
+                        <TextView
+                            android:id="@+id/working_loss_sales_npso"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:textSize="16sp"
+                            android:layout_height="wrap_content"
+                            android:gravity="end"
+                            android:text="0"/>
+                    </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="8dp"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp"
-                    android:paddingBottom="8dp"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:textSize="16sp"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="start"
-                        android:textColor="@color/black"
-                        android:text="Own Use TBBM"/>
-                    <TextView
-                        android:id="@+id/working_loss_ownuse_tbbm"
-                        android:layout_width="0dp"
-                        android:textSize="16sp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:gravity="end"
-                        android:text="0"/>
-                </LinearLayout>
+                        android:paddingTop="8dp"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
+                        android:background="@color/grey_200"
+                        android:paddingBottom="8dp"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:textSize="16sp"
+                            android:layout_height="wrap_content"
+                            android:gravity="start"
+                            android:textColor="@color/black"
+                            android:text="Konsinyasi"/>
+                        <TextView
+                            android:id="@+id/working_loss_konsinyasi"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:textSize="16sp"
+                            android:layout_height="wrap_content"
+                            android:gravity="end"
+                            android:text="0"/>
+                    </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="8dp"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp"
-                    android:paddingBottom="8dp"
-                    android:background="@color/grey_200"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:textSize="16sp"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="start"
-                        android:textColor="@color/black"
-                        android:text="Own Use Kapal"/>
-                    <TextView
-                        android:id="@+id/working_loss_ownuse_kapal"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:textSize="16sp"
-                        android:layout_height="wrap_content"
-                        android:gravity="end"
-                        android:text="0"/>
-                </LinearLayout>
+                        android:paddingTop="8dp"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
+                        android:paddingBottom="8dp"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:textSize="16sp"
+                            android:layout_height="wrap_content"
+                            android:gravity="start"
+                            android:textColor="@color/black"
+                            android:text="Own Use TBBM"/>
+                        <TextView
+                            android:id="@+id/working_loss_ownuse_tbbm"
+                            android:layout_width="0dp"
+                            android:textSize="16sp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:gravity="end"
+                            android:text="0"/>
+                    </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="8dp"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp"
-                    android:paddingBottom="8dp"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:textSize="16sp"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="start"
-                        android:textColor="@color/black"
-                        android:text="Total Penyaluran"/>
-                    <TextView
-                        android:id="@+id/working_loss_total_penyaluran"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:textSize="16sp"
-                        android:layout_height="wrap_content"
-                        android:gravity="end"
-                        android:text="0"/>
-                </LinearLayout>
+                        android:paddingTop="8dp"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
+                        android:paddingBottom="8dp"
+                        android:background="@color/grey_200"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:textSize="16sp"
+                            android:layout_height="wrap_content"
+                            android:gravity="start"
+                            android:textColor="@color/black"
+                            android:text="Own Use Kapal"/>
+                        <TextView
+                            android:id="@+id/working_loss_ownuse_kapal"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:textSize="16sp"
+                            android:layout_height="wrap_content"
+                            android:gravity="end"
+                            android:text="0"/>
+                    </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="8dp"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp"
-                    android:background="@color/grey_200"
-                    android:paddingBottom="8dp"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:textSize="16sp"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="start"
-                        android:textColor="@color/black"
-                        android:text="Blending Out"/>
-                    <TextView
-                        android:id="@+id/working_loss_blending_out"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:textSize="16sp"
-                        android:layout_height="wrap_content"
-                        android:gravity="end"
-                        android:text="0"/>
-                </LinearLayout>
+                        android:paddingTop="8dp"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
+                        android:paddingBottom="8dp"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:textSize="16sp"
+                            android:layout_height="wrap_content"
+                            android:gravity="start"
+                            android:textColor="@color/black"
+                            android:text="Total Penyaluran"/>
+                        <TextView
+                            android:id="@+id/working_loss_total_penyaluran"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:textSize="16sp"
+                            android:layout_height="wrap_content"
+                            android:gravity="end"
+                            android:text="0"/>
+                    </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="8dp"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp"
-                    android:paddingBottom="8dp"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:textSize="16sp"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="start"
-                        android:textColor="@color/black"
-                        android:text="Stock Akhir"/>
-                    <TextView
-                        android:id="@+id/working_loss_stock_akhir"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:textSize="16sp"
-                        android:layout_height="wrap_content"
-                        android:gravity="end"
-                        android:text="0"/>
-                </LinearLayout>
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
+                        android:paddingTop="8dp"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
+                        android:background="@color/grey_200"
+                        android:paddingBottom="8dp"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:textSize="16sp"
+                            android:layout_height="wrap_content"
+                            android:gravity="start"
+                            android:textColor="@color/black"
+                            android:text="Blending Out"/>
+                        <TextView
+                            android:id="@+id/working_loss_blending_out"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:textSize="16sp"
+                            android:layout_height="wrap_content"
+                            android:gravity="end"
+                            android:text="0"/>
+                    </LinearLayout>
 
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="6dp">
-            <LinearLayout
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="8dp"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
+                        android:paddingBottom="8dp"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:textSize="16sp"
+                            android:layout_height="wrap_content"
+                            android:gravity="start"
+                            android:textColor="@color/black"
+                            android:text="Stock Akhir"/>
+                        <TextView
+                            android:id="@+id/working_loss_stock_akhir"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:textSize="16sp"
+                            android:layout_height="wrap_content"
+                            android:gravity="end"
+                            android:text="0"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="12dp"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Working Losses"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:textSize="18sp"
-                    android:textAllCaps="true"
-                    android:textColor="@color/black"/>
+                android:layout_margin="6dp">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="8dp"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp"
-                    android:background="@color/grey_200"
-                    android:paddingBottom="8dp"
-                    android:orientation="horizontal">
+                    android:padding="12dp"
+                    android:orientation="vertical">
                     <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:textSize="16sp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="start"
-                        android:textColor="@color/black"
-                        android:text="Quantity"/>
-                    <TextView
-                        android:id="@+id/working_loss_quantity"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:textSize="16sp"
+                        android:text="Working Losses"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:textSize="18sp"
+                        android:textAllCaps="true"
+                        android:textColor="@color/black"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="end"
-                        android:text="0"/>
+                        android:paddingTop="8dp"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
+                        android:background="@color/grey_200"
+                        android:paddingBottom="8dp"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:textSize="16sp"
+                            android:layout_height="wrap_content"
+                            android:gravity="start"
+                            android:textColor="@color/black"
+                            android:text="Quantity"/>
+                        <TextView
+                            android:id="@+id/working_loss_quantity"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:textSize="16sp"
+                            android:layout_height="wrap_content"
+                            android:gravity="end"
+                            android:text="0"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="8dp"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
+                        android:paddingBottom="8dp"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:textSize="16sp"
+                            android:layout_height="wrap_content"
+                            android:gravity="start"
+                            android:textColor="@color/black"
+                            android:text="Percentage"/>
+                        <TextView
+                            android:id="@+id/working_loss_percentage"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:textSize="16sp"
+                            android:layout_height="wrap_content"
+                            android:gravity="end"
+                            android:text="0"/>
+                    </LinearLayout>
                 </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="8dp"
-                    android:paddingStart="8dp"
-                    android:paddingEnd="8dp"
-                    android:paddingBottom="8dp"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:textSize="16sp"
-                        android:layout_height="wrap_content"
-                        android:gravity="start"
-                        android:textColor="@color/black"
-                        android:text="Percentage"/>
-                    <TextView
-                        android:id="@+id/working_loss_percentage"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:textSize="16sp"
-                        android:layout_height="wrap_content"
-                        android:gravity="end"
-                        android:text="0"/>
-                </LinearLayout>
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>

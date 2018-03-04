@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -51,6 +52,9 @@ public class WorkingLossActivity extends AppCompatActivity {
     private int month, year;
     private LinearLayout container;
 
+    private ProgressBar progressBar;
+    private TextView emptyText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +72,9 @@ public class WorkingLossActivity extends AppCompatActivity {
         Calendar calendar = Calendar.getInstance();
         month = calendar.get(Calendar.MONTH);
         year = calendar.get(Calendar.YEAR);
+
+        progressBar = findViewById(R.id.working_loss_progressbar);
+        emptyText = findViewById(R.id.working_loss_empty_text);
 
         initView();
         setMonthButton(month, year);
@@ -210,6 +217,8 @@ public class WorkingLossActivity extends AppCompatActivity {
     }
 
     private void updateUi(int month, int year, String wilayah, final String produk) {
+        progressBar.setVisibility(View.VISIBLE);
+
         clearData();
         SharedPreferences preferences = WorkingLossActivity.this.getSharedPreferences(
                 "login",
@@ -253,6 +262,7 @@ public class WorkingLossActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ArrayList<WorkingLoss>> call, Response<ArrayList<WorkingLoss>> response) {
                 Log.w("code", String.valueOf(response.code()));
+                progressBar.setVisibility(View.GONE);
                 if (response.code() == 200) {
                     Log.w("size", String.valueOf(response.body().size()));
                     ArrayList<WorkingLoss> workingLosses = response.body();
@@ -261,6 +271,9 @@ public class WorkingLossActivity extends AppCompatActivity {
                             Log.w("fuel data", "ada");
                             container.setVisibility(View.VISIBLE);
                             setWorkingLoss(workingLosses.get(i));
+                            emptyText.setVisibility(View.GONE);
+                        } else {
+                            emptyText.setVisibility(View.VISIBLE);
                         }
                     }
                 }
@@ -268,7 +281,7 @@ public class WorkingLossActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ArrayList<WorkingLoss>> call, Throwable t) {
-
+                progressBar.setVisibility(View.GONE);
             }
         });
     }
