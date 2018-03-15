@@ -154,7 +154,7 @@ public class InputMatbalActivity extends AppCompatActivity {
         Retrofit retrofit = builder.build();
         UserClient userClient = retrofit.create(UserClient.class);
 
-        Call<Object> call = userClient.updateMatbal(matbals);
+        Call<Object> call = userClient.updateMatbalTanggal(matbals);
         call.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, Response<Object> response) {

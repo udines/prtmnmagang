@@ -10,10 +10,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -44,12 +46,15 @@ public class InputKonsumenActivity extends AppCompatActivity {
 
     /*button*/
     private Button kirim, tanggal;
+    private ProgressBar progressBar;
 
     private int year, month, day;
     private boolean tanggalSet;
+    private ArrayList<Konsumen> konsumens;
 
     private Spinner spinnerBb, spinnerKons;
     private EditText inputNilai;
+    private boolean isUpdate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +77,10 @@ public class InputKonsumenActivity extends AppCompatActivity {
         tanggal = findViewById(R.id.input_konsumen_tanggal);
         kirim = findViewById(R.id.input_konsumen_kirim);
         inputNilai = findViewById(R.id.input_konsumen_nilai);
+        progressBar = findViewById(R.id.input_konsumen_progress);
+
+        konsumens = new ArrayList<>();
+        isUpdate = false;
 
         /*init tanggal*/
         Calendar calendar = Calendar.getInstance();
@@ -103,8 +112,80 @@ public class InputKonsumenActivity extends AppCompatActivity {
                             fuel,
                             nilai
                     ));
-                    sendPostRequest(konsumens);
+
+                    if (isUpdate) {
+                        sendUpdateRequest(konsumens);
+                    } else {
+                        sendPostRequest(konsumens);
+                    }
                 }
+            }
+        });
+    }
+
+    private void sendUpdateRequest(ArrayList<Konsumen> konsumens) {
+
+        kirim.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
+
+        Log.w("input size", String.valueOf(konsumens.size()));
+
+        SharedPreferences preferences = InputKonsumenActivity.this.getSharedPreferences(
+                "login",
+                Context.MODE_PRIVATE
+        );
+
+        final String key = preferences.getString("userKey", "none");
+
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(new Interceptor() {
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request original = chain.request();
+
+                Request request = original.newBuilder()
+                        .header("Authorization", key)
+                        .method(original.method(), original.body())
+                        .build();
+                return chain.proceed(request);
+            }
+        });
+
+        String json = new Gson().toJson(konsumens);
+        Log.w("json", json);
+
+        OkHttpClient client = httpClient.build();
+
+        String baseUrl = "http://www.api.clicktuban.com/";
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client);
+
+        Retrofit retrofit = builder.build();
+        UserClient userClient = retrofit.create(UserClient.class);
+        Call<Object> call = userClient.updateKonsumenTanggal(konsumens);
+        call.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, Response<Object> response) {
+                Log.w("code", String.valueOf(response.code()));
+                if (response.code() == 200) {
+                    Log.w("response ", response.body().toString());
+
+                    kirim.setVisibility(View.VISIBLE);
+                    progressBar.setVisibility(View.GONE);
+
+                    Toast.makeText(InputKonsumenActivity.this, "Data berhasil diperbarui", Toast.LENGTH_LONG).show();
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+                Log.e("error", t.getMessage());
+
+                kirim.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
             }
         });
     }
@@ -120,6 +201,29 @@ public class InputKonsumenActivity extends AppCompatActivity {
 
         spinnerBb.setAdapter(adapterBb);
         spinnerKons.setAdapter(adapterKons);
+
+        spinnerBb.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                setInitialValue();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+        spinnerKons.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                setInitialValue();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
 
     private boolean isDateSet() {
@@ -152,6 +256,7 @@ public class InputKonsumenActivity extends AppCompatActivity {
                 day = i2;
                 setDateButton(year, month, day);
                 tanggalSet = true;
+                getKonsumenHari();
             }
         };
 
@@ -171,8 +276,68 @@ public class InputKonsumenActivity extends AppCompatActivity {
         });
     }
 
+    private void getKonsumenHari() {
+        Calendar cal = Calendar.getInstance();
+        cal.set(year, month, day);
+        Date date = new Date(cal.getTimeInMillis());
+        String tanggalSekarang;
+        tanggalSekarang = date.toString();
+        Log.w("tanggal", tanggalSekarang);
+
+        SharedPreferences preferences = InputKonsumenActivity.this.getSharedPreferences(
+                "login",
+                Context.MODE_PRIVATE
+        );
+        final String key = preferences.getString("userKey", "none");
+
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(new Interceptor() {
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request original = chain.request();
+
+                Request request = original.newBuilder()
+                        .header("Authorization", key)
+                        .method(original.method(), original.body())
+                        .build();
+                return chain.proceed(request);
+            }
+        });
+
+        OkHttpClient client = httpClient.build();
+
+        String baseUrl = "http://www.api.clicktuban.com/";
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client);
+
+        Retrofit retrofit = builder.build();
+        UserClient userClient = retrofit.create(UserClient.class);
+
+        Call<ArrayList<Konsumen>> call = userClient.getKonsumenTanggal(tanggalSekarang);
+        call.enqueue(new Callback<ArrayList<Konsumen>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Konsumen>> call, Response<ArrayList<Konsumen>> response) {
+                Log.w("code", String.valueOf(response.code()));
+                if (response.code() == 200) {
+                    konsumens = response.body();
+                    setInitialValue();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Konsumen>> call, Throwable t) {
+
+            }
+        });
+    }
+
     private void sendPostRequest(ArrayList<Konsumen> konsumens) {
         Log.w("input size", String.valueOf(konsumens.size()));
+
+        kirim.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
 
         SharedPreferences preferences = InputKonsumenActivity.this.getSharedPreferences(
                 "login",
@@ -216,6 +381,10 @@ public class InputKonsumenActivity extends AppCompatActivity {
                 Log.w("code", String.valueOf(response.code()));
                 if (response.code() == 200) {
                     Log.w("response ", response.body().toString());
+
+                    kirim.setVisibility(View.VISIBLE);
+                    progressBar.setVisibility(View.GONE);
+
                     Toast.makeText(InputKonsumenActivity.this, "Data berhasil ditambahkan", Toast.LENGTH_LONG).show();
                     finish();
                 }
@@ -224,7 +393,34 @@ public class InputKonsumenActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<Object> call, Throwable t) {
                 Log.w("error", t.getMessage());
+                kirim.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
             }
         });
+    }
+
+    private void setInitialValue() {
+        String fuel = spinnerBb.getSelectedItem().toString();
+        String konsumen = spinnerKons.getSelectedItem().toString();
+        Log.w("init value", fuel + " - " + konsumen);
+
+        inputNilai.setText("");
+
+        if (konsumens.size() > 0) {
+            for (int i = 0; i < konsumens.size(); i++) {
+                if (konsumens.get(i).getKonsumen().equals(konsumen) && konsumens.get(i).getFuel().equals(fuel)) {
+                    inputNilai.setText(String.valueOf(konsumens.get(i).getNilai()));
+                    isUpdate = true;
+                    Log.w("fuel", String.valueOf(konsumens.get(i).getNilai()));
+                    break;
+                } else {
+                    isUpdate = false;
+                }
+            }
+        } else {
+            isUpdate = false;
+            Log.w("konsumens", "tidak ada");
+        }
+        Log.w("is update", String.valueOf(isUpdate));
     }
 }

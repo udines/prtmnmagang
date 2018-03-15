@@ -51,7 +51,7 @@ public interface UserClient {
     @GET("distribusi/matbal/total/{tanggal}")
     Call<ArrayList<Matbal>> getMatbalHari(@Path("tanggal") String tanggal);
     @PUT("distribusi/matbal/check")
-    Call<Object> updateMatbal(@Body ArrayList<Matbal> matbals);
+    Call<Object> updateMatbalTanggal(@Body ArrayList<Matbal> matbals);
 
     @GET("distribusi/konsumen/{bulan}")
     Call<ArrayList<Konsumen>> getKonsumen(@Path("bulan") int bulan);
@@ -63,6 +63,8 @@ public interface UserClient {
     Call<ArrayList<Konsumen>> getKonsumenBulan(@Path("tahun") String tahun, @Path("bulan") String bulan);
     @GET("distribusi/konsumen/{tanggal}")
     Call<ArrayList<Konsumen>> getKonsumenTanggal(@Path("tanggal") String tanggal);
+    @PUT("distribusi/konsumen/")
+    Call<Object> updateKonsumenTanggal(@Body ArrayList<Konsumen> konsumens);
 
     @GET("distribusi/wilayah/{bulan}")
     Call<ArrayList<Wilayah>> getWilayah(@Path("bulan") int bulan);
