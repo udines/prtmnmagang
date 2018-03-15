@@ -26,6 +26,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface UserClient {
@@ -49,6 +50,8 @@ public interface UserClient {
     Call<ArrayList<Matbal>> getMatbalBulan(@Path("tahun") String tahun, @Path("bulan") String bulan);
     @GET("distribusi/matbal/total/{tanggal}")
     Call<ArrayList<Matbal>> getMatbalHari(@Path("tanggal") String tanggal);
+    @PUT("distribusi/matbal/check")
+    Call<Object> updateMatbal(@Body ArrayList<Matbal> matbals);
 
     @GET("distribusi/konsumen/{bulan}")
     Call<ArrayList<Konsumen>> getKonsumen(@Path("bulan") int bulan);

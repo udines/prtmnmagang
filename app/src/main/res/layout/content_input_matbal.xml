@@ -19,54 +19,90 @@
             android:text="Pilih Tanggal"
             style="@style/Base.Widget.AppCompat.Button.Colored"
             android:id="@+id/input_matbal_tanggal"/>
-        <EditText
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
-            android:textSize="16sp"
-            android:id="@+id/input_matbal_pertamax"
-            android:maxLines="1"
-            android:hint="Matbal pertamax"/>
-        <EditText
+            android:layout_marginBottom="4dp">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:textSize="16sp"
+                android:id="@+id/input_matbal_pertamax"
+                android:maxLines="1"
+                android:hint="Matbal pertamax"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
-            android:textSize="16sp"
-            android:id="@+id/input_matbal_pertalite"
-            android:maxLines="1"
-            android:hint="Matbal pertalite"/>
-        <EditText
+            android:layout_marginBottom="4dp">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:textSize="16sp"
+                android:id="@+id/input_matbal_pertalite"
+                android:maxLines="1"
+                android:hint="Matbal pertalite"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
-            android:textSize="16sp"
-            android:id="@+id/input_matbal_premium"
-            android:maxLines="1"
-            android:hint="Matbal premium"/>
-        <EditText
-            android:layout_width="match_parent"
-            android:textSize="16sp"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:id="@+id/input_matbal_biosolar"
-            android:maxLines="1"
-            android:hint="Matbal biosolar"/>
-        <EditText
+            android:layout_marginBottom="4dp">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:textSize="16sp"
+                android:id="@+id/input_matbal_premium"
+                android:maxLines="1"
+                android:hint="Matbal premium"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
-            android:textSize="16sp"
-            android:id="@+id/input_matbal_solar"
-            android:maxLines="1"
-            android:hint="Matbal solar"/>
-        <EditText
+            android:layout_marginBottom="4dp">
+            <EditText
+                android:layout_width="match_parent"
+                android:textSize="16sp"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:id="@+id/input_matbal_biosolar"
+                android:maxLines="1"
+                android:hint="Matbal biosolar"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
-            android:textSize="16sp"
-            android:id="@+id/input_matbal_bioflame"
-            android:maxLines="1"
-            android:hint="Matbal biofame"/>
+            android:layout_marginBottom="4dp">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:textSize="16sp"
+                android:id="@+id/input_matbal_solar"
+                android:maxLines="1"
+                android:hint="Matbal solar"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:textSize="16sp"
+                android:id="@+id/input_matbal_bioflame"
+                android:maxLines="1"
+                android:hint="Matbal biofame"/>
+        </android.support.design.widget.TextInputLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -96,5 +132,12 @@
             android:id="@+id/input_matbal_kirim"
             android:layout_margin="4dp"
             android:text="Kirim"/>
+        <ProgressBar
+            android:id="@+id/input_matbal_progress"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:layout_gravity="center_horizontal"/>
     </LinearLayout>
 </ScrollView>

@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -20,8 +21,10 @@ import com.pertamina.pertaminatuban.service.UserClient;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -35,11 +38,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class InputMatbalActivity extends AppCompatActivity {
 
     private int year, month, day;
-    private Button dateButton;
+    private Button dateButton, kirim;
     private boolean tanggalSet, isUpdate;
 
     private EditText inputPertamax, inputPertalite, inputPremium, inputSolar, inputBiosolar, inputBioflame,
             inputLain, inputLainNilai;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +62,8 @@ public class InputMatbalActivity extends AppCompatActivity {
 
         /*inisialisasi view yang digunakan lebih dari satu fungsi*/
         dateButton = findViewById(R.id.input_matbal_tanggal);
+        progressBar = findViewById(R.id.input_matbal_progress);
+        kirim = findViewById(R.id.input_matbal_kirim);
 
         /*inisialisasi tanggal sesuai dengan tanggal hari ini*/
         Calendar calendar = Calendar.getInstance();
@@ -71,7 +77,6 @@ public class InputMatbalActivity extends AppCompatActivity {
     }
 
     private void getData() {
-        Button send = findViewById(R.id.input_matbal_kirim);
         inputPertamax = findViewById(R.id.input_matbal_pertamax);
         inputPertalite = findViewById(R.id.input_matbal_pertalite);
         inputPremium = findViewById(R.id.input_matbal_premium);
@@ -81,7 +86,7 @@ public class InputMatbalActivity extends AppCompatActivity {
         inputLain = findViewById(R.id.input_matbal_lain);
         inputLainNilai = findViewById(R.id.input_matbal_lain_nilai);
 
-        send.setOnClickListener(new View.OnClickListener() {
+        kirim.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (tanggalSet) {
@@ -110,16 +115,76 @@ public class InputMatbalActivity extends AppCompatActivity {
 
     private void sendUpdateRequest(ArrayList<Matbal> matbals) {
         //update matbals
+
+        kirim.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
+
+        SharedPreferences preferences = InputMatbalActivity.this.getSharedPreferences(
+                "login",
+                Context.MODE_PRIVATE
+        );
+
+        final String key = preferences.getString("userKey", "none");
+
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(new Interceptor() {
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request original = chain.request();
+
+                Request request = original.newBuilder()
+                        .header("Authorization", key)
+                        .method(original.method(), original.body())
+                        .build();
+                return chain.proceed(request);
+            }
+        });
+
+        String json = new Gson().toJson(matbals);
+        Log.w("json", json);
+
+        OkHttpClient client = httpClient.build();
+
+        String baseUrl = "http://www.api.clicktuban.com/";
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client);
+
+        Retrofit retrofit = builder.build();
+        UserClient userClient = retrofit.create(UserClient.class);
+
+        Call<Object> call = userClient.updateMatbal(matbals);
+        call.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, Response<Object> response) {
+                Log.w("code", String.valueOf(response.code()));
+                if (response.code() == 200) {
+                    kirim.setVisibility(View.VISIBLE);
+                    progressBar.setVisibility(View.GONE);
+                    Log.w("response size", response.body().toString());
+                    Toast.makeText(InputMatbalActivity.this, "Data berhasil ditambahkan", Toast.LENGTH_LONG).show();
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+                Log.w("error", t.getMessage());
+                kirim.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
+            }
+        });
     }
 
     private void getInitialInputData() {
-        isUpdate = true;
 
         Calendar cal = Calendar.getInstance();
         cal.set(year, month, day);
         Date date = new Date(cal.getTimeInMillis());
         String tanggalSekarang;
         tanggalSekarang = date.toString();
+        Log.w("tanggal", tanggalSekarang);
 
         SharedPreferences preferences = InputMatbalActivity.this.getSharedPreferences(
                 "login",
@@ -158,7 +223,15 @@ public class InputMatbalActivity extends AppCompatActivity {
             public void onResponse(Call<ArrayList<Matbal>> call, Response<ArrayList<Matbal>> response) {
                 Log.w("code", String.valueOf(response.code()));
                 if (response.code() == 200 && response.body().size() > 0) {
-                    setInitialInputData(response.body());
+                    Log.w("data", new Gson().toJson(response.body()));
+                    ArrayList<Matbal> matbals = new ArrayList<>();
+                    ArrayList<Matbal> body = response.body();
+                    for (int i = 0; i < body.size(); i++) {
+                        if (body.get(i).getNilai() > 0) {
+                            matbals.add(body.get(i));
+                        }
+                    }
+                    setInitialInputData(matbals);
                 }
             }
 
@@ -170,33 +243,44 @@ public class InputMatbalActivity extends AppCompatActivity {
     }
 
     private void setInitialInputData(ArrayList<Matbal> matbals) {
-        for (int i = 0; i < matbals.size(); i++) {
-            String nilai = String.valueOf(matbals.get(i).getNilai());
-            switch (matbals.get(i).getFuel()) {
-                case Matbal.BIOFAME:
-                    inputBioflame.setText(nilai);
-                    break;
-                case Matbal.BIOSOLAR:
-                    inputBiosolar.setText(nilai);
-                    break;
-                case Matbal.PERTALITE:
-                    inputPertalite.setText(nilai);
-                    break;
-                case Matbal.PERTAMAX:
-                    inputPertamax.setText(nilai);
-                    break;
-                case Matbal.PREMIUM:
-                    inputPremium.setText(nilai);
-                    break;
-                case Matbal.SOLAR:
-                    inputSolar.setText(nilai);
-                    break;
+        if (matbals.size() > 0) {
+            isUpdate = true;
+            for (int i = 0; i < matbals.size(); i++) {
+                String nilai = String.valueOf(matbals.get(i).getNilai());
+                switch (matbals.get(i).getFuel()) {
+                    case Matbal.BIOFAME:
+                        inputBioflame.setText(nilai);
+                        break;
+                    case Matbal.BIOSOLAR:
+                        inputBiosolar.setText(nilai);
+                        break;
+                    case Matbal.PERTALITE:
+                        inputPertalite.setText(nilai);
+                        break;
+                    case Matbal.PERTAMAX:
+                        inputPertamax.setText(nilai);
+                        break;
+                    case Matbal.PREMIUM:
+                        inputPremium.setText(nilai);
+                        break;
+                    case Matbal.SOLAR:
+                        inputSolar.setText(nilai);
+                        break;
+                }
             }
+        } else {
+            isUpdate = false;
         }
+        Log.w("is update", String.valueOf(isUpdate));
     }
 
     private void sendPostRequest(ArrayList<Matbal> matbals) {
         Log.w("input size", String.valueOf(matbals.size()));
+
+        kirim.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
+
+        Log.w("post body", new Gson().toJson(matbals));
 
         SharedPreferences preferences = InputMatbalActivity.this.getSharedPreferences(
                 "login",
@@ -239,6 +323,9 @@ public class InputMatbalActivity extends AppCompatActivity {
             public void onResponse(Call<Object> call, Response<Object> response) {
                 Log.w("code", String.valueOf(response.code()));
                 if (response.code() == 200) {
+                    kirim.setVisibility(View.VISIBLE);
+                    progressBar.setVisibility(View.GONE);
+
                     Log.w("response size", response.body().toString());
                     Toast.makeText(InputMatbalActivity.this, "Data berhasil ditambahkan", Toast.LENGTH_LONG).show();
                     finish();
@@ -248,6 +335,8 @@ public class InputMatbalActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<Object> call, Throwable t) {
                 Log.w("error", t.getMessage());
+                kirim.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
             }
         });
     }
@@ -267,7 +356,10 @@ public class InputMatbalActivity extends AppCompatActivity {
         } else {
             nilai = 0;
         }
-        String date = String.valueOf(year + "-" + month + 1 + "-" + day);
+        Calendar cal = Calendar.getInstance();
+        cal.set(year, month, day);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        String date = format.format(new Date(cal.getTimeInMillis()));
         return new Matbal(date, fuel, nilai);
     }
 
@@ -284,6 +376,7 @@ public class InputMatbalActivity extends AppCompatActivity {
                 day = i2;
                 setDateButton(year, month, day);
                 tanggalSet = true;
+                clearInput();
                 getInitialInputData();
             }
         };
@@ -302,6 +395,17 @@ public class InputMatbalActivity extends AppCompatActivity {
                 dialog.show();
             }
         });
+    }
+
+    private void clearInput() {
+        inputPertamax.setText("");
+        inputPertalite.setText("");
+        inputPremium.setText("");
+        inputSolar.setText("");
+        inputBiosolar.setText("");
+        inputBioflame.setText("");
+        inputLain.setText("");
+        inputLainNilai.setText("");
     }
 
 }
