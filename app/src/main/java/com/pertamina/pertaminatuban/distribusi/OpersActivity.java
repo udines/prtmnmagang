@@ -26,8 +26,11 @@ import java.io.IOException;
 import java.sql.Date;
 import java.sql.Time;
 import java.text.DateFormatSymbols;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -207,7 +210,29 @@ public class OpersActivity extends AppCompatActivity {
         sum.setText(String.valueOf(opers.getJumlahKeluar()));
         minJam.setText(opers.getMinJamKeluar());
         maxJam.setText(opers.getMaxJamKeluar());
-        jamOps.setText(opers.getJamOperasional());
+
+        SimpleDateFormat parseFormat = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
+        java.util.Date minDate, maxDate;
+        try {
+            minDate = parseFormat.parse(opers.getMinJamKeluar());
+            maxDate = parseFormat.parse(opers.getMaxJamKeluar());
+
+            //diff in millis
+            long diff = maxDate.getTime() - minDate.getTime();
+
+            //diff in seconds
+            diff = diff / 1000;
+
+            //diff in minutes
+            diff = diff / 60;
+
+            long hour = diff / 60;
+            long mins = diff % 60;
+
+            jamOps.setText(String.valueOf(hour + "jam " + mins + "menit"));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
     }
 
