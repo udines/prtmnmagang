@@ -21,11 +21,30 @@ public class Ritase {
     @Expose
     private double ritase;
 
+    @SerializedName("date")
+    @Expose
+    private String date;
+
+    public Ritase(int jumlahMobil, int dayaAngkut, double tpHarian, String date) {
+        this.jumlahMobil = jumlahMobil;
+        this.dayaAngkut = dayaAngkut;
+        this.tpHarian = tpHarian;
+        this.date = date;
+    }
+
     public Ritase(int jumlahMobil, int dayaAngkut, double tpHarian, double ritase) {
         this.jumlahMobil = jumlahMobil;
         this.dayaAngkut = dayaAngkut;
         this.tpHarian = tpHarian;
         this.ritase = ritase;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public int getJumlahMobil() {

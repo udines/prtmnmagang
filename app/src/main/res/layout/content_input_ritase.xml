@@ -19,52 +19,43 @@
             android:text="Pilih Tanggal"
             style="@style/Base.Widget.AppCompat.Button.Colored"
             android:id="@+id/input_ritase_tanggal"/>
+
         <EditText
+            android:id="@+id/input_ritase_jumlah_mobil"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp"
-            android:layout_marginTop="8dp"
-            android:inputType="textCapWords"
-            android:maxLines="1"
-            android:id="@+id/input_ritase_trasnportir"
-            android:hint="Nama Transportir"/>
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:id="@+id/input_ritase_nomobil"
-            android:inputType="textCapWords"
-            android:maxLines="1"
-            android:hint="Nomor Mobil"/>
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:id="@+id/input_ritase_status"
-            android:inputType="textCapWords"
-            android:maxLines="1"
-            android:hint="Status Transportir"/>
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:id="@+id/input_ritase_kapasitas"
             android:inputType="number"
             android:maxLines="1"
-            android:hint="Kapasitas MT"/>
+            android:hint="Jumlah Mobil"/>
         <EditText
+            android:id="@+id/input_ritase_daya_angkut"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp"
-            android:id="@+id/input_ritase_nilai"
             android:inputType="number"
             android:maxLines="1"
-            android:hint="Nilai"/>
+            android:hint="Daya Angkut"/>
+        <EditText
+            android:id="@+id/input_ritase_tp_harian"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:inputType="number"
+            android:maxLines="1"
+            android:hint="Tp Harian"/>
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/input_ritase_kirim"
             android:layout_margin="4dp"
             android:text="Kirim"/>
+        <ProgressBar
+            android:id="@+id/input_ritase_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="4dp"
+            android:visibility="gone"/>
     </LinearLayout>
 </ScrollView>

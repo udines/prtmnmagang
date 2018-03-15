@@ -94,6 +94,8 @@ public interface UserClient {
     Call<ArrayList<Ritase>> getRitaseBulan(@Path("tahun") String tahun, @Path("bulan") String bulan);
     @GET("distribusi/ritase/tanggal/{tanggal}")
     Call<Ritase> getRitaseTanggal(@Path("tanggal") String tanggal);
+    @PUT("distribusi/ritase/check")
+    Call<Object> updateRitaseTanggal(@Body ArrayList<Ritase> ritases);
 
     @GET("distribusi/{data}/{bulan}")
     Call<Object> getObject(@Path("data") String jenisData, @Path("bulan") int bulan);
