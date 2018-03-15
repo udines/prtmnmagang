@@ -85,6 +85,8 @@ public interface UserClient {
     Call<ArrayList<Opers>> getOpersTahun(@Path("tahun") String tahun);
     @GET("distribusi/opers/tanggal/{tanggal}")
     Call<Opers> getOpersTanggal(@Path("tanggal") String tanggal);
+    @PUT("distribusi/opers/check")
+    Call<Object> updateOpersTanggal(@Body Opers opers);
 
     @GET("distribusi/ritase/{bulan}")
     Call<ArrayList<Ritase>> getRitase(@Path("bulan") int bulan);

@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -25,6 +26,7 @@ import com.pertamina.pertaminatuban.service.UserClient;
 
 import java.io.IOException;
 import java.sql.Time;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -48,6 +50,8 @@ public class InputOpersActivity extends AppCompatActivity {
     private int year, month, day, hour, min;
     private int minHour, minMins;
     private int maxHour, maxMins;
+    private boolean isUpdate;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +73,9 @@ public class InputOpersActivity extends AppCompatActivity {
         minTimeButton = findViewById(R.id.input_opers_min_jam);
         maxTimeButton = findViewById(R.id.input_opers_max_jam);
         kirim = findViewById(R.id.input_opers_kirim);
+        progressBar = findViewById(R.id.input_opers_progress);
+
+        isUpdate = false;
         
         /*inisialisasi tanggal*/
         Calendar calendar = Calendar.getInstance();
@@ -139,7 +146,7 @@ public class InputOpersActivity extends AppCompatActivity {
         calendar.set(year, month, day, hour, min);
         Date date = new Date();
         date.setTime(calendar.getTimeInMillis());
-        button.setText(format.format(date));
+        button.setText(String.valueOf(format.format(date) + ":00"));
     }
 
     private void getOpersData() {
@@ -162,12 +169,79 @@ public class InputOpersActivity extends AppCompatActivity {
                             minTime.toString(),
                             maxTime.toString()
                     );
-                    sendPostRequest(opers);
+
+                    if (isUpdate) {
+                        sendUpdateRequest(opers);
+                    } else {
+                        sendPostRequest(opers);
+                    }
                 }
             }
         });
     }
-    
+
+    private void sendUpdateRequest(Opers opers) {
+        Log.w("update", "send update request");
+        kirim.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
+
+        SharedPreferences preferences = InputOpersActivity.this.getSharedPreferences(
+                "login",
+                Context.MODE_PRIVATE
+        );
+
+        final String key = preferences.getString("userKey", "none");
+
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(new Interceptor() {
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request original = chain.request();
+
+                Request request = original.newBuilder()
+                        .header("Authorization", key)
+                        .method(original.method(), original.body())
+                        .build();
+                return chain.proceed(request);
+            }
+        });
+
+        String json = new Gson().toJson(opers);
+        Log.w("json", json);
+
+        OkHttpClient client = httpClient.build();
+
+        String baseUrl = "http://www.api.clicktuban.com/";
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client);
+
+        Retrofit retrofit = builder.build();
+        UserClient userClient = retrofit.create(UserClient.class);
+        Call<Object> call = userClient.updateOpersTanggal(opers);
+        call.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, Response<Object> response) {
+                Log.w("code", String.valueOf(response.code()));
+                kirim.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
+                if (response.code() == 200) {
+                    Log.w("response ", response.body().toString());
+                    Toast.makeText(InputOpersActivity.this, "Data berhasil diperbarui", Toast.LENGTH_LONG).show();
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+                Log.e("error", t.getMessage());
+                kirim.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
+            }
+        });
+    }
+
     private boolean isMinTimeSet() {
         if (!minTimeSet) {
             Toast.makeText(this, "Pilih jam", Toast.LENGTH_SHORT).show();
@@ -211,6 +285,7 @@ public class InputOpersActivity extends AppCompatActivity {
                         day = i2;
                         dateSet = true;
                         setDateButton(year, month, day);
+                        getInitOpers();
                     }
                 };
                 DatePickerDialog dialog = new DatePickerDialog(
@@ -225,11 +300,108 @@ public class InputOpersActivity extends AppCompatActivity {
         });
     }
 
+    private void getInitOpers() {
+        clearInput();
+
+        Calendar cal = Calendar.getInstance();
+        cal.set(year, month, day);
+        java.sql.Date date = new java.sql.Date(cal.getTimeInMillis());
+        String tanggalSekarang;
+        tanggalSekarang = date.toString();
+        Log.w("tanggal", tanggalSekarang);
+
+        SharedPreferences preferences = InputOpersActivity.this.getSharedPreferences(
+                "login",
+                Context.MODE_PRIVATE
+        );
+        final String key = preferences.getString("userKey", "none");
+
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(new Interceptor() {
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request original = chain.request();
+
+                Request request = original.newBuilder()
+                        .header("Authorization", key)
+                        .method(original.method(), original.body())
+                        .build();
+                return chain.proceed(request);
+            }
+        });
+
+        OkHttpClient client = httpClient.build();
+
+        String baseUrl = "http://www.api.clicktuban.com/";
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client);
+
+        Retrofit retrofit = builder.build();
+        UserClient userClient = retrofit.create(UserClient.class);
+        Call<Opers> call = userClient.getOpersTanggal(tanggalSekarang);
+        call.enqueue(new Callback<Opers>() {
+            @Override
+            public void onResponse(Call<Opers> call, Response<Opers> response) {
+                Log.w("code", String.valueOf(response.code()));
+                if (response.code() == 200 && response.body() != null) {
+                    Log.w("body", new Gson().toJson(response.body()));
+                    isUpdate = true;
+
+                    Opers object = response.body();
+                    inputJumlah.setText(String.valueOf(object.getJumlahKeluar()));
+                    minTimeButton.setText(String.valueOf(object.getMinJamKeluar()));
+                    maxTimeButton.setText(String.valueOf(object.getMaxJamKeluar()));
+
+                    SimpleDateFormat parseFormat = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
+                    Calendar minCal = Calendar.getInstance();
+                    Calendar maxCal = Calendar.getInstance();
+                    Date minDate, maxDate;
+                    try {
+                        minDate = parseFormat.parse(object.getMinJamKeluar());
+                        maxDate = parseFormat.parse(object.getMaxJamKeluar());
+
+                        minCal.setTimeInMillis(minDate.getTime());
+                        maxCal.setTimeInMillis(maxDate.getTime());
+
+                        minMins = minCal.get(Calendar.MINUTE);
+                        minHour = minCal.get(Calendar.HOUR_OF_DAY);
+                        minTimeSet = true;
+
+                        maxMins = maxCal.get(Calendar.MINUTE);
+                        maxHour = maxCal.get(Calendar.HOUR_OF_DAY);
+                        maxTimeSet = true;
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+                Log.w("is update", String.valueOf(isUpdate));
+            }
+
+            @Override
+            public void onFailure(Call<Opers> call, Throwable t) {
+                Log.e("error", t.getMessage());
+                isUpdate = false;
+            }
+        });
+    }
+
+    private void clearInput() {
+        inputJumlah.setText("");
+        minTimeSet = false;
+        maxTimeSet = false;
+        minTimeButton.setText("pilih jam");
+        maxTimeButton.setText("pilih jam");
+    }
+
     private void setDateButton(int year, int month, int day) {
         tanggalButton.setText(String.valueOf(year + " - " + month + 1 + " - " + day));
     }
 
     private void sendPostRequest(Opers opers) {
+        kirim.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
 
         SharedPreferences preferences = InputOpersActivity.this.getSharedPreferences(
                 "login",
@@ -271,6 +443,8 @@ public class InputOpersActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Object> call, Response<Object> response) {
                 Log.w("code", String.valueOf(response.code()));
+                kirim.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
                 if (response.code() == 200) {
                     Log.w("response ", response.body().toString());
                     Toast.makeText(InputOpersActivity.this, "Data berhasil ditambahkan", Toast.LENGTH_LONG).show();
@@ -281,6 +455,8 @@ public class InputOpersActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<Object> call, Throwable t) {
                 Log.w("error", t.getMessage());
+                kirim.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
             }
         });
     }

@@ -57,5 +57,12 @@
             android:id="@+id/input_opers_kirim"
             android:layout_margin="4dp"
             android:text="Kirim"/>
+        <ProgressBar
+            android:id="@+id/input_opers_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:layout_gravity="center_horizontal"
+            android:visibility="gone"/>
     </LinearLayout>
 </ScrollView>

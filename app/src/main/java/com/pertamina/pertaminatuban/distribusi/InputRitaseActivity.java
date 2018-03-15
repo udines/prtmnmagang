@@ -172,6 +172,8 @@ public class InputRitaseActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Object> call, Response<Object> response) {
                 Log.w("code", String.valueOf(response.code()));
+                kirim.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
                 if (response.code() == 200) {
                     Log.w("response ", response.body().toString());
 
@@ -278,8 +280,6 @@ public class InputRitaseActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Ritase> call, Response<Ritase> response) {
                 Log.w("code", String.valueOf(response.code()));
-                kirim.setVisibility(View.VISIBLE);
-                progressBar.setVisibility(View.GONE);
                 if (response.code() == 200 && response.body() != null) {
                     Log.w("body", new Gson().toJson(response.body()));
                     isUpdate = true;
@@ -297,8 +297,6 @@ public class InputRitaseActivity extends AppCompatActivity {
                 Log.e("error", t.getMessage());
                 isUpdate = false;
                 Log.w("is update", String.valueOf(isUpdate));
-                kirim.setVisibility(View.VISIBLE);
-                progressBar.setVisibility(View.GONE);
             }
         });
     }
@@ -349,6 +347,8 @@ public class InputRitaseActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Object> call, Response<Object> response) {
                 Log.w("code", String.valueOf(response.code()));
+                kirim.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
                 if (response.code() == 200) {
                     Log.w("response ", response.body().toString());
 
