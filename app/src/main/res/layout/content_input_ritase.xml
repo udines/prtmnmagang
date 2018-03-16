@@ -20,30 +20,48 @@
             style="@style/Base.Widget.AppCompat.Button.Colored"
             android:id="@+id/input_ritase_tanggal"/>
 
-        <EditText
-            android:id="@+id/input_ritase_jumlah_mobil"
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:inputType="number"
-            android:maxLines="1"
-            android:hint="Jumlah Mobil"/>
-        <EditText
-            android:id="@+id/input_ritase_daya_angkut"
+            android:layout_marginBottom="4dp">
+            <EditText
+                android:id="@+id/input_ritase_jumlah_mobil"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:inputType="number"
+                android:maxLines="1"
+                android:hint="Jumlah Mobil"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:inputType="number"
-            android:maxLines="1"
-            android:hint="Daya Angkut"/>
-        <EditText
-            android:id="@+id/input_ritase_tp_harian"
+            android:layout_marginBottom="4dp">
+            <EditText
+                android:id="@+id/input_ritase_daya_angkut"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:inputType="number"
+                android:maxLines="1"
+                android:hint="Daya Angkut"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:inputType="number"
-            android:maxLines="1"
-            android:hint="Tp Harian"/>
+            android:layout_marginBottom="4dp">
+            <EditText
+                android:id="@+id/input_ritase_tp_harian"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:inputType="number"
+                android:maxLines="1"
+                android:hint="Tp Harian"/>
+        </android.support.design.widget.TextInputLayout>
+
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

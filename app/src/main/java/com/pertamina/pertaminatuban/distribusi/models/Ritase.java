@@ -39,6 +39,14 @@ public class Ritase {
         this.ritase = ritase;
     }
 
+    public Ritase(int jumlahMobil, int dayaAngkut, double tpHarian, double ritase, String date) {
+        this.jumlahMobil = jumlahMobil;
+        this.dayaAngkut = dayaAngkut;
+        this.tpHarian = tpHarian;
+        this.ritase = ritase;
+        this.date = date;
+    }
+
     public String getDate() {
         return date;
     }

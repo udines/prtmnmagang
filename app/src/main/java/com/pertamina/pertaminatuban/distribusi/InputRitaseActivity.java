@@ -105,18 +105,20 @@ public class InputRitaseActivity extends AppCompatActivity {
                         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
                         tanggal = format.format(new Date(cal.getTimeInMillis()));
 
-                        ArrayList<Ritase> ritases = new ArrayList<>();
-                        ritases.add(new Ritase(
+                        double ritaseValue = tpHarian / (jumlahMobil * dayaAngkut);
+
+                        Ritase ritase = new Ritase(
                                 jumlahMobil,
                                 dayaAngkut,
                                 tpHarian,
+                                ritaseValue,
                                 tanggal
-                        ));
+                        );
 
                         if (isUpdate) {
-                            sendUpdateRequest(ritases);
+                            sendUpdateRequest(ritase);
                         } else {
-                            sendPostRequest(ritases);
+                            sendPostRequest(ritase);
                         }
                     } else {
                         Toast.makeText(InputRitaseActivity.this, "Lengkapi data", Toast.LENGTH_SHORT).show();
@@ -126,8 +128,7 @@ public class InputRitaseActivity extends AppCompatActivity {
         });
     }
 
-    private void sendUpdateRequest(ArrayList<Ritase> ritases) {
-        Log.w("input size", String.valueOf(ritases.size()));
+    private void sendUpdateRequest(Ritase ritase) {
 
         kirim.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
@@ -153,7 +154,7 @@ public class InputRitaseActivity extends AppCompatActivity {
             }
         });
 
-        String json = new Gson().toJson(ritases);
+        String json = new Gson().toJson(ritase);
         Log.w("json", json);
 
         OkHttpClient client = httpClient.build();
@@ -167,7 +168,7 @@ public class InputRitaseActivity extends AppCompatActivity {
         Retrofit retrofit = builder.build();
         UserClient userClient = retrofit.create(UserClient.class);
 
-        Call<Object> call = userClient.updateRitaseTanggal(ritases);
+        Call<Object> call = userClient.updateRitaseTanggal(ritase);
         call.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, Response<Object> response) {
@@ -237,6 +238,8 @@ public class InputRitaseActivity extends AppCompatActivity {
     }
 
     private void getInitialData() {
+        clearInput();
+
         Calendar cal = Calendar.getInstance();
         cal.set(year, month, day);
         java.sql.Date date = new java.sql.Date(cal.getTimeInMillis());
@@ -301,8 +304,13 @@ public class InputRitaseActivity extends AppCompatActivity {
         });
     }
 
-    private void sendPostRequest(ArrayList<Ritase> ritases) {
-        Log.w("input size", String.valueOf(ritases.size()));
+    private void clearInput() {
+        inputJumlahMobil.setText("");
+        inputDayaAngkut.setText("");
+        inputTpHarian.setText("");
+    }
+
+    private void sendPostRequest(Ritase ritase) {
 
         kirim.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
@@ -328,7 +336,7 @@ public class InputRitaseActivity extends AppCompatActivity {
             }
         });
 
-        String json = new Gson().toJson(ritases);
+        String json = new Gson().toJson(ritase);
         Log.w("json", json);
 
         OkHttpClient client = httpClient.build();
@@ -342,7 +350,7 @@ public class InputRitaseActivity extends AppCompatActivity {
         Retrofit retrofit = builder.build();
         UserClient userClient = retrofit.create(UserClient.class);
 
-        Call<Object> call = userClient.postRitase(ritases);
+        Call<Object> call = userClient.postRitase(ritase);
         call.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, Response<Object> response) {

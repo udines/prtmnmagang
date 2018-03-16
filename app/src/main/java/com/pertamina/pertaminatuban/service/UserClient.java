@@ -97,14 +97,14 @@ public interface UserClient {
     @GET("distribusi/ritase/tanggal/{tanggal}")
     Call<Ritase> getRitaseTanggal(@Path("tanggal") String tanggal);
     @PUT("distribusi/ritase/check")
-    Call<Object> updateRitaseTanggal(@Body ArrayList<Ritase> ritases);
+    Call<Object> updateRitaseTanggal(@Body Ritase ritase);
 
     @GET("distribusi/{data}/{bulan}")
     Call<Object> getObject(@Path("data") String jenisData, @Path("bulan") int bulan);
 
 
     @POST("distribusi/ritase")
-    Call<Object> postRitase(@Body ArrayList<Ritase> ritases);
+    Call<Object> postRitase(@Body Ritase ritase);
 
     @POST("distribusi/opers")
     Call<Object> postOpers(@Body Opers opers);
