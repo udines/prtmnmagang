@@ -23,6 +23,8 @@ import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.pertamina.pertaminatuban.R;
 import com.pertamina.pertaminatuban.qualityquantity.bulanan.WorkingLossActivity;
@@ -52,6 +54,7 @@ public class InputFotoSampleActivity extends AppCompatActivity {
     private ArrayList<String> photoPaths;
     private EditText inputDeskripsi;
     private Button kirim;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +66,7 @@ public class InputFotoSampleActivity extends AppCompatActivity {
         imagePreview = findViewById(R.id.input_foto_sampel_image);
         inputDeskripsi = findViewById(R.id.input_foto_sampel_deskripsi);
         kirim = findViewById(R.id.input_foto_sampel_kirim);
+        progressBar = findViewById(R.id.input_foto_sample_progress);
 
         handleUplodFoto();
         handleKirimFoto();
@@ -73,6 +77,9 @@ public class InputFotoSampleActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (photoPaths != null && inputDeskripsi.getText().length() > 0) {
+                    kirim.setVisibility(View.GONE);
+                    progressBar.setVisibility(View.VISIBLE);
+
                     String deskripsi = inputDeskripsi.getText().toString();
                     String path = photoPaths.get(0);
                     sendFileRequest(path, deskripsi);
@@ -141,6 +148,8 @@ public class InputFotoSampleActivity extends AppCompatActivity {
             public void onResponse(Call<Object> call, Response<Object> response) {
                 Log.w("response code", String.valueOf(response.code()));
                 if (response.code() == 200) {
+                    kirim.setVisibility(View.VISIBLE);
+                    progressBar.setVisibility(View.GONE);
                     NavUtils.navigateUpTo(InputFotoSampleActivity.this, new Intent(
                             getApplicationContext(),
                             FotoSampleActivity.class
@@ -150,7 +159,9 @@ public class InputFotoSampleActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Object> call, Throwable t) {
-
+                Toast.makeText(InputFotoSampleActivity.this, "Gagal upload", Toast.LENGTH_SHORT).show();
+                kirim.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
             }
         });
     }
