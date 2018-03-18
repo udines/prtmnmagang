@@ -43,7 +43,9 @@ public class InputMatbalActivity extends AppCompatActivity {
 
     private EditText inputPertamax, inputPertalite, inputPremium, inputSolar, inputBiosolar, inputBioflame,
             inputLain, inputLainNilai;
+    private boolean pertamaxUpdate, pertaliteUpdate, premiumUpdate, solarUpdate, biosolarUpdate, biofameUpdate;
     private ProgressBar progressBar;
+    private boolean postSuccess, putSuccess;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +67,15 @@ public class InputMatbalActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.input_matbal_progress);
         kirim = findViewById(R.id.input_matbal_kirim);
 
+        inputPertamax = findViewById(R.id.input_matbal_pertamax);
+        inputPertalite = findViewById(R.id.input_matbal_pertalite);
+        inputPremium = findViewById(R.id.input_matbal_premium);
+        inputSolar = findViewById(R.id.input_matbal_solar);
+        inputBiosolar = findViewById(R.id.input_matbal_biosolar);
+        inputBioflame = findViewById(R.id.input_matbal_bioflame);
+        inputLain = findViewById(R.id.input_matbal_lain);
+        inputLainNilai = findViewById(R.id.input_matbal_lain_nilai);
+
         /*inisialisasi tanggal sesuai dengan tanggal hari ini*/
         Calendar calendar = Calendar.getInstance();
         year = calendar.get(Calendar.YEAR);
@@ -76,36 +87,78 @@ public class InputMatbalActivity extends AppCompatActivity {
         getData();
     }
 
+    private void setBooleanUpdates() {
+        pertamaxUpdate = isTerisi(inputPertamax);
+        pertaliteUpdate = isTerisi(inputPertalite);
+        premiumUpdate = isTerisi(inputPremium);
+        solarUpdate = isTerisi(inputSolar);
+        biosolarUpdate = isTerisi(inputBiosolar);
+        biofameUpdate = isTerisi(inputBioflame);
+    }
+
+    private boolean isTerisi(EditText editText) {
+        return editText.getText().length() > 0;
+    }
+
     private void getData() {
-        inputPertamax = findViewById(R.id.input_matbal_pertamax);
-        inputPertalite = findViewById(R.id.input_matbal_pertalite);
-        inputPremium = findViewById(R.id.input_matbal_premium);
-        inputSolar = findViewById(R.id.input_matbal_solar);
-        inputBiosolar = findViewById(R.id.input_matbal_biosolar);
-        inputBioflame = findViewById(R.id.input_matbal_bioflame);
-        inputLain = findViewById(R.id.input_matbal_lain);
-        inputLainNilai = findViewById(R.id.input_matbal_lain_nilai);
 
         kirim.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (tanggalSet) {
-                    ArrayList<Matbal> matbals = new ArrayList<>();
-                    if (!isNull(inputPertamax))matbals.add(makeObject(inputPertamax, Matbal.PERTAMAX));
-                    if (!isNull(inputPertalite))matbals.add(makeObject(inputPertalite, Matbal.PERTALITE));
-                    if (!isNull(inputPremium))matbals.add(makeObject(inputPremium, Matbal.PREMIUM));
-                    if (!isNull(inputSolar))matbals.add(makeObject(inputSolar, Matbal.SOLAR));
-                    if (!isNull(inputBiosolar))matbals.add(makeObject(inputBiosolar, Matbal.BIOSOLAR));
-                    if (!isNull(inputBioflame))matbals.add(makeObject(inputBioflame, Matbal.BIOFAME));
+                    ArrayList<Matbal> matbalPost = new ArrayList<>();
+                    ArrayList<Matbal> matbalPut = new ArrayList<>();
+
+                    if (!isNull(inputPertamax)) {
+                        if (pertamaxUpdate) {
+                            matbalPut.add(makeObject(inputPertamax, Matbal.PERTAMAX));
+                        } else {
+                            matbalPost.add(makeObject(inputPertamax, Matbal.PERTAMAX));
+                        }
+                    }
+                    if (!isNull(inputPertalite)) {
+                        if (pertaliteUpdate) {
+                            matbalPut.add(makeObject(inputPertalite, Matbal.PERTALITE));
+                        } else {
+                            matbalPost.add(makeObject(inputPertalite, Matbal.PERTALITE));
+                        }
+                    }
+                    if (!isNull(inputPremium)) {
+                        if (premiumUpdate) {
+                            matbalPut.add(makeObject(inputPremium, Matbal.PREMIUM));
+                        } else {
+                            matbalPost.add(makeObject(inputPremium, Matbal.PREMIUM));
+                        }
+                    }
+                    if (!isNull(inputSolar)) {
+                        if (solarUpdate) {
+                            matbalPut.add(makeObject(inputSolar, Matbal.SOLAR));
+                        } else {
+                            matbalPost.add(makeObject(inputSolar, Matbal.SOLAR));
+                        }
+                    }
+                    if (!isNull(inputBiosolar)) {
+                        if (biosolarUpdate) {
+                            matbalPut.add(makeObject(inputBiosolar, Matbal.BIOSOLAR));
+                        } else {
+                            matbalPost.add(makeObject(inputBiosolar, Matbal.BIOSOLAR));
+                        }
+                    }
+                    if (!isNull(inputBioflame)) {
+                        if (biofameUpdate) {
+                            matbalPut.add(makeObject(inputBioflame, Matbal.BIOFAME));
+                        } else {
+                            matbalPost.add(makeObject(inputBioflame, Matbal.BIOFAME));
+                        }
+                    }
                     if (!isNull(inputLain) && !isNull(inputLainNilai)) {
-                        matbals.add(makeObject(inputLainNilai, inputLain.getText().toString()));
+                        matbalPost.add(makeObject(inputLainNilai, inputLain.getText().toString()));
                     }
 
-                    if (isUpdate) {
-                        sendUpdateRequest(matbals);
-                    } else {
-                        sendPostRequest(matbals);
-                    }
+
+                    sendUpdateRequest(matbalPost);
+                    sendPostRequest(matbalPost);
+
                 } else {
                     Toast.makeText(InputMatbalActivity.this, "Belum memilih tanggal", Toast.LENGTH_SHORT).show();
                 }
@@ -162,9 +215,14 @@ public class InputMatbalActivity extends AppCompatActivity {
                 if (response.code() == 200) {
                     kirim.setVisibility(View.VISIBLE);
                     progressBar.setVisibility(View.GONE);
+                    putSuccess = true;
+
                     Log.w("response size", response.body().toString());
-                    Toast.makeText(InputMatbalActivity.this, "Data berhasil ditambahkan", Toast.LENGTH_LONG).show();
-                    finish();
+
+                    if (putSuccess && postSuccess) {
+                        Toast.makeText(InputMatbalActivity.this, "Data berhasil ditambahkan", Toast.LENGTH_LONG).show();
+                        finish();
+                    }
                 }
             }
 
@@ -268,6 +326,10 @@ public class InputMatbalActivity extends AppCompatActivity {
                         break;
                 }
             }
+
+            //mencek apakah input sudah terisi atau belum guna menentukan jenis request
+            setBooleanUpdates();
+
         } else {
             isUpdate = false;
         }
@@ -325,10 +387,13 @@ public class InputMatbalActivity extends AppCompatActivity {
                 if (response.code() == 200) {
                     kirim.setVisibility(View.VISIBLE);
                     progressBar.setVisibility(View.GONE);
+                    postSuccess = true;
 
                     Log.w("response size", response.body().toString());
-                    Toast.makeText(InputMatbalActivity.this, "Data berhasil ditambahkan", Toast.LENGTH_LONG).show();
-                    finish();
+                    if (postSuccess && putSuccess) {
+                        Toast.makeText(InputMatbalActivity.this, "Data berhasil ditambahkan", Toast.LENGTH_LONG).show();
+                        finish();
+                    }
                 }
             }
 
