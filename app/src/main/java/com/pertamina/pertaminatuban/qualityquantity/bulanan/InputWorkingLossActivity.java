@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -63,6 +64,7 @@ public class InputWorkingLossActivity extends AppCompatActivity {
     private Button kirim;
     private ArrayList<String> fuelList;
     private int fuelIndex;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -175,6 +177,9 @@ public class InputWorkingLossActivity extends AppCompatActivity {
         kirim.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                kirim.setVisibility(View.GONE);
+                progressBar.setVisibility(View.VISIBLE);
+
                 Date date = new Date();
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
                 String text = format.format(date);
@@ -249,6 +254,8 @@ public class InputWorkingLossActivity extends AppCompatActivity {
             public void onResponse(Call<Object> call, Response<Object> response) {
                 Log.w("post req code", String.valueOf(response.code()));
                 if (response.code() == 200) {
+                    kirim.setVisibility(View.VISIBLE);
+                    progressBar.setVisibility(View.GONE);
                     Log.w("response size", response.body().toString());
                     Toast.makeText(InputWorkingLossActivity.this, "Data berhasil ditambahkan", Toast.LENGTH_LONG).show();
                     NavUtils.navigateUpTo(InputWorkingLossActivity.this, new Intent(getApplicationContext(), WorkingLossActivity.class));
@@ -258,6 +265,9 @@ public class InputWorkingLossActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<Object> call, Throwable t) {
                 Log.w("error", t.getMessage());
+                kirim.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(InputWorkingLossActivity.this, "Gagal mengirim data", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -498,6 +508,7 @@ public class InputWorkingLossActivity extends AppCompatActivity {
         quantityInput = findViewById(R.id.input_working_loss_quantity);
         produkInput = findViewById(R.id.input_working_loss_spinner);
         kirim = findViewById(R.id.input_working_loss_kirim);
+        progressBar = findViewById(R.id.input_working_loss_progress);
     }
 
 }

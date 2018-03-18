@@ -220,5 +220,11 @@
             android:layout_height="wrap_content"
             style="@style/Base.Widget.AppCompat.Button.Colored"
             android:text="Kirim"/>
+        <ProgressBar
+            android:id="@+id/input_working_loss_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_gravity="center_horizontal"/>
     </LinearLayout>
 </ScrollView>
