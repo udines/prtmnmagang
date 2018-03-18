@@ -55,6 +55,7 @@ public class InputKonsumenActivity extends AppCompatActivity {
     private Spinner spinnerBb, spinnerKons;
     private EditText inputNilai;
     private boolean isUpdate;
+    private String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +82,7 @@ public class InputKonsumenActivity extends AppCompatActivity {
 
         konsumens = new ArrayList<>();
         isUpdate = false;
+        id = "hore";
 
         /*init tanggal*/
         Calendar calendar = Calendar.getInstance();
@@ -106,15 +108,23 @@ public class InputKonsumenActivity extends AppCompatActivity {
                     Date date = new Date(calendar.getTimeInMillis());
                     String sqlDate = date.toString();
                     ArrayList<Konsumen> konsumens = new ArrayList<>();
-                    konsumens.add(new Konsumen(
+                    Konsumen kons = new Konsumen(
                             sqlDate,
                             konsumen,
                             fuel,
                             nilai
-                    ));
+                    );
+
+                    konsumens.add(kons);
 
                     if (isUpdate) {
-                        sendUpdateRequest(konsumens);
+                        sendUpdateRequest(new Konsumen(
+                                id,
+                                sqlDate,
+                                konsumen,
+                                fuel,
+                                nilai
+                        ));
                     } else {
                         sendPostRequest(konsumens);
                     }
@@ -123,12 +133,10 @@ public class InputKonsumenActivity extends AppCompatActivity {
         });
     }
 
-    private void sendUpdateRequest(ArrayList<Konsumen> konsumens) {
+    private void sendUpdateRequest(Konsumen konsumen) {
 
         kirim.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
-
-        Log.w("input size", String.valueOf(konsumens.size()));
 
         SharedPreferences preferences = InputKonsumenActivity.this.getSharedPreferences(
                 "login",
@@ -151,7 +159,7 @@ public class InputKonsumenActivity extends AppCompatActivity {
             }
         });
 
-        String json = new Gson().toJson(konsumens);
+        String json = new Gson().toJson(konsumen);
         Log.w("json", json);
 
         OkHttpClient client = httpClient.build();
@@ -164,7 +172,7 @@ public class InputKonsumenActivity extends AppCompatActivity {
 
         Retrofit retrofit = builder.build();
         UserClient userClient = retrofit.create(UserClient.class);
-        Call<Object> call = userClient.updateKonsumenTanggal(konsumens);
+        Call<Object> call = userClient.updateKonsumenTanggal(konsumen);
         call.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, Response<Object> response) {
@@ -411,7 +419,10 @@ public class InputKonsumenActivity extends AppCompatActivity {
                 if (konsumens.get(i).getKonsumen().equals(konsumen) && konsumens.get(i).getFuel().equals(fuel)) {
                     inputNilai.setText(String.valueOf(konsumens.get(i).getNilai()));
                     isUpdate = true;
+                    id = konsumens.get(i).getId();
                     Log.w("fuel", String.valueOf(konsumens.get(i).getNilai()));
+//                    Log.w("id", id);
+                    Log.w("object", new Gson().toJson(konsumens.get(i)));
                     break;
                 } else {
                     isUpdate = false;

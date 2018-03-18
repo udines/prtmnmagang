@@ -27,16 +27,18 @@ public class Konsumen {
     @Expose
     private float nilai;
 
-    @SerializedName("total")
-    @Expose
-    private float total;
-
     @SerializedName("konsumen")
     @Expose
     private String konsumen;
 
     /*constructor*/
-    public Konsumen() {
+
+    public Konsumen(String id, String date, String konsumen, String fuel, float nilai) {
+        this.id = id;
+        this.date = date;
+        this.fuel = fuel;
+        this.nilai = nilai;
+        this.konsumen = konsumen;
     }
 
     public Konsumen(String date, String konsumen, String fuel, float nilai) {
@@ -46,6 +48,8 @@ public class Konsumen {
         this.nilai = nilai;
     }
 
+    public Konsumen() {
+    }
     /*setter*/
 
     public void setFuel(String fuel) {
@@ -54,10 +58,6 @@ public class Konsumen {
 
     public void setNilai(float nilai) {
         this.nilai = nilai;
-    }
-
-    public void setTotal(float total) {
-        this.total = total;
     }
 
     public void setDate(String date) {
@@ -83,10 +83,6 @@ public class Konsumen {
 
     public float getNilai() {
         return nilai;
-    }
-
-    public float getTotal() {
-        return total;
     }
 
     public String getId() {

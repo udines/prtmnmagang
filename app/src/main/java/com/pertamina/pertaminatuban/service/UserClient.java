@@ -64,7 +64,7 @@ public interface UserClient {
     @GET("distribusi/konsumen/{tanggal}")
     Call<ArrayList<Konsumen>> getKonsumenTanggal(@Path("tanggal") String tanggal);
     @PUT("distribusi/konsumen/")
-    Call<Object> updateKonsumenTanggal(@Body ArrayList<Konsumen> konsumens);
+    Call<Object> updateKonsumenTanggal(@Body Konsumen konsumen);
 
     @GET("distribusi/wilayah/{bulan}")
     Call<ArrayList<Wilayah>> getWilayah(@Path("bulan") int bulan);
