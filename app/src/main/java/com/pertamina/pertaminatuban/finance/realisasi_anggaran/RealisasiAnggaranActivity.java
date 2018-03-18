@@ -153,19 +153,32 @@ public class RealisasiAnggaranActivity extends AppCompatActivity {
                 Log.w("code", String.valueOf(response.code()));
                 if (response.code() == 200) {
                     ArrayList<RealisasiAnggaran> realisasiAnggarans =  response.body();
-                    for (int i = 0; i < realisasiAnggarans.size(); i++) {
-                        if (realisasiAnggarans.get(i).getCost_elements().equals("Over/Underabsorption")) {
-                            ArrayList<RealisasiAnggaran> overUnderAnggaran = new ArrayList<>();
-                            overUnderAnggaran.add(realisasiAnggarans.get(i));
-                            recyclerView.setAdapter(new RealisasiAnggaranAdapter(
-                                    overUnderAnggaran, getApplicationContext()
-                            ));
-                            actual.setText(currencyFor(realisasiAnggarans.get(i).getActual()));
-                            commitment.setText(currencyFor(realisasiAnggarans.get(i).getCommitment()));
-                            allotted.setText(currencyFor(realisasiAnggarans.get(i).getAllotted()));
-                            plan.setText(currencyFor(realisasiAnggarans.get(i).getPlan()));
-                            available.setText(currencyFor(realisasiAnggarans.get(i).getAvailable()));
+                    Log.w("size", String.valueOf(realisasiAnggarans.size()));
+                    if (realisasiAnggarans.size() > 0) {
+                        for (int i = 0; i < realisasiAnggarans.size(); i++) {
+                            if (realisasiAnggarans.get(i).getCost_elements().equals("Over/Underabsorption")) {
+                                ArrayList<RealisasiAnggaran> overUnderAnggaran = new ArrayList<>();
+                                overUnderAnggaran.add(realisasiAnggarans.get(i));
+                                recyclerView.setAdapter(new RealisasiAnggaranAdapter(
+                                        overUnderAnggaran, getApplicationContext()
+                                ));
+                                actual.setText(currencyFor(realisasiAnggarans.get(i).getActual()));
+                                commitment.setText(currencyFor(realisasiAnggarans.get(i).getCommitment()));
+                                allotted.setText(currencyFor(realisasiAnggarans.get(i).getAllotted()));
+                                plan.setText(currencyFor(realisasiAnggarans.get(i).getPlan()));
+                                available.setText(currencyFor(realisasiAnggarans.get(i).getAvailable()));
+                            }
                         }
+                    } else {
+                        actual.setText("");
+                        commitment.setText("");
+                        allotted.setText("");
+                        plan.setText("");
+                        available.setText("");
+                        ArrayList<RealisasiAnggaran> overUnderAnggaran = new ArrayList<>();
+                        recyclerView.setAdapter(new RealisasiAnggaranAdapter(
+                                overUnderAnggaran, getApplicationContext()
+                        ));
                     }
                 }
             }

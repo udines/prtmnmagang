@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -205,7 +207,11 @@ public class InputFotoSampleActivity extends AppCompatActivity {
         if (photoPaths != null) {
             if (photoPaths.get(0) != null) {
                 if (Uri.parse(photoPaths.get(0)) != null) {
-                    imagePreview.setImageURI(Uri.parse(photoPaths.get(0)));
+                    BitmapFactory.Options options = new BitmapFactory.Options();
+                    options.inScaled = true;
+                    Bitmap bitmap = BitmapFactory.decodeFile(photoPaths.get(0), options);
+                    imagePreview.setImageBitmap(bitmap);
+//                    imagePreview.setImageURI(Uri.parse(photoPaths.get(0)));
                 }
             }
         }
