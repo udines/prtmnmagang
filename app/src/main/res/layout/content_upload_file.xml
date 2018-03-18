@@ -30,4 +30,10 @@
         android:layout_height="wrap_content"
         android:text="Upload"
         style="@style/Base.Widget.AppCompat.Button.Colored"/>
+    <ProgressBar
+        android:id="@+id/upload_file_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:visibility="gone"/>
 </LinearLayout>

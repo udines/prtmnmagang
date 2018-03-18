@@ -19,7 +19,9 @@ import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.pertamina.pertaminatuban.R;
 import com.pertamina.pertaminatuban.qualityquantity.bulanan.TruckingLossActivity;
@@ -52,6 +54,7 @@ public class UploadFileActivity extends AppCompatActivity {
     private TextView fileName;
     private Button chooseFile, kirim;
     private ArrayList<String> filePaths;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +73,7 @@ public class UploadFileActivity extends AppCompatActivity {
         fileName = findViewById(R.id.upload_file_name);
         chooseFile = findViewById(R.id.upload_file_choose);
         kirim = findViewById(R.id.upload_file_kirim);
+        progressBar = findViewById(R.id.upload_file_progress);
         kirim.setVisibility(View.GONE);
 
         handleChooseFile();
@@ -140,6 +144,8 @@ public class UploadFileActivity extends AppCompatActivity {
         kirim.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                kirim.setVisibility(View.GONE);
+                progressBar.setVisibility(View.VISIBLE);
                 String type = getIntent().getStringExtra("type");
                 String path = filePaths.get(0);
                 sendFileRequest(path, type);
@@ -218,6 +224,9 @@ public class UploadFileActivity extends AppCompatActivity {
             public void onResponse(Call<Object> call, Response<Object> response) {
                 Log.w("response code", String.valueOf(response.code()));
                 if (response.code() == 200) {
+                    kirim.setVisibility(View.VISIBLE);
+                    progressBar.setVisibility(View.GONE);
+
                     Intent intent = new Intent();
                     switch (getIntent().getStringExtra("type")) {
                         case ItemTestReport.TYPE_TEST_REPORT:
@@ -233,7 +242,9 @@ public class UploadFileActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Object> call, Throwable t) {
-
+                Toast.makeText(UploadFileActivity.this, "Gagal upload file", Toast.LENGTH_SHORT).show();
+                kirim.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
             }
         });
     }
