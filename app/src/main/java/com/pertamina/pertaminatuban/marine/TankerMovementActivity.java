@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.pertamina.pertaminatuban.R;
+import com.pertamina.pertaminatuban.marine.input.InputTankerMovementActivity;
 import com.pertamina.pertaminatuban.marine.input.PilihTankerActivity;
 import com.pertamina.pertaminatuban.marine.models.TankerMovement;
 import com.pertamina.pertaminatuban.marine.utils.TankerMovementAdapter;
@@ -234,7 +235,7 @@ public class TankerMovementActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent inputIntent = new Intent(getApplicationContext(), PilihTankerActivity.class);
+                Intent inputIntent = new Intent(getApplicationContext(), InputTankerMovementActivity.class);
                 inputIntent.putExtra("sourceActivity", "TankerMovement");
                 inputIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(inputIntent);
