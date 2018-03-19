@@ -140,7 +140,7 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     private void displayFeatured(ArrayList<Featured> featureds, ArrayList<ImageUrl> urls) {
-        recyclerView.setAdapter(new FeaturedAdapter(featureds, getApplicationContext(), urls));
+        recyclerView.setAdapter(new FeaturedAdapter(featureds, MenuActivity.this, urls));
     }
 
     private void populateFeatured() {
