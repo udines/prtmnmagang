@@ -1,6 +1,7 @@
 package com.pertamina.pertaminatuban.marine;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -11,11 +12,13 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.pertamina.pertaminatuban.R;
 import com.pertamina.pertaminatuban.distribusi.MatbalActivity;
+import com.pertamina.pertaminatuban.marine.input.InputInitialTankerActivity;
 import com.pertamina.pertaminatuban.marine.models.InitialTanker;
 import com.pertamina.pertaminatuban.service.UserClient;
 import com.whiteelephant.monthpicker.MonthPickerDialog;
@@ -45,6 +48,7 @@ public class NewMarineActivity extends AppCompatActivity {
     private TextView periodeBulan;
     private RecyclerView recyclerView;
     private Spinner periodeSpinner;
+    private Button addInitTanker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +67,7 @@ public class NewMarineActivity extends AppCompatActivity {
         periodeBulan = findViewById(R.id.new_marine_bulan);
         periodeSpinner = findViewById(R.id.new_marine_periode_spinner);
         recyclerView = findViewById(R.id.new_marine_recyclerview);
+        addInitTanker = findViewById(R.id.new_marine_tambah_init_tanker);
 
         Calendar cal = Calendar.getInstance();
         year = cal.get(Calendar.YEAR);
@@ -72,6 +77,31 @@ public class NewMarineActivity extends AppCompatActivity {
 
         handlePeriode();
         displayDummy();
+        handleAddInitTanker();
+    }
+
+    private void handleAddInitTanker() {
+        SharedPreferences preferences = this.getSharedPreferences(
+                "login",
+                Context.MODE_PRIVATE
+        );
+        String role = preferences.getString("userRole", "none");
+        if (role.equals("marine") || role.equals("admin")) {
+            addInitTanker.setVisibility(View.VISIBLE);
+        } else {
+            addInitTanker.setVisibility(View.GONE);
+        }
+
+        addInitTanker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), InputInitialTankerActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("month", month);
+                intent.putExtra("year", year);
+                startActivity(intent);
+            }
+        });
     }
 
     private void handlePeriode() {

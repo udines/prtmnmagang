@@ -80,7 +80,7 @@ public class TruckingLossActivity extends AppCompatActivity {
                 Context.MODE_PRIVATE
         );
         String role = preferences.getString("userRole", "none");
-        if (role.equals("distribusi") || role.equals("admin")) {
+        if (role.equals("qq") || role.equals("admin")) {
             upload.setVisibility(View.VISIBLE);
         } else {
             upload.setVisibility(View.GONE);

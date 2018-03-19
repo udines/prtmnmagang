@@ -54,4 +54,22 @@
 
     <include layout="@layout/content_new_marine" />
 
+    <Button
+        android:id="@+id/new_marine_tambah_init_tanker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:drawableStart="@drawable/ic_add_black_24dp"
+        android:background="@drawable/round_corner_24dp_accent"
+        android:drawableLeft="@drawable/ic_add_black_24dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:text="Initial Tanker"
+        android:drawablePadding="8dp"
+        android:visibility="gone"
+        android:textColor="@color/white"/>
+
 </android.support.design.widget.CoordinatorLayout>

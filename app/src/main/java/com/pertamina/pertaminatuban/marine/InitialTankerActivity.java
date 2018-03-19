@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.pertamina.pertaminatuban.R;
+import com.pertamina.pertaminatuban.marine.input.InputInitialTankerActivity;
 import com.pertamina.pertaminatuban.marine.input.PilihTankerActivity;
 import com.pertamina.pertaminatuban.marine.models.InitialTanker;
 import com.pertamina.pertaminatuban.marine.models.MarineTable;
@@ -254,8 +255,10 @@ public class InitialTankerActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent inputIntent = new Intent(getApplicationContext(), PilihTankerActivity.class);
+                Intent inputIntent = new Intent(getApplicationContext(), InputInitialTankerActivity.class);
                 inputIntent.putExtra("sourceActivity", "InitialTanker");
+                inputIntent.putExtra("month", month);
+                inputIntent.putExtra("year", year);
                 inputIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(inputIntent);
             }

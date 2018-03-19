@@ -14,11 +14,13 @@ import android.widget.RadioGroup;
 
 import com.google.gson.Gson;
 import com.pertamina.pertaminatuban.R;
+import com.pertamina.pertaminatuban.distribusi.WilayahActivity;
 import com.pertamina.pertaminatuban.marine.InitialTankerActivity;
 import com.pertamina.pertaminatuban.marine.models.InitialTanker;
 import com.pertamina.pertaminatuban.marine.models.MarineIdentifier;
 import com.pertamina.pertaminatuban.marine.models.MarineInput;
 import com.pertamina.pertaminatuban.service.UserClient;
+import com.whiteelephant.monthpicker.MonthPickerDialog;
 
 import java.io.IOException;
 import java.sql.Date;
@@ -48,6 +50,7 @@ public class InputInitialTankerActivity extends AppCompatActivity {
     private List<String> portChoice, barthingChoice, statusChoice, activityChoice, methodChoice, gradeChoice;
 
     private String bulan, callTanker, kapal, periode;
+    private int month, year;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +69,7 @@ public class InputInitialTankerActivity extends AppCompatActivity {
         getIntentExtras();
         initChoices();
         getData();
+        handlePeriodeButton();
     }
 
     private void getIntentExtras() {
@@ -74,6 +78,47 @@ public class InputInitialTankerActivity extends AppCompatActivity {
         kapal = getIntent().getStringExtra("kapal");
         periode = getIntent().getStringExtra("periode");
         callTanker = getIntent().getStringExtra("call");
+    }
+
+    private void handlePeriodeButton() {
+        month = getIntent().getIntExtra("month", 0);
+        year = getIntent().getIntExtra("year", 2018);
+        setMonthButton(month, year);
+
+        inputPeriode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar today = Calendar.getInstance();
+
+                MonthPickerDialog.Builder builder = new MonthPickerDialog.Builder(
+                        InputInitialTankerActivity.this,
+                        new MonthPickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(int selectedMonth, int selectedYear) {
+                                month = selectedMonth;
+                                year = selectedYear;
+                                setMonthButton(month, year);
+                            }
+                        },
+                        today.get(Calendar.YEAR),
+                        today.get(Calendar.MONTH)
+                );
+
+                builder.setMinYear(1970)
+                        .setMaxYear(today.get(Calendar.YEAR))
+                        .setTitle("Pilih bulan dan tahun")
+                        .setActivatedMonth(month)
+                        .setActivatedYear(year)
+                        .build()
+                        .show();
+            }
+        });
+    }
+
+    private void setMonthButton(int month, int year) {
+        DateFormatSymbols symbols = new DateFormatSymbols();
+        String text = symbols.getMonths()[month] + " " + String.valueOf(year);
+        inputPeriode.setText(text);
     }
 
     private void initChoices() {
