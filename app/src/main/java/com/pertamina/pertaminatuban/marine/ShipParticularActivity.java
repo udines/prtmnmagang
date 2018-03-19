@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.pertamina.pertaminatuban.R;
+import com.pertamina.pertaminatuban.marine.input.InputShipParticularActivity;
 import com.pertamina.pertaminatuban.marine.input.PilihTankerActivity;
 import com.pertamina.pertaminatuban.marine.models.ShipParticular;
 import com.pertamina.pertaminatuban.marine.utils.ShipParticularAdapter;
@@ -233,7 +234,7 @@ public class ShipParticularActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent inputIntent = new Intent(getApplicationContext(), PilihTankerActivity.class);
+                Intent inputIntent = new Intent(getApplicationContext(), InputShipParticularActivity.class);
                 inputIntent.putExtra("sourceActivity", "ShipParticular");
                 inputIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(inputIntent);
