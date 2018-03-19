@@ -82,7 +82,7 @@ public class MenuActivity extends AppCompatActivity {
         card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), InfoUmumActivity.class));
+                startActivity(new Intent(MenuActivity.this, InfoUmumActivity.class));
             }
         });
 
@@ -150,7 +150,7 @@ public class MenuActivity extends AppCompatActivity {
         helper.attachToRecyclerView(recyclerView);
         recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setLayoutManager(new LinearLayoutManager(
-                getApplicationContext(),
+                MenuActivity.this,
                 LinearLayoutManager.HORIZONTAL,
                 false
         ));
@@ -211,13 +211,13 @@ public class MenuActivity extends AppCompatActivity {
 //        menuList.add(new MenuViewModel("Divisi 6", R.drawable.ic_launcher_foreground));
 
         /*membuat obyek dari GridMenuAdapter untuk menampilkan menu bentuk gridLayoutManager 2 kolom*/
-        GridMenuAdapter gridAdapter = new GridMenuAdapter(menuList, getApplicationContext());
+        GridMenuAdapter gridAdapter = new GridMenuAdapter(menuList, MenuActivity.this);
 
         /*menghubungkan view dengan layout recyclerview di content_menu.xml*/
         RecyclerView recyclerView = findViewById(R.id.menu_recyclerview);
 
         /*membuat obyek layout manager tipe gridLayoutManager dengan jumlah kolom : 2*/
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(), 2);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(MenuActivity.this, 2);
 
         /*inisialisasi awal menu dalam bentuk grid*/
         recyclerView.setLayoutManager(gridLayoutManager);
@@ -249,7 +249,7 @@ public class MenuActivity extends AppCompatActivity {
             );
             sharedPreferences.edit().putString("userKey", null).apply();
             sharedPreferences.edit().putString("userRole", null).apply();
-            Intent loginIntent = new Intent(getApplicationContext(), LoginActivity.class);
+            Intent loginIntent = new Intent(MenuActivity.this, LoginActivity.class);
             startActivity(loginIntent);
             return true;
         }
