@@ -545,6 +545,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.pertamina.pertaminatuban.operation.OperationActivity" />
         </activity>
+        <activity
+            android:name=".operation.pumpable.InputPumpableActivity"
+            android:label="@string/title_activity_input_pumpable"
+            android:parentActivityName=".operation.pumpable.PumpableActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.pertamina.pertaminatuban.operation.pumpable.PumpableActivity" />
+        </activity>
     </application>
 
 </manifest>
