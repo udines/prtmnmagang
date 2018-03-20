@@ -7,7 +7,8 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.pertamina.pertaminatuban.qualityquantity.bulanan.InputWorkingLossActivity"
     tools:showIn="@layout/activity_input_working_loss"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/grey_200">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -33,186 +34,599 @@
             android:layout_width="wrap_content"
             android:layout_height="48dp" />
 
-        <android.support.design.widget.TextInputLayout
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:hint="Stok Awal">
-            <EditText
-                android:id="@+id/input_working_loss_stock_awal"
+            android:layout_margin="4dp">
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:inputType="number"
-                android:layout_height="wrap_content"/>
-        </android.support.design.widget.TextInputLayout>
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="12dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Satuan: Liter 15 C"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"/>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:hint="Stok Awal">
+                    <EditText
+                        android:id="@+id/input_working_loss_stock_awal"
+                        android:layout_width="match_parent"
+                        android:inputType="number"
+                        android:layout_height="wrap_content"/>
+                </android.support.design.widget.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:hint="Act. Receipt">
+                    <EditText
+                        android:id="@+id/input_working_loss_receipt"
+                        android:layout_width="match_parent"
+                        android:inputType="number"
+                        android:layout_height="wrap_content"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:hint="Blending In">
+                    <EditText
+                        android:id="@+id/input_working_loss_blending_in"
+                        android:layout_width="match_parent"
+                        android:inputType="number"
+                        android:layout_height="wrap_content"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Total Tersedia"
+                    android:textSize="12sp"/>
+                <TextView
+                    android:id="@+id/input_working_loss_total_tersedia"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:layout_marginTop="4dp"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"/>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:hint="Sales PSO">
+                    <EditText
+                        android:id="@+id/input_working_loss_sales_pso"
+                        android:layout_width="match_parent"
+                        android:inputType="number"
+                        android:layout_height="wrap_content"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:hint="Sales NPSO">
+                    <EditText
+                        android:id="@+id/input_working_loss_sales_npso"
+                        android:layout_width="match_parent"
+                        android:inputType="number"
+                        android:layout_height="wrap_content"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:hint="Konsinyasi">
+                    <EditText
+                        android:id="@+id/input_working_loss_konsinyasi"
+                        android:layout_width="match_parent"
+                        android:inputType="number"
+                        android:layout_height="wrap_content"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:hint="Own Use TBBM">
+                    <EditText
+                        android:id="@+id/input_working_loss_ownuse_tbbm"
+                        android:layout_width="match_parent"
+                        android:inputType="number"
+                        android:layout_height="wrap_content"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:hint="Own Use Kapal">
+                    <EditText
+                        android:id="@+id/input_working_loss_ownuse_kapal"
+                        android:layout_width="match_parent"
+                        android:inputType="number"
+                        android:layout_height="wrap_content"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Total Penyaluran"
+                    android:textSize="12sp"/>
+                <TextView
+                    android:id="@+id/input_working_loss_total_penyaluran"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:layout_marginTop="4dp"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"/>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:hint="Blending Out">
+                    <EditText
+                        android:id="@+id/input_working_loss_blending_out"
+                        android:layout_width="match_parent"
+                        android:inputType="number"
+                        android:layout_height="wrap_content"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:hint="Stock Akhir">
+                    <EditText
+                        android:id="@+id/input_working_loss_stock_akhir"
+                        android:layout_width="match_parent"
+                        android:inputType="number"
+                        android:layout_height="wrap_content"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Working Losses Quantity"
+                    android:textSize="12sp"/>
+                <TextView
+                    android:id="@+id/input_working_loss_quantity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:layout_marginTop="4dp"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Working Loss Percentage"
+                    android:textSize="12sp"/>
+                <TextView
+                    android:id="@+id/input_working_loss_percentage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="%"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="8dp"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"/>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:hint="Act. Receipt">
-            <EditText
-                android:id="@+id/input_working_loss_receipt"
+            android:layout_margin="4dp">
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:inputType="number"
-                android:layout_height="wrap_content"/>
-        </android.support.design.widget.TextInputLayout>
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="12dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Satuan: Bbls 60F"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"/>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:hint="Stok Awal">
+                    <EditText
+                        android:id="@+id/input_working_loss_stock_awal_60f"
+                        android:layout_width="match_parent"
+                        android:inputType="number"
+                        android:layout_height="wrap_content"/>
+                </android.support.design.widget.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:hint="Act. Receipt">
+                    <EditText
+                        android:id="@+id/input_working_loss_receipt_60f"
+                        android:layout_width="match_parent"
+                        android:inputType="number"
+                        android:layout_height="wrap_content"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:hint="Blending In">
+                    <EditText
+                        android:id="@+id/input_working_loss_blending_in_60f"
+                        android:layout_width="match_parent"
+                        android:inputType="number"
+                        android:layout_height="wrap_content"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Total Tersedia"
+                    android:textSize="12sp"/>
+                <TextView
+                    android:id="@+id/input_working_loss_total_tersedia_60f"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:layout_marginTop="4dp"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"/>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:hint="Sales PSO">
+                    <EditText
+                        android:id="@+id/input_working_loss_sales_pso_60f"
+                        android:layout_width="match_parent"
+                        android:inputType="number"
+                        android:layout_height="wrap_content"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:hint="Sales NPSO">
+                    <EditText
+                        android:id="@+id/input_working_loss_sales_npso_60f"
+                        android:layout_width="match_parent"
+                        android:inputType="number"
+                        android:layout_height="wrap_content"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:hint="Konsinyasi">
+                    <EditText
+                        android:id="@+id/input_working_loss_konsinyasi_60f"
+                        android:layout_width="match_parent"
+                        android:inputType="number"
+                        android:layout_height="wrap_content"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:hint="Own Use TBBM">
+                    <EditText
+                        android:id="@+id/input_working_loss_ownuse_tbbm_60f"
+                        android:layout_width="match_parent"
+                        android:inputType="number"
+                        android:layout_height="wrap_content"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:hint="Own Use Kapal">
+                    <EditText
+                        android:id="@+id/input_working_loss_ownuse_kapal_60f"
+                        android:layout_width="match_parent"
+                        android:inputType="number"
+                        android:layout_height="wrap_content"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Total Penyaluran"
+                    android:textSize="12sp"/>
+                <TextView
+                    android:id="@+id/input_working_loss_total_penyaluran_60f"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:layout_marginTop="4dp"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"/>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:hint="Blending Out">
+                    <EditText
+                        android:id="@+id/input_working_loss_blending_out_60f"
+                        android:layout_width="match_parent"
+                        android:inputType="number"
+                        android:layout_height="wrap_content"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:hint="Stock Akhir">
+                    <EditText
+                        android:id="@+id/input_working_loss_stock_akhir_60f"
+                        android:layout_width="match_parent"
+                        android:inputType="number"
+                        android:layout_height="wrap_content"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Working Losses Quantity"
+                    android:textSize="12sp"/>
+                <TextView
+                    android:id="@+id/input_working_loss_quantity_60f"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:layout_marginTop="4dp"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Working Loss Percentage"
+                    android:textSize="12sp"/>
+                <TextView
+                    android:id="@+id/input_working_loss_percentage_60f"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="%"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="8dp"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"/>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:hint="Blending In">
-            <EditText
-                android:id="@+id/input_working_loss_blending_in"
+            android:layout_margin="4dp">
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:inputType="number"
-                android:layout_height="wrap_content"/>
-        </android.support.design.widget.TextInputLayout>
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="12dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Satuan: Liter Obs"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"/>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:hint="Stok Awal">
+                    <EditText
+                        android:id="@+id/input_working_loss_stock_awal_obs"
+                        android:layout_width="match_parent"
+                        android:inputType="number"
+                        android:layout_height="wrap_content"/>
+                </android.support.design.widget.TextInputLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Total Tersedia"
-            android:textSize="12sp"/>
-        <TextView
-            android:id="@+id/input_working_loss_total_tersedia"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0"
-            android:layout_marginTop="4dp"
-            android:textSize="18sp"
-            android:textColor="@color/black"/>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:hint="Act. Receipt">
+                    <EditText
+                        android:id="@+id/input_working_loss_receipt_obs"
+                        android:layout_width="match_parent"
+                        android:inputType="number"
+                        android:layout_height="wrap_content"/>
+                </android.support.design.widget.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:hint="Sales PSO">
-            <EditText
-                android:id="@+id/input_working_loss_sales_pso"
-                android:layout_width="match_parent"
-                android:inputType="number"
-                android:layout_height="wrap_content"/>
-        </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:hint="Blending In">
+                    <EditText
+                        android:id="@+id/input_working_loss_blending_in_obs"
+                        android:layout_width="match_parent"
+                        android:inputType="number"
+                        android:layout_height="wrap_content"/>
+                </android.support.design.widget.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:hint="Sales NPSO">
-            <EditText
-                android:id="@+id/input_working_loss_sales_npso"
-                android:layout_width="match_parent"
-                android:inputType="number"
-                android:layout_height="wrap_content"/>
-        </android.support.design.widget.TextInputLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Total Tersedia"
+                    android:textSize="12sp"/>
+                <TextView
+                    android:id="@+id/input_working_loss_total_tersedia_obs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:layout_marginTop="4dp"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"/>
 
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:hint="Konsinyasi">
-            <EditText
-                android:id="@+id/input_working_loss_konsinyasi"
-                android:layout_width="match_parent"
-                android:inputType="number"
-                android:layout_height="wrap_content"/>
-        </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:hint="Sales PSO">
+                    <EditText
+                        android:id="@+id/input_working_loss_sales_pso_obs"
+                        android:layout_width="match_parent"
+                        android:inputType="number"
+                        android:layout_height="wrap_content"/>
+                </android.support.design.widget.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:hint="Own Use TBBM">
-            <EditText
-                android:id="@+id/input_working_loss_ownuse_tbbm"
-                android:layout_width="match_parent"
-                android:inputType="number"
-                android:layout_height="wrap_content"/>
-        </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:hint="Sales NPSO">
+                    <EditText
+                        android:id="@+id/input_working_loss_sales_npso_obs"
+                        android:layout_width="match_parent"
+                        android:inputType="number"
+                        android:layout_height="wrap_content"/>
+                </android.support.design.widget.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:hint="Own Use Kapal">
-            <EditText
-                android:id="@+id/input_working_loss_ownuse_kapal"
-                android:layout_width="match_parent"
-                android:inputType="number"
-                android:layout_height="wrap_content"/>
-        </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:hint="Konsinyasi">
+                    <EditText
+                        android:id="@+id/input_working_loss_konsinyasi_obs"
+                        android:layout_width="match_parent"
+                        android:inputType="number"
+                        android:layout_height="wrap_content"/>
+                </android.support.design.widget.TextInputLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Total Penyaluran"
-            android:textSize="12sp"/>
-        <TextView
-            android:id="@+id/input_working_loss_total_penyaluran"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0"
-            android:layout_marginTop="4dp"
-            android:textSize="18sp"
-            android:textColor="@color/black"/>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:hint="Own Use TBBM">
+                    <EditText
+                        android:id="@+id/input_working_loss_ownuse_tbbm_obs"
+                        android:layout_width="match_parent"
+                        android:inputType="number"
+                        android:layout_height="wrap_content"/>
+                </android.support.design.widget.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:hint="Blending Out">
-            <EditText
-                android:id="@+id/input_working_loss_blending_out"
-                android:layout_width="match_parent"
-                android:inputType="number"
-                android:layout_height="wrap_content"/>
-        </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:hint="Own Use Kapal">
+                    <EditText
+                        android:id="@+id/input_working_loss_ownuse_kapal_obs"
+                        android:layout_width="match_parent"
+                        android:inputType="number"
+                        android:layout_height="wrap_content"/>
+                </android.support.design.widget.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:hint="Stock Akhir">
-            <EditText
-                android:id="@+id/input_working_loss_stock_akhir"
-                android:layout_width="match_parent"
-                android:inputType="number"
-                android:layout_height="wrap_content"/>
-        </android.support.design.widget.TextInputLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Total Penyaluran"
+                    android:textSize="12sp"/>
+                <TextView
+                    android:id="@+id/input_working_loss_total_penyaluran_obs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:layout_marginTop="4dp"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Working Losses Quantity"
-            android:textSize="12sp"/>
-        <TextView
-            android:id="@+id/input_working_loss_quantity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0"
-            android:layout_marginTop="4dp"
-            android:textSize="18sp"
-            android:textColor="@color/black"/>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:hint="Blending Out">
+                    <EditText
+                        android:id="@+id/input_working_loss_blending_out_obs"
+                        android:layout_width="match_parent"
+                        android:inputType="number"
+                        android:layout_height="wrap_content"/>
+                </android.support.design.widget.TextInputLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Working Loss Percentage"
-            android:textSize="12sp"/>
-        <TextView
-            android:id="@+id/input_working_loss_percentage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="%"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="8dp"
-            android:textSize="18sp"
-            android:textColor="@color/black"/>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:hint="Stock Akhir">
+                    <EditText
+                        android:id="@+id/input_working_loss_stock_akhir_obs"
+                        android:layout_width="match_parent"
+                        android:inputType="number"
+                        android:layout_height="wrap_content"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Working Losses Quantity"
+                    android:textSize="12sp"/>
+                <TextView
+                    android:id="@+id/input_working_loss_quantity_obs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:layout_marginTop="4dp"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Working Loss Percentage"
+                    android:textSize="12sp"/>
+                <TextView
+                    android:id="@+id/input_working_loss_percentage_obs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="%"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="8dp"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"/>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
 
         <Button
             android:id="@+id/input_working_loss_kirim"

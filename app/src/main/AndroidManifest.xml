@@ -482,6 +482,69 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.pertamina.pertaminatuban.qualityquantity.harian.InputTestReportActivity" />
         </activity>
+        <activity
+            android:name=".operation.OperationActivity"
+            android:label="@string/title_activity_operation"
+            android:parentActivityName=".activities.MenuActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.pertamina.pertaminatuban.activities.MenuActivity" />
+        </activity>
+        <activity
+            android:name=".operation.pumpable.PumpableActivity"
+            android:label="@string/title_activity_pumpable"
+            android:parentActivityName=".operation.OperationActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.pertamina.pertaminatuban.operation.OperationActivity" />
+        </activity>
+        <activity
+            android:name=".operation.distribusibbm.DistribusiBbmActivity"
+            android:label="@string/title_activity_distribusi_bbm"
+            android:parentActivityName=".operation.OperationActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.pertamina.pertaminatuban.operation.OperationActivity" />
+        </activity>
+        <activity
+            android:name=".operation.supplybbm.SuplaiBbmActivity"
+            android:label="@string/title_activity_suplai_bbm"
+            android:parentActivityName=".operation.OperationActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.pertamina.pertaminatuban.operation.OperationActivity" />
+        </activity>
+        <activity
+            android:name=".operation.tfpipeline.TransferPipelineActivity"
+            android:label="@string/title_activity_transfer_pipeline"
+            android:parentActivityName=".operation.OperationActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.pertamina.pertaminatuban.operation.OperationActivity" />
+        </activity>
+        <activity
+            android:name=".operation.tftppi.TransferTppiActivity"
+            android:label="@string/title_activity_transfer_tppi"
+            android:parentActivityName=".operation.OperationActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.pertamina.pertaminatuban.operation.OperationActivity" />
+        </activity>
+        <activity
+            android:name=".operation.sarfas.SarfasActivity"
+            android:label="@string/title_activity_sarfas"
+            android:parentActivityName=".operation.OperationActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.pertamina.pertaminatuban.operation.OperationActivity" />
+        </activity>
     </application>
 
 </manifest>

@@ -385,4 +385,11 @@
     <string name="berthing_date">Berthing Date</string>
     <string name="title_activity_input_test_report">Input Test Report</string>
     <string name="title_activity_input_rincian_test_report">" Rincian Test Report"</string>
+    <string name="title_activity_operation">"Operation "</string>
+    <string name="title_activity_pumpable">Pump Able Stock</string>
+    <string name="title_activity_distribusi_bbm">Distribusi BBM</string>
+    <string name="title_activity_suplai_bbm">Suplai BBM</string>
+    <string name="title_activity_transfer_pipeline">Transfer Pipeline</string>
+    <string name="title_activity_transfer_tppi">Transfer TPPI</string>
+    <string name="title_activity_sarfas">Sarfas</string>
 </resources>

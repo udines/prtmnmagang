@@ -14,6 +14,7 @@ import com.pertamina.pertaminatuban.finance.FinanceActivity;
 import com.pertamina.pertaminatuban.finance.perjalanan_dinas.PerjalananDinasActivity;
 import com.pertamina.pertaminatuban.marine.NewMarineActivity;
 import com.pertamina.pertaminatuban.models.MenuViewModel;
+import com.pertamina.pertaminatuban.operation.OperationActivity;
 import com.pertamina.pertaminatuban.qualityquantity.QQActivity;
 
 import java.util.ArrayList;
@@ -71,6 +72,10 @@ public class GridMenuAdapter extends RecyclerView.Adapter<GridMenuViewHolder> {
                         keuanganIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         holder.context.startActivity(keuanganIntent);
                         break;
+                    case 4:
+                        Intent operationIntent = new Intent(holder.context, OperationActivity.class);
+                        operationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        holder.context.startActivity(operationIntent);
                 }
             }
         });
