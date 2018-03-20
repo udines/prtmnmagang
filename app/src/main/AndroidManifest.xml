@@ -464,6 +464,24 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.pertamina.pertaminatuban.finance.perjalanan_dinas.InputRincianActivity" />
         </activity>
+        <activity
+            android:name=".qualityquantity.harian.InputTestReportActivity"
+            android:label="@string/title_activity_input_test_report"
+            android:parentActivityName=".qualityquantity.harian.TestReportActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.pertamina.pertaminatuban.qualityquantity.harian.TestReportActivity" />
+        </activity>
+        <activity
+            android:name=".qualityquantity.harian.InputRincianTestReportActivity"
+            android:label="@string/title_activity_input_rincian_test_report"
+            android:parentActivityName=".qualityquantity.harian.InputTestReportActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.pertamina.pertaminatuban.qualityquantity.harian.InputTestReportActivity" />
+        </activity>
     </application>
 
 </manifest>
