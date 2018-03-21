@@ -15,9 +15,9 @@ public class Pumpable {
 
     @SerializedName("value")
     @Expose
-    private long value;
+    private double value;
 
-    public Pumpable(String noTank, String fuel, long value) {
+    public Pumpable(String noTank, String fuel, double value) {
         this.noTank = noTank;
         this.fuel = fuel;
         this.value = value;
@@ -31,7 +31,7 @@ public class Pumpable {
         return fuel;
     }
 
-    public long getValue() {
+    public double getValue() {
         return value;
     }
 }

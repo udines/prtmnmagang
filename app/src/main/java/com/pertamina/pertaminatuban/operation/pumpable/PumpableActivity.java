@@ -157,7 +157,7 @@ public class PumpableActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ArrayList<Pumpable>> call, Throwable t) {
-
+                Log.w("error", t.getMessage());
             }
         });
     }
@@ -201,10 +201,9 @@ public class PumpableActivity extends AppCompatActivity {
         recyclerPremium.setNestedScrollingEnabled(false);
         recyclerSolar.setNestedScrollingEnabled(false);
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerPertamax.setLayoutManager(layoutManager);
-        recyclerPremium.setLayoutManager(layoutManager);
-        recyclerSolar.setLayoutManager(layoutManager);
+        recyclerPertamax.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        recyclerPremium.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        recyclerSolar.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
         DecimalFormat format = new DecimalFormat("#,###");
 
@@ -222,8 +221,8 @@ public class PumpableActivity extends AppCompatActivity {
         }
     }
 
-    private long getTotal(ArrayList<Pumpable> pumpables) {
-        long total = 0;
+    private double getTotal(ArrayList<Pumpable> pumpables) {
+        double total = 0;
         for (int i = 0; i < pumpables.size(); i++) {
             total = total + pumpables.get(i).getValue();
         }
