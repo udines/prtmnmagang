@@ -69,4 +69,8 @@ public class TransferPipeline {
     public String getFuel() {
         return fuel;
     }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 }

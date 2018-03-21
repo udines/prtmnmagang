@@ -65,7 +65,7 @@ public class InputTransferPipelineActivity extends AppCompatActivity {
     private int stopYear, stopMonth, stopDay, stopHour, stopMinute;
     private String jumlah;
 
-    private int initMonth, initYear;
+    private String id;
     private boolean isUpdate;
 
     @Override
@@ -140,13 +140,78 @@ public class InputTransferPipelineActivity extends AppCompatActivity {
                             jml,
                             fuel
                     );
-                    sendPostRequest(object);
+                    Log.w("is update", String.valueOf(isUpdate));
+                    if (isUpdate) {
+                        Log.w("id", id);
+                        object.setId(id);
+                        sendUpdateRequest(object);
+                    } else {
+                        sendPostRequest(object);
+                    }
                 }
             }
         });
     }
 
+    private void sendUpdateRequest(TransferPipeline object) {
+        Log.w("put object", new Gson().toJson(object));
+
+        SharedPreferences preferences = InputTransferPipelineActivity.this.getSharedPreferences(
+                "login",
+                Context.MODE_PRIVATE
+        );
+
+        final String key = preferences.getString("userKey", "none");
+
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(new Interceptor() {
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request original = chain.request();
+
+                Request request = original.newBuilder()
+                        .header("Authorization", key)
+                        .method(original.method(), original.body())
+                        .build();
+                return chain.proceed(request);
+            }
+        });
+
+        OkHttpClient client = httpClient.build();
+
+        String baseUrl = "http://www.api.clicktuban.com/";
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client);
+
+        Retrofit retrofit = builder.build();
+        OperationClient operationClient = retrofit.create(OperationClient.class);
+
+        Log.w("body", new Gson().toJson(object));
+
+        Call<Object> call = operationClient.putPipeline(object);
+        call.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, Response<Object> response) {
+                Log.w("code", String.valueOf(response.code()));
+                if (response.code() == 200) {
+                    Log.w("body", String.valueOf(response.body()));
+                    Toast.makeText(InputTransferPipelineActivity.this, "Data berhasil ditambahkan", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+    }
+
     private void sendPostRequest(TransferPipeline object) {
+        Log.w("post object", new Gson().toJson(object));
+
         SharedPreferences preferences = InputTransferPipelineActivity.this.getSharedPreferences(
                 "login",
                 Context.MODE_PRIVATE
@@ -205,27 +270,30 @@ public class InputTransferPipelineActivity extends AppCompatActivity {
     }
 
     private void setInitBatchData() {
-        Calendar cal = Calendar.getInstance();
-
-        initMonth = cal.get(Calendar.MONTH);
-        initYear = cal.get(Calendar.YEAR);
-        setBulanButton(initMonth, initYear, bulanButton);
+        setBulanButton(startMonth, startYear, bulanButton);
 
         bulanButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Calendar today = Calendar.getInstance();
+                final Calendar today = Calendar.getInstance();
 
                 MonthPickerDialog.Builder builder = new MonthPickerDialog.Builder(
                         InputTransferPipelineActivity.this,
                         new MonthPickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(int selectedMonth, int selectedYear) {
-                                initMonth = selectedMonth;
-                                initYear = selectedYear;
-                                setBulanButton(initMonth, initYear, bulanButton);
+                                startDay = today.get(Calendar.DAY_OF_MONTH);
+                                startMonth = selectedMonth;
+                                startYear = selectedYear;
+                                stopDay = today.get(Calendar.DAY_OF_MONTH);
+                                stopMonth = selectedMonth;
+                                stopYear = selectedYear;
+                                setDateTimeButton(startYear, startMonth, startDay, startHour, startMinute, buttonStartDate, buttonStartTime);
+                                setDateTimeButton(stopYear, stopMonth, stopDay, stopHour, stopMinute, buttonStopDate, buttonStopTime);
+                                setBulanButton(startMonth, startYear, bulanButton);
+                                calculateJumlah();
                                 if (inputBatch.getText().length() > 0) {
-                                    setInitData(initMonth, initYear, Integer.parseInt(inputBatch.getText().toString()));
+                                    setInitData(startMonth, startYear, Integer.parseInt(inputBatch.getText().toString()));
                                 }
                             }
                         },
@@ -236,8 +304,8 @@ public class InputTransferPipelineActivity extends AppCompatActivity {
                 builder.setMinYear(1970)
                         .setMaxYear(today.get(Calendar.YEAR))
                         .setTitle("Pilih bulan dan tahun")
-                        .setActivatedMonth(initMonth)
-                        .setActivatedYear(initYear)
+                        .setActivatedMonth(startMonth)
+                        .setActivatedYear(startYear)
                         .build()
                         .show();
             }
@@ -252,7 +320,7 @@ public class InputTransferPipelineActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(final CharSequence charSequence, int i, int i1, int i2) {
                 if (charSequence.length() > 0) {
-                    setInitData(initMonth, initYear, Integer.parseInt(charSequence.toString()));
+                    setInitData(startMonth, startYear, Integer.parseInt(charSequence.toString()));
                 } else {
                     clearData();
                 }
@@ -315,6 +383,7 @@ public class InputTransferPipelineActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<TransferPipeline> call, Throwable t) {
                 isUpdate = false;
+                id = "";
                 clearData();
             }
         });
@@ -342,6 +411,7 @@ public class InputTransferPipelineActivity extends AppCompatActivity {
     }
 
     private void setInitInput(TransferPipeline pipeline) {
+        id = pipeline.getId();
         inputQuantity.setText(String.valueOf(pipeline.getQuantity()));
         jumlah = pipeline.getJumlah().substring(0, pipeline.getJumlah().length() - 3);
         textJumlah.setText(String.valueOf("Jumlah: " + jumlah));
@@ -397,7 +467,12 @@ public class InputTransferPipelineActivity extends AppCompatActivity {
                         startYear = i;
                         startMonth = i1;
                         startDay = i2;
+                        stopYear = startYear;
+                        stopMonth = startMonth;
+                        stopDay = startDay;
                         setDateTimeButton(startYear, startMonth, startDay, startHour, startMinute, buttonStartDate, buttonStartTime);
+                        setDateTimeButton(stopYear, stopMonth, stopDay, stopHour, stopMinute, buttonStopDate, buttonStopTime);
+                        setBulanButton(startMonth, startYear, bulanButton);
                         calculateJumlah();
                     }
                 };

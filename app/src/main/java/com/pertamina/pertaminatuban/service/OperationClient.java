@@ -34,7 +34,7 @@ public interface OperationClient {
     Call<Object> postPipeline(@Body TransferPipeline pipeline);
     @GET("oprtsg/check/{tahun}/{bulan}/{batch}")
     Call<TransferPipeline> getPipeline(@Path("tahun") String tahun, @Path("bulan") String bulan, @Path("batch") String batch);
-    @POST("oprtsg/")
+    @PUT("oprtsg/")
     Call<Object> putPipeline(@Body TransferPipeline pipeline);
 
     //tppi
