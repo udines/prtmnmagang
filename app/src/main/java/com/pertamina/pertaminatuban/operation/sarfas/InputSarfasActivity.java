@@ -1,4 +1,4 @@
-package com.pertamina.pertaminatuban.operation.tftppi;
+package com.pertamina.pertaminatuban.operation.sarfas;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -37,7 +37,7 @@ import okhttp3.Request;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class InputTransferTppiActivity extends AppCompatActivity {
+public class InputSarfasActivity extends AppCompatActivity {
 
     private Spinner spinner;
     private EditText inputBatch;
@@ -54,7 +54,7 @@ public class InputTransferTppiActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_input_transfer_tppi);
+        setContentView(R.layout.activity_input_sarfas);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -65,15 +65,15 @@ public class InputTransferTppiActivity extends AppCompatActivity {
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        spinner = findViewById(R.id.input_transfer_tppi_spinner_produk);
-        inputBatch = findViewById(R.id.input_transfer_tppi_batch);
-        inputQuantity = findViewById(R.id.input_transfer_tppi_quantity);
-        buttonStartDate = findViewById(R.id.input_transfer_tppi_start_date);
-        buttonStartTime = findViewById(R.id.input_transfer_tppi_start_time);
-        buttonStopDate = findViewById(R.id.input_transfer_tppi_stop_date);
-        buttonStopTime = findViewById(R.id.input_transfer_tppi_stop_time);
-        textJumlah = findViewById(R.id.input_transfer_tppi_jumlah);
-        kirim = findViewById(R.id.input_transfer_tppi_kirim);
+        spinner = findViewById(R.id.input_sarfas_spinner_produk);
+        inputBatch = findViewById(R.id.input_sarfas_batch);
+        inputQuantity = findViewById(R.id.input_sarfas_quantity);
+        buttonStartDate = findViewById(R.id.input_sarfas_start_date);
+        buttonStartTime = findViewById(R.id.input_sarfas_start_time);
+        buttonStopDate = findViewById(R.id.input_sarfas_stop_date);
+        buttonStopTime = findViewById(R.id.input_sarfas_stop_time);
+        textJumlah = findViewById(R.id.input_sarfas_jumlah);
+        kirim = findViewById(R.id.input_sarfas_kirim);
 
         Calendar cal = Calendar.getInstance();
         startYear = cal.get(Calendar.YEAR);
@@ -129,7 +129,7 @@ public class InputTransferTppiActivity extends AppCompatActivity {
     }
 
     private void sendPostRequest(TransferPipeline object) {
-        SharedPreferences preferences = InputTransferTppiActivity.this.getSharedPreferences(
+        SharedPreferences preferences = InputSarfasActivity.this.getSharedPreferences(
                 "login",
                 Context.MODE_PRIVATE
         );
@@ -195,7 +195,7 @@ public class InputTransferTppiActivity extends AppCompatActivity {
                     }
                 };
                 DatePickerDialog dialog = new DatePickerDialog(
-                        InputTransferTppiActivity.this,
+                        InputSarfasActivity.this,
                         listener,
                         startYear,
                         startMonth,
@@ -218,7 +218,7 @@ public class InputTransferTppiActivity extends AppCompatActivity {
                     }
                 };
                 TimePickerDialog dialog = new TimePickerDialog(
-                        InputTransferTppiActivity.this,
+                        InputSarfasActivity.this,
                         listener,
                         startHour,
                         startMinute,
@@ -242,7 +242,7 @@ public class InputTransferTppiActivity extends AppCompatActivity {
                     }
                 };
                 DatePickerDialog dialog = new DatePickerDialog(
-                        InputTransferTppiActivity.this,
+                        InputSarfasActivity.this,
                         listener,
                         stopYear,
                         stopMonth,
@@ -265,7 +265,7 @@ public class InputTransferTppiActivity extends AppCompatActivity {
                     }
                 };
                 TimePickerDialog dialog = new TimePickerDialog(
-                        InputTransferTppiActivity.this,
+                        InputSarfasActivity.this,
                         listener,
                         stopHour,
                         stopMinute,
@@ -306,5 +306,4 @@ public class InputTransferTppiActivity extends AppCompatActivity {
         jumlah = String.format(Locale.getDefault(),"%02d:%02d", hour, minute);
         textJumlah.setText(String.valueOf("Jumlah: " + jumlah));
     }
-
 }

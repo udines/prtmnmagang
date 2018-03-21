@@ -52,6 +52,7 @@ public class InputTransferPipelineActivity extends AppCompatActivity {
 
     private int startYear, startMonth, startDay, startHour, startMinute;
     private int stopYear, stopMonth, stopDay, stopHour, stopMinute;
+    private String jumlah;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,14 +115,14 @@ public class InputTransferPipelineActivity extends AppCompatActivity {
                     String start  = format.format(new Date(cal.getTimeInMillis()));
                     cal.set(stopYear, stopMonth, stopDay, stopHour, stopMinute);
                     String stop = format.format(new Date(cal.getTimeInMillis()));
-                    String jumlah = textJumlah.getText().toString() + ":00";
+                    String jml = jumlah + ":00";
 
                     TransferPipeline object = new TransferPipeline(
                             quantity,
                             start,
                             stop,
                             batch,
-                            jumlah,
+                            jml,
                             fuel
                     );
                     sendPostRequest(object);
@@ -305,6 +306,7 @@ public class InputTransferPipelineActivity extends AppCompatActivity {
         long hour = diff / 60;
         long minute = diff % 60;
 
-        textJumlah.setText(String.valueOf("Jumlah: " + String.format("%02d:%02d", hour, minute)));
+        jumlah = String.format(Locale.getDefault(),"%02d:%02d", hour, minute);
+        textJumlah.setText(String.valueOf("Jumlah: " + jumlah));
     }
 }

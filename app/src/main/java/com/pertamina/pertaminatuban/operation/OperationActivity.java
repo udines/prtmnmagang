@@ -12,13 +12,14 @@ import android.view.View;
 import com.pertamina.pertaminatuban.R;
 import com.pertamina.pertaminatuban.operation.distribusibbm.DistribusiBbmActivity;
 import com.pertamina.pertaminatuban.operation.pumpable.PumpableActivity;
+import com.pertamina.pertaminatuban.operation.sarfas.SarfasActivity;
 import com.pertamina.pertaminatuban.operation.supplybbm.SuplaiBbmActivity;
 import com.pertamina.pertaminatuban.operation.tfpipeline.TransferPipelineActivity;
 import com.pertamina.pertaminatuban.operation.tftppi.TransferTppiActivity;
 
 public class OperationActivity extends AppCompatActivity {
 
-    private CardView menuPumpable, menuTfPipeline, menuTfTppi, menuSuplaiBbm, menuDistribusiBbm;
+    private CardView menuPumpable, menuTfPipeline, menuTfTppi, menuSarfas, menuSuplaiBbm, menuDistribusiBbm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +38,7 @@ public class OperationActivity extends AppCompatActivity {
         menuPumpable = findViewById(R.id.operation_pumpable);
         menuTfPipeline = findViewById(R.id.operation_transfer_pipeline);
         menuTfTppi = findViewById(R.id.operation_transfer_tppi);
+        menuSarfas = findViewById(R.id.operation_sarfas);
         menuSuplaiBbm = findViewById(R.id.operation_suplai_bbm);
         menuDistribusiBbm = findViewById(R.id.operation_distribusi_bbm);
 
@@ -66,6 +68,14 @@ public class OperationActivity extends AppCompatActivity {
                 Intent tppiIntent = new Intent(getApplicationContext(), TransferTppiActivity.class);
                 tppiIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(tppiIntent);
+            }
+        });
+        menuSarfas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent sarfastIntent = new Intent(getApplicationContext(), SarfasActivity.class);
+                sarfastIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(sarfastIntent);
             }
         });
         menuSuplaiBbm.setOnClickListener(new View.OnClickListener() {

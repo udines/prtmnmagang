@@ -395,4 +395,5 @@
     <string name="title_activity_input_pumpable">Input Pumpable</string>
     <string name="title_activity_input_transfer_pipeline">Input Transfer Pipeline</string>
     <string name="title_activity_input_transfer_tppi">Input Transfer TPPI TBBM</string>
+    <string name="title_activity_input_sarfas">Input Sarfas Penerimaan</string>
 </resources>

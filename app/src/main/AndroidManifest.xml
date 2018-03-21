@@ -572,6 +572,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.pertamina.pertaminatuban.operation.tftppi.TransferTppiActivity" />
         </activity>
+        <activity
+            android:name=".operation.sarfas.InputSarfasActivity"
+            android:label="@string/title_activity_input_sarfas"
+            android:parentActivityName=".operation.sarfas.SarfasActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.pertamina.pertaminatuban.operation.sarfas.SarfasActivity" />
+        </activity>
     </application>
 
 </manifest>
