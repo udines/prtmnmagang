@@ -1,4 +1,4 @@
-package com.pertamina.pertaminatuban.operation.tfpipeline;
+package com.pertamina.pertaminatuban.operation.tftppi;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -11,7 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -22,10 +21,8 @@ import android.widget.TimePicker;
 
 import com.google.gson.Gson;
 import com.pertamina.pertaminatuban.R;
-import com.pertamina.pertaminatuban.distribusi.KonsumenActivity;
-import com.pertamina.pertaminatuban.marine.input.InputTankerMovementActivity;
 import com.pertamina.pertaminatuban.operation.models.TransferPipeline;
-import com.pertamina.pertaminatuban.operation.pumpable.InputPumpableActivity;
+import com.pertamina.pertaminatuban.operation.tfpipeline.InputTransferPipelineActivity;
 import com.pertamina.pertaminatuban.service.OperationClient;
 
 import java.io.IOException;
@@ -40,7 +37,7 @@ import okhttp3.Request;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class InputTransferPipelineActivity extends AppCompatActivity {
+public class InputTransferTppiActivity extends AppCompatActivity {
 
     private Spinner spinner;
     private EditText inputBatch;
@@ -56,7 +53,7 @@ public class InputTransferPipelineActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_input_transfer_pipeline);
+        setContentView(R.layout.activity_input_transfer_tppi);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -67,15 +64,15 @@ public class InputTransferPipelineActivity extends AppCompatActivity {
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        spinner = findViewById(R.id.input_transfer_pipeline_spinner_produk);
-        inputBatch = findViewById(R.id.input_transfer_pipeline_batch);
-        inputQuantity = findViewById(R.id.input_transfer_pipeline_quantity);
-        buttonStartDate = findViewById(R.id.input_transfer_pipeline_start_date);
-        buttonStartTime = findViewById(R.id.input_transfer_pipeline_start_time);
-        buttonStopDate = findViewById(R.id.input_transfer_pipeline_stop_date);
-        buttonStopTime = findViewById(R.id.input_transfer_pipeline_stop_time);
-        textJumlah = findViewById(R.id.input_transfer_pipeline_jumlah);
-        kirim = findViewById(R.id.input_transfer_pipeline_kirim);
+        spinner = findViewById(R.id.input_transfer_tppi_spinner_produk);
+        inputBatch = findViewById(R.id.input_transfer_tppi_batch);
+        inputQuantity = findViewById(R.id.input_transfer_tppi_quantity);
+        buttonStartDate = findViewById(R.id.input_transfer_tppi_start_date);
+        buttonStartTime = findViewById(R.id.input_transfer_tppi_start_time);
+        buttonStopDate = findViewById(R.id.input_transfer_tppi_stop_date);
+        buttonStopTime = findViewById(R.id.input_transfer_tppi_stop_time);
+        textJumlah = findViewById(R.id.input_transfer_tppi_jumlah);
+        kirim = findViewById(R.id.input_transfer_tppi_kirim);
 
         Calendar cal = Calendar.getInstance();
         startYear = cal.get(Calendar.YEAR);
@@ -131,7 +128,7 @@ public class InputTransferPipelineActivity extends AppCompatActivity {
     }
 
     private void sendPostRequest(TransferPipeline object) {
-        SharedPreferences preferences = InputTransferPipelineActivity.this.getSharedPreferences(
+        SharedPreferences preferences = InputTransferTppiActivity.this.getSharedPreferences(
                 "login",
                 Context.MODE_PRIVATE
         );
@@ -197,7 +194,7 @@ public class InputTransferPipelineActivity extends AppCompatActivity {
                     }
                 };
                 DatePickerDialog dialog = new DatePickerDialog(
-                        InputTransferPipelineActivity.this,
+                        InputTransferTppiActivity.this,
                         listener,
                         startYear,
                         startMonth,
@@ -220,7 +217,7 @@ public class InputTransferPipelineActivity extends AppCompatActivity {
                     }
                 };
                 TimePickerDialog dialog = new TimePickerDialog(
-                        InputTransferPipelineActivity.this,
+                        InputTransferTppiActivity.this,
                         listener,
                         startHour,
                         startMinute,
@@ -244,7 +241,7 @@ public class InputTransferPipelineActivity extends AppCompatActivity {
                     }
                 };
                 DatePickerDialog dialog = new DatePickerDialog(
-                        InputTransferPipelineActivity.this,
+                        InputTransferTppiActivity.this,
                         listener,
                         stopYear,
                         stopMonth,
@@ -267,7 +264,7 @@ public class InputTransferPipelineActivity extends AppCompatActivity {
                     }
                 };
                 TimePickerDialog dialog = new TimePickerDialog(
-                        InputTransferPipelineActivity.this,
+                        InputTransferTppiActivity.this,
                         listener,
                         stopHour,
                         stopMinute,
@@ -307,4 +304,5 @@ public class InputTransferPipelineActivity extends AppCompatActivity {
 
         textJumlah.setText(String.valueOf("Jumlah: " + String.format("%02d:%02d", hour, minute)));
     }
+
 }

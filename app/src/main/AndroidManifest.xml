@@ -563,6 +563,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.pertamina.pertaminatuban.operation.tfpipeline.TransferPipelineActivity" />
         </activity>
+        <activity
+            android:name=".operation.tftppi.InputTransferTppiActivity"
+            android:label="@string/title_activity_input_transfer_tppi"
+            android:parentActivityName=".operation.tftppi.TransferTppiActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.pertamina.pertaminatuban.operation.tftppi.TransferTppiActivity" />
+        </activity>
     </application>
 
 </manifest>
