@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.pertamina.pertaminatuban.R;
@@ -34,6 +35,9 @@ import java.util.Locale;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -161,7 +165,23 @@ public class InputTransferTppiActivity extends AppCompatActivity {
         Retrofit retrofit = builder.build();
         OperationClient operationClient = retrofit.create(OperationClient.class);
 
-        Log.w("body", new Gson().toJson(object));
+        Call<Object> call = operationClient.postTppi(object);
+        call.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, Response<Object> response) {
+                Log.w("code", String.valueOf(response.code()));
+                if (response.code() == 200) {
+                    Log.w("body", String.valueOf(response.body()));
+                    Toast.makeText(InputTransferTppiActivity.this, "Data berhasil ditambahkan", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
     }
 
     private boolean inputTerisi(EditText editText) {

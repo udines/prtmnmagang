@@ -5,10 +5,13 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -28,12 +31,16 @@ import com.pertamina.pertaminatuban.marine.input.InputTankerMovementActivity;
 import com.pertamina.pertaminatuban.operation.models.TransferPipeline;
 import com.pertamina.pertaminatuban.operation.pumpable.InputPumpableActivity;
 import com.pertamina.pertaminatuban.service.OperationClient;
+import com.whiteelephant.monthpicker.MonthPickerDialog;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -51,12 +58,15 @@ public class InputTransferPipelineActivity extends AppCompatActivity {
     private EditText inputQuantity;
     private Button buttonStartDate, buttonStartTime;
     private Button buttonStopDate, buttonStopTime;
-    private Button kirim;
+    private Button kirim, bulanButton;
     private TextView textJumlah;
 
     private int startYear, startMonth, startDay, startHour, startMinute;
     private int stopYear, stopMonth, stopDay, stopHour, stopMinute;
     private String jumlah;
+
+    private int initMonth, initYear;
+    private boolean isUpdate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +91,7 @@ public class InputTransferPipelineActivity extends AppCompatActivity {
         buttonStopTime = findViewById(R.id.input_transfer_pipeline_stop_time);
         textJumlah = findViewById(R.id.input_transfer_pipeline_jumlah);
         kirim = findViewById(R.id.input_transfer_pipeline_kirim);
+        bulanButton = findViewById(R.id.input_transfer_pipeline_bulan_button);
 
         Calendar cal = Calendar.getInstance();
         startYear = cal.get(Calendar.YEAR);
@@ -195,7 +206,178 @@ public class InputTransferPipelineActivity extends AppCompatActivity {
 
     private void setInitBatchData() {
         Calendar cal = Calendar.getInstance();
-        inputBatch.setText(String.valueOf(cal.get(Calendar.DAY_OF_MONTH)));
+
+        initMonth = cal.get(Calendar.MONTH);
+        initYear = cal.get(Calendar.YEAR);
+        setBulanButton(initMonth, initYear, bulanButton);
+
+        bulanButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar today = Calendar.getInstance();
+
+                MonthPickerDialog.Builder builder = new MonthPickerDialog.Builder(
+                        InputTransferPipelineActivity.this,
+                        new MonthPickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(int selectedMonth, int selectedYear) {
+                                initMonth = selectedMonth;
+                                initYear = selectedYear;
+                                setBulanButton(initMonth, initYear, bulanButton);
+                                if (inputBatch.getText().length() > 0) {
+                                    setInitData(initMonth, initYear, Integer.parseInt(inputBatch.getText().toString()));
+                                }
+                            }
+                        },
+                        today.get(Calendar.YEAR),
+                        today.get(Calendar.MONTH)
+                );
+
+                builder.setMinYear(1970)
+                        .setMaxYear(today.get(Calendar.YEAR))
+                        .setTitle("Pilih bulan dan tahun")
+                        .setActivatedMonth(initMonth)
+                        .setActivatedYear(initYear)
+                        .build()
+                        .show();
+            }
+        });
+
+        inputBatch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(final CharSequence charSequence, int i, int i1, int i2) {
+                if (charSequence.length() > 0) {
+                    setInitData(initMonth, initYear, Integer.parseInt(charSequence.toString()));
+                } else {
+                    clearData();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+    }
+
+    private void setInitData(int initMonth, int initYear, int initBatch) {
+        SharedPreferences preferences = InputTransferPipelineActivity.this.getSharedPreferences(
+                "login",
+                Context.MODE_PRIVATE
+        );
+
+        final String key = preferences.getString("userKey", "none");
+
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(new Interceptor() {
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request original = chain.request();
+
+                Request request = original.newBuilder()
+                        .header("Authorization", key)
+                        .method(original.method(), original.body())
+                        .build();
+                return chain.proceed(request);
+            }
+        });
+
+        OkHttpClient client = httpClient.build();
+
+        String baseUrl = "http://www.api.clicktuban.com/";
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client);
+
+        Retrofit retrofit = builder.build();
+        OperationClient operationClient = retrofit.create(OperationClient.class);
+        Call<TransferPipeline> call = operationClient.getPipeline(
+                String.valueOf(initYear),
+                String.valueOf(initMonth + 1),
+                String.valueOf(initBatch)
+        );
+        call.enqueue(new Callback<TransferPipeline>() {
+            @Override
+            public void onResponse(Call<TransferPipeline> call, Response<TransferPipeline> response) {
+                Log.w("code", String.valueOf(response.code()));
+                if (response.code() == 200 && response.body() != null) {
+                    isUpdate = true;
+                    setInitInput(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TransferPipeline> call, Throwable t) {
+                isUpdate = false;
+                clearData();
+            }
+        });
+    }
+
+    private void clearData() {
+        inputQuantity.setText("");
+        spinner.setSelection(0);
+        Calendar cal = Calendar.getInstance();
+        startYear = cal.get(Calendar.YEAR);
+        startMonth = cal.get(Calendar.MONTH);
+        startDay = cal.get(Calendar.DAY_OF_MONTH);
+        stopYear = cal.get(Calendar.YEAR);
+        stopMonth = cal.get(Calendar.MONTH);
+        stopDay = cal.get(Calendar.DAY_OF_MONTH);
+
+        startHour = cal.get(Calendar.HOUR_OF_DAY);
+        startMinute = 0;
+        stopHour = cal.get(Calendar.HOUR_OF_DAY);
+        stopMinute = 0;
+
+        setDateTimeButton(startYear, startMonth, startDay, startHour, startMinute, buttonStartDate, buttonStartTime);
+        setDateTimeButton(stopYear, stopMonth, stopDay, stopHour, stopMinute, buttonStopDate, buttonStopTime);
+        calculateJumlah();
+    }
+
+    private void setInitInput(TransferPipeline pipeline) {
+        inputQuantity.setText(String.valueOf(pipeline.getQuantity()));
+        jumlah = pipeline.getJumlah().substring(0, pipeline.getJumlah().length() - 3);
+        textJumlah.setText(String.valueOf("Jumlah: " + jumlah));
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(),
+                R.array.bahan_bakar, android.R.layout.simple_spinner_item);
+        spinner.setSelection(adapter.getPosition(pipeline.getFuel()));
+        SimpleDateFormat parseFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        Date startDate, stopDate;
+        Calendar cal = Calendar.getInstance();
+        try {
+            startDate = parseFormat.parse(pipeline.getStart());
+            stopDate = parseFormat.parse(pipeline.getStop());
+            cal.setTimeInMillis(startDate.getTime());
+            startYear = cal.get(Calendar.YEAR);
+            startMonth = cal.get(Calendar.MONTH);
+            startDay = cal.get(Calendar.DAY_OF_MONTH);
+            startHour = cal.get(Calendar.HOUR_OF_DAY);
+            startMinute = cal.get(Calendar.MINUTE);
+            cal.setTimeInMillis(stopDate.getTime());
+            stopYear = cal.get(Calendar.YEAR);
+            stopMonth = cal.get(Calendar.MONTH);
+            stopDay = cal.get(Calendar.DAY_OF_MONTH);
+            stopHour = cal.get(Calendar.HOUR_OF_DAY);
+            stopMinute = cal.get(Calendar.MINUTE);
+            setDateTimeButton(startYear, startMonth, startDay, startHour, startMinute, buttonStartDate, buttonStartTime);
+            setDateTimeButton(stopYear, stopMonth, stopDay, stopHour, stopMinute, buttonStopDate, buttonStopTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setBulanButton(int month, int year, TextView bulanButton) {
+        SimpleDateFormat format = new SimpleDateFormat("MMMM yyyy", Locale.getDefault());
+        Calendar cal = Calendar.getInstance();
+        cal.set(year, month, 1);
+        bulanButton.setText(format.format(new Date(cal.getTimeInMillis())));
     }
 
     private void handleSpinner() {
