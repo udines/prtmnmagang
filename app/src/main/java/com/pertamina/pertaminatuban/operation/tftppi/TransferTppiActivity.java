@@ -56,7 +56,7 @@ public class TransferTppiActivity extends AppCompatActivity {
         tambahButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), InputTransferPipelineActivity.class);
+                Intent intent = new Intent(getApplicationContext(), InputTransferTppiActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
