@@ -1,6 +1,7 @@
 package com.pertamina.pertaminatuban.operation.pumpable;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -68,7 +69,20 @@ public class PumpableActivity extends AppCompatActivity {
         setBulanButton(month, year, bulanButton);
 
         handleBulanButton(bulanButton);
+        handleInputButton();
         getPumpable(month, year);
+    }
+
+    private void handleInputButton() {
+        inputButton = findViewById(R.id.pumpable_tambah_button);
+        inputButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), InputPumpableActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+        });
     }
 
     private void handleBulanButton(TextView button) {
@@ -141,7 +155,7 @@ public class PumpableActivity extends AppCompatActivity {
 
         Retrofit retrofit = builder.build();
         OperationClient operationClient = retrofit.create(OperationClient.class);
-        Call<ArrayList<Pumpable>> call = operationClient.getPumpable(
+        /*Call<ArrayList<Pumpable>> call = operationClient.getPumpable(
                 String.valueOf(year),
                 String.valueOf(month + 1)
         );
@@ -159,6 +173,21 @@ public class PumpableActivity extends AppCompatActivity {
             public void onFailure(Call<ArrayList<Pumpable>> call, Throwable t) {
                 Log.w("error", t.getMessage());
             }
+        });*/
+        Call<Object> call = operationClient.getPumpableRaw(
+                String.valueOf(year),
+                String.valueOf(month + 1)
+        );
+        call.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, Response<Object> response) {
+                Log.w("object", new Gson().toJson(response.body()));
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
         });
     }
 
@@ -169,20 +198,23 @@ public class PumpableActivity extends AppCompatActivity {
             pumpablePremium = new ArrayList<>();
             pumpableSolar = new ArrayList<>();
 
-            for (int i = 0; i < pumpables.size(); i++) {
+            /*for (int i = 0; i < pumpables.size(); i++) {
                 if (pumpables.get(i).getNoTank().length() < 5) {
                     switch (pumpables.get(i).getFuel()) {
                         case Matbal.PERTAMAX:
                             pumpablePertamax.add(pumpables.get(i));
+                            break;
                         case Matbal.PREMIUM:
                             pumpablePremium.add(pumpables.get(i));
+                            break;
                         case Matbal.SOLAR:
                             pumpableSolar.add(pumpables.get(i));
+                            break;
                     }
                 }
             }
 
-            attachAdapter(pumpablePertamax, pumpablePremium, pumpableSolar);
+            attachAdapter(pumpablePertamax, pumpablePremium, pumpableSolar);*/
         }
     }
 

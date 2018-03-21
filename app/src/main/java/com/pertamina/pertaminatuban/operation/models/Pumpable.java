@@ -15,9 +15,17 @@ public class Pumpable {
 
     @SerializedName("value")
     @Expose
-    private double value;
+    private long value;
 
-    public Pumpable(String noTank, String fuel, double value) {
+    @SerializedName("date")
+    @Expose
+    private String date;
+
+    @SerializedName("id")
+    @Expose
+    private String id;
+
+    public Pumpable(String noTank, String fuel, long value) {
         this.noTank = noTank;
         this.fuel = fuel;
         this.value = value;
@@ -27,11 +35,35 @@ public class Pumpable {
         return noTank;
     }
 
+    public void setNoTank(String noTank) {
+        this.noTank = noTank;
+    }
+
     public String getFuel() {
         return fuel;
     }
 
-    public double getValue() {
+    public void setFuel(String fuel) {
+        this.fuel = fuel;
+    }
+
+    public long getValue() {
         return value;
+    }
+
+    public void setValue(long value) {
+        this.value = value;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

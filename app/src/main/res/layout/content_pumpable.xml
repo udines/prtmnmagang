@@ -7,7 +7,9 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.pertamina.pertaminatuban.operation.pumpable.PumpableActivity"
     tools:showIn="@layout/activity_pumpable"
-    android:background="@color/grey_200">
+    android:background="@color/grey_200"
+    android:paddingBottom="60dp"
+    android:clipToPadding="false">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
