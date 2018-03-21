@@ -393,4 +393,5 @@
     <string name="title_activity_transfer_tppi">Transfer TPPI</string>
     <string name="title_activity_sarfas">Sarfas</string>
     <string name="title_activity_input_pumpable">Input Pumpable</string>
+    <string name="title_activity_input_transfer_pipeline">Input Transfer Pipeline</string>
 </resources>

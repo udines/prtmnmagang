@@ -554,6 +554,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.pertamina.pertaminatuban.operation.pumpable.PumpableActivity" />
         </activity>
+        <activity
+            android:name=".operation.tfpipeline.InputTransferPipelineActivity"
+            android:label="@string/title_activity_input_transfer_pipeline"
+            android:parentActivityName=".operation.tfpipeline.TransferPipelineActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.pertamina.pertaminatuban.operation.tfpipeline.TransferPipelineActivity" />
+        </activity>
     </application>
 
 </manifest>

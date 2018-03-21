@@ -25,4 +25,6 @@ public interface OperationClient {
     Call<Object> getPumpableTanggalRaw(@Path("tanggal") String tanggal, @Body Datels datels);
     @PUT("operasional/tangkitimbuncheck")
     Call<Object> putPumpable(@Body ArrayList<Pumpable> pumpables);
+
+//    @GET("operasional/")
 }
