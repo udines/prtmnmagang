@@ -581,6 +581,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.pertamina.pertaminatuban.operation.sarfas.SarfasActivity" />
         </activity>
+        <activity
+            android:name=".operation.supplybbm.InputSuplaiBbmActivity"
+            android:label="@string/title_activity_input_suplai_bbm"
+            android:parentActivityName=".operation.supplybbm.SuplaiBbmActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.pertamina.pertaminatuban.operation.supplybbm.SuplaiBbmActivity" />
+        </activity>
     </application>
 
 </manifest>
