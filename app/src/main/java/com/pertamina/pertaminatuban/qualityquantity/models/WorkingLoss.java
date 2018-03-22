@@ -8,6 +8,10 @@ public class WorkingLoss {
     @Expose
     private String date;
 
+    @SerializedName("satuan")
+    @Expose
+    private String satuan;
+
     @SerializedName("lokasi")
     @Expose
     private String lokasi;
@@ -154,5 +158,9 @@ public class WorkingLoss {
 
     public String getWlPercentage() {
         return wlPercentage;
+    }
+
+    public void setSatuan(String satuan) {
+        this.satuan = satuan;
     }
 }
