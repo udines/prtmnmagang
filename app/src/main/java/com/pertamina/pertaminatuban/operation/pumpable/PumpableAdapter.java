@@ -27,7 +27,18 @@ public class PumpableAdapter extends RecyclerView.Adapter<PumpableViewHolder> {
 
     @Override
     public void onBindViewHolder(PumpableViewHolder holder, int position) {
-        holder.noTank.setText(String.valueOf("Tank: " + pumpables.get(position).getNoTank()));
+        String noTank = "Tank: ";
+        switch (pumpables.get(position).getNoTank()) {
+            case "total":
+                noTank = "Total: ";
+                break;
+            case "average":
+                noTank = "Average: ";
+                break;
+            default:
+                noTank = noTank + pumpables.get(position).getNoTank();
+        }
+        holder.noTank.setText(String.valueOf(noTank));
         holder.value.setText(String.valueOf(pumpables.get(position).getValue()));
     }
 

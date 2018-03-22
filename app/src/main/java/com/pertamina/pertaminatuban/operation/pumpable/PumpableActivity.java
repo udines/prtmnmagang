@@ -53,7 +53,8 @@ public class PumpableActivity extends AppCompatActivity {
 
     private RecyclerView totalPertamaxRec, totalPremiumRec, totalSolarRec,
     avPertamaxRec, avPremiumRec, avSolarRec, scPertamaxRec, scPremiumRec, scSolarRec,
-    utilPertamaxRec, utilPremiumRec, utilSolarRec;
+    utilPertamaxRec, utilPremiumRec, utilSolarRec, sc90PertamaxRec, sc90PremiumRec, sc90SolarRec,
+    rerataUtilPertamaxRec, rerataUtilPremiumRec, rerataUtilSolaRec;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +84,12 @@ public class PumpableActivity extends AppCompatActivity {
         utilPertamaxRec = findViewById(R.id.pumpable_total_utilitas_recyclerview_pertamax);
         utilPremiumRec = findViewById(R.id.pumpable_total_utilitas_recyclerview_premium);
         utilSolarRec = findViewById(R.id.pumpable_total_utilitas_recyclerview_solar);
+        sc90PertamaxRec = findViewById(R.id.pumpable_total_sc_90_recyclerview_pertamax);
+        sc90PremiumRec = findViewById(R.id.pumpable_total_sc_90_recyclerview_premium);
+        sc90SolarRec = findViewById(R.id.pumpable_total_sc_90_recyclerview_solar);
+        rerataUtilPertamaxRec = findViewById(R.id.pumpable_rerata_utilitas_recyclerview_pertamax);
+        rerataUtilPremiumRec = findViewById(R.id.pumpable_rerata_utilitas_recyclerview_premium);
+        rerataUtilSolaRec = findViewById(R.id.pumpable_rerata_utilitas_recyclerview_solar);
 
         Calendar cal = Calendar.getInstance();
         month = cal.get(Calendar.MONTH);
@@ -196,15 +203,19 @@ public class PumpableActivity extends AppCompatActivity {
                     ArrayList<Pumpable> scPerFuel = new ArrayList<>();
                     ArrayList<Pumpable> utilPerTank = new ArrayList<>();
                     ArrayList<Pumpable> utilPerFuel = new ArrayList<>();
+                    ArrayList<Pumpable> sc90 = new ArrayList<>();
+                    ArrayList<Pumpable> rerataUtil = new ArrayList<>();
 
-                    JSONArray totalPerFuelJson = raw.getJSONArray("totalperfuel");
-                    JSONArray totalPerTankJson = raw.getJSONArray("datapertank");
-                    JSONArray averagePerFuelJson = raw.getJSONArray("averageperfuel");
-                    JSONArray averagePerTankJson = raw.getJSONArray("averagepertank");
-                    JSONArray scPerTankJson = raw.getJSONArray("scpertank");
-                    JSONArray scPerFuelJson = raw.getJSONArray("scperfuel");
-                    JSONArray utilPerTankJson = raw.getJSONArray("utilpertank");
-                    JSONArray utilPerFuelJson = raw.getJSONArray("utilperfuel");
+//                    JSONArray totalPerFuelJson = raw.getJSONArray("totalperfuel");
+                    JSONArray totalPerTankJson = raw.getJSONArray("totalPumpable");
+//                    JSONArray averagePerFuelJson = raw.getJSONArray("averageperfuel");
+                    JSONArray averagePerTankJson = raw.getJSONArray("averagePumpable");
+                    JSONArray scPerTankJson = raw.getJSONArray("totalsc100");
+//                    JSONArray scPerFuelJson = raw.getJSONArray("scperfuel");
+                    JSONArray utilPerTankJson = raw.getJSONArray("totalutil");
+//                    JSONArray utilPerFuelJson = raw.getJSONArray("utilperfuel");
+                    JSONArray sc90Json = raw.getJSONArray("totalsc90");
+                    JSONArray rerataUtilJson = raw.getJSONArray("rerataUtilitas");
 
 //                    totalPerFuel = parseJsonToPumpable(totalPerFuelJson);
                     totalPerTank = parseJsonToPumpable(totalPerTankJson);
@@ -214,11 +225,15 @@ public class PumpableActivity extends AppCompatActivity {
 //                    scPerFuel = parseJsonToPumpable(scPerFuelJson);
                     utilPerTank = parseJsonToPumpable(utilPerTankJson);
 //                    utilPerFuel = parseJsonToPumpable(utilPerFuelJson);
+                    sc90 = parseJsonToPumpable(sc90Json);
+                    rerataUtil = parseJsonToPumpable(rerataUtilJson);
 
                     populateRecyclerView(totalPerTank, totalPertamaxRec, totalPremiumRec, totalSolarRec);
                     populateRecyclerView(averagePerTank, avPertamaxRec, avPremiumRec, avSolarRec);
                     populateRecyclerView(scPerTank, scPertamaxRec, scPremiumRec, scSolarRec);
                     populateRecyclerView(utilPerTank, utilPertamaxRec, utilPremiumRec, utilSolarRec);
+                    populateRecyclerView(sc90, sc90PertamaxRec, sc90PremiumRec, sc90SolarRec);
+                    populateRecyclerView(rerataUtil, rerataUtilPertamaxRec, rerataUtilPremiumRec, rerataUtilSolaRec);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -277,13 +292,5 @@ public class PumpableActivity extends AppCompatActivity {
             pumpables.add(pumpable);
         }
         return pumpables;
-    }
-
-    private double getTotal(ArrayList<Pumpable> pumpables) {
-        double total = 0;
-        for (int i = 0; i < pumpables.size(); i++) {
-            total = total + pumpables.get(i).getValue();
-        }
-        return total;
     }
 }
