@@ -46,6 +46,8 @@ public interface OperationClient {
     Call<TransferPipeline> getTppi(@Path("tahun") String tahun, @Path("bulan") String bulan, @Path("batch") String batch);
     @PUT("oprtppi/")
     Call<Object> putTppi(@Body TransferPipeline pipeline);
+    @GET("oprtppi/{tahun}/{bulan}")
+    Call<Object> getTppiBulanRaw(@Path("tahun") String tahun, @Path("bulan") String bulan);
 
     //twu
     @POST("oprtwu/")
@@ -54,4 +56,6 @@ public interface OperationClient {
     Call<TransferPipeline> getTwu(@Path("tahun") String tahun, @Path("bulan") String bulan, @Path("batch") String batch);
     @POST("oprtwu/")
     Call<Object> putTwu(@Body TransferPipeline pipeline);
+    @GET("oprtwu/{tahun}/{bulan}")
+    Call<Object> getTwuBulanRaw(@Path("tahun") String tahun, @Path("bulan") String bulan);
 }

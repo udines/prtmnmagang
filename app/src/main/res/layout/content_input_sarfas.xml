@@ -9,6 +9,12 @@
     tools:showIn="@layout/activity_input_sarfas"
     android:orientation="vertical"
     android:padding="12dp">
+    <Button
+        android:id="@+id/input_sarfas_bulan_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        style="@style/Base.Widget.AppCompat.Button.Colored"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

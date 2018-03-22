@@ -9,6 +9,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -25,8 +27,10 @@ import com.pertamina.pertaminatuban.R;
 import com.pertamina.pertaminatuban.operation.models.TransferPipeline;
 import com.pertamina.pertaminatuban.operation.tfpipeline.InputTransferPipelineActivity;
 import com.pertamina.pertaminatuban.service.OperationClient;
+import com.whiteelephant.monthpicker.MonthPickerDialog;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -48,12 +52,15 @@ public class InputSarfasActivity extends AppCompatActivity {
     private EditText inputQuantity;
     private Button buttonStartDate, buttonStartTime;
     private Button buttonStopDate, buttonStopTime;
-    private Button kirim;
+    private Button kirim, bulanButton;
     private TextView textJumlah;
 
     private int startYear, startMonth, startDay, startHour, startMinute;
     private int stopYear, stopMonth, stopDay, stopHour, stopMinute;
     private String jumlah;
+
+    private String id;
+    private boolean isUpdate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +85,7 @@ public class InputSarfasActivity extends AppCompatActivity {
         buttonStopTime = findViewById(R.id.input_sarfas_stop_time);
         textJumlah = findViewById(R.id.input_sarfas_jumlah);
         kirim = findViewById(R.id.input_sarfas_kirim);
+        bulanButton = findViewById(R.id.input_transfer_pipeline_bulan_button);
 
         Calendar cal = Calendar.getInstance();
         startYear = cal.get(Calendar.YEAR);
@@ -126,8 +134,71 @@ public class InputSarfasActivity extends AppCompatActivity {
                             jml,
                             fuel
                     );
-                    sendPostRequest(object);
+                    Log.w("is update", String.valueOf(isUpdate));
+                    if (isUpdate) {
+                        Log.w("id", id);
+                        object.setId(id);
+                        sendUpdateRequest(object);
+                    } else {
+                        sendPostRequest(object);
+                    }
                 }
+            }
+        });
+    }
+
+    private void sendUpdateRequest(TransferPipeline object) {
+        Log.w("put object", new Gson().toJson(object));
+
+        SharedPreferences preferences = InputSarfasActivity.this.getSharedPreferences(
+                "login",
+                Context.MODE_PRIVATE
+        );
+
+        final String key = preferences.getString("userKey", "none");
+
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(new Interceptor() {
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request original = chain.request();
+
+                Request request = original.newBuilder()
+                        .header("Authorization", key)
+                        .method(original.method(), original.body())
+                        .build();
+                return chain.proceed(request);
+            }
+        });
+
+        OkHttpClient client = httpClient.build();
+
+        String baseUrl = "http://www.api.clicktuban.com/";
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client);
+
+        Retrofit retrofit = builder.build();
+        OperationClient operationClient = retrofit.create(OperationClient.class);
+
+        Log.w("body", new Gson().toJson(object));
+
+        Call<Object> call = operationClient.putTwu(object);
+        call.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, Response<Object> response) {
+                Log.w("code", String.valueOf(response.code()));
+                if (response.code() == 200) {
+                    Log.w("body", String.valueOf(response.body()));
+                    Toast.makeText(InputSarfasActivity.this, "Data berhasil ditambahkan", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
             }
         });
     }
@@ -191,8 +262,184 @@ public class InputSarfasActivity extends AppCompatActivity {
     }
 
     private void setInitBatchData() {
+        setBulanButton(startMonth, startYear, bulanButton);
+
+        bulanButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Calendar today = Calendar.getInstance();
+
+                MonthPickerDialog.Builder builder = new MonthPickerDialog.Builder(
+                        InputSarfasActivity.this,
+                        new MonthPickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(int selectedMonth, int selectedYear) {
+                                startDay = today.get(Calendar.DAY_OF_MONTH);
+                                startMonth = selectedMonth;
+                                startYear = selectedYear;
+                                stopDay = today.get(Calendar.DAY_OF_MONTH);
+                                stopMonth = selectedMonth;
+                                stopYear = selectedYear;
+                                setDateTimeButton(startYear, startMonth, startDay, startHour, startMinute, buttonStartDate, buttonStartTime);
+                                setDateTimeButton(stopYear, stopMonth, stopDay, stopHour, stopMinute, buttonStopDate, buttonStopTime);
+                                setBulanButton(startMonth, startYear, bulanButton);
+                                calculateJumlah();
+                                if (inputBatch.getText().length() > 0) {
+                                    setInitData(startMonth, startYear, Integer.parseInt(inputBatch.getText().toString()));
+                                }
+                            }
+                        },
+                        today.get(Calendar.YEAR),
+                        today.get(Calendar.MONTH)
+                );
+
+                builder.setMinYear(1970)
+                        .setMaxYear(today.get(Calendar.YEAR))
+                        .setTitle("Pilih bulan dan tahun")
+                        .setActivatedMonth(startMonth)
+                        .setActivatedYear(startYear)
+                        .build()
+                        .show();
+            }
+        });
+
+        inputBatch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(final CharSequence charSequence, int i, int i1, int i2) {
+                if (charSequence.length() > 0) {
+                    setInitData(startMonth, startYear, Integer.parseInt(charSequence.toString()));
+                } else {
+                    clearData();
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+    }
+
+    private void setInitData(int initMonth, int initYear, int initBatch) {
+        SharedPreferences preferences = InputSarfasActivity.this.getSharedPreferences(
+                "login",
+                Context.MODE_PRIVATE
+        );
+
+        final String key = preferences.getString("userKey", "none");
+
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(new Interceptor() {
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request original = chain.request();
+
+                Request request = original.newBuilder()
+                        .header("Authorization", key)
+                        .method(original.method(), original.body())
+                        .build();
+                return chain.proceed(request);
+            }
+        });
+
+        OkHttpClient client = httpClient.build();
+
+        String baseUrl = "http://www.api.clicktuban.com/";
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client);
+
+        Retrofit retrofit = builder.build();
+        OperationClient operationClient = retrofit.create(OperationClient.class);
+        Call<TransferPipeline> call = operationClient.getTwu(
+                String.valueOf(initYear),
+                String.valueOf(initMonth + 1),
+                String.valueOf(initBatch)
+        );
+        call.enqueue(new Callback<TransferPipeline>() {
+            @Override
+            public void onResponse(Call<TransferPipeline> call, Response<TransferPipeline> response) {
+                Log.w("code", String.valueOf(response.code()));
+                if (response.code() == 200 && response.body() != null) {
+                    isUpdate = true;
+                    setInitInput(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TransferPipeline> call, Throwable t) {
+                isUpdate = false;
+                id = "";
+                clearData();
+            }
+        });
+    }
+
+    private void clearData() {
+        inputQuantity.setText("");
+        spinner.setSelection(0);
         Calendar cal = Calendar.getInstance();
-        inputBatch.setText(String.valueOf(cal.get(Calendar.DAY_OF_MONTH)));
+        startYear = cal.get(Calendar.YEAR);
+        startMonth = cal.get(Calendar.MONTH);
+        startDay = cal.get(Calendar.DAY_OF_MONTH);
+        stopYear = cal.get(Calendar.YEAR);
+        stopMonth = cal.get(Calendar.MONTH);
+        stopDay = cal.get(Calendar.DAY_OF_MONTH);
+
+        startHour = cal.get(Calendar.HOUR_OF_DAY);
+        startMinute = 0;
+        stopHour = cal.get(Calendar.HOUR_OF_DAY);
+        stopMinute = 0;
+
+        setDateTimeButton(startYear, startMonth, startDay, startHour, startMinute, buttonStartDate, buttonStartTime);
+        setDateTimeButton(stopYear, stopMonth, stopDay, stopHour, stopMinute, buttonStopDate, buttonStopTime);
+        calculateJumlah();
+    }
+
+    private void setInitInput(TransferPipeline pipeline) {
+        id = pipeline.getId();
+        inputQuantity.setText(String.valueOf(pipeline.getQuantity()));
+        jumlah = pipeline.getJumlah().substring(0, pipeline.getJumlah().length() - 3);
+        textJumlah.setText(String.valueOf("Jumlah: " + jumlah));
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(),
+                R.array.bahan_bakar, android.R.layout.simple_spinner_item);
+        spinner.setSelection(adapter.getPosition(pipeline.getFuel()));
+        SimpleDateFormat parseFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        Date startDate, stopDate;
+        Calendar cal = Calendar.getInstance();
+        try {
+            startDate = parseFormat.parse(pipeline.getStart());
+            stopDate = parseFormat.parse(pipeline.getStop());
+            cal.setTimeInMillis(startDate.getTime());
+            startYear = cal.get(Calendar.YEAR);
+            startMonth = cal.get(Calendar.MONTH);
+            startDay = cal.get(Calendar.DAY_OF_MONTH);
+            startHour = cal.get(Calendar.HOUR_OF_DAY);
+            startMinute = cal.get(Calendar.MINUTE);
+            cal.setTimeInMillis(stopDate.getTime());
+            stopYear = cal.get(Calendar.YEAR);
+            stopMonth = cal.get(Calendar.MONTH);
+            stopDay = cal.get(Calendar.DAY_OF_MONTH);
+            stopHour = cal.get(Calendar.HOUR_OF_DAY);
+            stopMinute = cal.get(Calendar.MINUTE);
+            setDateTimeButton(startYear, startMonth, startDay, startHour, startMinute, buttonStartDate, buttonStartTime);
+            setDateTimeButton(stopYear, stopMonth, stopDay, stopHour, stopMinute, buttonStopDate, buttonStopTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setBulanButton(int month, int year, TextView bulanButton) {
+        SimpleDateFormat format = new SimpleDateFormat("MMMM yyyy", Locale.getDefault());
+        Calendar cal = Calendar.getInstance();
+        cal.set(year, month, 1);
+        bulanButton.setText(format.format(new Date(cal.getTimeInMillis())));
     }
 
     private void handleSpinner() {
