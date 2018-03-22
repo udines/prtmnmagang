@@ -24,6 +24,10 @@ import com.pertamina.pertaminatuban.operation.models.Pumpable;
 import com.pertamina.pertaminatuban.service.OperationClient;
 import com.whiteelephant.monthpicker.MonthPickerDialog;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -47,6 +51,10 @@ public class PumpableActivity extends AppCompatActivity {
     private TextView bulanButton;
     private Button inputButton;
 
+    private RecyclerView totalPertamaxRec, totalPremiumRec, totalSolarRec,
+    avPertamaxRec, avPremiumRec, avSolarRec, scPertamaxRec, scPremiumRec, scSolarRec,
+    utilPertamaxRec, utilPremiumRec, utilSolarRec;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +70,19 @@ public class PumpableActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         bulanButton = findViewById(R.id.pumpable_bulan_button);
+
+        totalPertamaxRec = findViewById(R.id.pumpable_recyclerview_pertamax);
+        totalPremiumRec = findViewById(R.id.pumpable_recyclerview_premium);
+        totalSolarRec = findViewById(R.id.pumpable_recyclerview_solar);
+        avPertamaxRec = findViewById(R.id.pumpable_average_recyclerview_pertamax);
+        avPremiumRec = findViewById(R.id.pumpable_average_recyclerview_premium);
+        avSolarRec = findViewById(R.id.pumpable_average_recyclerview_solar);
+        scPertamaxRec = findViewById(R.id.pumpable_total_sc_100_recyclerview_pertamax);
+        scPremiumRec = findViewById(R.id.pumpable_total_sc_100_recyclerview_premium);
+        scSolarRec = findViewById(R.id.pumpable_total_sc_100_recyclerview_solar);
+        utilPertamaxRec = findViewById(R.id.pumpable_total_utilitas_recyclerview_pertamax);
+        utilPremiumRec = findViewById(R.id.pumpable_total_utilitas_recyclerview_premium);
+        utilSolarRec = findViewById(R.id.pumpable_total_utilitas_recyclerview_solar);
 
         Calendar cal = Calendar.getInstance();
         month = cal.get(Calendar.MONTH);
@@ -155,25 +176,7 @@ public class PumpableActivity extends AppCompatActivity {
 
         Retrofit retrofit = builder.build();
         OperationClient operationClient = retrofit.create(OperationClient.class);
-        /*Call<ArrayList<Pumpable>> call = operationClient.getPumpable(
-                String.valueOf(year),
-                String.valueOf(month + 1)
-        );
-        call.enqueue(new Callback<ArrayList<Pumpable>>() {
-            @Override
-            public void onResponse(Call<ArrayList<Pumpable>> call, Response<ArrayList<Pumpable>> response) {
-                Log.w("code", String.valueOf(response.code()));
-                if (response.code() == 200) {
-                    Log.w("body", new Gson().toJson(response.body()));
-                    populateData(response.body());
-                }
-            }
 
-            @Override
-            public void onFailure(Call<ArrayList<Pumpable>> call, Throwable t) {
-                Log.w("error", t.getMessage());
-            }
-        });*/
         Call<Object> call = operationClient.getPumpableRaw(
                 String.valueOf(year),
                 String.valueOf(month + 1)
@@ -182,6 +185,44 @@ public class PumpableActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Object> call, Response<Object> response) {
                 Log.w("object", new Gson().toJson(response.body()));
+                try {
+                    JSONObject raw = new JSONObject(new Gson().toJson(response.body()));
+
+                    ArrayList<Pumpable> totalPerFuel = new ArrayList<>();
+                    ArrayList<Pumpable> totalPerTank = new ArrayList<>();
+                    ArrayList<Pumpable> averagePerFuel = new ArrayList<>();
+                    ArrayList<Pumpable> averagePerTank = new ArrayList<>();
+                    ArrayList<Pumpable> scPerTank = new ArrayList<>();
+                    ArrayList<Pumpable> scPerFuel = new ArrayList<>();
+                    ArrayList<Pumpable> utilPerTank = new ArrayList<>();
+                    ArrayList<Pumpable> utilPerFuel = new ArrayList<>();
+
+                    JSONArray totalPerFuelJson = raw.getJSONArray("totalperfuel");
+                    JSONArray totalPerTankJson = raw.getJSONArray("datapertank");
+                    JSONArray averagePerFuelJson = raw.getJSONArray("averageperfuel");
+                    JSONArray averagePerTankJson = raw.getJSONArray("averagepertank");
+                    JSONArray scPerTankJson = raw.getJSONArray("scpertank");
+                    JSONArray scPerFuelJson = raw.getJSONArray("scperfuel");
+                    JSONArray utilPerTankJson = raw.getJSONArray("utilpertank");
+                    JSONArray utilPerFuelJson = raw.getJSONArray("utilperfuel");
+
+//                    totalPerFuel = parseJsonToPumpable(totalPerFuelJson);
+                    totalPerTank = parseJsonToPumpable(totalPerTankJson);
+//                    averagePerFuel = parseJsonToPumpable(averagePerFuelJson);
+                    averagePerTank = parseJsonToPumpable(averagePerTankJson);
+                    scPerTank = parseJsonToPumpable(scPerTankJson);
+//                    scPerFuel = parseJsonToPumpable(scPerFuelJson);
+                    utilPerTank = parseJsonToPumpable(utilPerTankJson);
+//                    utilPerFuel = parseJsonToPumpable(utilPerFuelJson);
+
+                    populateRecyclerView(totalPerTank, totalPertamaxRec, totalPremiumRec, totalSolarRec);
+                    populateRecyclerView(averagePerTank, avPertamaxRec, avPremiumRec, avSolarRec);
+                    populateRecyclerView(scPerTank, scPertamaxRec, scPremiumRec, scSolarRec);
+                    populateRecyclerView(utilPerTank, utilPertamaxRec, utilPremiumRec, utilSolarRec);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -191,66 +232,51 @@ public class PumpableActivity extends AppCompatActivity {
         });
     }
 
-    private void populateData(ArrayList<Pumpable> pumpables) {
-        if (pumpables.size() > 0) {
-            ArrayList<Pumpable> pumpablePertamax, pumpablePremium, pumpableSolar;
-            pumpablePertamax = new ArrayList<>();
-            pumpablePremium = new ArrayList<>();
-            pumpableSolar = new ArrayList<>();
+    private void populateRecyclerView(
+            ArrayList<Pumpable> pumpables,
+            RecyclerView recyclerPertamax,
+            RecyclerView recyclerPremium,
+            RecyclerView recyclerSolar
+    ) {
+        ArrayList<Pumpable> pumpablesPertamax = new ArrayList<>();
+        ArrayList<Pumpable> pumpablesPremium = new ArrayList<>();
+        ArrayList<Pumpable> pumpablesSolar = new ArrayList<>();
 
-            /*for (int i = 0; i < pumpables.size(); i++) {
-                if (pumpables.get(i).getNoTank().length() < 5) {
-                    switch (pumpables.get(i).getFuel()) {
-                        case Matbal.PERTAMAX:
-                            pumpablePertamax.add(pumpables.get(i));
-                            break;
-                        case Matbal.PREMIUM:
-                            pumpablePremium.add(pumpables.get(i));
-                            break;
-                        case Matbal.SOLAR:
-                            pumpableSolar.add(pumpables.get(i));
-                            break;
-                    }
-                }
+        for (int i = 0; i < pumpables.size(); i++) {
+            switch (pumpables.get(i).getFuel()) {
+                case Matbal.PERTAMAX:
+                    pumpablesPertamax.add(pumpables.get(i));
+                    break;
+                case Matbal.PREMIUM:
+                    pumpablesPremium.add(pumpables.get(i));
+                    break;
+                case Matbal.SOLAR:
+                    pumpablesSolar.add(pumpables.get(i));
+                    break;
             }
-
-            attachAdapter(pumpablePertamax, pumpablePremium, pumpableSolar);*/
         }
-    }
-
-    private void attachAdapter(ArrayList<Pumpable> pumpablePertamax, ArrayList<Pumpable> pumpablePremium, ArrayList<Pumpable> pumpableSolar) {
-        RecyclerView recyclerPertamax, recyclerPremium, recyclerSolar;
-        TextView totalPertamax, totalPremium, totalSolar;
-
-        recyclerPertamax = findViewById(R.id.pumpable_recyclerview_pertamax);
-        recyclerPremium = findViewById(R.id.pumpable_recyclerview_premium);
-        recyclerSolar = findViewById(R.id.pumpable_recyclerview_solar);
-        totalPertamax = findViewById(R.id.pumpable_total_value_pertamax);
-        totalPremium = findViewById(R.id.pumpable_total_value_premium);
-        totalSolar = findViewById(R.id.pumpable_total_value_solar);
 
         recyclerPertamax.setNestedScrollingEnabled(false);
         recyclerPremium.setNestedScrollingEnabled(false);
         recyclerSolar.setNestedScrollingEnabled(false);
-
         recyclerPertamax.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         recyclerPremium.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         recyclerSolar.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        recyclerPertamax.setAdapter(new PumpableAdapter(pumpablesPertamax));
+        recyclerPremium.setAdapter(new PumpableAdapter(pumpablesPremium));
+        recyclerSolar.setAdapter(new PumpableAdapter(pumpablesSolar));
+    }
 
-        DecimalFormat format = new DecimalFormat("#,###");
-
-        if (pumpablePertamax.size() > 0) {
-            recyclerPertamax.setAdapter(new PumpableAdapter(pumpablePertamax));
-            totalPertamax.setText(format.format(getTotal(pumpablePertamax)));
+    private ArrayList<Pumpable> parseJsonToPumpable(JSONArray jsonArray) throws JSONException {
+        ArrayList<Pumpable> pumpables = new ArrayList<>();
+        for (int i = 0; i < jsonArray.length(); i++) {
+            Pumpable pumpable = new Pumpable();
+            pumpable.setFuel(jsonArray.getJSONObject(i).getString("fuel"));
+            pumpable.setValue(jsonArray.getJSONObject(i).getLong("value"));
+            pumpable.setNoTank(jsonArray.getJSONObject(i).getString("no_tank"));
+            pumpables.add(pumpable);
         }
-        if (pumpablePremium.size() > 0) {
-            recyclerPremium.setAdapter(new PumpableAdapter(pumpablePremium));
-            totalPremium.setText(format.format(getTotal(pumpablePremium)));
-        }
-        if (pumpableSolar.size() > 0) {
-            recyclerSolar.setAdapter(new PumpableAdapter(pumpableSolar));
-            totalSolar.setText(format.format(getTotal(pumpableSolar)));
-        }
+        return pumpables;
     }
 
     private double getTotal(ArrayList<Pumpable> pumpables) {

@@ -25,6 +25,9 @@ public class Pumpable {
     @Expose
     private String id;
 
+    public Pumpable() {
+    }
+
     public Pumpable(String noTank, String fuel, long value) {
         this.noTank = noTank;
         this.fuel = fuel;
