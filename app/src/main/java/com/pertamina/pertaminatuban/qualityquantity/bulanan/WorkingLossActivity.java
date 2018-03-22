@@ -45,12 +45,21 @@ public class WorkingLossActivity extends AppCompatActivity {
     private TextView lokasi, produk, stockAwal, actReceipt, blendingIn, totalTersedia,
     salesPso, salesNpso, konsinyasi, ownUseTbbm, ownUseKapal, totalPenyaluran, blendingOut,
     quantity, percentage, stockAkhir;
+
+    private TextView lokasi60f, produk60f, stockAwal60f, actReceipt60f, blendingIn60f, totalTersedia60f,
+            salesPso60f, salesNpso60f, konsinyasi60f, ownUseTbbm60f, ownUseKapal60f, totalPenyaluran60f, blendingOut60f,
+            quantity60f, percentage60f, stockAkhir60f;
+
+    private TextView lokasiObs, produkObs, stockAwalObs, actReceiptObs, blendingInObs, totalTersediaObs,
+            salesPsoObs, salesNpsoObs, konsinyasiObs, ownUseTbbmObs, ownUseKapalObs, totalPenyaluranObs, blendingOutObs,
+            quantityObs, percentageObs, stockAkhirObs;
+
     private Spinner spinner;
     private TextView bulan;
     private ArrayList<String> fuelList;
     private int fuelIndex = 0;
     private int month, year;
-    private LinearLayout container;
+    private LinearLayout container, container60f, containerObs;
 
     private ProgressBar progressBar;
     private TextView emptyText;
@@ -266,11 +275,15 @@ public class WorkingLossActivity extends AppCompatActivity {
                 if (response.code() == 200) {
                     Log.w("size", String.valueOf(response.body().size()));
                     ArrayList<WorkingLoss> workingLosses = response.body();
+                    ArrayList<WorkingLoss> wLforFuel = new ArrayList<>();
                     for (int i = 0; i < workingLosses.size(); i++) {
                         if (workingLosses.get(i).getProduk().equals(produk)) {
                             Log.w("fuel data", "ada");
                             container.setVisibility(View.VISIBLE);
-                            setWorkingLoss(workingLosses.get(i));
+                            container60f.setVisibility(View.VISIBLE);
+                            containerObs.setVisibility(View.VISIBLE);
+                            wLforFuel.add(workingLosses.get(i));
+                            setWorkingLoss(wLforFuel);
                             emptyText.setVisibility(View.GONE);
                         } else {
                             emptyText.setVisibility(View.VISIBLE);
@@ -305,6 +318,42 @@ public class WorkingLossActivity extends AppCompatActivity {
         percentage = findViewById(R.id.working_loss_percentage);
         stockAkhir = findViewById(R.id.working_loss_stock_akhir);
 
+        container60f = findViewById(R.id.working_loss_container_60f);
+        lokasi60f = findViewById(R.id.working_loss_lokasi_60f);
+        produk60f = findViewById(R.id.working_loss_produk_60f);
+        stockAwal60f = findViewById(R.id.working_loss_stock_awal_60f);
+        actReceipt60f = findViewById(R.id.working_loss_act_receipt_60f);
+        blendingIn60f = findViewById(R.id.working_loss_blending_in_60f);
+        totalTersedia60f = findViewById(R.id.working_loss_total_tersedia_60f);
+        salesPso60f = findViewById(R.id.working_loss_sales_pso_60f);
+        salesNpso60f = findViewById(R.id.working_loss_sales_npso_60f);
+        konsinyasi60f = findViewById(R.id.working_loss_konsinyasi_60f);
+        ownUseTbbm60f = findViewById(R.id.working_loss_ownuse_tbbm_60f);
+        ownUseKapal60f = findViewById(R.id.working_loss_ownuse_kapal_60f);
+        totalPenyaluran60f = findViewById(R.id.working_loss_total_penyaluran_60f);
+        blendingOut60f = findViewById(R.id.working_loss_blending_out_60f);
+        quantity60f = findViewById(R.id.working_loss_quantity_60f);
+        percentage60f = findViewById(R.id.working_loss_percentage_60f);
+        stockAkhir60f = findViewById(R.id.working_loss_stock_akhir_60f);
+
+        containerObs = findViewById(R.id.working_loss_container_obs);
+        lokasiObs = findViewById(R.id.working_loss_lokasi_obs);
+        produkObs = findViewById(R.id.working_loss_produk_obs);
+        stockAwalObs = findViewById(R.id.working_loss_stock_awal_obs);
+        actReceiptObs = findViewById(R.id.working_loss_act_receipt_obs);
+        blendingInObs = findViewById(R.id.working_loss_blending_in_obs);
+        totalTersediaObs = findViewById(R.id.working_loss_total_tersedia_obs);
+        salesPsoObs = findViewById(R.id.working_loss_sales_pso_obs);
+        salesNpsoObs = findViewById(R.id.working_loss_sales_npso_obs);
+        konsinyasiObs = findViewById(R.id.working_loss_konsinyasi_obs);
+        ownUseTbbmObs = findViewById(R.id.working_loss_ownuse_tbbm_obs);
+        ownUseKapalObs = findViewById(R.id.working_loss_ownuse_kapal_obs);
+        totalPenyaluranObs = findViewById(R.id.working_loss_total_penyaluran_obs);
+        blendingOutObs = findViewById(R.id.working_loss_blending_out_obs);
+        quantityObs = findViewById(R.id.working_loss_quantity_obs);
+        percentageObs = findViewById(R.id.working_loss_percentage_obs);
+        stockAkhirObs = findViewById(R.id.working_loss_stock_akhir_obs);
+
         spinner = findViewById(R.id.working_loss_spinner);
         bulan = findViewById(R.id.working_loss_bulan);
     }
@@ -331,27 +380,75 @@ public class WorkingLossActivity extends AppCompatActivity {
         });
     }
 
-    private void setWorkingLoss(WorkingLoss model) {
-        lokasi.setText(model.getLokasi());
-        produk.setText(model.getProduk());
-        stockAwal.setText(model.getStokAwal());
-        actReceipt.setText(model.getActReceipt());
-        blendingIn.setText(model.getBlendingIn());
-        totalTersedia.setText(model.getTotalTersedia());
-        salesPso.setText(model.getSalesPso());
-        salesNpso.setText(model.getSalesNpso());
-        konsinyasi.setText(model.getKonsinyasi());
-        ownUseTbbm.setText(model.getOwnUseTbbm());
-        ownUseKapal.setText(model.getOwnUseKapal());
-        totalPenyaluran.setText(model.getPenyaluran());
-        blendingOut.setText(model.getBlendingOut());
-        quantity.setText(model.getWlQuantity());
-        percentage.setText(String.valueOf(Double.parseDouble(model.getWlPercentage()) * 100 + " %"));
-        stockAkhir.setText(model.getStokAkhir());
+    private void setWorkingLoss(ArrayList<WorkingLoss> workingLosses) {
+        WorkingLoss model, model60f, modelObs;
+        for (int i = 0; i < workingLosses.size(); i++) {
+            switch (workingLosses.get(i).getSatuan()) {
+                case "Liter 15 C":
+                    model = workingLosses.get(i);
+                    lokasi.setText(model.getLokasi());
+                    produk.setText(model.getProduk());
+                    stockAwal.setText(model.getStokAwal());
+                    actReceipt.setText(model.getActReceipt());
+                    blendingIn.setText(model.getBlendingIn());
+                    totalTersedia.setText(model.getTotalTersedia());
+                    salesPso.setText(model.getSalesPso());
+                    salesNpso.setText(model.getSalesNpso());
+                    konsinyasi.setText(model.getKonsinyasi());
+                    ownUseTbbm.setText(model.getOwnUseTbbm());
+                    ownUseKapal.setText(model.getOwnUseKapal());
+                    totalPenyaluran.setText(model.getPenyaluran());
+                    blendingOut.setText(model.getBlendingOut());
+                    quantity.setText(model.getWlQuantity());
+                    percentage.setText(String.valueOf(Double.parseDouble(model.getWlPercentage()) * 100 + " %"));
+                    stockAkhir.setText(model.getStokAkhir());
+                    break;
+                case "Bbls 60F":
+                    model60f = workingLosses.get(i);
+                    lokasi60f.setText(model60f.getLokasi());
+                    produk60f.setText(model60f.getProduk());
+                    stockAwal60f.setText(model60f.getStokAwal());
+                    actReceipt60f.setText(model60f.getActReceipt());
+                    blendingIn60f.setText(model60f.getBlendingIn());
+                    totalTersedia60f.setText(model60f.getTotalTersedia());
+                    salesPso60f.setText(model60f.getSalesPso());
+                    salesNpso60f.setText(model60f.getSalesNpso());
+                    konsinyasi60f.setText(model60f.getKonsinyasi());
+                    ownUseTbbm60f.setText(model60f.getOwnUseTbbm());
+                    ownUseKapal60f.setText(model60f.getOwnUseKapal());
+                    totalPenyaluran60f.setText(model60f.getPenyaluran());
+                    blendingOut60f.setText(model60f.getBlendingOut());
+                    quantity60f.setText(model60f.getWlQuantity());
+                    percentage60f.setText(String.valueOf(Double.parseDouble(model60f.getWlPercentage()) * 100 + " %"));
+                    stockAkhir60f.setText(model60f.getStokAkhir());
+                    break;
+                case "Liter Obs":
+                    modelObs = workingLosses.get(i);
+                    lokasiObs.setText(modelObs.getLokasi());
+                    produkObs.setText(modelObs.getProduk());
+                    stockAwalObs.setText(modelObs.getStokAwal());
+                    actReceiptObs.setText(modelObs.getActReceipt());
+                    blendingInObs.setText(modelObs.getBlendingIn());
+                    totalTersediaObs.setText(modelObs.getTotalTersedia());
+                    salesPsoObs.setText(modelObs.getSalesPso());
+                    salesNpsoObs.setText(modelObs.getSalesNpso());
+                    konsinyasiObs.setText(modelObs.getKonsinyasi());
+                    ownUseTbbmObs.setText(modelObs.getOwnUseTbbm());
+                    ownUseKapalObs.setText(modelObs.getOwnUseKapal());
+                    totalPenyaluranObs.setText(modelObs.getPenyaluran());
+                    blendingOutObs.setText(modelObs.getBlendingOut());
+                    quantityObs.setText(modelObs.getWlQuantity());
+                    percentageObs.setText(String.valueOf(Double.parseDouble(modelObs.getWlPercentage()) * 100 + " %"));
+                    stockAkhirObs.setText(modelObs.getStokAkhir());
+                    break;
+            }
+        }
     }
 
     private void clearData() {
         container.setVisibility(View.GONE);
+        container60f.setVisibility(View.GONE);
+        containerObs.setVisibility(View.GONE);
         WorkingLoss model = new WorkingLoss(
                 "", "Tuban", "Produk", "", "", "",
                 "","","","","","",

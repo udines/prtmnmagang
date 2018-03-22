@@ -163,4 +163,8 @@ public class WorkingLoss {
     public void setSatuan(String satuan) {
         this.satuan = satuan;
     }
+
+    public String getSatuan() {
+        return satuan;
+    }
 }
