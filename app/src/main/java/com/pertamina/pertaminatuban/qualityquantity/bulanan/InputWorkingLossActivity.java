@@ -201,7 +201,7 @@ public class InputWorkingLossActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.VISIBLE);
 
                 Date date = new Date();
-                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM", Locale.getDefault());
                 String text = format.format(date);
                 workingLoss = new WorkingLoss(
                         text,
