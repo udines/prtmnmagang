@@ -1,6 +1,7 @@
 package com.pertamina.pertaminatuban.service;
 
 import com.pertamina.pertaminatuban.operation.models.Datels;
+import com.pertamina.pertaminatuban.operation.models.DistribusiBbm;
 import com.pertamina.pertaminatuban.operation.models.Pumpable;
 import com.pertamina.pertaminatuban.operation.models.Suplai;
 import com.pertamina.pertaminatuban.operation.models.TransferPipeline;
@@ -67,4 +68,12 @@ public interface OperationClient {
     Call<ArrayList<Suplai>> getSuplaiBulan(@Path("tahun") String tahun, @Path("bulan") String bulan);
     @PUT("suplaibbm/")
     Call<Object> putSuplai(@Body ArrayList<Suplai> suplais);
+
+    //distribusi
+    @POST("distribusibbm/")
+    Call<Object> postDistribusi(@Body ArrayList<DistribusiBbm> distribusis);
+    @GET("distribusibbm/{tahun}/{bulan}")
+    Call<ArrayList<DistribusiBbm>> getDistribusiBulan(@Path("tahun") String tahun, @Path("bulan") String bulan);
+    @PUT("distribusibbm/")
+    Call<Object> putDistribusi(@Body ArrayList<DistribusiBbm> distribusis);
 }
