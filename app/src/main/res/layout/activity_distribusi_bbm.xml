@@ -18,16 +18,38 @@
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
+        <TextView
+            android:id="@+id/distribusi_bbm_bulan_button"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_gravity="center_horizontal"
+            android:text="Maret 2018"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:drawableEnd="@drawable/ic_date_range_white_18dp"
+            android:drawableRight="@drawable/ic_date_range_white_18dp"
+            android:drawablePadding="8dp"/>
+
     </android.support.design.widget.AppBarLayout>
 
     <include layout="@layout/content_distribusi_bbm" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
+    <Button
+        android:id="@+id/distribusi_bbm_tambah_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        android:drawableStart="@drawable/ic_add_black_24dp"
+        android:background="@drawable/round_corner_24dp_accent"
+        android:drawableLeft="@drawable/ic_add_black_24dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:text="Tambah Data"
+        android:drawablePadding="8dp"
+        android:textColor="@color/white"/>
 
 </android.support.design.widget.CoordinatorLayout>

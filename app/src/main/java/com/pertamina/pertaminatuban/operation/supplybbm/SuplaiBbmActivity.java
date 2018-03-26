@@ -205,18 +205,18 @@ public class SuplaiBbmActivity extends AppCompatActivity {
     }
 
     private void clearEntries() {
-        tankerImportPertamax.setText("");
-        tankerImportPremium.setText("");
-        tankerImportSolar.setText("");
-        tankerDomestikPertamax.setText("");
-        tankerDomestikPremium.setText("");
-        tankerDomestikSolar.setText("");
-        pipePertamax.setText("");
-        pipePremium.setText("");
-        pipeSolar.setText("");
-        tangkiPertamax.setText("");
-        tangkiPremium.setText("");
-        tangkiSolar.setText("");
+        tankerImportPertamax.setText("0");
+        tankerImportPremium.setText("0");
+        tankerImportSolar.setText("0");
+        tankerDomestikPertamax.setText("0");
+        tankerDomestikPremium.setText("0");
+        tankerDomestikSolar.setText("0");
+        pipePertamax.setText("0");
+        pipePremium.setText("0");
+        pipeSolar.setText("0");
+        tangkiPertamax.setText("0");
+        tangkiPremium.setText("0");
+        tangkiSolar.setText("0");
     }
 
     private void handleTambahButton() {

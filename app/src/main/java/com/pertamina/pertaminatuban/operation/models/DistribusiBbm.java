@@ -46,6 +46,10 @@ public class DistribusiBbm {
         this.value = value;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public String getDate() {
         return date;
     }

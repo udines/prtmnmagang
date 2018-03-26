@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import com.google.gson.Gson;
 import com.pertamina.pertaminatuban.R;
@@ -44,6 +45,8 @@ public class InputDistribusiBbmActivity extends AppCompatActivity {
     private Button tanggalButton, kirim;
     private int day, month, year;
     private ArrayList<DistribusiBbm> distribusis;
+    private ArrayList<String> distribusiIds;
+    private ProgressBar progressBar;
     private boolean isUpdate;
 
     @Override
@@ -74,6 +77,7 @@ public class InputDistribusiBbmActivity extends AppCompatActivity {
         inputMobilPertalite = findViewById(R.id.input_distribusi_bbm_mobil_pertalite);
         tanggalButton = findViewById(R.id.input_distribusi_bbm_tanggal);
         kirim = findViewById(R.id.input_distribusi_bbm_button_kirim);
+        progressBar = findViewById(R.id.input_distribusi_bbm_progress);
 
         Calendar cal = Calendar.getInstance();
         day = cal.get(Calendar.DAY_OF_MONTH);
@@ -90,6 +94,9 @@ public class InputDistribusiBbmActivity extends AppCompatActivity {
         kirim.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                kirim.setVisibility(View.GONE);
+                progressBar.setVisibility(View.VISIBLE);
+
                 distribusis = new ArrayList<>();
                 Calendar cal = Calendar.getInstance();
                 cal.set(year, month, day);
@@ -107,6 +114,12 @@ public class InputDistribusiBbmActivity extends AppCompatActivity {
                 distribusis.add(makeObject(date, DistribusiBbm.DIST_MOBIL, DistribusiBbm.TRANS_MOBIL, Matbal.PREMIUM, inputMobilPremium));
                 distribusis.add(makeObject(date, DistribusiBbm.DIST_MOBIL, DistribusiBbm.TRANS_MOBIL, Matbal.SOLAR, inputMobilSolar));
                 distribusis.add(makeObject(date, DistribusiBbm.DIST_MOBIL, DistribusiBbm.TRANS_MOBIL, Matbal.PERTALITE, inputMobilPertalite));
+
+                if (distribusiIds != null && distribusiIds.size() > 0) {
+                    for (int i = 0; i < distribusis.size(); i++) {
+                        distribusis.get(i).setId(distribusiIds.get(i));
+                    }
+                }
 
                 if (isUpdate) {
                     sendPutRequest(distribusis);
@@ -154,6 +167,8 @@ public class InputDistribusiBbmActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Object> call, Response<Object> response) {
                 Log.w("code", String.valueOf(response.code()));
+                kirim.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
                 if (response.code() == 200) {
                     Log.w("body", new Gson().toJson(response.body()));
                     finish();
@@ -163,11 +178,15 @@ public class InputDistribusiBbmActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<Object> call, Throwable t) {
                 Log.w("error", t.getMessage());
+                kirim.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
             }
         });
     }
 
     private void getDistribusiTanggal(int year, int month, int day) {
+        clearEntries();
+
         Calendar cal = Calendar.getInstance();
         cal.set(year, month, day);
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
@@ -223,6 +242,11 @@ public class InputDistribusiBbmActivity extends AppCompatActivity {
     }
 
     private void setInitialInput(ArrayList<DistribusiBbm> distribusis) {
+        distribusiIds = new ArrayList<>();
+        for (int s = 0; s < distribusis.size(); s++) {
+            distribusiIds.add("");
+        }
+
         if (distribusis.size() > 0) {
             isUpdate = true;
             for (int i = 0; i < distribusis.size(); i++) {
@@ -232,15 +256,19 @@ public class InputDistribusiBbmActivity extends AppCompatActivity {
                         switch (distribusi.getFuel()) {
                             case Matbal.PERTAMAX:
                                 inputTankerPertamax.setText(String.valueOf(distribusi.getValue()));
+                                distribusiIds.set(0, distribusi.getId());
                                 break;
                             case Matbal.PREMIUM:
                                 inputTankerPremium.setText(String.valueOf(distribusi.getValue()));
+                                distribusiIds.set(1, distribusi.getId());
                                 break;
                             case Matbal.SOLAR:
                                 inputTankerSolar.setText(String.valueOf(distribusi.getValue()));
+                                distribusiIds.set(2, distribusi.getId());
                                 break;
                             case Matbal.PERTALITE:
                                 inputTankerPertalite.setText(String.valueOf(distribusi.getValue()));
+                                distribusiIds.set(3, distribusi.getId());
                                 break;
                         }
                         break;
@@ -248,15 +276,19 @@ public class InputDistribusiBbmActivity extends AppCompatActivity {
                         switch (distribusi.getFuel()) {
                             case Matbal.PERTAMAX:
                                 inputPipaPertamax.setText(String.valueOf(distribusi.getValue()));
+                                distribusiIds.set(4, distribusi.getId());
                                 break;
                             case Matbal.PREMIUM:
                                 inputPipaPremium.setText(String.valueOf(distribusi.getValue()));
+                                distribusiIds.set(5, distribusi.getId());
                                 break;
                             case Matbal.SOLAR:
                                 inputPipaSolar.setText(String.valueOf(distribusi.getValue()));
+                                distribusiIds.set(6, distribusi.getId());
                                 break;
                             case Matbal.PERTALITE:
                                 inputPipaPertalite.setText(String.valueOf(distribusi.getValue()));
+                                distribusiIds.set(7, distribusi.getId());
                                 break;
                         }
                         break;
@@ -264,15 +296,19 @@ public class InputDistribusiBbmActivity extends AppCompatActivity {
                         switch (distribusi.getFuel()) {
                             case Matbal.PERTAMAX:
                                 inputMobilPertamax.setText(String.valueOf(distribusi.getValue()));
+                                distribusiIds.set(8, distribusi.getId());
                                 break;
                             case Matbal.PREMIUM:
                                 inputMobilPremium.setText(String.valueOf(distribusi.getValue()));
+                                distribusiIds.set(9, distribusi.getId());
                                 break;
                             case Matbal.SOLAR:
                                 inputMobilSolar.setText(String.valueOf(distribusi.getValue()));
+                                distribusiIds.set(10, distribusi.getId());
                                 break;
                             case Matbal.PERTALITE:
                                 inputMobilPertalite.setText(String.valueOf(distribusi.getValue()));
+                                distribusiIds.set(11, distribusi.getId());
                                 break;
                         }
                         break;
@@ -318,6 +354,8 @@ public class InputDistribusiBbmActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Object> call, Response<Object> response) {
                 Log.w("code", String.valueOf(response.code()));
+                kirim.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
                 if (response.code() == 200) {
                     Log.w("body", new Gson().toJson(response.body()));
                     finish();
@@ -327,6 +365,8 @@ public class InputDistribusiBbmActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<Object> call, Throwable t) {
                 Log.w("error", t.getMessage());
+                kirim.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
             }
         });
     }
@@ -376,5 +416,23 @@ public class InputDistribusiBbmActivity extends AppCompatActivity {
             dist.setValue(0);
         }
         return dist;
+    }
+
+    private void clearEntries() {
+        inputTankerPertamax.setText("");
+        inputTankerPremium.setText("");
+        inputTankerSolar.setText("");
+        inputTankerPertalite.setText("");
+        inputPipaPertamax.setText("");
+        inputPipaPremium.setText("");
+        inputPipaSolar.setText("");
+        inputPipaPertalite.setText("");
+        inputMobilPertamax.setText("");
+        inputMobilPremium.setText("");
+        inputMobilSolar.setText("");
+        inputMobilPertalite.setText("");
+        isUpdate = false;
+        distribusiIds = new ArrayList<>();
+        distribusis = new ArrayList<>();
     }
 }
