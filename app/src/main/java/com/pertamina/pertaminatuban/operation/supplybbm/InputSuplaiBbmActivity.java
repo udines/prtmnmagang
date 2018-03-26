@@ -104,11 +104,11 @@ public class InputSuplaiBbmActivity extends AppCompatActivity {
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
                 String date = format.format(new Date(cal.getTimeInMillis()));
                 suplais.add(makeObject(date, Suplai.SUP_EXTANKER, Suplai.TRANS_IMPORT, Matbal.PERTAMAX, inputExtankerImportPertamax));
-                suplais.add(makeObject(date, Suplai.SUP_EXTANKER, Suplai.TRANS_IMPORT, Matbal.PREMIUM, inputExtankerImportPertamax));
-                suplais.add(makeObject(date, Suplai.SUP_EXTANKER, Suplai.TRANS_IMPORT, Matbal.SOLAR, inputExtankerImportPertamax));
+                suplais.add(makeObject(date, Suplai.SUP_EXTANKER, Suplai.TRANS_IMPORT, Matbal.PREMIUM, inputExtankerImportPremium));
+                suplais.add(makeObject(date, Suplai.SUP_EXTANKER, Suplai.TRANS_IMPORT, Matbal.SOLAR, inputExtankerImportSolar));
                 suplais.add(makeObject(date, Suplai.SUP_EXTANKER, Suplai.TRANS_DOMESTIK, Matbal.PERTAMAX, inputExtankerDomestikPertamax));
-                suplais.add(makeObject(date, Suplai.SUP_EXTANKER, Suplai.TRANS_DOMESTIK, Matbal.PREMIUM, inputExtankerDomestikPertamax));
-                suplais.add(makeObject(date, Suplai.SUP_EXTANKER, Suplai.TRANS_DOMESTIK, Matbal.SOLAR, inputExtankerDomestikPertamax));
+                suplais.add(makeObject(date, Suplai.SUP_EXTANKER, Suplai.TRANS_DOMESTIK, Matbal.PREMIUM, inputExtankerDomestikPremium));
+                suplais.add(makeObject(date, Suplai.SUP_EXTANKER, Suplai.TRANS_DOMESTIK, Matbal.SOLAR, inputExtankerDomestikSolar));
                 suplais.add(makeObject(date, Suplai.SUP_EXTPPI, Suplai.TRANS_PIPE, Matbal.PERTAMAX, inputExtppiPertamax));
                 suplais.add(makeObject(date, Suplai.SUP_EXTPPI, Suplai.TRANS_PIPE, Matbal.PREMIUM, inputExtppiPremium));
                 suplais.add(makeObject(date, Suplai.SUP_EXTPPI, Suplai.TRANS_PIPE, Matbal.SOLAR, inputExtppiSolar));
