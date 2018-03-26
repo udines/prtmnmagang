@@ -29,8 +29,8 @@ public class Suplai {
     private long value;
 
     public static final String SUP_EXTANKER = "Ex-Tanker";
-    public static final String SUP_EXTPPI = "Ex-Tppi";
-    public static final String SUP_EXTWU = "Ex-Twu";
+    public static final String SUP_EXTPPI = "Ex-TPPI";
+    public static final String SUP_EXTWU = "Ex-TWU";
     public static final String TRANS_IMPORT = "Import";
     public static final String TRANS_DOMESTIK = "Domestik";
     public static final String TRANS_PIPE = "Pipe Line";

@@ -61,10 +61,12 @@
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
                     android:hint="Pertamax">
                     <EditText
                         android:id="@+id/input_distribusi_bbm_tanker_pertamax"
                         android:layout_width="match_parent"
+                        android:inputType="number"
                         android:layout_height="wrap_content" />
                 </android.support.design.widget.TextInputLayout>
                 <android.support.design.widget.TextInputLayout
@@ -74,6 +76,7 @@
                     <EditText
                         android:id="@+id/input_distribusi_bbm_tanker_premium"
                         android:layout_width="match_parent"
+                        android:inputType="number"
                         android:layout_height="wrap_content" />
                 </android.support.design.widget.TextInputLayout>
                 <android.support.design.widget.TextInputLayout
@@ -83,6 +86,7 @@
                     <EditText
                         android:id="@+id/input_distribusi_bbm_tanker_solar"
                         android:layout_width="match_parent"
+                        android:inputType="number"
                         android:layout_height="wrap_content" />
                 </android.support.design.widget.TextInputLayout>
                 <android.support.design.widget.TextInputLayout
@@ -92,6 +96,7 @@
                     <EditText
                         android:id="@+id/input_distribusi_bbm_tanker_pertalite"
                         android:layout_width="match_parent"
+                        android:inputType="number"
                         android:layout_height="wrap_content" />
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
@@ -130,10 +135,12 @@
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
                     android:hint="Pertamax">
                     <EditText
                         android:id="@+id/input_distribusi_bbm_pipe_pertamax"
                         android:layout_width="match_parent"
+                        android:inputType="number"
                         android:layout_height="wrap_content" />
                 </android.support.design.widget.TextInputLayout>
                 <android.support.design.widget.TextInputLayout
@@ -143,6 +150,7 @@
                     <EditText
                         android:id="@+id/input_distribusi_bbm_pipe_premium"
                         android:layout_width="match_parent"
+                        android:inputType="number"
                         android:layout_height="wrap_content" />
                 </android.support.design.widget.TextInputLayout>
                 <android.support.design.widget.TextInputLayout
@@ -152,6 +160,7 @@
                     <EditText
                         android:id="@+id/input_distribusi_bbm_pipe_solar"
                         android:layout_width="match_parent"
+                        android:inputType="number"
                         android:layout_height="wrap_content" />
                 </android.support.design.widget.TextInputLayout>
                 <android.support.design.widget.TextInputLayout
@@ -161,6 +170,7 @@
                     <EditText
                         android:id="@+id/input_distribusi_bbm_pipe_pertalite"
                         android:layout_width="match_parent"
+                        android:inputType="number"
                         android:layout_height="wrap_content" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -200,10 +210,12 @@
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
                     android:hint="Pertamax">
                     <EditText
                         android:id="@+id/input_distribusi_bbm_mobil_pertamax"
                         android:layout_width="match_parent"
+                        android:inputType="number"
                         android:layout_height="wrap_content" />
                 </android.support.design.widget.TextInputLayout>
                 <android.support.design.widget.TextInputLayout
@@ -213,6 +225,7 @@
                     <EditText
                         android:id="@+id/input_distribusi_bbm_mobil_premium"
                         android:layout_width="match_parent"
+                        android:inputType="number"
                         android:layout_height="wrap_content" />
                 </android.support.design.widget.TextInputLayout>
                 <android.support.design.widget.TextInputLayout
@@ -222,6 +235,7 @@
                     <EditText
                         android:id="@+id/input_distribusi_bbm_mobil_solar"
                         android:layout_width="match_parent"
+                        android:inputType="number"
                         android:layout_height="wrap_content" />
                 </android.support.design.widget.TextInputLayout>
                 <android.support.design.widget.TextInputLayout
@@ -231,6 +245,7 @@
                     <EditText
                         android:id="@+id/input_distribusi_bbm_mobil_pertalite"
                         android:layout_width="match_parent"
+                        android:inputType="number"
                         android:layout_height="wrap_content" />
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>

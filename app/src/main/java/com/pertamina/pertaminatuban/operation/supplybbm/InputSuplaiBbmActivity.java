@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import com.google.gson.Gson;
 import com.pertamina.pertaminatuban.R;
@@ -43,8 +44,10 @@ public class InputSuplaiBbmActivity extends AppCompatActivity {
     inputExtppiPertamax, inputExtppiPremium, inputExtppiSolar, inputExtwuPertamax, inputExtwuPremium,
     inputExtwuSolar;
     private Button tanggalButton, kirim;
+    private ProgressBar progressBar;
 
     private ArrayList<Suplai> suplais;
+    private ArrayList<String> suplaiIds;
     private int day, month, year;
     private boolean isUpdate;
 
@@ -77,6 +80,7 @@ public class InputSuplaiBbmActivity extends AppCompatActivity {
         inputExtwuSolar = findViewById(R.id.input_suplai_extwu_mobiltangki_solar);
         tanggalButton = findViewById(R.id.input_suplai_tanggal);
         kirim = findViewById(R.id.input_suplai_button_kirim);
+        progressBar = findViewById(R.id.input_suplai_progress);
 
         Calendar cal = Calendar.getInstance();
         day = cal.get(Calendar.DAY_OF_MONTH);
@@ -100,6 +104,9 @@ public class InputSuplaiBbmActivity extends AppCompatActivity {
         kirim.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                kirim.setVisibility(View.GONE);
+                progressBar.setVisibility(View.VISIBLE);
+
                 suplais = new ArrayList<>();
                 Calendar cal = Calendar.getInstance();
                 cal.set(year, month, day);
@@ -117,6 +124,14 @@ public class InputSuplaiBbmActivity extends AppCompatActivity {
                 suplais.add(makeObject(date, Suplai.SUP_EXTWU, Suplai.TRANS_MT, Matbal.PERTAMAX, inputExtwuPertamax));
                 suplais.add(makeObject(date, Suplai.SUP_EXTWU, Suplai.TRANS_MT, Matbal.PREMIUM, inputExtwuPremium));
                 suplais.add(makeObject(date, Suplai.SUP_EXTWU, Suplai.TRANS_MT, Matbal.SOLAR, inputExtwuSolar));
+
+                //set id untuk masing2 suplai untuk keperluan update/put method
+                if (suplaiIds != null && suplaiIds.size() > 0) {
+                    for (int i = 0; i < suplais.size(); i++) {
+                        suplais.get(i).setId(suplaiIds.get(i));
+                    }
+                }
+
                 if (isUpdate) {
                     sendPutRequest(suplais);
                 } else {
@@ -163,6 +178,8 @@ public class InputSuplaiBbmActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Object> call, Response<Object> response) {
                 Log.w("code", String.valueOf(response.code()));
+                kirim.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
                 if (response.code() == 200) {
                     Log.w("body", new Gson().toJson(response.body()));
                     finish();
@@ -172,11 +189,15 @@ public class InputSuplaiBbmActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<Object> call, Throwable t) {
                 Log.w("error", t.getMessage());
+                kirim.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
             }
         });
     }
 
     private void getSuplaiTanggal(int year, int month, int day) {
+        clearEntries();
+
         Calendar cal = Calendar.getInstance();
         cal.set(year, month, day);
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
@@ -232,6 +253,10 @@ public class InputSuplaiBbmActivity extends AppCompatActivity {
     }
 
     private void setInitialInput(ArrayList<Suplai> suplais) {
+        suplaiIds = new ArrayList<>();
+        for (int s = 0; s < suplais.size(); s++) {
+            suplaiIds.add("");
+        }
         if (suplais.size() > 0) {
             isUpdate = true;
             for (int i = 0; i < suplais.size(); i++) {
@@ -242,24 +267,30 @@ public class InputSuplaiBbmActivity extends AppCompatActivity {
                             switch (suplai.getFuel()) {
                                 case Matbal.PERTAMAX:
                                     inputExtankerImportPertamax.setText(String.valueOf(suplai.getValue()));
+                                    suplaiIds.set(0, suplai.getId());
                                     break;
                                 case Matbal.PREMIUM:
                                     inputExtankerImportPremium.setText(String.valueOf(suplai.getValue()));
+                                    suplaiIds.set(1, suplai.getId());
                                     break;
                                 case Matbal.SOLAR:
                                     inputExtankerImportSolar.setText(String.valueOf(suplai.getValue()));
+                                    suplaiIds.set(2, suplai.getId());
                                     break;
                             }
                         } else if (suplai.getTransaksi().equals(Suplai.TRANS_DOMESTIK)) {
                             switch (suplai.getFuel()) {
                                 case Matbal.PERTAMAX:
                                     inputExtankerDomestikPertamax.setText(String.valueOf(suplai.getValue()));
+                                    suplaiIds.set(3, suplai.getId());
                                     break;
                                 case Matbal.PREMIUM:
                                     inputExtankerDomestikPremium.setText(String.valueOf(suplai.getValue()));
+                                    suplaiIds.set(4, suplai.getId());
                                     break;
                                 case Matbal.SOLAR:
                                     inputExtankerDomestikSolar.setText(String.valueOf(suplai.getValue()));
+                                    suplaiIds.set(5, suplai.getId());
                                     break;
                             }
                         }
@@ -268,12 +299,15 @@ public class InputSuplaiBbmActivity extends AppCompatActivity {
                         switch (suplai.getFuel()) {
                             case Matbal.PERTAMAX:
                                 inputExtppiPertamax.setText(String.valueOf(suplai.getValue()));
+                                suplaiIds.set(6, suplai.getId());
                                 break;
                             case Matbal.PREMIUM:
                                 inputExtppiPremium.setText(String.valueOf(suplai.getValue()));
+                                suplaiIds.set(7, suplai.getId());
                                 break;
                             case Matbal.SOLAR:
                                 inputExtppiSolar.setText(String.valueOf(suplai.getValue()));
+                                suplaiIds.set(8, suplai.getId());
                                 break;
                         }
                         break;
@@ -281,12 +315,15 @@ public class InputSuplaiBbmActivity extends AppCompatActivity {
                         switch (suplai.getFuel()) {
                             case Matbal.PERTAMAX:
                                 inputExtwuPertamax.setText(String.valueOf(suplai.getValue()));
+                                suplaiIds.set(9, suplai.getId());
                                 break;
                             case Matbal.PREMIUM:
                                 inputExtwuPremium.setText(String.valueOf(suplai.getValue()));
+                                suplaiIds.set(10, suplai.getId());
                                 break;
                             case Matbal.SOLAR:
                                 inputExtwuSolar.setText(String.valueOf(suplai.getValue()));
+                                suplaiIds.set(11, suplai.getId());
                                 break;
                         }
                         break;
@@ -332,6 +369,8 @@ public class InputSuplaiBbmActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Object> call, Response<Object> response) {
                 Log.w("code", String.valueOf(response.code()));
+                kirim.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
                 if (response.code() == 200) {
                     Log.w("body", new Gson().toJson(response.body()));
                     finish();
@@ -341,6 +380,8 @@ public class InputSuplaiBbmActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<Object> call, Throwable t) {
                 Log.w("error", t.getMessage());
+                kirim.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
             }
         });
     }
@@ -383,5 +424,22 @@ public class InputSuplaiBbmActivity extends AppCompatActivity {
             sup.setValue(0);
         }
         return sup;
+    }
+
+    private void clearEntries() {
+        inputExtankerImportPremium.setText("");inputExtankerImportPertamax.setText("");
+        inputExtankerImportSolar.setText("");
+        inputExtankerDomestikPertamax.setText("");
+        inputExtankerDomestikPremium.setText("");
+        inputExtankerDomestikSolar.setText("");
+        inputExtppiPertamax.setText("");
+        inputExtppiPremium.setText("");
+        inputExtppiSolar.setText("");
+        inputExtwuPertamax.setText("");
+        inputExtwuPremium.setText("");
+        inputExtwuSolar.setText("");
+        suplaiIds = new ArrayList<>();
+        suplais = new ArrayList<>();
+        isUpdate = false;
     }
 }

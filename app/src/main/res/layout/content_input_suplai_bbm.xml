@@ -61,10 +61,12 @@
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
                     android:hint="Pertamax">
                     <EditText
                         android:id="@+id/input_suplai_extanker_import_pertamax"
                         android:layout_width="match_parent"
+                        android:inputType="number"
                         android:layout_height="wrap_content" />
                 </android.support.design.widget.TextInputLayout>
                 <android.support.design.widget.TextInputLayout
@@ -74,6 +76,7 @@
                     <EditText
                         android:id="@+id/input_suplai_extanker_import_premium"
                         android:layout_width="match_parent"
+                        android:inputType="number"
                         android:layout_height="wrap_content" />
                 </android.support.design.widget.TextInputLayout>
                 <android.support.design.widget.TextInputLayout
@@ -83,6 +86,7 @@
                     <EditText
                         android:id="@+id/input_suplai_extanker_import_solar"
                         android:layout_width="match_parent"
+                        android:inputType="number"
                         android:layout_height="wrap_content" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -100,10 +104,12 @@
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
                     android:hint="Pertamax">
                     <EditText
                         android:id="@+id/input_suplai_extanker_domestik_pertamax"
                         android:layout_width="match_parent"
+                        android:inputType="number"
                         android:layout_height="wrap_content" />
                 </android.support.design.widget.TextInputLayout>
                 <android.support.design.widget.TextInputLayout
@@ -113,6 +119,7 @@
                     <EditText
                         android:id="@+id/input_suplai_extanker_domestik_premium"
                         android:layout_width="match_parent"
+                        android:inputType="number"
                         android:layout_height="wrap_content" />
                 </android.support.design.widget.TextInputLayout>
                 <android.support.design.widget.TextInputLayout
@@ -122,6 +129,7 @@
                     <EditText
                         android:id="@+id/input_suplai_extanker_domestik_solar"
                         android:layout_width="match_parent"
+                        android:inputType="number"
                         android:layout_height="wrap_content" />
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
@@ -160,10 +168,12 @@
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
                     android:hint="Pertamax">
                     <EditText
                         android:id="@+id/input_suplai_extppi_pipeline_pertamax"
                         android:layout_width="match_parent"
+                        android:inputType="number"
                         android:layout_height="wrap_content" />
                 </android.support.design.widget.TextInputLayout>
                 <android.support.design.widget.TextInputLayout
@@ -173,6 +183,7 @@
                     <EditText
                         android:id="@+id/input_suplai_extppi_pipeline_premium"
                         android:layout_width="match_parent"
+                        android:inputType="number"
                         android:layout_height="wrap_content" />
                 </android.support.design.widget.TextInputLayout>
                 <android.support.design.widget.TextInputLayout
@@ -182,6 +193,7 @@
                     <EditText
                         android:id="@+id/input_suplai_extppi_pipeline_solar"
                         android:layout_width="match_parent"
+                        android:inputType="number"
                         android:layout_height="wrap_content" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -221,10 +233,12 @@
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
                     android:hint="Pertamax">
                     <EditText
                         android:id="@+id/input_suplai_extwu_mobiltangki_pertamax"
                         android:layout_width="match_parent"
+                        android:inputType="number"
                         android:layout_height="wrap_content" />
                 </android.support.design.widget.TextInputLayout>
                 <android.support.design.widget.TextInputLayout
@@ -234,6 +248,7 @@
                     <EditText
                         android:id="@+id/input_suplai_extwu_mobiltangki_premium"
                         android:layout_width="match_parent"
+                        android:inputType="number"
                         android:layout_height="wrap_content" />
                 </android.support.design.widget.TextInputLayout>
                 <android.support.design.widget.TextInputLayout
@@ -243,6 +258,7 @@
                     <EditText
                         android:id="@+id/input_suplai_extwu_mobiltangki_solar"
                         android:layout_width="match_parent"
+                        android:inputType="number"
                         android:layout_height="wrap_content" />
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
@@ -255,5 +271,11 @@
             android:backgroundTint="@color/blue_pertamina"
             android:text="KIRIM"
             android:textColor="@color/white"/>
+        <ProgressBar
+            android:id="@+id/input_suplai_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:visibility="gone"/>
     </LinearLayout>
 </ScrollView>
