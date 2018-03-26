@@ -68,6 +68,8 @@ public interface OperationClient {
     Call<ArrayList<Suplai>> getSuplaiBulan(@Path("tahun") String tahun, @Path("bulan") String bulan);
     @PUT("suplaibbm/")
     Call<Object> putSuplai(@Body ArrayList<Suplai> suplais);
+    @GET("suplaibbm/check/{tanggal{")
+    Call<ArrayList<Suplai>> getSuplaiTanggal(@Path("tanggal") String tanggal);
 
     //distribusi
     @POST("distribusibbm/")
@@ -76,4 +78,6 @@ public interface OperationClient {
     Call<ArrayList<DistribusiBbm>> getDistribusiBulan(@Path("tahun") String tahun, @Path("bulan") String bulan);
     @PUT("distribusibbm/")
     Call<Object> putDistribusi(@Body ArrayList<DistribusiBbm> distribusis);
+    @GET("distribusibbm/check/{tanggal}")
+    Call<ArrayList<DistribusiBbm>> getDistribusiTanggal(@Path("tanggal") String tanggal);
 }

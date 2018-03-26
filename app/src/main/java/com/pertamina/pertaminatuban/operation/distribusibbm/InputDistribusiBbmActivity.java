@@ -44,6 +44,7 @@ public class InputDistribusiBbmActivity extends AppCompatActivity {
     private Button tanggalButton, kirim;
     private int day, month, year;
     private ArrayList<DistribusiBbm> distribusis;
+    private boolean isUpdate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +80,7 @@ public class InputDistribusiBbmActivity extends AppCompatActivity {
         month = cal.get(Calendar.MONTH);
         year = cal.get(Calendar.YEAR);
         setTanggalButton(day, month, year);
+        getDistribusiTanggal(year, month, day);
 
         handleTanggalButton();
         handleKirimButton();
@@ -105,9 +107,178 @@ public class InputDistribusiBbmActivity extends AppCompatActivity {
                 distribusis.add(makeObject(date, DistribusiBbm.DIST_MOBIL, DistribusiBbm.TRANS_MOBIL, Matbal.PREMIUM, inputMobilPremium));
                 distribusis.add(makeObject(date, DistribusiBbm.DIST_MOBIL, DistribusiBbm.TRANS_MOBIL, Matbal.SOLAR, inputMobilSolar));
                 distribusis.add(makeObject(date, DistribusiBbm.DIST_MOBIL, DistribusiBbm.TRANS_MOBIL, Matbal.PERTALITE, inputMobilPertalite));
-                sendPostRequest(distribusis);
+
+                if (isUpdate) {
+                    sendPutRequest(distribusis);
+                } else {
+                    sendPostRequest(distribusis);
+                }
             }
         });
+    }
+
+    private void sendPutRequest(ArrayList<DistribusiBbm> distribusis) {
+        SharedPreferences preferences = InputDistribusiBbmActivity.this.getSharedPreferences(
+                "login",
+                Context.MODE_PRIVATE
+        );
+
+        final String key = preferences.getString("userKey", "none");
+
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(new Interceptor() {
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request original = chain.request();
+
+                Request request = original.newBuilder()
+                        .header("Authorization", key)
+                        .method(original.method(), original.body())
+                        .build();
+                return chain.proceed(request);
+            }
+        });
+
+        OkHttpClient client = httpClient.build();
+
+        String baseUrl = "http://www.api.clicktuban.com/";
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client);
+
+        Retrofit retrofit = builder.build();
+        OperationClient operationClient = retrofit.create(OperationClient.class);
+        Call<Object> call = operationClient.putDistribusi(distribusis);
+        call.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, Response<Object> response) {
+                Log.w("code", String.valueOf(response.code()));
+                if (response.code() == 200) {
+                    Log.w("body", new Gson().toJson(response.body()));
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+                Log.w("error", t.getMessage());
+            }
+        });
+    }
+
+    private void getDistribusiTanggal(int year, int month, int day) {
+        Calendar cal = Calendar.getInstance();
+        cal.set(year, month, day);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        String tanggal = format.format(new Date(cal.getTimeInMillis()));
+
+        SharedPreferences preferences = InputDistribusiBbmActivity.this.getSharedPreferences(
+                "login",
+                Context.MODE_PRIVATE
+        );
+
+        final String key = preferences.getString("userKey", "none");
+
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(new Interceptor() {
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request original = chain.request();
+
+                Request request = original.newBuilder()
+                        .header("Authorization", key)
+                        .method(original.method(), original.body())
+                        .build();
+                return chain.proceed(request);
+            }
+        });
+
+        OkHttpClient client = httpClient.build();
+
+        String baseUrl = "http://www.api.clicktuban.com/";
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client);
+
+        Retrofit retrofit = builder.build();
+        OperationClient operationClient = retrofit.create(OperationClient.class);
+        Call<ArrayList<DistribusiBbm>> call = operationClient.getDistribusiTanggal(tanggal);
+        call.enqueue(new Callback<ArrayList<DistribusiBbm>>() {
+            @Override
+            public void onResponse(Call<ArrayList<DistribusiBbm>> call, Response<ArrayList<DistribusiBbm>> response) {
+                Log.w("code", String.valueOf(response.code()));
+                if (response.code() == 200) {
+                    Log.w("body", new Gson().toJson(response.body()));
+                    setInitialInput(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<DistribusiBbm>> call, Throwable t) {
+                Log.w("error", t.getMessage());
+            }
+        });
+    }
+
+    private void setInitialInput(ArrayList<DistribusiBbm> distribusis) {
+        if (distribusis.size() > 0) {
+            isUpdate = true;
+            for (int i = 0; i < distribusis.size(); i++) {
+                DistribusiBbm distribusi = distribusis.get(i);
+                switch (distribusi.getDistribusi()) {
+                    case DistribusiBbm.DIST_TANKER:
+                        switch (distribusi.getFuel()) {
+                            case Matbal.PERTAMAX:
+                                inputTankerPertamax.setText(String.valueOf(distribusi.getValue()));
+                                break;
+                            case Matbal.PREMIUM:
+                                inputTankerPremium.setText(String.valueOf(distribusi.getValue()));
+                                break;
+                            case Matbal.SOLAR:
+                                inputTankerSolar.setText(String.valueOf(distribusi.getValue()));
+                                break;
+                            case Matbal.PERTALITE:
+                                inputTankerPertalite.setText(String.valueOf(distribusi.getValue()));
+                                break;
+                        }
+                        break;
+                    case DistribusiBbm.DIST_PIPA:
+                        switch (distribusi.getFuel()) {
+                            case Matbal.PERTAMAX:
+                                inputPipaPertamax.setText(String.valueOf(distribusi.getValue()));
+                                break;
+                            case Matbal.PREMIUM:
+                                inputPipaPremium.setText(String.valueOf(distribusi.getValue()));
+                                break;
+                            case Matbal.SOLAR:
+                                inputPipaSolar.setText(String.valueOf(distribusi.getValue()));
+                                break;
+                            case Matbal.PERTALITE:
+                                inputPipaPertalite.setText(String.valueOf(distribusi.getValue()));
+                                break;
+                        }
+                        break;
+                    case DistribusiBbm.DIST_MOBIL:
+                        switch (distribusi.getFuel()) {
+                            case Matbal.PERTAMAX:
+                                inputMobilPertamax.setText(String.valueOf(distribusi.getValue()));
+                                break;
+                            case Matbal.PREMIUM:
+                                inputMobilPremium.setText(String.valueOf(distribusi.getValue()));
+                                break;
+                            case Matbal.SOLAR:
+                                inputMobilSolar.setText(String.valueOf(distribusi.getValue()));
+                                break;
+                            case Matbal.PERTALITE:
+                                inputMobilPertalite.setText(String.valueOf(distribusi.getValue()));
+                                break;
+                        }
+                        break;
+                }
+            }
+        }
     }
 
     private void sendPostRequest(ArrayList<DistribusiBbm> distribusis) {
@@ -178,6 +349,7 @@ public class InputDistribusiBbmActivity extends AppCompatActivity {
                         month = i1;
                         day = i2;
                         setTanggalButton(day, month, year);
+                        getDistribusiTanggal(year, month, day);
                     }
                 };
                 DatePickerDialog dialog = new DatePickerDialog(

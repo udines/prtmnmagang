@@ -46,6 +46,7 @@ public class InputSuplaiBbmActivity extends AppCompatActivity {
 
     private ArrayList<Suplai> suplais;
     private int day, month, year;
+    private boolean isUpdate;
 
 
     @Override
@@ -82,6 +83,7 @@ public class InputSuplaiBbmActivity extends AppCompatActivity {
         month = cal.get(Calendar.MONTH);
         year = cal.get(Calendar.YEAR);
         setTanggalButton(day, month, year);
+        getSuplaiTanggal(year, month, day);
 
         handleTanggalButton();
         handleKirimButton();
@@ -115,9 +117,182 @@ public class InputSuplaiBbmActivity extends AppCompatActivity {
                 suplais.add(makeObject(date, Suplai.SUP_EXTWU, Suplai.TRANS_MT, Matbal.PERTAMAX, inputExtwuPertamax));
                 suplais.add(makeObject(date, Suplai.SUP_EXTWU, Suplai.TRANS_MT, Matbal.PREMIUM, inputExtwuPremium));
                 suplais.add(makeObject(date, Suplai.SUP_EXTWU, Suplai.TRANS_MT, Matbal.SOLAR, inputExtwuSolar));
-                sendPostRequest(suplais);
+                if (isUpdate) {
+                    sendPutRequest(suplais);
+                } else {
+                    sendPostRequest(suplais);
+                }
             }
         });
+    }
+
+    private void sendPutRequest(ArrayList<Suplai> suplais) {
+        SharedPreferences preferences = InputSuplaiBbmActivity.this.getSharedPreferences(
+                "login",
+                Context.MODE_PRIVATE
+        );
+
+        final String key = preferences.getString("userKey", "none");
+
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(new Interceptor() {
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request original = chain.request();
+
+                Request request = original.newBuilder()
+                        .header("Authorization", key)
+                        .method(original.method(), original.body())
+                        .build();
+                return chain.proceed(request);
+            }
+        });
+
+        OkHttpClient client = httpClient.build();
+
+        String baseUrl = "http://www.api.clicktuban.com/";
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client);
+
+        Retrofit retrofit = builder.build();
+        OperationClient operationClient = retrofit.create(OperationClient.class);
+        Call<Object> call = operationClient.putSuplai(suplais);
+        call.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, Response<Object> response) {
+                Log.w("code", String.valueOf(response.code()));
+                if (response.code() == 200) {
+                    Log.w("body", new Gson().toJson(response.body()));
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+                Log.w("error", t.getMessage());
+            }
+        });
+    }
+
+    private void getSuplaiTanggal(int year, int month, int day) {
+        Calendar cal = Calendar.getInstance();
+        cal.set(year, month, day);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        String tanggal = format.format(new Date(cal.getTimeInMillis()));
+
+        SharedPreferences preferences = InputSuplaiBbmActivity.this.getSharedPreferences(
+                "login",
+                Context.MODE_PRIVATE
+        );
+
+        final String key = preferences.getString("userKey", "none");
+
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(new Interceptor() {
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request original = chain.request();
+
+                Request request = original.newBuilder()
+                        .header("Authorization", key)
+                        .method(original.method(), original.body())
+                        .build();
+                return chain.proceed(request);
+            }
+        });
+
+        OkHttpClient client = httpClient.build();
+
+        String baseUrl = "http://www.api.clicktuban.com/";
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client);
+
+        Retrofit retrofit = builder.build();
+        OperationClient operationClient = retrofit.create(OperationClient.class);
+        Call<ArrayList<Suplai>> call = operationClient.getSuplaiTanggal(tanggal);
+        call.enqueue(new Callback<ArrayList<Suplai>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Suplai>> call, Response<ArrayList<Suplai>> response) {
+                Log.w("code", String.valueOf(response.code()));
+                if (response.code() == 200) {
+                    Log.w("body", new Gson().toJson(response.body()));
+                    setInitialInput(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Suplai>> call, Throwable t) {
+                Log.w("error", t.getMessage());
+            }
+        });
+    }
+
+    private void setInitialInput(ArrayList<Suplai> suplais) {
+        if (suplais.size() > 0) {
+            isUpdate = true;
+            for (int i = 0; i < suplais.size(); i++) {
+                Suplai suplai = suplais.get(i);
+                switch (suplai.getSuplai()) {
+                    case Suplai.SUP_EXTANKER:
+                        if (suplai.getTransaksi().equals(Suplai.TRANS_IMPORT)) {
+                            switch (suplai.getFuel()) {
+                                case Matbal.PERTAMAX:
+                                    inputExtankerImportPertamax.setText(String.valueOf(suplai.getValue()));
+                                    break;
+                                case Matbal.PREMIUM:
+                                    inputExtankerImportPremium.setText(String.valueOf(suplai.getValue()));
+                                    break;
+                                case Matbal.SOLAR:
+                                    inputExtankerImportSolar.setText(String.valueOf(suplai.getValue()));
+                                    break;
+                            }
+                        } else if (suplai.getTransaksi().equals(Suplai.TRANS_DOMESTIK)) {
+                            switch (suplai.getFuel()) {
+                                case Matbal.PERTAMAX:
+                                    inputExtankerDomestikPertamax.setText(String.valueOf(suplai.getValue()));
+                                    break;
+                                case Matbal.PREMIUM:
+                                    inputExtankerDomestikPremium.setText(String.valueOf(suplai.getValue()));
+                                    break;
+                                case Matbal.SOLAR:
+                                    inputExtankerDomestikSolar.setText(String.valueOf(suplai.getValue()));
+                                    break;
+                            }
+                        }
+                        break;
+                    case Suplai.SUP_EXTPPI:
+                        switch (suplai.getFuel()) {
+                            case Matbal.PERTAMAX:
+                                inputExtppiPertamax.setText(String.valueOf(suplai.getValue()));
+                                break;
+                            case Matbal.PREMIUM:
+                                inputExtppiPremium.setText(String.valueOf(suplai.getValue()));
+                                break;
+                            case Matbal.SOLAR:
+                                inputExtppiSolar.setText(String.valueOf(suplai.getValue()));
+                                break;
+                        }
+                        break;
+                    case Suplai.SUP_EXTWU:
+                        switch (suplai.getFuel()) {
+                            case Matbal.PERTAMAX:
+                                inputExtwuPertamax.setText(String.valueOf(suplai.getValue()));
+                                break;
+                            case Matbal.PREMIUM:
+                                inputExtwuPremium.setText(String.valueOf(suplai.getValue()));
+                                break;
+                            case Matbal.SOLAR:
+                                inputExtwuSolar.setText(String.valueOf(suplai.getValue()));
+                                break;
+                        }
+                        break;
+                }
+            }
+        }
     }
 
     private void sendPostRequest(ArrayList<Suplai> suplais) {
@@ -181,6 +356,7 @@ public class InputSuplaiBbmActivity extends AppCompatActivity {
                         month = i1;
                         day = i2;
                         setTanggalButton(day, month, year);
+                        getSuplaiTanggal(year, month, day);
                     }
                 };
                 DatePickerDialog dialog = new DatePickerDialog(
