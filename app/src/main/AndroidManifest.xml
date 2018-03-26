@@ -590,6 +590,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.pertamina.pertaminatuban.operation.supplybbm.SuplaiBbmActivity" />
         </activity>
+        <activity
+            android:name=".operation.distribusibbm.InputDistribusiBbmActivity"
+            android:label="@string/title_activity_input_distribusi_bbm"
+            android:parentActivityName=".operation.distribusibbm.DistribusiBbmActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.pertamina.pertaminatuban.operation.distribusibbm.DistribusiBbmActivity" />
+        </activity>
     </application>
 
 </manifest>

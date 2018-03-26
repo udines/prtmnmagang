@@ -397,4 +397,5 @@
     <string name="title_activity_input_transfer_tppi">Input Transfer TPPI TBBM</string>
     <string name="title_activity_input_sarfas">Input Sarfas Penerimaan</string>
     <string name="title_activity_input_suplai_bbm">Input Suplai Bbm</string>
+    <string name="title_activity_input_distribusi_bbm">Input Distribusi Bbm</string>
 </resources>

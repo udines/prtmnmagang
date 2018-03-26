@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.pertamina.pertaminatuban.operation.supplybbm.InputSuplaiBbmActivity"
-    tools:showIn="@layout/activity_input_suplai_bbm"
+    tools:context="com.pertamina.pertaminatuban.operation.distribusibbm.InputDistribusiBbmActivity"
+    tools:showIn="@layout/activity_input_distribusi_bbm"
     android:background="@color/grey_200">
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,7 +21,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"/>
         <Button
-            android:id="@+id/input_suplai_tanggal"
+            android:id="@+id/input_distribusi_bbm_tanggal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Tanggal"
@@ -40,13 +40,13 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Suplai"/>
+                    android:text="Distribusi"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="22sp"
                     android:textColor="@color/black"
-                    android:text="Ex-Tanker"/>
+                    android:text="Via-Tanker"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -56,14 +56,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
-                    android:text="Import"
+                    android:text="Tanker"
                     android:textColor="@color/black"/>
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Pertamax">
                     <EditText
-                        android:id="@+id/input_suplai_extanker_import_pertamax"
+                        android:id="@+id/input_distribusi_bbm_tanker_pertamax"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                 </android.support.design.widget.TextInputLayout>
@@ -72,7 +72,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Premium">
                     <EditText
-                        android:id="@+id/input_suplai_extanker_import_premium"
+                        android:id="@+id/input_distribusi_bbm_tanker_premium"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                 </android.support.design.widget.TextInputLayout>
@@ -81,46 +81,16 @@
                     android:layout_height="wrap_content"
                     android:hint="Solar (HSD)">
                     <EditText
-                        android:id="@+id/input_suplai_extanker_import_solar"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-                </android.support.design.widget.TextInputLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Transaksi"
-                    android:layout_marginTop="8dp"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="20sp"
-                    android:text="Domestik"
-                    android:textColor="@color/black"/>
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Pertamax">
-                    <EditText
-                        android:id="@+id/input_suplai_extanker_domestik_pertamax"
+                        android:id="@+id/input_distribusi_bbm_tanker_solar"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                 </android.support.design.widget.TextInputLayout>
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Premium">
+                    android:hint="Pertalite">
                     <EditText
-                        android:id="@+id/input_suplai_extanker_domestik_premium"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-                </android.support.design.widget.TextInputLayout>
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Solar (HSD)">
-                    <EditText
-                        android:id="@+id/input_suplai_extanker_domestik_solar"
+                        android:id="@+id/input_distribusi_bbm_tanker_pertalite"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                 </android.support.design.widget.TextInputLayout>
@@ -139,13 +109,13 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Suplai"/>
+                    android:text="Distribusi"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="22sp"
                     android:textColor="@color/black"
-                    android:text="Ex-TPPI"/>
+                    android:text="Via-Pipa"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -162,7 +132,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Pertamax">
                     <EditText
-                        android:id="@+id/input_suplai_extppi_pipeline_pertamax"
+                        android:id="@+id/input_distribusi_bbm_pipe_pertamax"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                 </android.support.design.widget.TextInputLayout>
@@ -171,7 +141,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Premium">
                     <EditText
-                        android:id="@+id/input_suplai_extppi_pipeline_premium"
+                        android:id="@+id/input_distribusi_bbm_pipe_premium"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                 </android.support.design.widget.TextInputLayout>
@@ -180,7 +150,16 @@
                     android:layout_height="wrap_content"
                     android:hint="Solar (HSD)">
                     <EditText
-                        android:id="@+id/input_suplai_extppi_pipeline_solar"
+                        android:id="@+id/input_distribusi_bbm_pipe_solar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Pertalite">
+                    <EditText
+                        android:id="@+id/input_distribusi_bbm_pipe_pertalite"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                 </android.support.design.widget.TextInputLayout>
@@ -200,13 +179,13 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Suplai"/>
+                    android:text="Distribusi"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="22sp"
                     android:textColor="@color/black"
-                    android:text="Ex-TWU"/>
+                    android:text="Via-Mobil Tangki"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -223,7 +202,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Pertamax">
                     <EditText
-                        android:id="@+id/input_suplai_extwu_mobiltangki_pertamax"
+                        android:id="@+id/input_distribusi_bbm_mobil_pertamax"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                 </android.support.design.widget.TextInputLayout>
@@ -232,7 +211,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Premium">
                     <EditText
-                        android:id="@+id/input_suplai_extwu_mobiltangki_premium"
+                        android:id="@+id/input_distribusi_bbm_mobil_premium"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                 </android.support.design.widget.TextInputLayout>
@@ -241,7 +220,16 @@
                     android:layout_height="wrap_content"
                     android:hint="Solar (HSD)">
                     <EditText
-                        android:id="@+id/input_suplai_extwu_mobiltangki_solar"
+                        android:id="@+id/input_distribusi_bbm_mobil_solar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Pertalite">
+                    <EditText
+                        android:id="@+id/input_distribusi_bbm_mobil_pertalite"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                 </android.support.design.widget.TextInputLayout>
@@ -249,11 +237,11 @@
         </android.support.v7.widget.CardView>
 
         <Button
-            android:id="@+id/input_suplai_button_kirim"
+            android:id="@+id/input_distribusi_bbm_button_kirim"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/blue_pertamina"
             android:text="KIRIM"
             android:textColor="@color/white"/>
     </LinearLayout>
-</ScrollView>
+</android.support.constraint.ConstraintLayout>

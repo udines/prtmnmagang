@@ -28,6 +28,17 @@ public class Suplai {
     @Expose
     private long value;
 
+    public static final String SUP_EXTANKER = "Ex-Tanker";
+    public static final String SUP_EXTPPI = "Ex-Tppi";
+    public static final String SUP_EXTWU = "Ex-Twu";
+    public static final String TRANS_IMPORT = "Import";
+    public static final String TRANS_DOMESTIK = "Domestik";
+    public static final String TRANS_PIPE = "Pipe Line";
+    public static final String TRANS_MT = "Mobil Tangki";
+
+    public Suplai() {
+    }
+
     public Suplai(String date, String suplai, String transaksi, String fuel, long value) {
         this.date = date;
         this.suplai = suplai;
@@ -58,5 +69,29 @@ public class Suplai {
 
     public long getValue() {
         return value;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public void setSuplai(String suplai) {
+        this.suplai = suplai;
+    }
+
+    public void setTransaksi(String transaksi) {
+        this.transaksi = transaksi;
+    }
+
+    public void setFuel(String fuel) {
+        this.fuel = fuel;
+    }
+
+    public void setValue(long value) {
+        this.value = value;
     }
 }
