@@ -247,4 +247,10 @@ public class DistribusiBbmActivity extends AppCompatActivity {
         cal.set(year, month, 1);
         bulanButton.setText(format.format(new Date(cal.getTimeInMillis())));
     }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        getDistribusiBulan(month, year);
+    }
 }

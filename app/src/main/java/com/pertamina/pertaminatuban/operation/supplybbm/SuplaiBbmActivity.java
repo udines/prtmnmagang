@@ -269,4 +269,9 @@ public class SuplaiBbmActivity extends AppCompatActivity {
         bulanButton.setText(format.format(new Date(cal.getTimeInMillis())));
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        getSuplaiBulan(month, year);
+    }
 }
