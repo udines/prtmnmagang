@@ -22,7 +22,7 @@ public class Sarfas {
     @Expose
     private String nomor;
 
-    @SerializedName("nama")
+    @SerializedName("namaSarfas")
     @Expose
     private String nama;
 
