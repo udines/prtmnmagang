@@ -23,4 +23,10 @@
 
     </style>
 
+    <style name="item_sarfas">
+        <item name="android:layout_marginBottom">6dp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
 </resources>

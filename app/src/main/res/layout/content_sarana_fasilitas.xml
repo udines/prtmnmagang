@@ -6,6 +6,17 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.pertamina.pertaminatuban.saranafasilitas.SaranaFasilitasActivity"
-    tools:showIn="@layout/activity_sarana_fasilitas">
+    tools:showIn="@layout/activity_sarana_fasilitas"
+    android:background="@color/grey_200">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/sarana_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="6dp"
+        android:paddingEnd="6dp"
+        android:paddingStart="6dp"
+        android:paddingBottom="68dp"
+        android:clipToPadding="false"/>
 
 </android.support.constraint.ConstraintLayout>
