@@ -16,6 +16,7 @@ import com.pertamina.pertaminatuban.marine.NewMarineActivity;
 import com.pertamina.pertaminatuban.models.MenuViewModel;
 import com.pertamina.pertaminatuban.operation.OperationActivity;
 import com.pertamina.pertaminatuban.qualityquantity.QQActivity;
+import com.pertamina.pertaminatuban.saranafasilitas.SaranaFasilitasActivity;
 
 import java.util.ArrayList;
 
@@ -76,6 +77,11 @@ public class GridMenuAdapter extends RecyclerView.Adapter<GridMenuViewHolder> {
                         Intent operationIntent = new Intent(holder.context, OperationActivity.class);
                         operationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         holder.context.startActivity(operationIntent);
+                        break;
+                    case 5:
+                        Intent sarfasIntent = new Intent(holder.context, SaranaFasilitasActivity.class);
+                        sarfasIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        holder.context.startActivity(sarfasIntent);
                 }
             }
         });

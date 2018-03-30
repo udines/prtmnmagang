@@ -599,6 +599,24 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.pertamina.pertaminatuban.operation.distribusibbm.DistribusiBbmActivity" />
         </activity>
+        <activity
+            android:name=".saranafasilitas.SaranaFasilitasActivity"
+            android:label="@string/title_activity_sarana_fasilitas"
+            android:parentActivityName=".activities.MenuActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.pertamina.pertaminatuban.activities.MenuActivity" />
+        </activity>
+        <activity
+            android:name=".saranafasilitas.InputSaranaFasilitasActivity"
+            android:label="@string/title_activity_input_sarana_fasilitas"
+            android:parentActivityName=".saranafasilitas.SaranaFasilitasActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.pertamina.pertaminatuban.saranafasilitas.SaranaFasilitasActivity" />
+        </activity>
     </application>
 
 </manifest>

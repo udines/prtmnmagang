@@ -208,7 +208,7 @@ public class MenuActivity extends AppCompatActivity {
         menuList.add(new MenuViewModel("Quality", R.drawable.ic_recommended));
         menuList.add(new MenuViewModel("Finance", R.drawable.ic_presentation));
         menuList.add(new MenuViewModel("Operation", R.drawable.ic_networking));
-//        menuList.add(new MenuViewModel("Divisi 6", R.drawable.ic_launcher_foreground));
+        menuList.add(new MenuViewModel("Sarfas", R.drawable.ic_tools));
 
         /*membuat obyek dari GridMenuAdapter untuk menampilkan menu bentuk gridLayoutManager 2 kolom*/
         GridMenuAdapter gridAdapter = new GridMenuAdapter(menuList, MenuActivity.this);

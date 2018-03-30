@@ -28,6 +28,13 @@
         <item>Biofame</item>
     </string-array>
 
+    <string-array name="sarfas_tab">
+        <item>Penerimaan</item>
+        <item>Penyaluran</item>
+        <item>Penimbunan</item>
+        <item>Supporting</item>
+    </string-array>
+
     <string-array name="pilihan_product">
         <item>PERTAMAX</item>
         <item>PERTALITE</item>
@@ -398,4 +405,6 @@
     <string name="title_activity_input_sarfas">Input Sarfas Penerimaan</string>
     <string name="title_activity_input_suplai_bbm">Input Suplai Bbm</string>
     <string name="title_activity_input_distribusi_bbm">Input Distribusi Bbm</string>
+    <string name="title_activity_sarana_fasilitas">Sarfas</string>
+    <string name="title_activity_input_sarana_fasilitas">Input Sarfas</string>
 </resources>
