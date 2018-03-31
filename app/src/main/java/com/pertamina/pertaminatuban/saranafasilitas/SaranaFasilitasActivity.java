@@ -17,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.pertamina.pertaminatuban.R;
@@ -86,6 +87,7 @@ public class SaranaFasilitasActivity extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                ((TextView) spinner.getSelectedView()).setTextColor(getResources().getColor(R.color.white));
                 getSarfasBulan(month, year, spinner.getSelectedItem().toString());
             }
 
@@ -151,9 +153,10 @@ public class SaranaFasilitasActivity extends AppCompatActivity {
     }
 
     private void populateSarfas(ArrayList<Sarfas> sarfases) {
-        if (sarfases.size() > 0) {
-            recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-            recyclerView.setAdapter(new SaranaAdapter(sarfases));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        recyclerView.setAdapter(new SaranaAdapter(sarfases));
+        if (sarfases.size() <= 0) {
+            Toast.makeText(this, "Tidak ditemukan data", Toast.LENGTH_SHORT).show();
         }
     }
 
