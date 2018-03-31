@@ -103,6 +103,16 @@ public class PumpableActivity extends AppCompatActivity {
 
     private void handleInputButton() {
         inputButton = findViewById(R.id.pumpable_tambah_button);
+        SharedPreferences preferences = this.getSharedPreferences(
+                "login",
+                Context.MODE_PRIVATE
+        );
+        String role = preferences.getString("userRole", "none");
+        if (role.equals("operasional") || role.equals("admin")) {
+            inputButton.setVisibility(View.VISIBLE);
+        } else {
+            inputButton.setVisibility(View.GONE);
+        }
         inputButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

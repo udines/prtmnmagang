@@ -200,6 +200,16 @@ public class SaranaFasilitasActivity extends AppCompatActivity {
     }
 
     private void handleTambahButton() {
+        SharedPreferences preferences = this.getSharedPreferences(
+                "login",
+                Context.MODE_PRIVATE
+        );
+        String role = preferences.getString("userRole", "none");
+        if (role.equals("sarfas") || role.equals("admin")) {
+            tambahButton.setVisibility(View.VISIBLE);
+        } else {
+            tambahButton.setVisibility(View.GONE);
+        }
         tambahButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

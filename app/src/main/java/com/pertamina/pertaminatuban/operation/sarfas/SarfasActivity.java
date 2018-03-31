@@ -103,6 +103,16 @@ public class SarfasActivity extends AppCompatActivity {
     }
 
     private void handleInputButton() {
+        SharedPreferences preferences = this.getSharedPreferences(
+                "login",
+                Context.MODE_PRIVATE
+        );
+        String role = preferences.getString("userRole", "none");
+        if (role.equals("operasional") || role.equals("admin")) {
+            tambahButton.setVisibility(View.VISIBLE);
+        } else {
+            tambahButton.setVisibility(View.GONE);
+        }
         tambahButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
