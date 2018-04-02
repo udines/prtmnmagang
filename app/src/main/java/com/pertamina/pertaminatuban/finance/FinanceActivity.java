@@ -36,6 +36,9 @@ public class FinanceActivity extends AppCompatActivity {
         perjalananDinas = findViewById(R.id.finance_menu_laporan_perjalanan);
         costPerLiter = findViewById(R.id.finance_menu_cost_per_liter);
 
+        //hilangkan fitur perjalanan dinas. angel le nggawe akhire ra dinggo.
+        perjalananDinas.setVisibility(View.GONE);
+
         perjalananDinas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
