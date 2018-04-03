@@ -59,6 +59,7 @@ public class MenuActivity extends AppCompatActivity {
     private DatabaseReference urlRef;
     private RecyclerView recyclerView;
     private View toolbarSpace;
+    private int slideIndex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -153,6 +154,24 @@ public class MenuActivity extends AppCompatActivity {
 
     private void displayFeatured(ArrayList<Featured> featureds, ArrayList<ImageUrl> urls) {
         recyclerView.setAdapter(new FeaturedAdapter(featureds, MenuActivity.this, urls));
+        slideIndex = 0;
+        autoSlide();
+    }
+
+    private void autoSlide() {
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                recyclerView.smoothScrollToPosition(slideIndex);
+                if (slideIndex < 2) {
+                    slideIndex++;
+                } else {
+                    slideIndex = 0;
+                }
+                autoSlide();
+            }
+        }, 3000);
     }
 
     private void populateFeatured() {
