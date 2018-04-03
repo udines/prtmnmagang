@@ -407,4 +407,5 @@
     <string name="title_activity_input_distribusi_bbm">Input Distribusi Bbm</string>
     <string name="title_activity_sarana_fasilitas">Sarfas</string>
     <string name="title_activity_input_sarana_fasilitas">Input Sarfas</string>
+    <string name="title_activity_license">Third Party Components</string>
 </resources>

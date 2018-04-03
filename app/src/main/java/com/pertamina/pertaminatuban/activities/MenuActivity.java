@@ -3,7 +3,9 @@ package com.pertamina.pertaminatuban.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
@@ -56,6 +58,7 @@ public class MenuActivity extends AppCompatActivity {
     private ArrayList<ImageUrl> urls;
     private DatabaseReference urlRef;
     private RecyclerView recyclerView;
+    private View toolbarSpace;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +68,15 @@ public class MenuActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         scrollView = findViewById(R.id.menu_nestedscrollview);
+        toolbarSpace = findViewById(R.id.menu_toolbar_space);
+        toolbarSpace.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), LicenseActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+        });
 
         /*menampilkan featured image*/
         populateFeatured();
@@ -156,7 +168,7 @@ public class MenuActivity extends AppCompatActivity {
         ));
 
         infoRef = FirebaseDatabase.getInstance().getReference("messages");
-        query = infoRef.orderByChild("date").limitToLast(3);
+        query = infoRef.limitToLast(3);
         listener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

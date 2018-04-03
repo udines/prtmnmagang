@@ -617,6 +617,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.pertamina.pertaminatuban.saranafasilitas.SaranaFasilitasActivity" />
         </activity>
+        <activity
+            android:name=".activities.LicenseActivity"
+            android:label="@string/title_activity_license"
+            android:parentActivityName=".activities.MenuActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.pertamina.pertaminatuban.activities.MenuActivity" />
+        </activity>
     </application>
 
 </manifest>
