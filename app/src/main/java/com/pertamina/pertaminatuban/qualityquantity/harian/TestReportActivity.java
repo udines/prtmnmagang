@@ -88,7 +88,7 @@ public class TestReportActivity extends AppCompatActivity {
         upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent uploadIntent = new Intent(getApplicationContext(), InputTestReportActivity.class);
+                Intent uploadIntent = new Intent(getApplicationContext(), UploadFileActivity.class);
                 uploadIntent.putExtra("type", ItemTestReport.TYPE_TEST_REPORT);
                 uploadIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(uploadIntent);
