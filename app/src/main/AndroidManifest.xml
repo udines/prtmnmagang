@@ -626,6 +626,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.pertamina.pertaminatuban.activities.MenuActivity" />
         </activity>
+        <activity
+            android:name=".qualityquantity.harian.TableTestReportActivity"
+            android:label="@string/title_activity_table_test_report"
+            android:parentActivityName=".qualityquantity.harian.TestReportActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.pertamina.pertaminatuban.qualityquantity.harian.TestReportActivity" />
+        </activity>
     </application>
 
 </manifest>

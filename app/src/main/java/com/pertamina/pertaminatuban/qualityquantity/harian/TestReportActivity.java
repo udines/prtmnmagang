@@ -1,5 +1,6 @@
 package com.pertamina.pertaminatuban.qualityquantity.harian;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,20 +12,26 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.pertamina.pertaminatuban.R;
 import com.pertamina.pertaminatuban.qualityquantity.UploadFileActivity;
-import com.pertamina.pertaminatuban.qualityquantity.bulanan.TruckingLossActivity;
 import com.pertamina.pertaminatuban.qualityquantity.models.ItemTestReport;
+import com.pertamina.pertaminatuban.qualityquantity.models.NewTestReportHeader;
+import com.pertamina.pertaminatuban.qualityquantity.models.TestReport;
+import com.pertamina.pertaminatuban.qualityquantity.utils.TestReportHeaderAdapter;
 import com.pertamina.pertaminatuban.service.QqClient;
 import com.whiteelephant.monthpicker.MonthPickerDialog;
 
 import java.io.IOException;
 import java.text.DateFormatSymbols;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -37,9 +44,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class TestReportActivity extends AppCompatActivity {
 
-    private TextView bulan;
+    private TextView tanggal;
     private RecyclerView recyclerView;
-    private int year, month;
+    private int year, month, day;
     private Button upload;
     private TextView emptyText;
     private ProgressBar progressBar;
@@ -58,7 +65,7 @@ public class TestReportActivity extends AppCompatActivity {
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        bulan = findViewById(R.id.test_report_bulan);
+        tanggal = findViewById(R.id.test_report_bulan);
         recyclerView = findViewById(R.id.test_report_recyclerview);
         upload = findViewById(R.id.test_report_upload_button);
         progressBar = findViewById(R.id.test_report_progressbar);
@@ -67,10 +74,11 @@ public class TestReportActivity extends AppCompatActivity {
         Calendar cal = Calendar.getInstance();
         year = cal.get(Calendar.YEAR);
         month = cal.get(Calendar.MONTH);
-        setMonthButton(month, year);
+        day = cal.get(Calendar.DAY_OF_MONTH);
+        setTanggalButton(day, month, year);
 
         handleBulanButton();
-        updateUi(month, year);
+        updateUi(day, month, year);
         handleUploadButton();
     }
 
@@ -97,38 +105,39 @@ public class TestReportActivity extends AppCompatActivity {
     }
 
     private void handleBulanButton() {
-        bulan.setOnClickListener(new View.OnClickListener() {
+        tanggal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Calendar today = Calendar.getInstance();
+                DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+                        year = i;
+                        month = i1;
+                        day = i2;
+                        setTanggalButton(day, month, year);
+                        updateUi(day, month, year);
+                    }
+                };
 
-                MonthPickerDialog.Builder builder = new MonthPickerDialog.Builder(
+                DatePickerDialog dialog = new DatePickerDialog(
                         TestReportActivity.this,
-                        new MonthPickerDialog.OnDateSetListener() {
-                            @Override
-                            public void onDateSet(int selectedMonth, int selectedYear) {
-                                month = selectedMonth;
-                                year = selectedYear;
-                                setMonthButton(month, year);
-                                updateUi(month, year);
-                            }
-                        },
-                        today.get(Calendar.YEAR),
-                        today.get(Calendar.MONTH)
+                        listener,
+                        year,
+                        month,
+                        day
                 );
 
-                builder.setMinYear(1970)
-                        .setMaxYear(today.get(Calendar.YEAR))
-                        .setTitle("Pilih bulan dan tahun")
-                        .setActivatedMonth(month)
-                        .setActivatedYear(year)
-                        .build()
-                        .show();
+                dialog.show();
             }
         });
     }
 
-    private void updateUi(int month, int year) {
+    private void updateUi(int day, int month, int year) {
+        Calendar cal = Calendar.getInstance();
+        cal.set(year, month, day);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        String tanggal = format.format(new Date(cal.getTimeInMillis()));
+
         progressBar.setVisibility(View.VISIBLE);
 
         SharedPreferences preferences = TestReportActivity.this.getSharedPreferences(
@@ -162,23 +171,17 @@ public class TestReportActivity extends AppCompatActivity {
         Retrofit retrofit = builder.build();
         QqClient qqClient = retrofit.create(QqClient.class);
 
-        Call<ArrayList<ItemTestReport>> call = qqClient.getTestReportBulan(
-                String.valueOf(year),
-                String.valueOf(month + 1));
-        call.enqueue(new Callback<ArrayList<ItemTestReport>>() {
+        Call<ArrayList<NewTestReportHeader>> call = qqClient.getTestReportHari(tanggal);
+        call.enqueue(new Callback<ArrayList<NewTestReportHeader>>() {
             @Override
-            public void onResponse(Call<ArrayList<ItemTestReport>> call, Response<ArrayList<ItemTestReport>> response) {
+            public void onResponse(Call<ArrayList<NewTestReportHeader>> call, Response<ArrayList<NewTestReportHeader>> response) {
                 Log.w("code", String.valueOf(response.code()));
                 progressBar.setVisibility(View.GONE);
                 if (response.code() == 200) {
-                    ArrayList<ItemTestReport> testReports = new ArrayList<>();
-                    for (int i = 0; i < response.body().size(); i++) {
-                        if (response.body().get(i).getType().equals(ItemTestReport.TYPE_TEST_REPORT)) {
-                            testReports.add(response.body().get(i));
-                        }
-                    }
+                    ArrayList<NewTestReportHeader> testReports = response.body();
+
                     recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                    TestReportAdapter adapter = new TestReportAdapter(testReports);
+                    TestReportHeaderAdapter adapter = new TestReportHeaderAdapter(testReports, getApplicationContext());
                     recyclerView.setAdapter(adapter);
 
                     if (adapter.getItemCount() <= 0) {
@@ -190,15 +193,17 @@ public class TestReportActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<ArrayList<ItemTestReport>> call, Throwable t) {
-                progressBar.setVisibility(View.GONE);
+            public void onFailure(Call<ArrayList<NewTestReportHeader>> call, Throwable t) {
+
             }
         });
     }
 
-    private void setMonthButton(int month, int year) {
-        DateFormatSymbols symbols = new DateFormatSymbols();
-        String text = symbols.getMonths()[month] + " " + String.valueOf(year);
-        bulan.setText(text);
+    private void setTanggalButton(int day, int month, int year) {
+        Calendar cal = Calendar.getInstance();
+        cal.set(year, month, day);
+        SimpleDateFormat format = new SimpleDateFormat("dd MMMM yyyy", Locale.getDefault());
+        String text = format.format(new Date(cal.getTimeInMillis()));
+        tanggal.setText(text);
     }
 }

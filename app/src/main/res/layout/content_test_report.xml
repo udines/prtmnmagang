@@ -36,6 +36,9 @@
         android:id="@+id/test_report_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp"
+        android:paddingTop="8dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:paddingBottom="68dp"
         android:clipToPadding="false"/>
 </LinearLayout>

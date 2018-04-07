@@ -2,6 +2,7 @@ package com.pertamina.pertaminatuban.service;
 
 import com.pertamina.pertaminatuban.qualityquantity.models.ItemFotoSample;
 import com.pertamina.pertaminatuban.qualityquantity.models.ItemTestReport;
+import com.pertamina.pertaminatuban.qualityquantity.models.NewTestReportHeader;
 import com.pertamina.pertaminatuban.qualityquantity.models.WorkingLoss;
 
 import java.util.ArrayList;
@@ -39,4 +40,9 @@ public interface QqClient {
     @Multipart
     @POST("quality/truckingloss")
     Call<Object> postFilePdf(@Part MultipartBody.Part file, @Part("type") RequestBody type, @Part("deskripsi") RequestBody deskripsi);
+
+    @GET("testreport/get/harian/{tanggal}")
+    Call<ArrayList<NewTestReportHeader>> getTestReportHari(@Path("tanggal") String tanggal);
+    @GET("testreport/{tanggal}/{fuel}")
+    Call<NewTestReportHeader> getTestReportFuel(@Path("tanggal") String tanggal, @Path("fuel") String fuel);
 }
