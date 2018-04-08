@@ -89,7 +89,7 @@ public class TestReportActivity extends AppCompatActivity {
         );
         String role = preferences.getString("userRole", "none");
         if (role.equals("qq") || role.equals("admin")) {
-            upload.setVisibility(View.VISIBLE);
+            upload.setVisibility(View.GONE);
         } else {
             upload.setVisibility(View.GONE);
         }
