@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.pertamina.pertaminatuban.R;
 import com.pertamina.pertaminatuban.qualityquantity.UploadFileActivity;
@@ -180,6 +181,7 @@ public class TestReportActivity extends AppCompatActivity {
                 if (response.code() == 200) {
                     ArrayList<NewTestReportHeader> testReports = response.body();
 
+                    recyclerView.setVisibility(View.VISIBLE);
                     recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                     TestReportHeaderAdapter adapter = new TestReportHeaderAdapter(testReports, getApplicationContext());
                     recyclerView.setAdapter(adapter);
@@ -189,12 +191,16 @@ public class TestReportActivity extends AppCompatActivity {
                     } else {
                         emptyText.setVisibility(View.GONE);
                     }
+                } else {
+                    Toast.makeText(TestReportActivity.this, "Tidak ada data", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<ArrayList<NewTestReportHeader>> call, Throwable t) {
-
+                progressBar.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.GONE);
+                Toast.makeText(TestReportActivity.this, "Tidak ada data", Toast.LENGTH_SHORT).show();
             }
         });
     }
