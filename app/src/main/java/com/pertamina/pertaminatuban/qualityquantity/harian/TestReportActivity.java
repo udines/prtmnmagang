@@ -90,14 +90,14 @@ public class TestReportActivity extends AppCompatActivity {
         );
         String role = preferences.getString("userRole", "none");
         if (role.equals("qq") || role.equals("admin")) {
-            upload.setVisibility(View.GONE);
+            upload.setVisibility(View.VISIBLE);
         } else {
             upload.setVisibility(View.GONE);
         }
         upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent uploadIntent = new Intent(getApplicationContext(), UploadFileActivity.class);
+                Intent uploadIntent = new Intent(getApplicationContext(), InputTestReportActivity.class);
                 uploadIntent.putExtra("type", ItemTestReport.TYPE_TEST_REPORT);
                 uploadIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(uploadIntent);

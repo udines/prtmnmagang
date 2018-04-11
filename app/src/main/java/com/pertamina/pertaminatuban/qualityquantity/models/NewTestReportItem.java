@@ -29,9 +29,8 @@ public class NewTestReportItem {
     @Expose
     private String limit;
 
-    public NewTestReportItem(String parameterUji, String hasilUji, String metode, String unit, String limit) {
+    public NewTestReportItem(String parameterUji, String metode, String unit, String limit) {
         this.parameterUji = parameterUji;
-        this.hasilUji = hasilUji;
         this.metode = metode;
         this.unit = unit;
         this.limit = limit;
