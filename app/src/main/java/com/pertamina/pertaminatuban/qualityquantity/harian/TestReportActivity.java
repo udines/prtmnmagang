@@ -212,4 +212,10 @@ public class TestReportActivity extends AppCompatActivity {
         String text = format.format(new Date(cal.getTimeInMillis()));
         tanggal.setText(text);
     }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        updateUi(day, month, year);
+    }
 }
