@@ -55,7 +55,7 @@ public class NewTestReportHeader {
     @Expose
     private ArrayList<NewTestReportItem> table;
 
-    public NewTestReportHeader(String no, String produk, String samplingDate, String vessel, String shipTankNo, String portDestination, String shoreTank, String exRef, String sample, String exSample, ArrayList<NewTestReportItem> table) {
+    public NewTestReportHeader(String no, String produk, String samplingDate, String vessel, String shipTankNo, String portDestination, String shoreTank, String exRef, String sample, String exSample) {
         this.no = no;
         this.produk = produk;
         this.samplingDate = samplingDate;
@@ -66,7 +66,6 @@ public class NewTestReportHeader {
         this.exRef = exRef;
         this.sample = sample;
         this.exSample = exSample;
-        this.table = table;
     }
 
     public void addItem(NewTestReportItem item) {

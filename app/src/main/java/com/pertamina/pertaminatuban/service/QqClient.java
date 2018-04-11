@@ -45,4 +45,6 @@ public interface QqClient {
     Call<ArrayList<NewTestReportHeader>> getTestReportHari(@Path("tanggal") String tanggal);
     @GET("testreport/{tanggal}/{fuel}")
     Call<NewTestReportHeader> getTestReportFuel(@Path("tanggal") String tanggal, @Path("fuel") String fuel);
+    @POST("testreport/")
+    Call<Object> postTestReport(@Body NewTestReportHeader object);
 }

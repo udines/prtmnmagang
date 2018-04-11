@@ -36,10 +36,10 @@
     </string-array>
 
     <string-array name="pilihan_product">
-        <item>PERTAMAX</item>
-        <item>PERTALITE</item>
-        <item>PREMIUM</item>
-        <item>SOLAR</item>
+        <item>Pertamax, BULK</item>
+        <item>Pertalite</item>
+        <item>Premium</item>
+        <item>SOLAR/HSD/MGO/ADO</item>
     </string-array>
 
     <string-array name="pilihan_periode">

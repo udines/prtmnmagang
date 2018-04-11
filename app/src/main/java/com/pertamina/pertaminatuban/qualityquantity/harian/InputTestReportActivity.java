@@ -1,11 +1,14 @@
 package com.pertamina.pertaminatuban.qualityquantity.harian;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,13 +20,26 @@ import android.widget.Toast;
 
 import com.pertamina.pertaminatuban.R;
 import com.pertamina.pertaminatuban.distribusi.models.Matbal;
+import com.pertamina.pertaminatuban.operation.pumpable.PumpableActivity;
+import com.pertamina.pertaminatuban.qualityquantity.models.NewTestReportHeader;
 import com.pertamina.pertaminatuban.qualityquantity.models.NewTestReportItem;
+import com.pertamina.pertaminatuban.service.QqClient;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class InputTestReportActivity extends AppCompatActivity {
 
@@ -93,6 +109,50 @@ public class InputTestReportActivity extends AppCompatActivity {
                 EditText inputSolarDensity, inputSolarColor, inputSolarFlash, inputSolarDestilation, inputSolarEvap90,
                         inputSolarCalcCetane, inputSolarWater, inputSolarViscocity, inputSolarSulfurContent,
                         inputSolarPourPoint, inputSolarCopper, inputSolarAcid, inputSolarCarbon;
+                String solarDensity, solarColor, solarFlash, solarDestilation, solarEvap90, solarCalcCetane, solarWater,
+                        solarViscocity, solarSulfurContent, solarPourPoint, solarCopper, solarAcid, solarCarbon;
+
+                inputSolarDensity = findViewById(R.id.input_test_report_solar_density);
+                inputSolarColor = findViewById(R.id.input_test_report_solar_colour);
+                inputSolarFlash = findViewById(R.id.input_test_report_solar_flash);
+                inputSolarDestilation = findViewById(R.id.input_test_report_solar_destilation);
+                inputSolarEvap90 = findViewById(R.id.input_test_report_solar_evap_90);
+                inputSolarCalcCetane = findViewById(R.id.input_test_report_solar_calc_cetane);
+                inputSolarWater = findViewById(R.id.input_test_report_solar_water_content);
+                inputSolarViscocity = findViewById(R.id.input_test_report_solar_viscocity);
+                inputSolarSulfurContent = findViewById(R.id.input_test_report_solar_sulfur_content);
+                inputSolarPourPoint = findViewById(R.id.input_test_report_solar_pour_point);
+                inputSolarCopper = findViewById(R.id.input_test_report_solar_copper_corossion);
+                inputSolarAcid = findViewById(R.id.input_test_report_solar_total_acid);
+                inputSolarCarbon = findViewById(R.id.input_test_report_solar_carbon_residue);
+
+                solarDensity = getInputData(inputSolarDensity);
+                solarColor = getInputData(inputSolarColor);
+                solarFlash = getInputData(inputSolarFlash);
+                solarDestilation = getInputData(inputSolarDestilation);
+                solarEvap90 = getInputData(inputSolarEvap90);
+                solarCalcCetane = getInputData(inputSolarCalcCetane);
+                solarWater = getInputData(inputSolarWater);
+                solarViscocity = getInputData(inputSolarViscocity);
+                solarSulfurContent = getInputData(inputSolarSulfurContent);
+                solarPourPoint = getInputData(inputSolarPourPoint);
+                solarCopper = getInputData(inputSolarCopper);
+                solarAcid = getInputData(inputSolarAcid);
+                solarCarbon = getInputData(inputSolarCarbon);
+
+                solarReportItems.get(0).setHasilUji(solarDensity);
+                solarReportItems.get(1).setHasilUji(solarColor);
+                solarReportItems.get(2).setHasilUji(solarFlash);
+                solarReportItems.get(3).setHasilUji(solarDestilation);
+                solarReportItems.get(4).setHasilUji(solarEvap90);
+                solarReportItems.get(5).setHasilUji(solarCalcCetane);
+                solarReportItems.get(6).setHasilUji(solarWater);
+                solarReportItems.get(7).setHasilUji(solarViscocity);
+                solarReportItems.get(8).setHasilUji(solarSulfurContent);
+                solarReportItems.get(9).setHasilUji(solarPourPoint);
+                solarReportItems.get(10).setHasilUji(solarCopper);
+                solarReportItems.get(11).setHasilUji(solarAcid);
+                solarReportItems.get(12).setHasilUji(solarCarbon);
 
                 ArrayList<NewTestReportItem> nonSolarReportItems = new ArrayList<>();
                 nonSolarReportItems.add(new NewTestReportItem("Apparance", "ASTM D-4530", "% m/m", "Max. 0.1"));
@@ -115,12 +175,94 @@ public class InputTestReportActivity extends AppCompatActivity {
                 nonSolarReportItems.add(new NewTestReportItem("Olefin", "ASTM D-4530", "% m/m", "Max. 0.1"));
                 nonSolarReportItems.add(new NewTestReportItem("Sulfur Mercaptan", "ASTM D-4530", "% m/m", "Max. 0.1"));
 
-                EditText inputNonAppearance, inputNonColor, inputNonDensity, inputNonRon, inputRonSulfurContent,
+                EditText inputNonAppearance, inputNonColor, inputNonDensity, inputNonRon, inputNonSulfurContent,
                         inputNonDestilation, inputNonIbp, inputNonEvap10, inputNonEvap50, inputNonEvap90,
                         inputNonFbp, inputNonResidu, inputNonReid, inputNonExistensi, inputNonCopper,
                         inputNonOxidation, inputNonDoctor, inputNonOlefin, inputNonSulfurMercaptan;
+                String nonAppearance, nonColor, nonDensity, nonRon, nonSulfurContent, nonDestilation, nonIbp,
+                        nonEvap10, nonEvap50, nonEvap90, nonFbp, nonResidu, nonReid, nonExistensi, nonCopper,
+                        nonOxidation, nonDoctor, nonOlefin, nonSulfurMercaptan;
 
-                Intent intent = new Intent(getApplicationContext(), InputRincianTestReportActivity.class);
+                inputNonAppearance = findViewById(R.id.input_test_report_non_appearance);
+                inputNonColor = findViewById(R.id.input_test_report_non_colour);
+                inputNonDensity = findViewById(R.id.input_test_report_non_density);
+                inputNonRon = findViewById(R.id.input_test_report_non_ron);
+                inputNonSulfurContent = findViewById(R.id.input_test_report_non_sulfur_content);
+                inputNonDestilation = findViewById(R.id.input_test_report_non_destilation);
+                inputNonIbp = findViewById(R.id.input_test_report_non_ibp);
+                inputNonEvap10 = findViewById(R.id.input_test_report_non_10_evap);
+                inputNonEvap50 = findViewById(R.id.input_test_report_non_50_evap);
+                inputNonEvap90 = findViewById(R.id.input_test_report_non_90_evap);
+                inputNonFbp = findViewById(R.id.input_test_report_non_fbp);
+                inputNonResidu = findViewById(R.id.input_test_report_non_residu);
+                inputNonReid = findViewById(R.id.input_test_report_non_reid_vapor);
+                inputNonExistensi = findViewById(R.id.input_test_report_non_existensi);
+                inputNonCopper = findViewById(R.id.input_test_report_non_copper);
+                inputNonOxidation = findViewById(R.id.input_test_report_non_oxidation);
+                inputNonDoctor = findViewById(R.id.input_test_report_non_doctor_test);
+                inputNonOlefin = findViewById(R.id.input_test_report_non_olefin);
+                inputNonSulfurMercaptan = findViewById(R.id.input_test_report_non_sulfur_mercaptan);
+
+                nonAppearance = getInputData(inputNonAppearance);
+                nonColor = getInputData(inputNonColor);
+                nonDensity = getInputData(inputNonDensity);
+                nonRon = getInputData(inputNonRon);
+                nonSulfurContent = getInputData(inputNonSulfurContent);
+                nonDestilation = getInputData(inputNonDestilation);
+                nonIbp = getInputData(inputNonIbp);
+                nonEvap10 = getInputData(inputNonEvap10);
+                nonEvap50 = getInputData(inputNonEvap50);
+                nonEvap90 = getInputData(inputNonEvap90);
+                nonFbp = getInputData(inputNonFbp);
+                nonResidu = getInputData(inputNonResidu);
+                nonReid = getInputData(inputNonReid);
+                nonExistensi = getInputData(inputNonExistensi);
+                nonCopper = getInputData(inputNonCopper);
+                nonOxidation = getInputData(inputNonOxidation);
+                nonDoctor = getInputData(inputNonDoctor);
+                nonOlefin = getInputData(inputNonOlefin);
+                nonSulfurMercaptan = getInputData(inputNonSulfurMercaptan);
+
+                nonSolarReportItems.get(0).setHasilUji(nonAppearance);
+                nonSolarReportItems.get(1).setHasilUji(nonColor);
+                nonSolarReportItems.get(2).setHasilUji(nonDensity);
+                nonSolarReportItems.get(3).setHasilUji(nonRon);
+                nonSolarReportItems.get(4).setHasilUji(nonSulfurContent);
+                nonSolarReportItems.get(5).setHasilUji(nonDestilation);
+                nonSolarReportItems.get(6).setHasilUji(nonIbp);
+                nonSolarReportItems.get(7).setHasilUji(nonEvap10);
+                nonSolarReportItems.get(8).setHasilUji(nonEvap50);
+                nonSolarReportItems.get(9).setHasilUji(nonEvap90);
+                nonSolarReportItems.get(10).setHasilUji(nonFbp);
+                nonSolarReportItems.get(11).setHasilUji(nonResidu);
+                nonSolarReportItems.get(12).setHasilUji(nonReid);
+                nonSolarReportItems.get(13).setHasilUji(nonExistensi);
+                nonSolarReportItems.get(14).setHasilUji(nonCopper);
+                nonSolarReportItems.get(15).setHasilUji(nonOxidation);
+                nonSolarReportItems.get(16).setHasilUji(nonDoctor);
+                nonSolarReportItems.get(17).setHasilUji(nonOlefin);
+                nonSolarReportItems.get(18).setHasilUji(nonSulfurMercaptan);
+
+                NewTestReportHeader reportHeader = new NewTestReportHeader(
+                        no,
+                        product,
+                        date,
+                        vessel,
+                        batch,
+                        destination,
+                        shoreTank,
+                        exRefinery,
+                        sample,
+                        exSample
+                );
+
+                if (product.equals(Matbal.SOLAR)) {
+                    reportHeader.setTable(solarReportItems);
+                } else {
+                    reportHeader.setTable(nonSolarReportItems);
+                }
+
+                /*Intent intent = new Intent(getApplicationContext(), InputRincianTestReportActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("no", no);
                 intent.putExtra("vessel", vessel);
@@ -133,7 +275,57 @@ public class InputTestReportActivity extends AppCompatActivity {
                 intent.putExtra("product", product);
                 intent.putExtra("date", date);
 
-                startActivity(intent);
+                startActivity(intent);*/
+
+                sendPostRequest(reportHeader);
+            }
+        });
+    }
+
+    private void sendPostRequest(NewTestReportHeader reportHeader) {
+        SharedPreferences preferences = InputTestReportActivity.this.getSharedPreferences(
+                "login",
+                Context.MODE_PRIVATE
+        );
+        final String key = preferences.getString("userKey", "none");
+
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(new Interceptor() {
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request original = chain.request();
+
+                Request request = original.newBuilder()
+                        .header("Authorization", key)
+                        .method(original.method(), original.body())
+                        .build();
+                return chain.proceed(request);
+            }
+        });
+
+        OkHttpClient client = httpClient.build();
+
+        String baseUrl = "http://www.api.clicktuban.com/";
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client);
+
+        Retrofit retrofit = builder.build();
+        QqClient qqClient = retrofit.create(QqClient.class);
+        Call<Object> call = qqClient.postTestReport(reportHeader);
+        call.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, Response<Object> response) {
+                Log.w("code", String.valueOf(response.code()));
+                if (response.code() == 200) {
+                    Log.w("msg", String.valueOf(response.body()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+                Log.w("error", t.getMessage());
             }
         });
     }
