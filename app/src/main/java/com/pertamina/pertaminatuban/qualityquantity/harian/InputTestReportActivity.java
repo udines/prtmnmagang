@@ -320,6 +320,7 @@ public class InputTestReportActivity extends AppCompatActivity {
                 Log.w("code", String.valueOf(response.code()));
                 if (response.code() == 200) {
                     Log.w("msg", String.valueOf(response.body()));
+                    Toast.makeText(InputTestReportActivity.this, "Data berhasil ditambahkan", Toast.LENGTH_SHORT).show();
                     finish();
                 }
             }

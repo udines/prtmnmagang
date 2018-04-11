@@ -37,41 +37,56 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="PERTAMAX"/>
+                <TextView
+                    android:id="@+id/pumpable_total_pertamax"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:textSize="18sp"
-                    android:text="PERTAMAX"
-                    android:layout_marginBottom="8dp"/>
+                    android:textColor="@color/black"/>
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/pumpable_recyclerview_pertamax"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"/>
 
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="18sp"
                     android:layout_marginTop="8dp"
-                    android:text="PREMIUM"
-                    android:layout_marginBottom="8dp"/>
+                    android:text="PREMIUM"/>
+                <TextView
+                    android:id="@+id/pumpable_total_premium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"/>
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/pumpable_recyclerview_premium"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="18sp"
                     android:layout_marginTop="8dp"
-                    android:text="SOLAR"
-                    android:layout_marginBottom="8dp"/>
+                    android:text="SOLAR"/>
+                <TextView
+                    android:id="@+id/pumpable_total_solar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"/>
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/pumpable_recyclerview_solar"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"/>
 
             </LinearLayout>
         </android.support.v7.widget.CardView>
@@ -98,40 +113,55 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="PERTAMAX"/>
+                <TextView
+                    android:id="@+id/pumpable_average_pertamax"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:textSize="18sp"
-                    android:text="PERTAMAX"
-                    android:layout_marginBottom="8dp"/>
+                    android:textColor="@color/black"/>
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/pumpable_average_recyclerview_pertamax"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="18sp"
                     android:layout_marginTop="8dp"
-                    android:text="PREMIUM"
-                    android:layout_marginBottom="8dp"/>
+                    android:text="PREMIUM"/>
+                <TextView
+                    android:id="@+id/pumpable_average_premium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"/>
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/pumpable_average_recyclerview_premium"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="18sp"
                     android:layout_marginTop="8dp"
-                    android:text="SOLAR"
-                    android:layout_marginBottom="8dp"/>
+                    android:text="SOLAR"/>
+                <TextView
+                    android:id="@+id/pumpable_average_solar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"/>
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/pumpable_average_recyclerview_solar"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"/>
 
             </LinearLayout>
         </android.support.v7.widget.CardView>
@@ -158,40 +188,55 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="PERTAMAX"/>
+                <TextView
+                    android:id="@+id/pumpable_sc100_pertamax"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:textSize="18sp"
-                    android:text="PERTAMAX"
-                    android:layout_marginBottom="8dp"/>
+                    android:textColor="@color/black"/>
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/pumpable_total_sc_100_recyclerview_pertamax"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="18sp"
                     android:layout_marginTop="8dp"
-                    android:text="PREMIUM"
-                    android:layout_marginBottom="8dp"/>
+                    android:text="PREMIUM"/>
+                <TextView
+                    android:id="@+id/pumpable_sc100_premium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"/>
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/pumpable_total_sc_100_recyclerview_premium"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="18sp"
                     android:layout_marginTop="8dp"
-                    android:text="SOLAR"
-                    android:layout_marginBottom="8dp"/>
+                    android:text="SOLAR"/>
+                <TextView
+                    android:id="@+id/pumpable_sc100_solar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"/>
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/pumpable_total_sc_100_recyclerview_solar"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"/>
 
             </LinearLayout>
         </android.support.v7.widget.CardView>
@@ -218,40 +263,55 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="PERTAMAX"/>
+                <TextView
+                    android:id="@+id/pumpable_utilitas_pertamax"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:textSize="18sp"
-                    android:text="PERTAMAX"
-                    android:layout_marginBottom="8dp"/>
+                    android:textColor="@color/black"/>
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/pumpable_total_utilitas_recyclerview_pertamax"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="18sp"
                     android:layout_marginTop="8dp"
-                    android:text="PREMIUM"
-                    android:layout_marginBottom="8dp"/>
+                    android:text="PREMIUM"/>
+                <TextView
+                    android:id="@+id/pumpable_utilitas_premium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"/>
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/pumpable_total_utilitas_recyclerview_premium"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="18sp"
                     android:layout_marginTop="8dp"
-                    android:text="SOLAR"
-                    android:layout_marginBottom="8dp"/>
+                    android:text="SOLAR"/>
+                <TextView
+                    android:id="@+id/pumpable_utilitas_solar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"/>
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/pumpable_total_utilitas_recyclerview_solar"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"/>
 
             </LinearLayout>
         </android.support.v7.widget.CardView>
@@ -278,40 +338,55 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="PERTAMAX"/>
+                <TextView
+                    android:id="@+id/pumpable_sc90_pertamax"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:textSize="18sp"
-                    android:text="PERTAMAX"
-                    android:layout_marginBottom="8dp"/>
+                    android:textColor="@color/black"/>
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/pumpable_total_sc_90_recyclerview_pertamax"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="18sp"
                     android:layout_marginTop="8dp"
-                    android:text="PREMIUM"
-                    android:layout_marginBottom="8dp"/>
+                    android:text="PREMIUM"/>
+                <TextView
+                    android:id="@+id/pumpable_sc90_premium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"/>
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/pumpable_total_sc_90_recyclerview_premium"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="18sp"
                     android:layout_marginTop="8dp"
-                    android:text="SOLAR"
-                    android:layout_marginBottom="8dp"/>
+                    android:text="SOLAR"/>
+                <TextView
+                    android:id="@+id/pumpable_sc90_solar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"/>
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/pumpable_total_sc_90_recyclerview_solar"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"/>
 
             </LinearLayout>
         </android.support.v7.widget.CardView>
@@ -338,40 +413,55 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="PERTAMAX"/>
+                <TextView
+                    android:id="@+id/pumpable_rerata_pertamax"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:textSize="18sp"
-                    android:text="PERTAMAX"
-                    android:layout_marginBottom="8dp"/>
+                    android:textColor="@color/black"/>
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/pumpable_rerata_utilitas_recyclerview_pertamax"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="18sp"
                     android:layout_marginTop="8dp"
-                    android:text="PREMIUM"
-                    android:layout_marginBottom="8dp"/>
+                    android:text="PREMIUM"/>
+                <TextView
+                    android:id="@+id/pumpable_rerata_premium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"/>
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/pumpable_rerata_utilitas_recyclerview_premium"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="18sp"
                     android:layout_marginTop="8dp"
-                    android:text="SOLAR"
-                    android:layout_marginBottom="8dp"/>
+                    android:text="SOLAR"/>
+                <TextView
+                    android:id="@+id/pumpable_rerata_solar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"/>
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/pumpable_rerata_utilitas_recyclerview_solar"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"/>
 
             </LinearLayout>
         </android.support.v7.widget.CardView>

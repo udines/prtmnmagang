@@ -55,6 +55,10 @@ public class PumpableActivity extends AppCompatActivity {
     avPertamaxRec, avPremiumRec, avSolarRec, scPertamaxRec, scPremiumRec, scSolarRec,
     utilPertamaxRec, utilPremiumRec, utilSolarRec, sc90PertamaxRec, sc90PremiumRec, sc90SolarRec,
     rerataUtilPertamaxRec, rerataUtilPremiumRec, rerataUtilSolaRec;
+    private TextView totalPertamax, totalPremium, totalSolar,
+            avPertamax, avPremium, avSolar, scPertamax, scPremium, scSolar,
+            utilPertamax, utilPremium, utilSolar, sc90Pertamax, sc90Premium, sc90Solar,
+            rerataUtilPertamax, rerataUtilPremium, rerataUtilSolar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +94,25 @@ public class PumpableActivity extends AppCompatActivity {
         rerataUtilPertamaxRec = findViewById(R.id.pumpable_rerata_utilitas_recyclerview_pertamax);
         rerataUtilPremiumRec = findViewById(R.id.pumpable_rerata_utilitas_recyclerview_premium);
         rerataUtilSolaRec = findViewById(R.id.pumpable_rerata_utilitas_recyclerview_solar);
+
+        totalPertamax = findViewById(R.id.pumpable_total_pertamax);
+        totalPremium = findViewById(R.id.pumpable_total_premium);
+        totalSolar = findViewById(R.id.pumpable_total_solar);
+        avPertamax = findViewById(R.id.pumpable_average_pertamax);
+        avPremium = findViewById(R.id.pumpable_average_premium);
+        avSolar = findViewById(R.id.pumpable_average_solar);
+        scPertamax = findViewById(R.id.pumpable_sc100_pertamax);
+        scPremium = findViewById(R.id.pumpable_sc100_premium);
+        scSolar = findViewById(R.id.pumpable_sc100_solar);
+        utilPertamax = findViewById(R.id.pumpable_utilitas_pertamax);
+        utilPremium = findViewById(R.id.pumpable_utilitas_premium);
+        utilSolar = findViewById(R.id.pumpable_utilitas_solar);
+        sc90Pertamax = findViewById(R.id.pumpable_sc90_pertamax);
+        sc90Premium = findViewById(R.id.pumpable_sc90_premium);
+        sc90Solar = findViewById(R.id.pumpable_sc90_solar);
+        rerataUtilPertamax = findViewById(R.id.pumpable_rerata_pertamax);
+        rerataUtilPremium = findViewById(R.id.pumpable_rerata_premium);
+        rerataUtilSolar = findViewById(R.id.pumpable_rerata_solar);
 
         Calendar cal = Calendar.getInstance();
         month = cal.get(Calendar.MONTH);
@@ -245,6 +268,13 @@ public class PumpableActivity extends AppCompatActivity {
                     populateRecyclerView(sc90, sc90PertamaxRec, sc90PremiumRec, sc90SolarRec);
                     populateRecyclerView(rerataUtil, rerataUtilPertamaxRec, rerataUtilPremiumRec, rerataUtilSolaRec);
 
+                    populateSummary(totalPerTank, totalPertamax, totalPremium, totalSolar, "");
+                    populateSummary(averagePerTank, avPertamax, avPremium, avSolar, "");
+                    populateSummary(scPerTank, scPertamax, scPremium, scSolar, "");
+                    populateSummary(utilPerTank, utilPertamax, utilPremium, utilSolar, "");
+                    populateSummary(sc90, sc90Pertamax, sc90Premium, sc90Solar, "");
+                    populateSummary(rerataUtil, rerataUtilPertamax, rerataUtilPremium, rerataUtilSolar, "%");
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -255,6 +285,34 @@ public class PumpableActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void populateSummary(
+            ArrayList<Pumpable> pumpables,
+            TextView pertamax,
+            TextView premium,
+            TextView solar,
+            String satuan
+    ) {
+        for (int i = 0; i < pumpables.size(); i++) {
+            switch (pumpables.get(i).getFuel()) {
+                case Matbal.PERTAMAX:
+                    if (pumpables.get(i).getNoTank().equals("total")) {
+                        pertamax.setText(String.valueOf(pumpables.get(i).getValue() + satuan));
+                    }
+                    break;
+                case Matbal.PREMIUM:
+                    if (pumpables.get(i).getNoTank().equals("total")) {
+                        premium.setText(String.valueOf(pumpables.get(i).getValue() + satuan));
+                    }
+                    break;
+                case Matbal.SOLAR:
+                    if (pumpables.get(i).getNoTank().equals("total")) {
+                        solar.setText(String.valueOf(pumpables.get(i).getValue() + satuan));
+                    }
+                    break;
+            }
+        }
     }
 
     private void populateRecyclerView(

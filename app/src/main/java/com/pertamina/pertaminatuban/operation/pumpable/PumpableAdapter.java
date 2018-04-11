@@ -36,7 +36,7 @@ public class PumpableAdapter extends RecyclerView.Adapter<PumpableViewHolder> {
                 noTank = "Average: ";
                 break;
             default:
-                noTank = noTank + pumpables.get(position).getNoTank();
+                noTank = noTank + String.valueOf((int)(Double.parseDouble(pumpables.get(position).getNoTank())));
         }
         holder.noTank.setText(String.valueOf(noTank));
         holder.value.setText(String.valueOf(pumpables.get(position).getValue()));
