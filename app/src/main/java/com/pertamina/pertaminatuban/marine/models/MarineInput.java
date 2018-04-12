@@ -17,25 +17,24 @@ public class MarineInput {
     @Expose
     private String kapal;
 
-    @SerializedName("periode")
+    @SerializedName("nomorBl")
     @Expose
-    private String periode;
+    private String nomorBl;
 
-    @SerializedName("bulan")
+    @SerializedName("berthing_date")
     @Expose
-    private String bulan;
+    private String date;
 
     @SerializedName("call_tanker")
     @Expose
     private String callTanker;
 
-    public MarineInput(String value, String variable, String kapal, String periode, String bulan, String callTanker) {
+    public MarineInput(String value, String variable, String kapal, String nomorBl, String date) {
         this.value = value;
         this.variable = variable;
         this.kapal = kapal;
-        this.periode = periode;
-        this.bulan = bulan;
-        this.callTanker = callTanker;
+        this.nomorBl = nomorBl;
+        this.date = date;
     }
 
     public String getValue() {
@@ -62,20 +61,20 @@ public class MarineInput {
         this.kapal = kapal;
     }
 
-    public String getPeriode() {
-        return periode;
+    public String getNomorBl() {
+        return nomorBl;
     }
 
-    public void setPeriode(String periode) {
-        this.periode = periode;
+    public void setNomorBl(String nomorBl) {
+        this.nomorBl = nomorBl;
     }
 
-    public String getBulan() {
-        return bulan;
+    public String getDate() {
+        return date;
     }
 
-    public void setBulan(String bulan) {
-        this.bulan = bulan;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getCallTanker() {
