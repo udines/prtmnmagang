@@ -155,25 +155,25 @@ public class InputTestReportActivity extends AppCompatActivity {
                 solarReportItems.get(12).setHasilUji(solarCarbon);
 
                 ArrayList<NewTestReportItem> nonSolarReportItems = new ArrayList<>();
-                nonSolarReportItems.add(new NewTestReportItem("Apparance", "ASTM D-4530", "% m/m", "Max. 0.1"));
-                nonSolarReportItems.add(new NewTestReportItem("Colour", "ASTM D-4530", "% m/m", "Max. 0.1"));
-                nonSolarReportItems.add(new NewTestReportItem("Density 15°C", "ASTM D-4530", "% m/m", "Max. 0.1"));
-                nonSolarReportItems.add(new NewTestReportItem("RON", "ASTM D-4530", "% m/m", "Max. 0.1"));
-                nonSolarReportItems.add(new NewTestReportItem("Sulfur Content", "ASTM D-4530", "% m/m", "Max. 0.1"));
-                nonSolarReportItems.add(new NewTestReportItem("Destillation", "ASTM D-4530", "% m/m", "Max. 0.1"));
-                nonSolarReportItems.add(new NewTestReportItem("I.B.P", "ASTM D-4530", "% m/m", "Max. 0.1"));
-                nonSolarReportItems.add(new NewTestReportItem("10% Vol. Evap.", "ASTM D-4530", "% m/m", "Max. 0.1"));
-                nonSolarReportItems.add(new NewTestReportItem("50% Vol. Evap.", "ASTM D-4530", "% m/m", "Max. 0.1"));
-                nonSolarReportItems.add(new NewTestReportItem("90% Vol. Evap.", "ASTM D-4530", "% m/m", "Max. 0.1"));
-                nonSolarReportItems.add(new NewTestReportItem("F.B.P (End Point)", "ASTM D-4530", "% m/m", "Max. 0.1"));
-                nonSolarReportItems.add(new NewTestReportItem("Residu", "ASTM D-4530", "% m/m", "Max. 0.1"));
-                nonSolarReportItems.add(new NewTestReportItem("Reid Vapor Pressure", "ASTM D-4530", "% m/m", "Max. 0.1"));
-                nonSolarReportItems.add(new NewTestReportItem("Existensi Gum", "ASTM D-4530", "% m/m", "Max. 0.1"));
-                nonSolarReportItems.add(new NewTestReportItem("Copper Strip Corrosion", "ASTM D-4530", "% m/m", "Max. 0.1"));
-                nonSolarReportItems.add(new NewTestReportItem("Oxidation Stability", "ASTM D-4530", "% m/m", "Max. 0.1"));
-                nonSolarReportItems.add(new NewTestReportItem("Doctor Test", "ASTM D-4530", "% m/m", "Max. 0.1"));
-                nonSolarReportItems.add(new NewTestReportItem("Olefin", "ASTM D-4530", "% m/m", "Max. 0.1"));
-                nonSolarReportItems.add(new NewTestReportItem("Sulfur Mercaptan", "ASTM D-4530", "% m/m", "Max. 0.1"));
+                nonSolarReportItems.add(new NewTestReportItem("Apparance", "Visual", "", "Clear & Bright"));
+                nonSolarReportItems.add(new NewTestReportItem("Colour", "Visual", "", "Blue"));
+                nonSolarReportItems.add(new NewTestReportItem("Density 15°C", "ASTM D-1298", "kg/m3", "715-770"));
+                nonSolarReportItems.add(new NewTestReportItem("RON", "ASTM D-2699", "", "Min. 92.0"));
+                nonSolarReportItems.add(new NewTestReportItem("Sulfur Content", "ASTM D-4294", "% m/m", "Max. 0.05"));
+                nonSolarReportItems.add(new NewTestReportItem("Destillation", "ASTM D-86", "", ""));
+                nonSolarReportItems.add(new NewTestReportItem("I.B.P", "°C", "", "-"));
+                nonSolarReportItems.add(new NewTestReportItem("10% Vol. Evap.", "°C", "", "Max. 70"));
+                nonSolarReportItems.add(new NewTestReportItem("50% Vol. Evap.", "°C", "", "77-110"));
+                nonSolarReportItems.add(new NewTestReportItem("90% Vol. Evap.", "°C", "", "Max. 180"));
+                nonSolarReportItems.add(new NewTestReportItem("F.B.P (End Point)", "°C", "", "Max. 215"));
+                nonSolarReportItems.add(new NewTestReportItem("Residu", "% V/v", "", "Max 2.0"));
+                nonSolarReportItems.add(new NewTestReportItem("Reid Vapor Pressure", "ASTM D-323", "kPa", "45-60"));
+                nonSolarReportItems.add(new NewTestReportItem("Existensi Gum", "ASTM D-381", "mg/100ml", "5"));
+                nonSolarReportItems.add(new NewTestReportItem("Copper Strip Corrosion", "ASTM D-130", "Class No.", "Max. Kelas 1"));
+                nonSolarReportItems.add(new NewTestReportItem("Oxidation Stability", "ASTM D-525", "Minute", "Min. 360"));
+                nonSolarReportItems.add(new NewTestReportItem("Doctor Test", "ASTM D-4952", "", "Negatif"));
+                nonSolarReportItems.add(new NewTestReportItem("Olefin", "ASTM D-6839", "%V/V", "To be reported"));
+                nonSolarReportItems.add(new NewTestReportItem("Sulfur Mercaptan", "ASTM D-3227", "&m/m", "Max. 0.002"));
 
                 EditText inputNonAppearance, inputNonColor, inputNonDensity, inputNonRon, inputNonSulfurContent,
                         inputNonDestilation, inputNonIbp, inputNonEvap10, inputNonEvap50, inputNonEvap90,
