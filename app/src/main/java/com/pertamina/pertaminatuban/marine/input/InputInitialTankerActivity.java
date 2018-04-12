@@ -1,5 +1,6 @@
 package com.pertamina.pertaminatuban.marine.input;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -8,9 +9,11 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.pertamina.pertaminatuban.R;
@@ -19,6 +22,7 @@ import com.pertamina.pertaminatuban.marine.InitialTankerActivity;
 import com.pertamina.pertaminatuban.marine.models.InitialTanker;
 import com.pertamina.pertaminatuban.marine.models.MarineIdentifier;
 import com.pertamina.pertaminatuban.marine.models.MarineInput;
+import com.pertamina.pertaminatuban.marine.models.NewMarineInput;
 import com.pertamina.pertaminatuban.service.UserClient;
 import com.whiteelephant.monthpicker.MonthPickerDialog;
 
@@ -29,6 +33,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -41,9 +46,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class InputInitialTankerActivity extends AppCompatActivity {
 
-    private EditText inputCallTanker, inputVoyage, inputNoBill, inputDoBill, inputHandlingAgent, inputGeneralAgent,
+    private EditText inputCallTanker, inputVesselName, inputVoyage, inputNoBill, inputDoBill, inputHandlingAgent, inputGeneralAgent,
             inputCargoStatus;
-    private Button inputPeriode, kirim;
+    private Button inputPeriode, inputBerthingDate, kirim;
     private RadioGroup groupStatusTanker, groupStatusOperasional, groupGrades, groupTankerActivity,
             groupPumpingMethod, groupBarthing, groupPortCall, groupPortCallReport, groupLastPort,
             groupNextPort;
@@ -51,6 +56,10 @@ public class InputInitialTankerActivity extends AppCompatActivity {
 
     private String bulan, callTanker, kapal, periode;
     private int month, year;
+
+    //menyimpan data untuk berthing date
+    private int bDay, bMonth, bYear;
+    private String berthingDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +79,41 @@ public class InputInitialTankerActivity extends AppCompatActivity {
         initChoices();
         getData();
         handlePeriodeButton();
+        handleBerthingDate();
+    }
+
+    private void handleBerthingDate() {
+        Calendar cal = Calendar.getInstance();
+        bDay = cal.get(Calendar.DAY_OF_MONTH);
+        bMonth = cal.get(Calendar.MONTH);
+        bYear = cal.get(Calendar.YEAR);
+
+        final SimpleDateFormat displayFormat = new SimpleDateFormat("dd MMMM yyyy", Locale.getDefault());
+        final SimpleDateFormat uploadFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        //ganti text pada button
+        cal.set(bYear, bMonth, bDay);
+        inputBerthingDate.setText(displayFormat.format(new java.util.Date(cal.getTimeInMillis())));
+        berthingDate = uploadFormat.format(new java.util.Date(cal.getTimeInMillis()));
+
+        inputBerthingDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+                        bYear = i;
+                        bMonth = i1;
+                        bDay = i2;
+
+                        //ganti text pada button
+                        Calendar cal = Calendar.getInstance();
+                        cal.set(bYear, bMonth, bDay);
+                        inputBerthingDate.setText(displayFormat.format(new java.util.Date(cal.getTimeInMillis())));
+                        berthingDate = uploadFormat.format(new java.util.Date(cal.getTimeInMillis()));
+                    }
+                };
+            }
+        });
     }
 
     private void getIntentExtras() {
@@ -155,6 +199,7 @@ public class InputInitialTankerActivity extends AppCompatActivity {
     private void getData() {
 
         inputCallTanker = findViewById(R.id.input_initial_tanker_call_tanker);
+        inputVesselName = findViewById(R.id.input_initial_tanker_name_of_vessel);
         inputVoyage = findViewById(R.id.input_initial_tanker_voyage_tanker);
         inputNoBill = findViewById(R.id.input_initial_tanker_no_bill_of_landing);
         inputDoBill = findViewById(R.id.input_initial_tanker_date_of_bill);
@@ -167,6 +212,7 @@ public class InputInitialTankerActivity extends AppCompatActivity {
         groupNextPort = findViewById(R.id.input_initial_tanker_group_next_port);
 
         inputPeriode = findViewById(R.id.input_initial_tanker_periode);
+        inputBerthingDate = findViewById(R.id.input_initial_tanker_berthing_date);
         kirim = findViewById(R.id.input_initial_tanker_kirim);
 
         groupStatusOperasional = findViewById(R.id.input_initial_tanker_group_status_operasional);
@@ -181,181 +227,145 @@ public class InputInitialTankerActivity extends AppCompatActivity {
         kirim.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getInputData();
+                if (inputNoBill.getText().length() > 0 && inputVesselName.getText().length() > 0) {
+                    getInputData();
+                } else {
+                    Toast.makeText(InputInitialTankerActivity.this, "Isi data untuk No bill dan name of vessel", Toast.LENGTH_LONG).show();
+                }
             }
         });
     }
 
     private void getInputData() {
 
-        ArrayList<MarineInput> data = new ArrayList<>();
+        String nomorBl = inputNoBill.getText().toString();
+        String namaKapal = inputVesselName.getText().toString();
 
-        data.add(new MarineInput(
-                getDataIfAvailable(inputCallTanker),
+        ArrayList<NewMarineInput> newData = new ArrayList<>();
+        newData.add(new NewMarineInput(
                 getResources().getString(R.string.variable_init_tanker_call_tanker),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getDataIfAvailable(inputCallTanker),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
-
-        data.add(new MarineInput(
-                periode,
+        newData.add(new NewMarineInput(
                 getResources().getString(R.string.variable_init_tanker_period),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                inputPeriode.getText().toString(),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
-
-        data.add(new MarineInput(
-                getDataIfAvailable(inputVoyage),
+        newData.add(new NewMarineInput(
                 getResources().getString(R.string.variable_init_tanker_voyage),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getDataIfAvailable(inputVoyage),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
-
-        data.add(new MarineInput(
-                getDataIfAvailable(inputNoBill),
-                getResources().getString(R.string.variable_init_tanker_no_bill),
-                kapal,
-                periode,
-                bulan,
-                callTanker
-        ));
-
-        data.add(new MarineInput(
-                getDataIfAvailable(inputDoBill),
+        newData.add(new NewMarineInput(
                 getResources().getString(R.string.variable_init_tanker_date_bill),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getDataIfAvailable(inputDoBill),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
-
-        data.add(new MarineInput(
-                getRadioGroupData(groupStatusTanker),
+        newData.add(new NewMarineInput(
                 getResources().getString(R.string.variable_init_tanker_status_tanker),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getRadioGroupData(groupStatusTanker),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
-
-        data.add(new MarineInput(
-                getRadioGroupData(groupStatusOperasional),
+        newData.add(new NewMarineInput(
                 getResources().getString(R.string.variable_init_tanker_status_ops),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getRadioGroupData(groupStatusOperasional),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
-
-        data.add(new MarineInput(
-                getRadioGroupData(groupGrades),
+        newData.add(new NewMarineInput(
                 getResources().getString(R.string.variable_init_tanker_grades),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getRadioGroupData(groupGrades),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
-
-        data.add(new MarineInput(
-                getDataIfAvailable(inputHandlingAgent),
+        newData.add(new NewMarineInput(
                 getResources().getString(R.string.variable_init_tanker_handling_agent),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getDataIfAvailable(inputHandlingAgent),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
-
-        data.add(new MarineInput(
-                getDataIfAvailable(inputGeneralAgent),
+        newData.add(new NewMarineInput(
                 getResources().getString(R.string.variable_init_tanker_general_agent),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getDataIfAvailable(inputGeneralAgent),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
-
-        data.add(new MarineInput(
-                getDataIfAvailable(inputCargoStatus),
+        newData.add(new NewMarineInput(
                 getResources().getString(R.string.variable_init_tanker_cargo_status),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getDataIfAvailable(inputCargoStatus),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
-
-        data.add(new MarineInput(
-                getRadioGroupData(groupTankerActivity),
+        newData.add(new NewMarineInput(
                 getResources().getString(R.string.variable_init_tanker_tanker_activity),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getRadioGroupData(groupTankerActivity),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
-
-        data.add(new MarineInput(
-                getRadioGroupData(groupPumpingMethod),
+        newData.add(new NewMarineInput(
                 getResources().getString(R.string.variable_init_tanker_pump_method),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getRadioGroupData(groupPumpingMethod),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
-
-        data.add(new MarineInput(
-                getRadioGroupData(groupBarthing),
+        newData.add(new NewMarineInput(
                 getResources().getString(R.string.variable_init_tanker_barthing_spm),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getRadioGroupData(groupBarthing),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
-
-        data.add(new MarineInput(
-                getRadioGroupData(groupPortCall),
+        newData.add(new NewMarineInput(
                 getResources().getString(R.string.variable_init_tanker_port_call),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getRadioGroupData(groupPortCall),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
-
-        data.add(new MarineInput(
-                getRadioGroupData(groupPortCallReport),
+        newData.add(new NewMarineInput(
                 getResources().getString(R.string.variable_init_tanker_port_call_report),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getRadioGroupData(groupPortCallReport),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
-
-        data.add(new MarineInput(
-                getRadioGroupData(groupLastPort),
+        newData.add(new NewMarineInput(
                 getResources().getString(R.string.variable_init_tanker_last_port),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getRadioGroupData(groupLastPort),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
-
-        data.add(new MarineInput(
-                getRadioGroupData(groupNextPort),
+        newData.add(new NewMarineInput(
                 getResources().getString(R.string.variable_init_tanker_next_port),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getRadioGroupData(groupNextPort),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        uploadData(data);
+        uploadData(newData);
     }
 
-    private void uploadData(ArrayList<MarineInput> data) {
+    private void uploadData(ArrayList<NewMarineInput> data) {
         String json = new Gson().toJson(data);
         Log.w("post json", json);
         sendPostRequest(data);
@@ -512,7 +522,7 @@ public class InputInitialTankerActivity extends AppCompatActivity {
         });
     }
 
-    private void sendPostRequest(ArrayList<MarineInput> marine) {
+    private void sendPostRequest(ArrayList<NewMarineInput> marine) {
         SharedPreferences preferences = InputInitialTankerActivity.this.getSharedPreferences(
                 "login",
                 Context.MODE_PRIVATE

@@ -8,6 +8,7 @@ import com.pertamina.pertaminatuban.distribusi.models.Wilayah;
 import com.pertamina.pertaminatuban.marine.models.MarineIdentifier;
 import com.pertamina.pertaminatuban.marine.models.MarineInput;
 import com.pertamina.pertaminatuban.marine.models.InitialTanker;
+import com.pertamina.pertaminatuban.marine.models.NewMarineInput;
 import com.pertamina.pertaminatuban.marine.models.PortCharges;
 import com.pertamina.pertaminatuban.marine.models.ShipCondition;
 import com.pertamina.pertaminatuban.marine.models.ShipParticular;
@@ -113,7 +114,7 @@ public interface UserClient {
     @GET("marine/initialtanker/{bulan}")
     Call<ArrayList<InitialTanker>> getInitialTanker(@Path("bulan") String bulan);
     @POST("marine/initialtanker")
-    Call<Object> postInitialTanker(@Body ArrayList<MarineInput> marine);
+    Call<Object> postInitialTanker(@Body ArrayList<NewMarineInput> marine);
     @POST("marine/initialtanker/check")
     Call<Object> getInitInitialTanker(@Body MarineIdentifier identifier);
 
