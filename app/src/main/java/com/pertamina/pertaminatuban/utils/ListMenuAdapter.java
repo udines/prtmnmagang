@@ -18,6 +18,8 @@ public class ListMenuAdapter extends RecyclerView.Adapter<ListMenuViewHolder> {
     private ArrayList<MenuViewModel> menuList;
     private ArrayList<Class> classes;
     private Context context;
+    private String berthingDate;
+    private String namaKapal;
 
     public ListMenuAdapter(ArrayList<MenuViewModel> menuList, Context context) {
         this.menuList = menuList;
@@ -26,6 +28,14 @@ public class ListMenuAdapter extends RecyclerView.Adapter<ListMenuViewHolder> {
 
     public void setClasses(ArrayList<Class> classes) {
         this.classes = classes;
+    }
+
+    public void setBerthingDate(String berthingDate) {
+        this.berthingDate = berthingDate;
+    }
+
+    public void setNamaKapal(String namaKapal) {
+        this.namaKapal = namaKapal;
     }
 
     @Override
@@ -49,6 +59,10 @@ public class ListMenuAdapter extends RecyclerView.Adapter<ListMenuViewHolder> {
                 @Override
                 public void onClick(View view) {
                     Intent activityIntent = new Intent(context, classes.get(holder.getAdapterPosition()));
+
+                    activityIntent.putExtra("namaKapal", namaKapal);
+                    activityIntent.putExtra("berthingDate", berthingDate);
+
                     activityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     activityIntent.putStringArrayListExtra("noBill", menuList.get(position).getNoBill());
                     context.startActivity(activityIntent);

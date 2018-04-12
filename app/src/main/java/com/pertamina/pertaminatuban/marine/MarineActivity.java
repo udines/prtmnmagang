@@ -83,6 +83,8 @@ public class MarineActivity extends AppCompatActivity {
 
         ListMenuAdapter adapter = new ListMenuAdapter(menus, getApplicationContext());
         adapter.setClasses(classes);
+        adapter.setNamaKapal(vesselName);
+        adapter.setBerthingDate(getIntent().getStringExtra("berthingDate"));
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         recyclerView.setAdapter(adapter);

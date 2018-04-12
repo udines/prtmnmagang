@@ -20,6 +20,9 @@ public class InitialTanker {
     @SerializedName("periode")
     @Expose
     private String periode;
+    @SerializedName("berthing_date")
+    @Expose
+    private String berthingDate;
 
 
     @SerializedName("callTanker")
@@ -264,5 +267,9 @@ public class InitialTanker {
 
     public void setNextPort(String nextPort) {
         this.nextPort = nextPort;
+    }
+
+    public String getBerthingDate() {
+        return berthingDate;
     }
 }

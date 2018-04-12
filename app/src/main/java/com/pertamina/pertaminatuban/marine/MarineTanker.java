@@ -7,11 +7,13 @@ public class MarineTanker {
     private String call;
     private String vesselName;
     private ArrayList<String> noBill;
+    private String berthingDate;
 
-    public MarineTanker(String call, String vesselName, ArrayList<String> noBill) {
+    public MarineTanker(String call, String vesselName, ArrayList<String> noBill, String berthingDate) {
         this.call = call;
         this.vesselName = vesselName;
         this.noBill = noBill;
+        this.berthingDate = berthingDate;
     }
 
     public String getCall() {
@@ -24,5 +26,9 @@ public class MarineTanker {
 
     public ArrayList<String> getNoBill() {
         return noBill;
+    }
+
+    public String getBerthingDate() {
+        return berthingDate;
     }
 }

@@ -225,7 +225,8 @@ public class NewMarineActivity extends AppCompatActivity {
                 marineTankers.add(new MarineTanker(
                         kumpulanTankers.get(i).get(0).getCall(),
                         kumpulanTankers.get(i).get(0).getKapal(),
-                        noBill
+                        noBill,
+                        kumpulanTankers.get(i).get(0).getBerthingDate()
                 ));
             }
 
@@ -245,17 +246,20 @@ public class NewMarineActivity extends AppCompatActivity {
         hmm.add(new MarineTanker(
                 "1",
                 "Sindang",
-                noBL
+                noBL,
+                "2018-04-12"
         ));
         hmm.add(new MarineTanker(
                 "2",
                 "John Caine",
-                noBL
+                noBL,
+                "2018-04-11"
         ));
         hmm.add(new MarineTanker(
                 "3",
                 "Titanic",
-                noBL
+                noBL,
+                "2018-04-10"
         ));
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
