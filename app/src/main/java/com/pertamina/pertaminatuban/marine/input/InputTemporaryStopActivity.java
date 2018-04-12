@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 import com.pertamina.pertaminatuban.R;
 import com.pertamina.pertaminatuban.marine.models.MarineIdentifier;
 import com.pertamina.pertaminatuban.marine.models.MarineInput;
+import com.pertamina.pertaminatuban.marine.models.NewMarineInput;
 import com.pertamina.pertaminatuban.marine.models.TemporaryStop;
 import com.pertamina.pertaminatuban.service.UserClient;
 
@@ -310,152 +311,141 @@ public class InputTemporaryStopActivity extends AppCompatActivity {
 
     private void getInputData() {
 
-        ArrayList<MarineInput> data = new ArrayList<>();
+        String nomorBl = getIntent().getStringExtra("nomorBl");
+        String namaKapal = getIntent().getStringExtra("namaKapal");
+        String berthingDate = getIntent().getStringExtra("berthingDate");
 
-        data.add(new MarineInput(
-                getDataIfAvailable(inputReason1),
+        ArrayList<NewMarineInput> data = new ArrayList<>();
+
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_temp_stop_reason_1),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getDataIfAvailable(inputReason1),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getTimeToString(inputStopDate1, inputStopTime1),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_temp_stop_start_1),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getTimeToString(inputStopDate1, inputStopTime1),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getTimeToString(inputResumeDate1, inputResumeTime1),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_temp_stop_resume_1),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getTimeToString(inputResumeDate1, inputResumeTime1),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getDataIfAvailable(inputReason2),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_temp_stop_reason_2),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getDataIfAvailable(inputReason2),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getTimeToString(inputStopDate2, inputStopTime2),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_temp_stop_start_2),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getTimeToString(inputStopDate2, inputStopTime2),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getTimeToString(inputResumeDate2, inputResumeTime2),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_temp_stop_resume_2),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getTimeToString(inputResumeDate2, inputResumeTime2),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getDataIfAvailable(inputReason3),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_temp_stop_reason_3),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getDataIfAvailable(inputReason3),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getTimeToString(inputStopDate3, inputStopTime3),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_temp_stop_start_3),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getTimeToString(inputStopDate3, inputStopTime3),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getTimeToString(inputResumeDate3, inputResumeTime3),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_temp_stop_resume_3),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getTimeToString(inputResumeDate3, inputResumeTime3),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getDataIfAvailable(inputReason4),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_temp_stop_reason_4),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getDataIfAvailable(inputReason4),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getTimeToString(inputStopDate4, inputStopTime4),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_temp_stop_start_4),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getTimeToString(inputStopDate4, inputStopTime4),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getTimeToString(inputResumeDate4, inputResumeTime4),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_temp_stop_resume_4),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getTimeToString(inputResumeDate4, inputResumeTime4),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getDataIfAvailable(inputReason5),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_temp_stop_reason_5),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getDataIfAvailable(inputReason5),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getTimeToString(inputStopDate5, inputStopTime5),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_temp_stop_start_5),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getTimeToString(inputStopDate5, inputStopTime5),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getTimeToString(inputResumeDate5, inputResumeTime5),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_temp_stop_resume_5),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getTimeToString(inputResumeDate5, inputResumeTime5),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
         uploadData(data);
     }
 
-    private void uploadData(ArrayList<MarineInput> data) {
+    private void uploadData(ArrayList<NewMarineInput> data) {
         Log.w("json", new Gson().toJson(data));
         sendPostRequest(data);
     }
 
-    private void sendPostRequest(ArrayList<MarineInput> marine) {
+    private void sendPostRequest(ArrayList<NewMarineInput> marine) {
         SharedPreferences preferences = InputTemporaryStopActivity.this.getSharedPreferences(
                 "login",
                 Context.MODE_PRIVATE

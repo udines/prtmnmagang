@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 import com.pertamina.pertaminatuban.R;
 import com.pertamina.pertaminatuban.marine.models.MarineIdentifier;
 import com.pertamina.pertaminatuban.marine.models.MarineInput;
+import com.pertamina.pertaminatuban.marine.models.NewMarineInput;
 import com.pertamina.pertaminatuban.marine.models.TankerMovement;
 import com.pertamina.pertaminatuban.service.UserClient;
 
@@ -272,228 +273,208 @@ public class InputTankerMovementActivity extends AppCompatActivity {
 
     private void getInputData() {
 
-        ArrayList<MarineInput> data = new ArrayList<>();
+        String nomorBl = getIntent().getStringExtra("nomorBl");
+        String namaKapal = getIntent().getStringExtra("namaKapal");
+        String berthingDate = getIntent().getStringExtra("berthingDate");
 
-        data.add(new MarineInput(
-                getTimeToString(allFastDate, allFastTime),
+        ArrayList<NewMarineInput> data = new ArrayList<>();
+
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_tank_move_all_fast),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getTimeToString(allFastDate, allFastTime),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getTimeToString(channelConnectionDate, channelConnectionTime),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_tank_move_channel_connection),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getTimeToString(channelConnectionDate, channelConnectionTime),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getTimeToString(dryCertIssuedDate1, dryCertIssuedTime1),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_tank_move_dry_certif_1),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getTimeToString(dryCertIssuedDate1, dryCertIssuedTime1),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getTimeToString(compCargoCalcDate1, compCargoCalcTime1),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_tank_move_completed_cargo_calc_1),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getTimeToString(compCargoCalcDate1, compCargoCalcTime1),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getTimeToString(labTestReleaseDate1, labTestReleaseTime1),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_tank_move_lab_test_released_1),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getTimeToString(labTestReleaseDate1, labTestReleaseTime1),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getTimeToString(commenceDisLoadDate, commenceDisLoadTime),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_tank_move_commence_dis_load),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getTimeToString(commenceDisLoadDate, commenceDisLoadTime),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getTimeToString(compDisLoadDate, compDisLoadTime),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_tank_move_completed_dis_load),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getTimeToString(compDisLoadDate, compDisLoadTime),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getTimeToString(compHoseDiscDate, compHoseDiscTime),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_tank_move_completed_hose),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getTimeToString(compHoseDiscDate, compHoseDiscTime),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getTimeToString(dryCertIssuedDate2, dryCertIssuedTime2),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_tank_move_dry_certif_2),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getTimeToString(dryCertIssuedDate2, dryCertIssuedTime2),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getTimeToString(compCargoCalcDate2, compCargoCalcTime2),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_tank_move_completed_cargo_calc_2),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getTimeToString(compCargoCalcDate2, compCargoCalcTime2),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getTimeToString(labTestReleaseDate2, labTestReleaseTime2),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_tank_move_lab_test_released_2),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getTimeToString(labTestReleaseDate2, labTestReleaseTime2),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getTimeToString(cargoDocumentDate, cargoDocumentTime),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.cargo_document_on_board),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getTimeToString(cargoDocumentDate, cargoDocumentTime),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getTimeToString(portClearanceDate, portClearanceTime),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_tank_move_port_clearence),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getTimeToString(portClearanceDate, portClearanceTime),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getTimeToString(bookingPilotDate, bookingPilotTime),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_tank_move_book_pilot_unberthing),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getTimeToString(bookingPilotDate, bookingPilotTime),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getTimeToString(pilotOnUnberDate, pilotOnUnberTime),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_tank_move_pilot_onboard_unberthing),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getTimeToString(pilotOnUnberDate, pilotOnUnberTime),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getTimeToString(castOffDate, castOffTime),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_tank_move_cast_off),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getTimeToString(castOffDate, castOffTime),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getTimeToString(anchoredDate, anchoredTime),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_tank_move_anchoredOnBoard),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getTimeToString(anchoredDate, anchoredTime),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getTimeToString(atdDate, atdTime),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_tank_move_actual_time_departure),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getTimeToString(atdDate, atdTime),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getTimeToString(deliveryDate, deliveryTime),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_tank_move_delivery),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getTimeToString(deliveryDate, deliveryTime),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getTimeToString(redeliveryDate, redeliveryTime),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_tank_move_redelivery),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getTimeToString(redeliveryDate, redeliveryTime),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getTimeToString(onHireDate, onHireTime),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_tank_move_on_hire),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getTimeToString(onHireDate, onHireTime),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getTimeToString(offHireDate, offHireTime),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_tank_move_off_hire),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getTimeToString(offHireDate, offHireTime),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getTimeOnlyToString(timeOffToOn),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_tank_move_time_off_on),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getTimeOnlyToString(timeOffToOn),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getDataIfAvailable(inputRemarks),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_tank_move_remarks),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getDataIfAvailable(inputRemarks),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
         uploadData(data);
     }
 
-    private void uploadData(ArrayList<MarineInput> data) {
+    private void uploadData(ArrayList<NewMarineInput> data) {
         Log.w("json", new Gson().toJson(data));
         sendPostRequest(data);
     }
@@ -629,7 +610,7 @@ public class InputTankerMovementActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    private void sendPostRequest(ArrayList<MarineInput> marine) {
+    private void sendPostRequest(ArrayList<NewMarineInput> marine) {
         SharedPreferences preferences = InputTankerMovementActivity.this.getSharedPreferences(
                 "login",
                 Context.MODE_PRIVATE

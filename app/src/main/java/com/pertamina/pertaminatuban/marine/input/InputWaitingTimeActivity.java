@@ -14,6 +14,7 @@ import com.google.gson.Gson;
 import com.pertamina.pertaminatuban.R;
 import com.pertamina.pertaminatuban.marine.models.MarineIdentifier;
 import com.pertamina.pertaminatuban.marine.models.MarineInput;
+import com.pertamina.pertaminatuban.marine.models.NewMarineInput;
 import com.pertamina.pertaminatuban.marine.models.WaitingTime;
 import com.pertamina.pertaminatuban.service.UserClient;
 
@@ -189,246 +190,224 @@ public class InputWaitingTimeActivity extends AppCompatActivity {
 
     private void getInputData() {
 
-        ArrayList<MarineInput> data = new ArrayList<>();
+        String nomorBl = getIntent().getStringExtra("nomorBl");
+        String namaKapal = getIntent().getStringExtra("namaKapal");
+        String berthingDate = getIntent().getStringExtra("berthingDate");
 
-        data.add(new MarineInput(
-                getDurasi(pilotHour, pilotMins),
+        ArrayList<NewMarineInput> data = new ArrayList<>();
+
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_waiting_time_pilot),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getDurasi(pilotHour, pilotMins),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getDurasi(labHour, labMins),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_waiting_time_lab_analysis),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getDurasi(labHour, labMins),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getDurasi(tugHour, tugMins),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_waiting_time_tug_boat),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getDurasi(tugHour, tugMins),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getDurasi(jettyHour, jettyMins),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_waiting_time_jetty),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getDurasi(jettyHour, jettyMins),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getDurasi(dayHour, dayMins),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_waiting_time_daylight),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getDurasi(dayHour, dayMins),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getDurasi(tideHour, tideMins),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_waiting_time_tide),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getDurasi(tideHour, tideMins),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getDurasi(ballastHour, ballastMins),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_waiting_time_ballast),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getDurasi(ballastHour, ballastMins),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getDurasi(cleanHour, cleanMins),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_waiting_time_tank_cleaning),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getDurasi(cleanHour, cleanMins),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getDurasi(nomiHour, nomiMins),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_waiting_time_nomination),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getDurasi(nomiHour, nomiMins),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getDurasi(powerHour, powerMins),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_waiting_time_man_power),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getDurasi(powerHour, powerMins),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getDurasi(weatherHour, weatherMins),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_waiting_time_bad_weather),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getDurasi(weatherHour, weatherMins),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getDurasi(lineHour, lineMins),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_waiting_time_line),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getDurasi(lineHour, lineMins),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getDurasi(cargoHour, cargoMins),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_waiting_time_cargo),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getDurasi(cargoHour, cargoMins),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getDurasi(ullageHour, ullageMins),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_waiting_time_ullage),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getDurasi(ullageHour, ullageMins),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getDurasi(supplyBunkHour, supplyBunkMins),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_waiting_time_supply_bunker),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getDurasi(supplyBunkHour, supplyBunkMins),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getDurasi(supplyFreshHour, supplyFreshMins),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_waiting_time_supply_fresh_water),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getDurasi(supplyFreshHour, supplyFreshMins),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getDurasi(actLoadHour, actLoadMins),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_waiting_time_act_load),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getDurasi(actLoadHour, actLoadMins),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getDurasi(prepHour, prepMins),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_waiting_time_preparation),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getDurasi(prepHour, prepMins),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getDurasi(shoreOrderHour, shoreOrderMins),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_waiting_time_shore_order),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getDurasi(shoreOrderHour, shoreOrderMins),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getDurasi(clearHour, clearMins),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_waiting_time_ship_clearence),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getDurasi(clearHour, clearMins),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getDurasi(cargoDocHour, cargoDocMins),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_waiting_time_cargo_doc),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getDurasi(cargoDocHour, cargoDocMins),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getDurasi(pumpVessHour, pumpVessMins),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_waiting_time_slow_vessel),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getDurasi(pumpVessHour, pumpVessMins),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getDurasi(pumpShoreHour, pumpShoreMins),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_waiting_time_slow_shore),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getDurasi(pumpShoreHour, pumpShoreMins),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getDurasi(cargoCalcHour, cargoCalcMins),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_waiting_time_cargo_calculation),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getDurasi(cargoCalcHour, cargoCalcMins),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getDurasi(steamHour, steamMins),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_waiting_time_steaming),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getDurasi(steamHour, steamMins),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getDurasi(unreadyHour, unreadyMins),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_waiting_time_unready),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getDurasi(unreadyHour, unreadyMins),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
         uploadData(data);
     }
 
-    private void uploadData(ArrayList<MarineInput> data) {
+    private void uploadData(ArrayList<NewMarineInput> data) {
         Log.w("json", new Gson().toJson(data));
         sendPostRequest(data);
     }
@@ -495,7 +474,7 @@ public class InputWaitingTimeActivity extends AppCompatActivity {
         }
     }
 
-    private void sendPostRequest(ArrayList<MarineInput> marine) {
+    private void sendPostRequest(ArrayList<NewMarineInput> marine) {
         SharedPreferences preferences = InputWaitingTimeActivity.this.getSharedPreferences(
                 "login",
                 Context.MODE_PRIVATE

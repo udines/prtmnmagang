@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 import com.pertamina.pertaminatuban.R;
 import com.pertamina.pertaminatuban.marine.models.MarineIdentifier;
 import com.pertamina.pertaminatuban.marine.models.MarineInput;
+import com.pertamina.pertaminatuban.marine.models.NewMarineInput;
 import com.pertamina.pertaminatuban.marine.models.ShipCondition;
 import com.pertamina.pertaminatuban.service.UserClient;
 
@@ -185,147 +186,136 @@ public class InputShipConditionActivity extends AppCompatActivity {
 
     private void getInputData() {
 
-        ArrayList<MarineInput> data = new ArrayList<>();
+        String nomorBl = getIntent().getStringExtra("nomorBl");
+        String namaKapal = getIntent().getStringExtra("namaKapal");
+        String berthingDate = getIntent().getStringExtra("berthingDate");
 
-        data.add(new MarineInput(
-                getDataIfAvailable(inputDescription),
+        ArrayList<NewMarineInput> data = new ArrayList<>();
+
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_ship_condition_description),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getDataIfAvailable(inputDescription),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getTimeOnlyToString(ataTime),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_ship_condition_draft_ata),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getTimeOnlyToString(ataTime),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getTimeOnlyToString(atdTime),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_ship_condition_draft_atd),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getTimeOnlyToString(atdTime),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getDataIfAvailable(inputGradesBunker),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_ship_condition_grade_bunker),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getDataIfAvailable(inputGradesBunker),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getDataIfAvailable(inputRobLastPort),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_ship_condition_rob_last_port),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getDataIfAvailable(inputRobLastPort),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getDataIfAvailable(inputRobAta),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_ship_condition_rob_ata),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getDataIfAvailable(inputRobAta),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getDataIfAvailable(inputRobAtd),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_ship_condition_rob_atd),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getDataIfAvailable(inputRobAtd),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getDataIfAvailable(inputRepl),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_ship_condition_repl),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getDataIfAvailable(inputRepl),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getTimeToString(comReplDate, comReplTime),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_ship_condition_com_repl),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getTimeToString(comReplDate, comReplTime),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getTimeToString(compReplDate, compReplTime),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_ship_condition_comp_repl),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getTimeToString(compReplDate, compReplTime),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getDataIfAvailable(inputLocationRepl),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_ship_condition_location),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getDataIfAvailable(inputLocationRepl),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getDataIfAvailable(inputBunkerConsPort),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_ship_condition_bunker_consumption_port),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getDataIfAvailable(inputBunkerConsPort),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getDataIfAvailable(inputBunkerConsSeatime),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_ship_condition_bunker_consumption_seatime),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getDataIfAvailable(inputBunkerConsSeatime),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getDataIfAvailable(inputSlopTankAta),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_ship_condition_slop_tank_ata),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getDataIfAvailable(inputSlopTankAta),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
-        data.add(new MarineInput(
-                getDataIfAvailable(inputSlopTankAtd),
+        data.add(new NewMarineInput(
                 getResources().getString(R.string.variable_ship_condition_slop_tank_atd),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getDataIfAvailable(inputSlopTankAtd),
+                nomorBl,
+                namaKapal,
+                berthingDate
         ));
 
         uploadData(data);
     }
 
-    private void uploadData(ArrayList<MarineInput> data) {
+    private void uploadData(ArrayList<NewMarineInput> data) {
         Log.w("json", new Gson().toJson(data));
         sendPostRequest(data);
     }
@@ -351,7 +341,7 @@ public class InputShipConditionActivity extends AppCompatActivity {
         }
     }
 
-    private void sendPostRequest(ArrayList<MarineInput> marine) {
+    private void sendPostRequest(ArrayList<NewMarineInput> marine) {
         SharedPreferences preferences = InputShipConditionActivity.this.getSharedPreferences(
                 "login",
                 Context.MODE_PRIVATE

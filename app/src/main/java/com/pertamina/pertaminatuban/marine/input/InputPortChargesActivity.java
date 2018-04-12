@@ -14,6 +14,7 @@ import com.google.gson.Gson;
 import com.pertamina.pertaminatuban.R;
 import com.pertamina.pertaminatuban.marine.models.MarineIdentifier;
 import com.pertamina.pertaminatuban.marine.models.MarineInput;
+import com.pertamina.pertaminatuban.marine.models.NewMarineInput;
 import com.pertamina.pertaminatuban.marine.models.PortCharges;
 import com.pertamina.pertaminatuban.service.UserClient;
 
@@ -139,79 +140,77 @@ public class InputPortChargesActivity extends AppCompatActivity {
 
     private void getInputData() {
 
-        ArrayList<MarineInput> data = new ArrayList<>();
-        MarineInput lightData, harborData, quayData, pilotageData, towageData, pupData;
+        String nomorBl = getIntent().getStringExtra("nomorBl");
+        String namaKapal = getIntent().getStringExtra("namaKapal");
+        String berthingDate = getIntent().getStringExtra("berthingDate");
 
-        lightData = new MarineInput(
-                getDataIfAvailable(inputRambu),
+        ArrayList<NewMarineInput> data = new ArrayList<>();
+        NewMarineInput lightData, harborData, quayData, pilotageData, towageData, pupData;
+
+        lightData = new NewMarineInput(
                 getResources().getString(R.string.variable_port_charges_light),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                getDataIfAvailable(inputRambu),
+                nomorBl,
+                namaKapal,
+                berthingDate
         );
         data.add(lightData);
 
-        harborData = new MarineInput(
+        harborData = new NewMarineInput(
                 getDataIfAvailable(inputLabuh),
                 getResources().getString(R.string.variable_port_charges_harbour),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                nomorBl,
+                namaKapal,
+                berthingDate
         );
         data.add(harborData);
 
-        quayData = new MarineInput(
+        quayData = new NewMarineInput(
                 getDataIfAvailable(inputTambat),
                 getResources().getString(R.string.variable_port_charges_quay),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                nomorBl,
+                namaKapal,
+                berthingDate
         );
         data.add(quayData);
 
-        pilotageData = new MarineInput(
+        pilotageData = new NewMarineInput(
                 getDataIfAvailable(inputPandu),
                 getResources().getString(R.string.variable_port_charges_pilotages),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                nomorBl,
+                namaKapal,
+                berthingDate
         );
         data.add(pilotageData);
 
-        towageData = new MarineInput(
+        towageData = new NewMarineInput(
                 getDataIfAvailable(inputTunda),
                 getResources().getString(R.string.variable_port_charges_towage),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                nomorBl,
+                namaKapal,
+                berthingDate
         );
         data.add(towageData);
 
-        pupData = new MarineInput(
+        pupData = new NewMarineInput(
                 getDataIfAvailable(inputPup),
                 getResources().getString(R.string.variable_port_charges_pup),
-                kapal,
-                periode,
-                bulan,
-                callTanker
+                nomorBl,
+                namaKapal,
+                berthingDate
         );
         data.add(pupData);
 
         uploadData(data);
     }
 
-    private void uploadData(ArrayList<MarineInput> data) {
+    private void uploadData(ArrayList<NewMarineInput> data) {
         String json = new Gson().toJson(data);
         Log.w("json", json);
         sendPostRequest(data);
     }
 
-    private void sendPostRequest(ArrayList<MarineInput> data) {
+    private void sendPostRequest(ArrayList<NewMarineInput> data) {
         SharedPreferences preferences = InputPortChargesActivity.this.getSharedPreferences(
                 "login",
                 Context.MODE_PRIVATE
