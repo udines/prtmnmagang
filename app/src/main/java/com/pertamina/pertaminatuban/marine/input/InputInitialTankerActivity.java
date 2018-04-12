@@ -29,7 +29,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -190,153 +189,167 @@ public class InputInitialTankerActivity extends AppCompatActivity {
     private void getInputData() {
 
         ArrayList<MarineInput> data = new ArrayList<>();
-        String nomorBl = getDataIfAvailable(inputNoBill);
-        Calendar cal = Calendar.getInstance();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-        String date = format.format(new java.util.Date(cal.getTimeInMillis()));
 
         data.add(new MarineInput(
                 getDataIfAvailable(inputCallTanker),
                 getResources().getString(R.string.variable_init_tanker_call_tanker),
                 kapal,
-                nomorBl,
-                date
+                periode,
+                bulan,
+                callTanker
         ));
 
         data.add(new MarineInput(
                 periode,
                 getResources().getString(R.string.variable_init_tanker_period),
                 kapal,
-                nomorBl,
-                date
+                periode,
+                bulan,
+                callTanker
         ));
 
         data.add(new MarineInput(
                 getDataIfAvailable(inputVoyage),
                 getResources().getString(R.string.variable_init_tanker_voyage),
                 kapal,
-                nomorBl,
-                date
+                periode,
+                bulan,
+                callTanker
         ));
 
         data.add(new MarineInput(
                 getDataIfAvailable(inputNoBill),
                 getResources().getString(R.string.variable_init_tanker_no_bill),
                 kapal,
-                nomorBl,
-                date
+                periode,
+                bulan,
+                callTanker
         ));
 
         data.add(new MarineInput(
                 getDataIfAvailable(inputDoBill),
                 getResources().getString(R.string.variable_init_tanker_date_bill),
                 kapal,
-                nomorBl,
-                date
+                periode,
+                bulan,
+                callTanker
         ));
 
         data.add(new MarineInput(
                 getRadioGroupData(groupStatusTanker),
                 getResources().getString(R.string.variable_init_tanker_status_tanker),
                 kapal,
-                nomorBl,
-                date
+                periode,
+                bulan,
+                callTanker
         ));
 
         data.add(new MarineInput(
                 getRadioGroupData(groupStatusOperasional),
                 getResources().getString(R.string.variable_init_tanker_status_ops),
                 kapal,
-                nomorBl,
-                date
+                periode,
+                bulan,
+                callTanker
         ));
 
         data.add(new MarineInput(
                 getRadioGroupData(groupGrades),
                 getResources().getString(R.string.variable_init_tanker_grades),
                 kapal,
-                nomorBl,
-                date
+                periode,
+                bulan,
+                callTanker
         ));
 
         data.add(new MarineInput(
                 getDataIfAvailable(inputHandlingAgent),
                 getResources().getString(R.string.variable_init_tanker_handling_agent),
                 kapal,
-                nomorBl,
-                date
+                periode,
+                bulan,
+                callTanker
         ));
 
         data.add(new MarineInput(
                 getDataIfAvailable(inputGeneralAgent),
                 getResources().getString(R.string.variable_init_tanker_general_agent),
                 kapal,
-                nomorBl,
-                date
+                periode,
+                bulan,
+                callTanker
         ));
 
         data.add(new MarineInput(
                 getDataIfAvailable(inputCargoStatus),
                 getResources().getString(R.string.variable_init_tanker_cargo_status),
                 kapal,
-                nomorBl,
-                date
+                periode,
+                bulan,
+                callTanker
         ));
 
         data.add(new MarineInput(
                 getRadioGroupData(groupTankerActivity),
                 getResources().getString(R.string.variable_init_tanker_tanker_activity),
                 kapal,
-                nomorBl,
-                date
+                periode,
+                bulan,
+                callTanker
         ));
 
         data.add(new MarineInput(
                 getRadioGroupData(groupPumpingMethod),
                 getResources().getString(R.string.variable_init_tanker_pump_method),
                 kapal,
-                nomorBl,
-                date
+                periode,
+                bulan,
+                callTanker
         ));
 
         data.add(new MarineInput(
                 getRadioGroupData(groupBarthing),
                 getResources().getString(R.string.variable_init_tanker_barthing_spm),
                 kapal,
-                nomorBl,
-                date
+                periode,
+                bulan,
+                callTanker
         ));
 
         data.add(new MarineInput(
                 getRadioGroupData(groupPortCall),
                 getResources().getString(R.string.variable_init_tanker_port_call),
                 kapal,
-                nomorBl,
-                date
+                periode,
+                bulan,
+                callTanker
         ));
 
         data.add(new MarineInput(
                 getRadioGroupData(groupPortCallReport),
                 getResources().getString(R.string.variable_init_tanker_port_call_report),
                 kapal,
-                nomorBl,
-                date
+                periode,
+                bulan,
+                callTanker
         ));
 
         data.add(new MarineInput(
                 getRadioGroupData(groupLastPort),
                 getResources().getString(R.string.variable_init_tanker_last_port),
                 kapal,
-                nomorBl,
-                date
+                periode,
+                bulan,
+                callTanker
         ));
 
         data.add(new MarineInput(
                 getRadioGroupData(groupNextPort),
                 getResources().getString(R.string.variable_init_tanker_next_port),
                 kapal,
-                nomorBl,
-                date
+                periode,
+                bulan,
+                callTanker
         ));
 
         uploadData(data);
