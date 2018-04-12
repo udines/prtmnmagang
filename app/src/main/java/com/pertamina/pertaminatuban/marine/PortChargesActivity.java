@@ -49,6 +49,7 @@ public class PortChargesActivity extends AppCompatActivity {
     private int year, month, day;
     private TextView dateText;
     private RecyclerView recyclerView;
+    private Spinner spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +82,7 @@ public class PortChargesActivity extends AppCompatActivity {
     }
 
     private void handleSpinner() {
-        final Spinner spinner = findViewById(R.id.port_charges_no_bill_spinner);
+        spinner = findViewById(R.id.port_charges_no_bill_spinner);
 
         ArrayList<String> noBill = getIntent().getStringArrayListExtra("noBill");
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
@@ -237,6 +238,15 @@ public class PortChargesActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent inputIntent = new Intent(getApplicationContext(), InputPortChargesActivity.class);
                 inputIntent.putExtra("sourceActivity", "PortCharges");
+
+                String nomorBl = spinner.getSelectedItem().toString();
+                String namaKapal = getIntent().getStringExtra("namaKapal");
+                String berthingDate = getIntent().getStringExtra("berthingDate");
+
+                inputIntent.putExtra("nomorBl", nomorBl);
+                inputIntent.putExtra("namaKapal", namaKapal);
+                inputIntent.putExtra("berthingDate", berthingDate);
+
                 inputIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(inputIntent);
             }
