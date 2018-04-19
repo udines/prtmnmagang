@@ -268,11 +268,11 @@ public class PumpableActivity extends AppCompatActivity {
                     populateRecyclerView(sc90, sc90PertamaxRec, sc90PremiumRec, sc90SolarRec);
                     populateRecyclerView(rerataUtil, rerataUtilPertamaxRec, rerataUtilPremiumRec, rerataUtilSolaRec);
 
-                    populateSummary(totalPerTank, totalPertamax, totalPremium, totalSolar, "");
-                    populateSummary(averagePerTank, avPertamax, avPremium, avSolar, "");
-                    populateSummary(scPerTank, scPertamax, scPremium, scSolar, "");
-                    populateSummary(utilPerTank, utilPertamax, utilPremium, utilSolar, "");
-                    populateSummary(sc90, sc90Pertamax, sc90Premium, sc90Solar, "");
+                    populateSummary(totalPerTank, totalPertamax, totalPremium, totalSolar, " KL");
+                    populateSummary(averagePerTank, avPertamax, avPremium, avSolar, " KL");
+                    populateSummary(scPerTank, scPertamax, scPremium, scSolar, " KL");
+                    populateSummary(utilPerTank, utilPertamax, utilPremium, utilSolar, "%");
+                    populateSummary(sc90, sc90Pertamax, sc90Premium, sc90Solar, " KL");
                     populateSummary(rerataUtil, rerataUtilPertamax, rerataUtilPremium, rerataUtilSolar, "%");
 
                 } catch (JSONException e) {
@@ -360,5 +360,11 @@ public class PumpableActivity extends AppCompatActivity {
             pumpables.add(pumpable);
         }
         return pumpables;
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        getPumpable(month, year);
     }
 }

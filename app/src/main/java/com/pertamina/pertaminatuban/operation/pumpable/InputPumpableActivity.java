@@ -158,13 +158,15 @@ public class InputPumpableActivity extends AppCompatActivity {
                 Log.w("code", String.valueOf(response.code()));
                 if (response.code() == 200) {
                     Log.w("msg", String.valueOf(response.body()));
-
+                    Toast.makeText(InputPumpableActivity.this, "Input berhasil disimpan", Toast.LENGTH_SHORT).show();
+                    finish();
                 }
             }
 
             @Override
             public void onFailure(Call<Object> call, Throwable t) {
                 Log.w("error", t.getMessage());
+                Toast.makeText(InputPumpableActivity.this, "Input gagal disimpan", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -210,12 +212,15 @@ public class InputPumpableActivity extends AppCompatActivity {
                 Log.w("code", String.valueOf(response.code()));
                 if (response.code() == 200) {
                     Log.w("msg", String.valueOf(response.body()));
+                    Toast.makeText(InputPumpableActivity.this, "Input berhasil disimpan", Toast.LENGTH_SHORT).show();
+                    finish();
                 }
             }
 
             @Override
             public void onFailure(Call<Object> call, Throwable t) {
                 Log.w("error", t.getMessage());
+                Toast.makeText(InputPumpableActivity.this, "Input gagal disimpan", Toast.LENGTH_SHORT).show();
             }
         });
     }
