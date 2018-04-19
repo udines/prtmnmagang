@@ -452,7 +452,7 @@ public class InputTransferPipelineActivity extends AppCompatActivity {
 
     private void handleSpinner() {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(),
-                R.array.bahan_bakar, android.R.layout.simple_spinner_item);
+                R.array.operasi_product, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
     }

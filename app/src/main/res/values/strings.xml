@@ -42,6 +42,12 @@
         <item>SOLAR/HSD/MGO/ADO</item>
     </string-array>
 
+    <string-array name="operasi_product">
+        <item>Pertamax, BULK</item>
+        <item>Premium</item>
+        <item>SOLAR/HSD/MGO/ADO</item>
+    </string-array>
+
     <string-array name="pilihan_periode">
         <item>Daily</item>
         <item>Monthly</item>

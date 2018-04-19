@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.pertamina.pertaminatuban.R;
@@ -171,6 +172,7 @@ public class InputDistribusiBbmActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.GONE);
                 if (response.code() == 200) {
                     Log.w("body", new Gson().toJson(response.body()));
+                    Toast.makeText(InputDistribusiBbmActivity.this, "Input berhasil disimpan", Toast.LENGTH_SHORT).show();
                     finish();
                 }
             }
@@ -180,6 +182,7 @@ public class InputDistribusiBbmActivity extends AppCompatActivity {
                 Log.w("error", t.getMessage());
                 kirim.setVisibility(View.VISIBLE);
                 progressBar.setVisibility(View.GONE);
+                Toast.makeText(InputDistribusiBbmActivity.this, "Input gagal disimpan", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -358,6 +361,7 @@ public class InputDistribusiBbmActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.GONE);
                 if (response.code() == 200) {
                     Log.w("body", new Gson().toJson(response.body()));
+                    Toast.makeText(InputDistribusiBbmActivity.this, "Input berhasil ditambahkan", Toast.LENGTH_SHORT).show();
                     finish();
                 }
             }
@@ -367,6 +371,7 @@ public class InputDistribusiBbmActivity extends AppCompatActivity {
                 Log.w("error", t.getMessage());
                 kirim.setVisibility(View.VISIBLE);
                 progressBar.setVisibility(View.GONE);
+                Toast.makeText(InputDistribusiBbmActivity.this, "Input gagal ditambahkan", Toast.LENGTH_SHORT).show();
             }
         });
     }

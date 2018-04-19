@@ -220,17 +220,17 @@ public class TransferPipelineActivity extends AppCompatActivity {
 
                     for (int i = 0; i < pipelines.size(); i++) {
                         if (pipelines.get(i).getFuel().equals(Matbal.PERTAMAX)) {
-                            quantityPertamax.setText(String.valueOf(pipelines.get(i).getQuantity()));
+                            quantityPertamax.setText(String.valueOf(pipelines.get(i).getQuantity() + " KL"));
                             startPertamax.setText(pipelines.get(i).getStart());
                             stopPertamax.setText(pipelines.get(i).getStop());
                             jumlahPertamax.setText(pipelines.get(i).getJumlah());
                         } else if (pipelines.get(i).getFuel().equals(Matbal.PREMIUM)) {
-                            quantityPremium.setText(String.valueOf(pipelines.get(i).getQuantity()));
+                            quantityPremium.setText(String.valueOf(pipelines.get(i).getQuantity() + " KL"));
                             startPremium.setText(pipelines.get(i).getStart());
                             stopPremium.setText(pipelines.get(i).getStop());
                             jumlahPremium.setText(pipelines.get(i).getJumlah());
                         } else if (pipelines.get(i).getFuel().equals(Matbal.SOLAR)) {
-                            quantitySolar.setText(String.valueOf(pipelines.get(i).getQuantity()));
+                            quantitySolar.setText(String.valueOf(pipelines.get(i).getQuantity() + " KL"));
                             startSolar.setText(pipelines.get(i).getStart());
                             stopSolar.setText(pipelines.get(i).getStop());
                             jumlahSolar.setText(pipelines.get(i).getJumlah());
@@ -246,13 +246,13 @@ public class TransferPipelineActivity extends AppCompatActivity {
                         Log.w("keys", key);
                         switch (key) {
                             case Matbal.PERTAMAX:
-                                handledSetText(utilisasiPertamax, object.getString(key));
+                                handledSetText(utilisasiPertamax, object.getString(key), "%");
                                 break;
                             case Matbal.PREMIUM:
-                                handledSetText(utilisasiPremium, object.getString(key));
+                                handledSetText(utilisasiPremium, object.getString(key), "%");
                                 break;
                             case Matbal.SOLAR:
-                                handledSetText(utilisasiSolar, object.getString(key));
+                                handledSetText(utilisasiSolar, object.getString(key), "%");
                                 break;
                         }
                     }
@@ -266,13 +266,13 @@ public class TransferPipelineActivity extends AppCompatActivity {
                         Log.w("keys", key);
                         switch (key) {
                             case Matbal.PERTAMAX:
-                                handledSetText(flowratePertamax, object.getString(key));
+                                handledSetText(flowratePertamax, object.getString(key), "");
                                 break;
                             case Matbal.PREMIUM:
-                                handledSetText(flowratePremium, object.getString(key));
+                                handledSetText(flowratePremium, object.getString(key), "");
                                 break;
                             case Matbal.SOLAR:
-                                handledSetText(flowrateSolar, object.getString(key));
+                                handledSetText(flowrateSolar, object.getString(key), "");
                                 break;
                         }
                     }
@@ -288,9 +288,15 @@ public class TransferPipelineActivity extends AppCompatActivity {
         });
     }
 
-    private void handledSetText(TextView target, String value) {
+    private void handledSetText(TextView target, String value, String satuan) {
         if (value != null) {
-            target.setText(value);
+            target.setText(String.valueOf(value + satuan));
         }
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        getPipelineBulan(month, year);
     }
 }

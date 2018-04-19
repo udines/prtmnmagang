@@ -85,7 +85,7 @@ public class InputSarfasActivity extends AppCompatActivity {
         buttonStopTime = findViewById(R.id.input_sarfas_stop_time);
         textJumlah = findViewById(R.id.input_sarfas_jumlah);
         kirim = findViewById(R.id.input_sarfas_kirim);
-        bulanButton = findViewById(R.id.input_transfer_pipeline_bulan_button);
+        bulanButton = findViewById(R.id.input_sarfas_bulan_button);
 
         Calendar cal = Calendar.getInstance();
         startYear = cal.get(Calendar.YEAR);
@@ -444,7 +444,7 @@ public class InputSarfasActivity extends AppCompatActivity {
 
     private void handleSpinner() {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(),
-                R.array.bahan_bakar, android.R.layout.simple_spinner_item);
+                R.array.operasi_product, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
     }

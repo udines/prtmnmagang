@@ -180,48 +180,48 @@ public class DistribusiBbmActivity extends AppCompatActivity {
                     case DistribusiBbm.DIST_TANKER:
                         switch (distribusi.getFuel()) {
                             case Matbal.PERTAMAX:
-                                tankerPertamax.setText(String.valueOf(distribusi.getValue()));
+                                tankerPertamax.setText(String.valueOf(distribusi.getValue() + " KL"));
                                 break;
                             case Matbal.PREMIUM:
-                                tankerPremium.setText(String.valueOf(distribusi.getValue()));
+                                tankerPremium.setText(String.valueOf(distribusi.getValue() + " KL"));
                                 break;
                             case Matbal.SOLAR:
-                                tankerSolar.setText(String.valueOf(distribusi.getValue()));
+                                tankerSolar.setText(String.valueOf(distribusi.getValue() + " KL"));
                                 break;
                             case Matbal.PERTALITE:
-                                tankerPertalite.setText(String.valueOf(distribusi.getValue()));
+                                tankerPertalite.setText(String.valueOf(distribusi.getValue() + " KL"));
                                 break;
                         }
                         break;
                     case DistribusiBbm.DIST_PIPA:
                         switch (distribusi.getFuel()) {
                             case Matbal.PERTAMAX:
-                                pipaPertamax.setText(String.valueOf(distribusi.getValue()));
+                                pipaPertamax.setText(String.valueOf(distribusi.getValue() + " KL"));
                                 break;
                             case Matbal.PREMIUM:
-                                pipaPremium.setText(String.valueOf(distribusi.getValue()));
+                                pipaPremium.setText(String.valueOf(distribusi.getValue() + " KL"));
                                 break;
                             case Matbal.SOLAR:
-                                pipaSolar.setText(String.valueOf(distribusi.getValue()));
+                                pipaSolar.setText(String.valueOf(distribusi.getValue() + " KL"));
                                 break;
                             case Matbal.PERTALITE:
-                                pipaPertalite.setText(String.valueOf(distribusi.getValue()));
+                                pipaPertalite.setText(String.valueOf(distribusi.getValue() + " KL"));
                                 break;
                         }
                         break;
                     case DistribusiBbm.DIST_MOBIL:
                         switch (distribusi.getFuel()) {
                             case Matbal.PERTAMAX:
-                                mobilPertamax.setText(String.valueOf(distribusi.getValue()));
+                                mobilPertamax.setText(String.valueOf(distribusi.getValue() + " KL"));
                                 break;
                             case Matbal.PREMIUM:
-                                mobilPremium.setText(String.valueOf(distribusi.getValue()));
+                                mobilPremium.setText(String.valueOf(distribusi.getValue() + " KL"));
                                 break;
                             case Matbal.SOLAR:
-                                mobilSolar.setText(String.valueOf(distribusi.getValue()));
+                                mobilSolar.setText(String.valueOf(distribusi.getValue() + " KL"));
                                 break;
                             case Matbal.PERTALITE:
-                                mobilPertalite.setText(String.valueOf(distribusi.getValue()));
+                                mobilPertalite.setText(String.valueOf(distribusi.getValue() + " KL"));
                                 break;
                         }
                         break;

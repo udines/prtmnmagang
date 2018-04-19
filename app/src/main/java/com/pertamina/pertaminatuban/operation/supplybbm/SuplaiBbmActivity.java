@@ -150,25 +150,25 @@ public class SuplaiBbmActivity extends AppCompatActivity {
                         if (suplai.getTransaksi().equals(Suplai.TRANS_IMPORT)) {
                             switch (suplai.getFuel()) {
                                 case Matbal.PERTAMAX:
-                                    tankerImportPertamax.setText(String.valueOf(suplai.getValue()));
+                                    tankerImportPertamax.setText(String.valueOf(suplai.getValue() + " KL"));
                                     break;
                                 case Matbal.PREMIUM:
-                                    tankerImportPremium.setText(String.valueOf(suplai.getValue()));
+                                    tankerImportPremium.setText(String.valueOf(suplai.getValue() + " KL"));
                                     break;
                                 case Matbal.SOLAR:
-                                    tankerImportSolar.setText(String.valueOf(suplai.getValue()));
+                                    tankerImportSolar.setText(String.valueOf(suplai.getValue() + " KL"));
                                     break;
                             }
                         } else if (suplai.getTransaksi().equals(Suplai.TRANS_DOMESTIK)) {
                             switch (suplai.getFuel()) {
                                 case Matbal.PERTAMAX:
-                                    tankerDomestikPertamax.setText(String.valueOf(suplai.getValue()));
+                                    tankerDomestikPertamax.setText(String.valueOf(suplai.getValue() + " KL"));
                                     break;
                                 case Matbal.PREMIUM:
-                                    tankerDomestikPremium.setText(String.valueOf(suplai.getValue()));
+                                    tankerDomestikPremium.setText(String.valueOf(suplai.getValue() + " KL"));
                                     break;
                                 case Matbal.SOLAR:
-                                    tankerDomestikSolar.setText(String.valueOf(suplai.getValue()));
+                                    tankerDomestikSolar.setText(String.valueOf(suplai.getValue() + " KL"));
                                     break;
                             }
                         }
@@ -176,26 +176,26 @@ public class SuplaiBbmActivity extends AppCompatActivity {
                     case Suplai.SUP_EXTPPI:
                         switch (suplai.getFuel()) {
                             case Matbal.PERTAMAX:
-                                pipePertamax.setText(String.valueOf(suplai.getValue()));
+                                pipePertamax.setText(String.valueOf(suplai.getValue() + " KL"));
                                 break;
                             case Matbal.PREMIUM:
-                                pipePremium.setText(String.valueOf(suplai.getValue()));
+                                pipePremium.setText(String.valueOf(suplai.getValue() + " KL"));
                                 break;
                             case Matbal.SOLAR:
-                                pipeSolar.setText(String.valueOf(suplai.getValue()));
+                                pipeSolar.setText(String.valueOf(suplai.getValue() + " KL"));
                                 break;
                         }
                         break;
                     case Suplai.SUP_EXTWU:
                         switch (suplai.getFuel()) {
                             case Matbal.PERTAMAX:
-                                tangkiPertamax.setText(String.valueOf(suplai.getValue()));
+                                tangkiPertamax.setText(String.valueOf(suplai.getValue() + " KL"));
                                 break;
                             case Matbal.PREMIUM:
-                                tangkiPremium.setText(String.valueOf(suplai.getValue()));
+                                tangkiPremium.setText(String.valueOf(suplai.getValue() + " KL"));
                                 break;
                             case Matbal.SOLAR:
-                                tangkiSolar.setText(String.valueOf(suplai.getValue()));
+                                tangkiSolar.setText(String.valueOf(suplai.getValue() + " KL"));
                                 break;
                         }
                         break;
