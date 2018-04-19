@@ -391,7 +391,6 @@ public class InputTransferPipelineActivity extends AppCompatActivity {
 
     private void clearData() {
         inputQuantity.setText("");
-        spinner.setSelection(0);
         Calendar cal = Calendar.getInstance();
         startYear = cal.get(Calendar.YEAR);
         startMonth = cal.get(Calendar.MONTH);
