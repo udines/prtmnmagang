@@ -49,6 +49,7 @@ public class FeaturedAdapter extends RecyclerView.Adapter<FeaturedViewHolder> {
         holder.judul.setText(model.getJudul());
         holder.informasi.setText(model.getInformasi());
         holder.deskripsi.setText(model.getDeskripsi());
+        holder.index.setText(String.valueOf(holder.getAdapterPosition() + 1 + "/" + featureds.size()));
 
         switch (position) {
             case 0:

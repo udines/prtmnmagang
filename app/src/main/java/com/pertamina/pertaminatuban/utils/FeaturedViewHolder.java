@@ -15,6 +15,7 @@ public class FeaturedViewHolder extends RecyclerView.ViewHolder {
     public final ImageView image;
     public final CardView card;
     public final TextView judul, informasi, deskripsi;
+    public final TextView index;
 
     public FeaturedViewHolder(View itemView) {
         super(itemView);
@@ -23,5 +24,6 @@ public class FeaturedViewHolder extends RecyclerView.ViewHolder {
         judul = itemView.findViewById(R.id.item_menu_featured_judul);
         informasi = itemView.findViewById(R.id.item_menu_featured_informasi);
         deskripsi = itemView.findViewById(R.id.item_menu_featured_deskripsi);
+        index = itemView.findViewById(R.id.item_menu_featured_index);
     }
 }
