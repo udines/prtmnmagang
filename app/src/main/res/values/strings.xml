@@ -415,4 +415,7 @@
     <string name="title_activity_input_sarana_fasilitas">Input Sarfas</string>
     <string name="title_activity_license">Third Party Components</string>
     <string name="title_activity_table_test_report">Test Report</string>
+    <string name="jumlah_jam_transfer">Jumlah Jam Transfer</string>
+    <string name="utilisasi_pipe_line">Utilisasi Pipe Line</string>
+    <string name="flowrate">Flowrate</string>
 </resources>

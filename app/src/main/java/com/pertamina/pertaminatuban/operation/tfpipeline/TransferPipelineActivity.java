@@ -26,6 +26,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -220,17 +221,17 @@ public class TransferPipelineActivity extends AppCompatActivity {
 
                     for (int i = 0; i < pipelines.size(); i++) {
                         if (pipelines.get(i).getFuel().equals(Matbal.PERTAMAX)) {
-                            quantityPertamax.setText(String.valueOf(pipelines.get(i).getQuantity() + " KL"));
+                            quantityPertamax.setText(String.valueOf(numberWithDot(pipelines.get(i).getQuantity()) + " KL"));
                             startPertamax.setText(pipelines.get(i).getStart());
                             stopPertamax.setText(pipelines.get(i).getStop());
                             jumlahPertamax.setText(pipelines.get(i).getJumlah());
                         } else if (pipelines.get(i).getFuel().equals(Matbal.PREMIUM)) {
-                            quantityPremium.setText(String.valueOf(pipelines.get(i).getQuantity() + " KL"));
+                            quantityPremium.setText(String.valueOf(numberWithDot(pipelines.get(i).getQuantity()) + " KL"));
                             startPremium.setText(pipelines.get(i).getStart());
                             stopPremium.setText(pipelines.get(i).getStop());
                             jumlahPremium.setText(pipelines.get(i).getJumlah());
                         } else if (pipelines.get(i).getFuel().equals(Matbal.SOLAR)) {
-                            quantitySolar.setText(String.valueOf(pipelines.get(i).getQuantity() + " KL"));
+                            quantitySolar.setText(String.valueOf(numberWithDot(pipelines.get(i).getQuantity()) + " KL"));
                             startSolar.setText(pipelines.get(i).getStart());
                             stopSolar.setText(pipelines.get(i).getStop());
                             jumlahSolar.setText(pipelines.get(i).getJumlah());
@@ -286,6 +287,11 @@ public class TransferPipelineActivity extends AppCompatActivity {
                 Log.w("error", t.getMessage());
             }
         });
+    }
+
+    private String numberWithDot(long angka) {
+        DecimalFormat formatter = new DecimalFormat("#,###,###");
+        return formatter.format(angka).replaceAll(",",".");
     }
 
     private void handledSetText(TextView target, String value, String satuan) {
