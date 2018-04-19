@@ -28,8 +28,11 @@ import com.google.gson.Gson;
 import com.pertamina.pertaminatuban.R;
 import com.pertamina.pertaminatuban.distribusi.KonsumenActivity;
 import com.pertamina.pertaminatuban.marine.input.InputTankerMovementActivity;
+import com.pertamina.pertaminatuban.operation.models.LastBatch;
 import com.pertamina.pertaminatuban.operation.models.TransferPipeline;
 import com.pertamina.pertaminatuban.operation.pumpable.InputPumpableActivity;
+import com.pertamina.pertaminatuban.operation.sarfas.InputSarfasActivity;
+import com.pertamina.pertaminatuban.operation.tftppi.InputTransferTppiActivity;
 import com.pertamina.pertaminatuban.service.OperationClient;
 import com.whiteelephant.monthpicker.MonthPickerDialog;
 
@@ -58,8 +61,8 @@ public class InputTransferPipelineActivity extends AppCompatActivity {
     private EditText inputQuantity;
     private Button buttonStartDate, buttonStartTime;
     private Button buttonStopDate, buttonStopTime;
-    private Button kirim, bulanButton;
-    private TextView textJumlah;
+    private Button kirim, bulanButton, hapus;
+    private TextView textJumlah, batchTerakhir;
 
     private int startYear, startMonth, startDay, startHour, startMinute;
     private int stopYear, stopMonth, stopDay, stopHour, stopMinute;
@@ -92,6 +95,8 @@ public class InputTransferPipelineActivity extends AppCompatActivity {
         textJumlah = findViewById(R.id.input_transfer_pipeline_jumlah);
         kirim = findViewById(R.id.input_transfer_pipeline_kirim);
         bulanButton = findViewById(R.id.input_transfer_pipeline_bulan_button);
+        hapus = findViewById(R.id.input_transfer_pipeline_hapus);
+        batchTerakhir = findViewById(R.id.input_transfer_pipeline_batch_terakhir);
 
         Calendar cal = Calendar.getInstance();
         startYear = cal.get(Calendar.YEAR);
@@ -109,11 +114,125 @@ public class InputTransferPipelineActivity extends AppCompatActivity {
         setDateTimeButton(startYear, startMonth, startDay, startHour, startMinute, buttonStartDate, buttonStartTime);
         setDateTimeButton(stopYear, stopMonth, stopDay, stopHour, stopMinute, buttonStopDate, buttonStopTime);
         calculateJumlah();
+        getLastBatch(startYear, startMonth);
 
         handleDateTimeButtonClick();
         handleSpinner();
         setInitBatchData();
         handleKirim();
+        handleHapus();
+    }
+
+    private void getLastBatch(int year, int month) {
+        SharedPreferences preferences = InputTransferPipelineActivity.this.getSharedPreferences(
+                "login",
+                Context.MODE_PRIVATE
+        );
+
+        final String key = preferences.getString("userKey", "none");
+
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(new Interceptor() {
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request original = chain.request();
+
+                Request request = original.newBuilder()
+                        .header("Authorization", key)
+                        .method(original.method(), original.body())
+                        .build();
+                return chain.proceed(request);
+            }
+        });
+
+        OkHttpClient client = httpClient.build();
+
+        String baseUrl = "http://www.api.clicktuban.com/";
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client);
+
+        Retrofit retrofit = builder.build();
+        OperationClient operationClient = retrofit.create(OperationClient.class);
+        Call<LastBatch> call = operationClient.getPipelineLastBatch(
+                String.valueOf(year),
+                String.valueOf(month + 1)
+        );
+        call.enqueue(new Callback<LastBatch>() {
+            @Override
+            public void onResponse(Call<LastBatch> call, Response<LastBatch> response) {
+                Log.w("code", String.valueOf(response.code()));
+                if (response.code() == 200) {
+                    Log.w("body", new Gson().toJson(response.body()));
+                    batchTerakhir.setText(String.valueOf("Batch terakhir " + response.body().getLastBatch()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LastBatch> call, Throwable t) {
+                batchTerakhir.setText(String.valueOf("Batch terakhir " + 0));
+            }
+        });
+    }
+
+    private void handleHapus() {
+        hapus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.w("is update", String.valueOf(isUpdate));
+                if (isUpdate) {
+                    SharedPreferences preferences = InputTransferPipelineActivity.this.getSharedPreferences(
+                            "login",
+                            Context.MODE_PRIVATE
+                    );
+
+                    final String key = preferences.getString("userKey", "none");
+
+                    OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+                    httpClient.addInterceptor(new Interceptor() {
+                        @Override
+                        public okhttp3.Response intercept(Chain chain) throws IOException {
+                            Request original = chain.request();
+
+                            Request request = original.newBuilder()
+                                    .header("Authorization", key)
+                                    .method(original.method(), original.body())
+                                    .build();
+                            return chain.proceed(request);
+                        }
+                    });
+
+                    OkHttpClient client = httpClient.build();
+
+                    String baseUrl = "http://www.api.clicktuban.com/";
+                    Retrofit.Builder builder = new Retrofit.Builder()
+                            .baseUrl(baseUrl)
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .client(client);
+
+                    Retrofit retrofit = builder.build();
+                    OperationClient operationClient = retrofit.create(OperationClient.class);
+                    Call<Object> call = operationClient.deletePipeline(id);
+                    call.enqueue(new Callback<Object>() {
+                        @Override
+                        public void onResponse(Call<Object> call, Response<Object> response) {
+                            Log.w("code", String.valueOf(response.code()));
+                            if (response.code() == 200) {
+                                Log.w("msg", new Gson().toJson(response.body()));
+                                Toast.makeText(InputTransferPipelineActivity.this, "Data berhasil dihapus", Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<Object> call, Throwable t) {
+                            Toast.makeText(InputTransferPipelineActivity.this, "Data gagal dihapus", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            }
+        });
     }
 
     private void handleKirim() {
@@ -295,6 +414,7 @@ public class InputTransferPipelineActivity extends AppCompatActivity {
                                 if (inputBatch.getText().length() > 0) {
                                     setInitData(startMonth, startYear, Integer.parseInt(inputBatch.getText().toString()));
                                 }
+                                getLastBatch(startYear, startMonth);
                             }
                         },
                         today.get(Calendar.YEAR),
@@ -391,7 +511,7 @@ public class InputTransferPipelineActivity extends AppCompatActivity {
 
     private void clearData() {
         inputQuantity.setText("");
-        Calendar cal = Calendar.getInstance();
+        /*Calendar cal = Calendar.getInstance();
         startYear = cal.get(Calendar.YEAR);
         startMonth = cal.get(Calendar.MONTH);
         startDay = cal.get(Calendar.DAY_OF_MONTH);
@@ -406,10 +526,13 @@ public class InputTransferPipelineActivity extends AppCompatActivity {
 
         setDateTimeButton(startYear, startMonth, startDay, startHour, startMinute, buttonStartDate, buttonStartTime);
         setDateTimeButton(stopYear, stopMonth, stopDay, stopHour, stopMinute, buttonStopDate, buttonStopTime);
-        calculateJumlah();
+        calculateJumlah();*/
+        jumlah = String.format(Locale.getDefault(),"%02d:%02d", 0, 0);
+        textJumlah.setText(String.valueOf("Jumlah: " + jumlah));
     }
 
     private void setInitInput(TransferPipeline pipeline) {
+        Log.w("init data", new Gson().toJson(pipeline));
         id = pipeline.getId();
         inputQuantity.setText(String.valueOf(pipeline.getQuantity()));
         jumlah = pipeline.getJumlah().substring(0, pipeline.getJumlah().length() - 3);
@@ -451,7 +574,7 @@ public class InputTransferPipelineActivity extends AppCompatActivity {
 
     private void handleSpinner() {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(),
-                R.array.operasi_product, android.R.layout.simple_spinner_item);
+                R.array.bahan_bakar, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
     }
@@ -473,6 +596,7 @@ public class InputTransferPipelineActivity extends AppCompatActivity {
                         setDateTimeButton(stopYear, stopMonth, stopDay, stopHour, stopMinute, buttonStopDate, buttonStopTime);
                         setBulanButton(startMonth, startYear, bulanButton);
                         calculateJumlah();
+                        getLastBatch(startYear, startMonth);
                     }
                 };
                 DatePickerDialog dialog = new DatePickerDialog(

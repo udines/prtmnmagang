@@ -2,6 +2,7 @@ package com.pertamina.pertaminatuban.service;
 
 import com.pertamina.pertaminatuban.operation.models.Datels;
 import com.pertamina.pertaminatuban.operation.models.DistribusiBbm;
+import com.pertamina.pertaminatuban.operation.models.LastBatch;
 import com.pertamina.pertaminatuban.operation.models.Pumpable;
 import com.pertamina.pertaminatuban.operation.models.Suplai;
 import com.pertamina.pertaminatuban.operation.models.TransferPipeline;
@@ -43,6 +44,10 @@ public interface OperationClient {
     Call<Object> putPipeline(@Body TransferPipeline pipeline);
     @GET("oprtsg/{tahun}/{bulan}")
     Call<Object> getPipelineBulanRaw(@Path("tahun") String tahun, @Path("bulan") String bulan);
+    @GET("oprtsg/get/last/batch/{tahun}/{bulan}")
+    Call<LastBatch> getPipelineLastBatch(@Path("tahun") String tahun, @Path("bulan") String bulan);
+    @DELETE("oprtsg/{id}")
+    Call<Object> deletePipeline(@Path("id") String id);
 
     //tppi
     @POST("oprtppi/")
@@ -53,6 +58,10 @@ public interface OperationClient {
     Call<Object> putTppi(@Body TransferPipeline pipeline);
     @GET("oprtppi/{tahun}/{bulan}")
     Call<Object> getTppiBulanRaw(@Path("tahun") String tahun, @Path("bulan") String bulan);
+    @GET("oprtppi/get/last/batch/{tahun}/{bulan}")
+    Call<LastBatch> getTppiLastBatch(@Path("tahun") String tahun, @Path("bulan") String bulan);
+    @DELETE("oprtppi/{id}")
+    Call<Object> deleteTppi(@Path("id") String id);
 
     //twu
     @POST("oprtwu/")
@@ -63,6 +72,10 @@ public interface OperationClient {
     Call<Object> putTwu(@Body TransferPipeline pipeline);
     @GET("oprtwu/{tahun}/{bulan}")
     Call<Object> getTwuBulanRaw(@Path("tahun") String tahun, @Path("bulan") String bulan);
+    @GET("oprtwu/get/last/batch/{tahun}/{bulan}")
+    Call<LastBatch> getTwuLastBatch(@Path("tahun") String tahun, @Path("bulan") String bulan);
+    @DELETE("oprtwu/{id}")
+    Call<Object> deleteTwu(@Path("id") String id);
 
     //suplai
     @POST("suplaibbm/")
