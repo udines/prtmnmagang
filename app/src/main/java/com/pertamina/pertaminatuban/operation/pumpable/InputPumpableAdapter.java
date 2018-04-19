@@ -1,25 +1,40 @@
 package com.pertamina.pertaminatuban.operation.pumpable;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
+import com.google.gson.Gson;
 import com.pertamina.pertaminatuban.R;
 import com.pertamina.pertaminatuban.operation.models.Pumpable;
+import com.pertamina.pertaminatuban.service.OperationClient;
 
+import java.io.IOException;
 import java.util.ArrayList;
+
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class InputPumpableAdapter extends RecyclerView.Adapter<InputPumpableViewHolder> {
 
     private ArrayList<Pumpable> pumpables;
     private Context context;
+    private int index;
 
     public InputPumpableAdapter(ArrayList<Pumpable> pumpables, Context context) {
         this.pumpables = pumpables;
@@ -40,6 +55,20 @@ public class InputPumpableAdapter extends RecyclerView.Adapter<InputPumpableView
         if (pumpables.get(position).getValue() > 0) {
             holder.inputValue.setText(String.valueOf(pumpables.get(position).getValue()));
         }
+
+        holder.close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (pumpables.get(holder.getAdapterPosition()).getId() != null) {
+                    index = holder.getAdapterPosition();
+                    hapusPumpable(pumpables.get(holder.getAdapterPosition()).getId());
+                } else {
+                    pumpables.remove(holder.getAdapterPosition());
+                    notifyItemRemoved(holder.getAdapterPosition());
+                    notifyItemRangeChanged(holder.getAdapterPosition(), pumpables.size());
+                }
+            }
+        });
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context,
                 R.array.bahan_bakar, android.R.layout.simple_spinner_item);
@@ -108,5 +137,58 @@ public class InputPumpableAdapter extends RecyclerView.Adapter<InputPumpableView
 
     public ArrayList<Pumpable> getPumpables() {
         return pumpables;
+    }
+
+    private void hapusPumpable(String id) {
+        Log.w("delete id", id);
+        SharedPreferences preferences = context.getSharedPreferences(
+                "login",
+                Context.MODE_PRIVATE
+        );
+
+        final String key = preferences.getString("userKey", "none");
+
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(new Interceptor() {
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request original = chain.request();
+
+                Request request = original.newBuilder()
+                        .header("Authorization", key)
+                        .method(original.method(), original.body())
+                        .build();
+                return chain.proceed(request);
+            }
+        });
+
+        OkHttpClient client = httpClient.build();
+
+        String baseUrl = "http://www.api.clicktuban.com/";
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client);
+
+        Retrofit retrofit = builder.build();
+        OperationClient operationClient = retrofit.create(OperationClient.class);
+        Call<Object> call = operationClient.deletePumpable(id);
+        call.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, Response<Object> response) {
+                Log.w("code", String.valueOf(response.code()));
+                if (response.code() == 200) {
+                    Log.w("body", new Gson().toJson(response.body()));
+                    pumpables.remove(index);
+                    notifyItemRemoved(index);
+                    notifyItemRangeChanged(index, pumpables.size());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
     }
 }

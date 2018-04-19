@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -30,6 +31,8 @@ public interface OperationClient {
     Call<Object> getPumpableTanggalRaw(@Path("tanggal") String tanggal, @Body Datels datels);
     @PUT("operasional/tangkitimbuncheck")
     Call<Object> putPumpable(@Body ArrayList<Pumpable> pumpables);
+    @DELETE("operasional/tangkitimbuncheck/{id}")
+    Call<Object> deletePumpable(@Path("id") String id);
 
     //pipeline
     @POST("oprtsg/")
