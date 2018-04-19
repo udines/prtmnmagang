@@ -294,7 +294,7 @@ public class InputSarfasActivity extends AppCompatActivity {
                 );
 
                 builder.setMinYear(1970)
-                        .setMaxYear(today.get(Calendar.YEAR))
+                        .setMaxYear(today.get(Calendar.YEAR) + 4)
                         .setTitle("Pilih bulan dan tahun")
                         .setActivatedMonth(startMonth)
                         .setActivatedYear(startYear)
