@@ -300,6 +300,7 @@ public class PumpableActivity extends AppCompatActivity {
                     if (pumpables.get(i).getNoTank().equals("total")) {
                         pertamax.setText(String.valueOf(pumpables.get(i).getValue() + satuan));
                     }
+                    Log.w("pertamax", new Gson().toJson(pumpables.get(i)));
                     break;
                 case Matbal.PREMIUM:
                     if (pumpables.get(i).getNoTank().equals("total")) {
@@ -355,7 +356,7 @@ public class PumpableActivity extends AppCompatActivity {
         for (int i = 0; i < jsonArray.length(); i++) {
             Pumpable pumpable = new Pumpable();
             pumpable.setFuel(jsonArray.getJSONObject(i).getString("fuel"));
-            pumpable.setValue(jsonArray.getJSONObject(i).getLong("value"));
+            pumpable.setValue(jsonArray.getJSONObject(i).getDouble("value"));
             pumpable.setNoTank(jsonArray.getJSONObject(i).getString("no_tank"));
             pumpables.add(pumpable);
         }
