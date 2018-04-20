@@ -47,6 +47,7 @@ public class InputDistribusiBbmActivity extends AppCompatActivity {
     private int day, month, year;
     private ArrayList<DistribusiBbm> distribusis;
     private ArrayList<String> distribusiIds;
+    private ArrayList<String> deleteIds;
     private ProgressBar progressBar;
     private boolean isUpdate;
 
@@ -90,6 +91,71 @@ public class InputDistribusiBbmActivity extends AppCompatActivity {
 
         handleTanggalButton();
         handleKirimButton();
+        handleHapus();
+    }
+
+    private void handleHapus() {
+        hapus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                clearEntries();
+                Log.w("id length", String.valueOf(deleteIds.size()));
+                if (deleteIds.size() > 0) {
+                    for (int i = 0; i < deleteIds.size(); i++) {
+                        deleteData(deleteIds.get(i));
+                    }
+                }
+            }
+        });
+    }
+
+    private void deleteData(String id) {
+        SharedPreferences preferences = InputDistribusiBbmActivity.this.getSharedPreferences(
+                "login",
+                Context.MODE_PRIVATE
+        );
+
+        final String key = preferences.getString("userKey", "none");
+
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(new Interceptor() {
+            @Override
+            public okhttp3.Response intercept(Chain chain) throws IOException {
+                Request original = chain.request();
+
+                Request request = original.newBuilder()
+                        .header("Authorization", key)
+                        .method(original.method(), original.body())
+                        .build();
+                return chain.proceed(request);
+            }
+        });
+
+        OkHttpClient client = httpClient.build();
+
+        String baseUrl = "http://www.api.clicktuban.com/";
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client);
+
+        Retrofit retrofit = builder.build();
+        OperationClient operationClient = retrofit.create(OperationClient.class);
+        Call<Object> call = operationClient.deleteDistribusi(id);
+        call.enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, Response<Object> response) {
+                Log.w("code", String.valueOf(response.code()));
+                if (response.code() == 200) {
+                    Log.w("body", new Gson().toJson(response.body()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+                Log.w("error", t.getMessage());
+            }
+        });
     }
 
     private void handleKirimButton() {
@@ -235,6 +301,10 @@ public class InputDistribusiBbmActivity extends AppCompatActivity {
                 if (response.code() == 200) {
                     Log.w("body", new Gson().toJson(response.body()));
                     setInitialInput(response.body());
+                    deleteIds = new ArrayList<>();
+                    for (int i = 0; i < response.body().size(); i++) {
+                        deleteIds.add(response.body().get(i).getId());
+                    }
                 }
             }
 
