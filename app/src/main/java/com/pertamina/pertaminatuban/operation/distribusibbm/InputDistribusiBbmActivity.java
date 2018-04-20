@@ -43,7 +43,7 @@ public class InputDistribusiBbmActivity extends AppCompatActivity {
     private EditText inputTankerPertamax, inputTankerPremium, inputTankerSolar, inputTankerPertalite,
     inputPipaPertamax, inputPipaPremium, inputPipaSolar, inputPipaPertalite, inputMobilPertamax,
     inputMobilPremium, inputMobilSolar, inputMobilPertalite;
-    private Button tanggalButton, kirim;
+    private Button tanggalButton, kirim, hapus;
     private int day, month, year;
     private ArrayList<DistribusiBbm> distribusis;
     private ArrayList<String> distribusiIds;
@@ -79,6 +79,7 @@ public class InputDistribusiBbmActivity extends AppCompatActivity {
         tanggalButton = findViewById(R.id.input_distribusi_bbm_tanggal);
         kirim = findViewById(R.id.input_distribusi_bbm_button_kirim);
         progressBar = findViewById(R.id.input_distribusi_bbm_progress);
+        hapus = findViewById(R.id.input_distribusi_bbm_button_hapus);
 
         Calendar cal = Calendar.getInstance();
         day = cal.get(Calendar.DAY_OF_MONTH);
