@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.pertamina.pertaminatuban.R;
@@ -22,6 +23,7 @@ import com.pertamina.pertaminatuban.distribusi.WilayahActivity;
 import com.pertamina.pertaminatuban.distribusi.models.Matbal;
 import com.pertamina.pertaminatuban.operation.models.Pumpable;
 import com.pertamina.pertaminatuban.service.OperationClient;
+import com.pertamina.pertaminatuban.utils.MethodCollection;
 import com.whiteelephant.monthpicker.MonthPickerDialog;
 
 import org.json.JSONArray;
@@ -224,40 +226,33 @@ public class PumpableActivity extends AppCompatActivity {
         call.enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, Response<Object> response) {
-                Log.w("object", new Gson().toJson(response.body()));
+                String json = new Gson().toJson(response.body());
+                Log.w("object", json);
+                if (json.length() <= 2) {
+                    Toast.makeText(PumpableActivity.this, "Tidak ada data bulan ini", Toast.LENGTH_LONG).show();
+                    clearTextData();
+                }
                 try {
                     JSONObject raw = new JSONObject(new Gson().toJson(response.body()));
 
-                    ArrayList<Pumpable> totalPerFuel = new ArrayList<>();
                     ArrayList<Pumpable> totalPerTank = new ArrayList<>();
-                    ArrayList<Pumpable> averagePerFuel = new ArrayList<>();
                     ArrayList<Pumpable> averagePerTank = new ArrayList<>();
                     ArrayList<Pumpable> scPerTank = new ArrayList<>();
-                    ArrayList<Pumpable> scPerFuel = new ArrayList<>();
                     ArrayList<Pumpable> utilPerTank = new ArrayList<>();
-                    ArrayList<Pumpable> utilPerFuel = new ArrayList<>();
                     ArrayList<Pumpable> sc90 = new ArrayList<>();
                     ArrayList<Pumpable> rerataUtil = new ArrayList<>();
 
-//                    JSONArray totalPerFuelJson = raw.getJSONArray("totalperfuel");
                     JSONArray totalPerTankJson = raw.getJSONArray("totalPumpable");
-//                    JSONArray averagePerFuelJson = raw.getJSONArray("averageperfuel");
                     JSONArray averagePerTankJson = raw.getJSONArray("averagePumpable");
                     JSONArray scPerTankJson = raw.getJSONArray("totalsc100");
-//                    JSONArray scPerFuelJson = raw.getJSONArray("scperfuel");
                     JSONArray utilPerTankJson = raw.getJSONArray("totalutil");
-//                    JSONArray utilPerFuelJson = raw.getJSONArray("utilperfuel");
                     JSONArray sc90Json = raw.getJSONArray("totalsc90");
                     JSONArray rerataUtilJson = raw.getJSONArray("rerataUtilitas");
 
-//                    totalPerFuel = parseJsonToPumpable(totalPerFuelJson);
                     totalPerTank = parseJsonToPumpable(totalPerTankJson);
-//                    averagePerFuel = parseJsonToPumpable(averagePerFuelJson);
                     averagePerTank = parseJsonToPumpable(averagePerTankJson);
                     scPerTank = parseJsonToPumpable(scPerTankJson);
-//                    scPerFuel = parseJsonToPumpable(scPerFuelJson);
                     utilPerTank = parseJsonToPumpable(utilPerTankJson);
-//                    utilPerFuel = parseJsonToPumpable(utilPerFuelJson);
                     sc90 = parseJsonToPumpable(sc90Json);
                     rerataUtil = parseJsonToPumpable(rerataUtilJson);
 
@@ -268,11 +263,11 @@ public class PumpableActivity extends AppCompatActivity {
                     populateRecyclerView(sc90, sc90PertamaxRec, sc90PremiumRec, sc90SolarRec);
                     populateRecyclerView(rerataUtil, rerataUtilPertamaxRec, rerataUtilPremiumRec, rerataUtilSolaRec);
 
-                    populateSummary(totalPerTank, totalPertamax, totalPremium, totalSolar, " KL");
-                    populateSummary(averagePerTank, avPertamax, avPremium, avSolar, " KL");
-                    populateSummary(scPerTank, scPertamax, scPremium, scSolar, " KL");
+                    populateSummaryBulat(totalPerTank, totalPertamax, totalPremium, totalSolar, " KL");
+                    populateSummaryBulat(averagePerTank, avPertamax, avPremium, avSolar, " KL");
+                    populateSummaryBulat(scPerTank, scPertamax, scPremium, scSolar, " KL");
                     populateSummary(utilPerTank, utilPertamax, utilPremium, utilSolar, "%");
-                    populateSummary(sc90, sc90Pertamax, sc90Premium, sc90Solar, " KL");
+                    populateSummaryBulat(sc90, sc90Pertamax, sc90Premium, sc90Solar, " KL");
                     populateSummary(rerataUtil, rerataUtilPertamax, rerataUtilPremium, rerataUtilSolar, "%");
 
                 } catch (JSONException e) {
@@ -285,6 +280,56 @@ public class PumpableActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void clearTextData() {
+        totalPertamax.setText("");
+        totalPremium.setText("");
+        totalSolar.setText("");
+        avPertamax.setText("");
+        avPremium.setText("");
+        avSolar.setText("");
+        scPertamax.setText("");
+        scPremium.setText("");
+        scSolar.setText("");
+        utilPertamax.setText("");
+        utilPremium.setText("");
+        utilSolar.setText("");
+        sc90Pertamax.setText("");
+        sc90Premium.setText("");
+        sc90Solar.setText("");
+        rerataUtilPertamax.setText("");
+        rerataUtilPremium.setText("");
+        rerataUtilSolar.setText("");
+    }
+
+    private void populateSummaryBulat(ArrayList<Pumpable> pumpables, TextView pertamax, TextView premium, TextView solar, String satuan) {
+        for (int i = 0; i < pumpables.size(); i++) {
+            switch (pumpables.get(i).getFuel()) {
+                case Matbal.PERTAMAX:
+                    if (pumpables.get(i).getNoTank().equals("total")) {
+                        pertamax.setText(String.valueOf(
+                                MethodCollection.numberWithDot(pumpables.get(i).getValue()) + satuan
+                        ));
+                    }
+                    Log.w("pertamax", new Gson().toJson(pumpables.get(i)));
+                    break;
+                case Matbal.PREMIUM:
+                    if (pumpables.get(i).getNoTank().equals("total")) {
+                        premium.setText(String.valueOf(
+                                MethodCollection.numberWithDot(pumpables.get(i).getValue()) + satuan
+                        ));
+                    }
+                    break;
+                case Matbal.SOLAR:
+                    if (pumpables.get(i).getNoTank().equals("total")) {
+                        solar.setText(String.valueOf(
+                                MethodCollection.numberWithDot(pumpables.get(i).getValue()) + satuan
+                        ));
+                    }
+                    break;
+            }
+        }
     }
 
     private void populateSummary(

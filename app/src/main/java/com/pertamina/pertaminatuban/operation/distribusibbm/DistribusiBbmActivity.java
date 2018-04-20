@@ -21,6 +21,7 @@ import com.pertamina.pertaminatuban.operation.models.Suplai;
 import com.pertamina.pertaminatuban.operation.supplybbm.InputSuplaiBbmActivity;
 import com.pertamina.pertaminatuban.operation.supplybbm.SuplaiBbmActivity;
 import com.pertamina.pertaminatuban.service.OperationClient;
+import com.pertamina.pertaminatuban.utils.MethodCollection;
 import com.whiteelephant.monthpicker.MonthPickerDialog;
 
 import java.io.IOException;
@@ -180,48 +181,48 @@ public class DistribusiBbmActivity extends AppCompatActivity {
                     case DistribusiBbm.DIST_TANKER:
                         switch (distribusi.getFuel()) {
                             case Matbal.PERTAMAX:
-                                tankerPertamax.setText(String.valueOf(distribusi.getValue() + " KL"));
+                                tankerPertamax.setText(String.valueOf(MethodCollection.numberWithDot(distribusi.getValue()) + " KL"));
                                 break;
                             case Matbal.PREMIUM:
-                                tankerPremium.setText(String.valueOf(distribusi.getValue() + " KL"));
+                                tankerPremium.setText(String.valueOf(MethodCollection.numberWithDot(distribusi.getValue()) + " KL"));
                                 break;
                             case Matbal.SOLAR:
-                                tankerSolar.setText(String.valueOf(distribusi.getValue() + " KL"));
+                                tankerSolar.setText(String.valueOf(MethodCollection.numberWithDot(distribusi.getValue()) + " KL"));
                                 break;
                             case Matbal.PERTALITE:
-                                tankerPertalite.setText(String.valueOf(distribusi.getValue() + " KL"));
+                                tankerPertalite.setText(String.valueOf(MethodCollection.numberWithDot(distribusi.getValue()) + " KL"));
                                 break;
                         }
                         break;
                     case DistribusiBbm.DIST_PIPA:
                         switch (distribusi.getFuel()) {
                             case Matbal.PERTAMAX:
-                                pipaPertamax.setText(String.valueOf(distribusi.getValue() + " KL"));
+                                pipaPertamax.setText(String.valueOf(MethodCollection.numberWithDot(distribusi.getValue()) + " KL"));
                                 break;
                             case Matbal.PREMIUM:
-                                pipaPremium.setText(String.valueOf(distribusi.getValue() + " KL"));
+                                pipaPremium.setText(String.valueOf(MethodCollection.numberWithDot(distribusi.getValue()) + " KL"));
                                 break;
                             case Matbal.SOLAR:
-                                pipaSolar.setText(String.valueOf(distribusi.getValue() + " KL"));
+                                pipaSolar.setText(String.valueOf(MethodCollection.numberWithDot(distribusi.getValue()) + " KL"));
                                 break;
                             case Matbal.PERTALITE:
-                                pipaPertalite.setText(String.valueOf(distribusi.getValue() + " KL"));
+                                pipaPertalite.setText(String.valueOf(MethodCollection.numberWithDot(distribusi.getValue()) + " KL"));
                                 break;
                         }
                         break;
                     case DistribusiBbm.DIST_MOBIL:
                         switch (distribusi.getFuel()) {
                             case Matbal.PERTAMAX:
-                                mobilPertamax.setText(String.valueOf(distribusi.getValue() + " KL"));
+                                mobilPertamax.setText(String.valueOf(MethodCollection.numberWithDot(distribusi.getValue()) + " KL"));
                                 break;
                             case Matbal.PREMIUM:
-                                mobilPremium.setText(String.valueOf(distribusi.getValue() + " KL"));
+                                mobilPremium.setText(String.valueOf(MethodCollection.numberWithDot(distribusi.getValue()) + " KL"));
                                 break;
                             case Matbal.SOLAR:
-                                mobilSolar.setText(String.valueOf(distribusi.getValue() + " KL"));
+                                mobilSolar.setText(String.valueOf(MethodCollection.numberWithDot(distribusi.getValue()) + " KL"));
                                 break;
                             case Matbal.PERTALITE:
-                                mobilPertalite.setText(String.valueOf(distribusi.getValue() + " KL"));
+                                mobilPertalite.setText(String.valueOf(MethodCollection.numberWithDot(distribusi.getValue()) + " KL"));
                                 break;
                         }
                         break;

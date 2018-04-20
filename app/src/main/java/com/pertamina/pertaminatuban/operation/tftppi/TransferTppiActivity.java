@@ -272,13 +272,13 @@ public class TransferTppiActivity extends AppCompatActivity {
                         Log.w("keys", key);
                         switch (key) {
                             case Matbal.PERTAMAX:
-                                handledSetText(flowratePertamax, object.getString(key), "");
+                                handledSetText(flowratePertamax, object.getString(key), " KL/Jam");
                                 break;
                             case Matbal.PREMIUM:
-                                handledSetText(flowratePremium, object.getString(key), "");
+                                handledSetText(flowratePremium, object.getString(key), " KL/Jam");
                                 break;
                             case Matbal.SOLAR:
-                                handledSetText(flowrateSolar, object.getString(key), "");
+                                handledSetText(flowrateSolar, object.getString(key), " KL/Jam");
                                 break;
                         }
                     }

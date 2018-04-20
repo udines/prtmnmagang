@@ -19,6 +19,7 @@ import com.pertamina.pertaminatuban.distribusi.models.Matbal;
 import com.pertamina.pertaminatuban.operation.models.Suplai;
 import com.pertamina.pertaminatuban.operation.pumpable.PumpableActivity;
 import com.pertamina.pertaminatuban.service.OperationClient;
+import com.pertamina.pertaminatuban.utils.MethodCollection;
 import com.whiteelephant.monthpicker.MonthPickerDialog;
 
 import java.io.IOException;
@@ -150,25 +151,25 @@ public class SuplaiBbmActivity extends AppCompatActivity {
                         if (suplai.getTransaksi().equals(Suplai.TRANS_IMPORT)) {
                             switch (suplai.getFuel()) {
                                 case Matbal.PERTAMAX:
-                                    tankerImportPertamax.setText(String.valueOf(suplai.getValue() + " KL"));
+                                    tankerImportPertamax.setText(String.valueOf(MethodCollection.numberWithDot(suplai.getValue()) + " KL"));
                                     break;
                                 case Matbal.PREMIUM:
-                                    tankerImportPremium.setText(String.valueOf(suplai.getValue() + " KL"));
+                                    tankerImportPremium.setText(String.valueOf(MethodCollection.numberWithDot(suplai.getValue()) + " KL"));
                                     break;
                                 case Matbal.SOLAR:
-                                    tankerImportSolar.setText(String.valueOf(suplai.getValue() + " KL"));
+                                    tankerImportSolar.setText(String.valueOf(MethodCollection.numberWithDot(suplai.getValue()) + " KL"));
                                     break;
                             }
                         } else if (suplai.getTransaksi().equals(Suplai.TRANS_DOMESTIK)) {
                             switch (suplai.getFuel()) {
                                 case Matbal.PERTAMAX:
-                                    tankerDomestikPertamax.setText(String.valueOf(suplai.getValue() + " KL"));
+                                    tankerDomestikPertamax.setText(String.valueOf(MethodCollection.numberWithDot(suplai.getValue()) + " KL"));
                                     break;
                                 case Matbal.PREMIUM:
-                                    tankerDomestikPremium.setText(String.valueOf(suplai.getValue() + " KL"));
+                                    tankerDomestikPremium.setText(String.valueOf(MethodCollection.numberWithDot(suplai.getValue()) + " KL"));
                                     break;
                                 case Matbal.SOLAR:
-                                    tankerDomestikSolar.setText(String.valueOf(suplai.getValue() + " KL"));
+                                    tankerDomestikSolar.setText(String.valueOf(MethodCollection.numberWithDot(suplai.getValue()) + " KL"));
                                     break;
                             }
                         }
@@ -176,26 +177,26 @@ public class SuplaiBbmActivity extends AppCompatActivity {
                     case Suplai.SUP_EXTPPI:
                         switch (suplai.getFuel()) {
                             case Matbal.PERTAMAX:
-                                pipePertamax.setText(String.valueOf(suplai.getValue() + " KL"));
+                                pipePertamax.setText(String.valueOf(MethodCollection.numberWithDot(suplai.getValue()) + " KL"));
                                 break;
                             case Matbal.PREMIUM:
-                                pipePremium.setText(String.valueOf(suplai.getValue() + " KL"));
+                                pipePremium.setText(String.valueOf(MethodCollection.numberWithDot(suplai.getValue()) + " KL"));
                                 break;
                             case Matbal.SOLAR:
-                                pipeSolar.setText(String.valueOf(suplai.getValue() + " KL"));
+                                pipeSolar.setText(String.valueOf(MethodCollection.numberWithDot(suplai.getValue()) + " KL"));
                                 break;
                         }
                         break;
                     case Suplai.SUP_EXTWU:
                         switch (suplai.getFuel()) {
                             case Matbal.PERTAMAX:
-                                tangkiPertamax.setText(String.valueOf(suplai.getValue() + " KL"));
+                                tangkiPertamax.setText(String.valueOf(MethodCollection.numberWithDot(suplai.getValue()) + " KL"));
                                 break;
                             case Matbal.PREMIUM:
-                                tangkiPremium.setText(String.valueOf(suplai.getValue() + " KL"));
+                                tangkiPremium.setText(String.valueOf(MethodCollection.numberWithDot(suplai.getValue()) + " KL"));
                                 break;
                             case Matbal.SOLAR:
-                                tangkiSolar.setText(String.valueOf(suplai.getValue() + " KL"));
+                                tangkiSolar.setText(String.valueOf(MethodCollection.numberWithDot(suplai.getValue()) + " KL"));
                                 break;
                         }
                         break;
