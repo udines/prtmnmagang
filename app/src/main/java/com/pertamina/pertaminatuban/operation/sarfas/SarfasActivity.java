@@ -145,6 +145,7 @@ public class SarfasActivity extends AppCompatActivity {
                                 month = selectedMonth;
                                 year = selectedYear;
                                 setBulanButton(month, year, dateButton);
+                                getPipelineBulan(month, year);
                             }
                         },
                         today.get(Calendar.YEAR),
