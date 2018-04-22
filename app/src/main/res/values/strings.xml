@@ -404,11 +404,11 @@
     <string name="title_activity_suplai_bbm">Suplai BBM</string>
     <string name="title_activity_transfer_pipeline">Transfer Pipeline</string>
     <string name="title_activity_transfer_tppi">Transfer TPPI</string>
-    <string name="title_activity_sarfas">Sarfas</string>
+    <string name="title_activity_sarfas">Penerimaan TWU</string>
     <string name="title_activity_input_pumpable">Input Pumpable</string>
     <string name="title_activity_input_transfer_pipeline">Input Transfer Pipeline</string>
-    <string name="title_activity_input_transfer_tppi">Input Transfer TPPI TBBM</string>
-    <string name="title_activity_input_sarfas">Input Sarfas Penerimaan</string>
+    <string name="title_activity_input_transfer_tppi">Input Transfer TPPI</string>
+    <string name="title_activity_input_sarfas">Input Penerimaan TWU</string>
     <string name="title_activity_input_suplai_bbm">Input Suplai Bbm</string>
     <string name="title_activity_input_distribusi_bbm">Input Distribusi Bbm</string>
     <string name="title_activity_sarana_fasilitas">Sarfas</string>

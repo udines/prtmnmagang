@@ -169,8 +169,8 @@ public class PumpableActivity extends AppCompatActivity {
                         today.get(Calendar.MONTH)
                 );
 
-                builder.setMinYear(1970)
-                        .setMaxYear(today.get(Calendar.YEAR))
+                builder.setMinYear(2018)
+                        .setMaxYear(2050)
                         .setTitle("Pilih bulan dan tahun")
                         .setActivatedMonth(month)
                         .setActivatedYear(year)
@@ -343,18 +343,17 @@ public class PumpableActivity extends AppCompatActivity {
             switch (pumpables.get(i).getFuel()) {
                 case Matbal.PERTAMAX:
                     if (pumpables.get(i).getNoTank().equals("total")) {
-                        pertamax.setText(String.valueOf(pumpables.get(i).getValue() + satuan));
+                        pertamax.setText(String.valueOf(MethodCollection.numberWithComma(pumpables.get(i).getValue()) + satuan));
                     }
-                    Log.w("pertamax", new Gson().toJson(pumpables.get(i)));
                     break;
                 case Matbal.PREMIUM:
                     if (pumpables.get(i).getNoTank().equals("total")) {
-                        premium.setText(String.valueOf(pumpables.get(i).getValue() + satuan));
+                        premium.setText(String.valueOf(MethodCollection.numberWithComma(pumpables.get(i).getValue()) + satuan));
                     }
                     break;
                 case Matbal.SOLAR:
                     if (pumpables.get(i).getNoTank().equals("total")) {
-                        solar.setText(String.valueOf(pumpables.get(i).getValue() + satuan));
+                        solar.setText(String.valueOf(MethodCollection.numberWithComma(pumpables.get(i).getValue()) + satuan));
                     }
                     break;
             }

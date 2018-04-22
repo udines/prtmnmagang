@@ -108,8 +108,8 @@ public class DistribusiBbmActivity extends AppCompatActivity {
                         today.get(Calendar.MONTH)
                 );
 
-                builder.setMinYear(1970)
-                        .setMaxYear(today.get(Calendar.YEAR))
+                builder.setMinYear(2018)
+                        .setMaxYear(2050)
                         .setTitle("Pilih bulan dan tahun")
                         .setActivatedMonth(month)
                         .setActivatedYear(year)

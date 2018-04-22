@@ -19,4 +19,20 @@ public class MethodCollection {
         DecimalFormat formatter = new DecimalFormat("#,###,###");
         return formatter.format(number).replaceAll(",",".");
     }
+
+    public static String numberWithComma(long angka) {
+        DecimalFormat precision = new DecimalFormat("0.00");
+        return precision.format(angka).replace(".", ",");
+    }
+
+    public static String numberWithComma(double angka) {
+        DecimalFormat precision = new DecimalFormat("0.00");
+        return precision.format(angka).replace(".", ",");
+    }
+
+    public static String numberWithComma(String angka) {
+        double number = Double.parseDouble(angka);
+        DecimalFormat precision = new DecimalFormat("0.00");
+        return precision.format(number).replace(".", ",");
+    }
 }

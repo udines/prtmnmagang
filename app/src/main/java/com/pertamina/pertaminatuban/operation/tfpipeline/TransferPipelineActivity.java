@@ -19,6 +19,7 @@ import com.pertamina.pertaminatuban.distribusi.models.Matbal;
 import com.pertamina.pertaminatuban.operation.models.TransferPipeline;
 import com.pertamina.pertaminatuban.operation.pumpable.PumpableActivity;
 import com.pertamina.pertaminatuban.service.OperationClient;
+import com.pertamina.pertaminatuban.utils.MethodCollection;
 import com.whiteelephant.monthpicker.MonthPickerDialog;
 
 import org.json.JSONArray;
@@ -150,8 +151,8 @@ public class TransferPipelineActivity extends AppCompatActivity {
                         today.get(Calendar.MONTH)
                 );
 
-                builder.setMinYear(1970)
-                        .setMaxYear(today.get(Calendar.YEAR))
+                builder.setMinYear(2018)
+                        .setMaxYear(2050)
                         .setTitle("Pilih bulan dan tahun")
                         .setActivatedMonth(month)
                         .setActivatedYear(year)
@@ -247,13 +248,13 @@ public class TransferPipelineActivity extends AppCompatActivity {
                         Log.w("keys", key);
                         switch (key) {
                             case Matbal.PERTAMAX:
-                                handledSetText(utilisasiPertamax, object.getString(key), "%");
+                                handledSetTextComma(utilisasiPertamax, object.getString(key), "%");
                                 break;
                             case Matbal.PREMIUM:
-                                handledSetText(utilisasiPremium, object.getString(key), "%");
+                                handledSetTextComma(utilisasiPremium, object.getString(key), "%");
                                 break;
                             case Matbal.SOLAR:
-                                handledSetText(utilisasiSolar, object.getString(key), "%");
+                                handledSetTextComma(utilisasiSolar, object.getString(key), "%");
                                 break;
                         }
                     }
@@ -267,15 +268,26 @@ public class TransferPipelineActivity extends AppCompatActivity {
                         Log.w("keys", key);
                         switch (key) {
                             case Matbal.PERTAMAX:
-                                handledSetText(flowratePertamax, object.getString(key), " KL/Jam");
+                                handledSetTextComma(flowratePertamax, object.getString(key), " KL/Jam");
                                 break;
                             case Matbal.PREMIUM:
-                                handledSetText(flowratePremium, object.getString(key), " KL/Jam");
+                                handledSetTextComma(flowratePremium, object.getString(key), " KL/Jam");
                                 break;
                             case Matbal.SOLAR:
-                                handledSetText(flowrateSolar, object.getString(key), " KL/Jam");
+                                handledSetTextComma(flowrateSolar, object.getString(key), " KL/Jam");
                                 break;
                         }
+                    }
+
+                    if (utilisasi.length() == 0) {
+                        utilisasiPertamax.setText("0,00%");
+                        utilisasiPremium.setText("0,00%");
+                        utilisasiSolar.setText("0,00%");
+                    }
+                    if (flowrate.length() == 0) {
+                        flowratePertamax.setText("0,00 KL/Jam");
+                        flowratePremium.setText("0,00 KL/Jam");
+                        flowrateSolar.setText("0,00 KL/Jam");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -292,6 +304,12 @@ public class TransferPipelineActivity extends AppCompatActivity {
     private String numberWithDot(long angka) {
         DecimalFormat formatter = new DecimalFormat("#,###,###");
         return formatter.format(angka).replaceAll(",",".");
+    }
+
+    private void handledSetTextComma(TextView target, String value, String satuan) {
+        if (value != null) {
+            target.setText(String.valueOf(MethodCollection.numberWithComma(value) + satuan));
+        }
     }
 
     private void handledSetText(TextView target, String value, String satuan) {
