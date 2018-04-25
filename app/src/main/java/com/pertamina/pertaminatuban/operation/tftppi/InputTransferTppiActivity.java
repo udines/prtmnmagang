@@ -530,7 +530,7 @@ public class InputTransferTppiActivity extends AppCompatActivity {
         jumlah = pipeline.getJumlah().substring(0, pipeline.getJumlah().length() - 3);
         textJumlah.setText(String.valueOf("Jumlah: " + jumlah));
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(),
-                R.array.bahan_bakar, android.R.layout.simple_spinner_item);
+                R.array.operasi_product, android.R.layout.simple_spinner_item);
         spinner.setSelection(adapter.getPosition(pipeline.getFuel()));
         SimpleDateFormat parseFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         Date startDate, stopDate;
@@ -566,7 +566,7 @@ public class InputTransferTppiActivity extends AppCompatActivity {
 
     private void handleSpinner() {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getApplicationContext(),
-                R.array.bahan_bakar, android.R.layout.simple_spinner_item);
+                R.array.operasi_product, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
     }

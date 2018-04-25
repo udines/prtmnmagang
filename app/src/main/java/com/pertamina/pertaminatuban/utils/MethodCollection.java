@@ -35,4 +35,19 @@ public class MethodCollection {
         DecimalFormat precision = new DecimalFormat("0.00");
         return precision.format(number).replace(".", ",");
     }
+
+    public static String flowRateNumber(double angka) {
+        DecimalFormat flowrateFormat = new DecimalFormat("#,###,###.00");
+        String temp = flowrateFormat.format(angka).replaceAll(",", "!");
+        temp = temp.replace(".", ",");
+        return temp.replaceAll("!", ".");
+    }
+
+    public static String flowRateNumber(String angka) {
+        double number = Double.parseDouble(angka);
+        DecimalFormat flowrateFormat = new DecimalFormat("#,###,###.00");
+        String temp = flowrateFormat.format(number).replaceAll(",", "!");
+        temp = temp.replace(".", ",");
+        return temp.replaceAll("!", ".");
+    }
 }

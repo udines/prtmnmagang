@@ -268,13 +268,13 @@ public class TransferPipelineActivity extends AppCompatActivity {
                         Log.w("keys", key);
                         switch (key) {
                             case Matbal.PERTAMAX:
-                                handledSetTextComma(flowratePertamax, object.getString(key), " KL/Jam");
+                                handledSetTextFlowrate(flowratePertamax, object.getString(key), " KL/Jam");
                                 break;
                             case Matbal.PREMIUM:
-                                handledSetTextComma(flowratePremium, object.getString(key), " KL/Jam");
+                                handledSetTextFlowrate(flowratePremium, object.getString(key), " KL/Jam");
                                 break;
                             case Matbal.SOLAR:
-                                handledSetTextComma(flowrateSolar, object.getString(key), " KL/Jam");
+                                handledSetTextFlowrate(flowrateSolar, object.getString(key), " KL/Jam");
                                 break;
                         }
                     }
@@ -312,9 +312,9 @@ public class TransferPipelineActivity extends AppCompatActivity {
         }
     }
 
-    private void handledSetText(TextView target, String value, String satuan) {
+    private void handledSetTextFlowrate(TextView target, String value, String satuan) {
         if (value != null) {
-            target.setText(String.valueOf(value + satuan));
+            target.setText(String.valueOf(MethodCollection.flowRateNumber(value) + satuan));
         }
     }
 
