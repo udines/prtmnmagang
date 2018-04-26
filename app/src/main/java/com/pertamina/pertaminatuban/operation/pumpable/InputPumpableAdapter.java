@@ -53,7 +53,7 @@ public class InputPumpableAdapter extends RecyclerView.Adapter<InputPumpableView
             holder.inputNoTank.setText(pumpables.get(position).getNoTank());
         }
         if (pumpables.get(position).getValue() > 0) {
-            holder.inputValue.setText(String.valueOf(pumpables.get(position).getValue()));
+            holder.inputValue.setText(String.valueOf((long)pumpables.get(position).getValue()));
         }
 
         holder.close.setOnClickListener(new View.OnClickListener() {
