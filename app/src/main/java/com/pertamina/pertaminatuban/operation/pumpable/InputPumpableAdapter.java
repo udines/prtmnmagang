@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.pertamina.pertaminatuban.R;
@@ -59,19 +60,23 @@ public class InputPumpableAdapter extends RecyclerView.Adapter<InputPumpableView
         holder.close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (pumpables.get(holder.getAdapterPosition()).getId() != null) {
-                    index = holder.getAdapterPosition();
-                    hapusPumpable(pumpables.get(holder.getAdapterPosition()).getId());
-                } else {
-                    pumpables.remove(holder.getAdapterPosition());
-                    notifyItemRemoved(holder.getAdapterPosition());
-                    notifyItemRangeChanged(holder.getAdapterPosition(), pumpables.size());
+                try {
+                    if (pumpables.get(holder.getAdapterPosition()).getId() != null) {
+                        index = holder.getAdapterPosition();
+                        hapusPumpable(pumpables.get(holder.getAdapterPosition()).getId());
+                    } else {
+                        pumpables.remove(holder.getAdapterPosition());
+                        notifyItemRemoved(holder.getAdapterPosition());
+                        notifyItemRangeChanged(holder.getAdapterPosition(), pumpables.size());
+                    }
+                } catch (IndexOutOfBoundsException e) {
+                    e.getMessage();
                 }
             }
         });
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context,
-                R.array.bahan_bakar, android.R.layout.simple_spinner_item);
+                R.array.operasi_product, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         holder.spinner.setAdapter(adapter);
         holder.spinner.setSelection(adapter.getPosition(pumpables.get(position).getFuel()));
