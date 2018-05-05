@@ -28,10 +28,13 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import okhttp3.Interceptor;
@@ -220,6 +223,9 @@ public class TransferPipelineActivity extends AppCompatActivity {
                         pipelines.add(pipeline);
                     }
 
+                    long kwantity = 0;
+                    long min = 0;
+                    Log.w("pipeline size", String.valueOf(pipelines.size()));
                     for (int i = 0; i < pipelines.size(); i++) {
                         if (pipelines.get(i).getFuel().equals(Matbal.PERTAMAX)) {
                             quantityPertamax.setText(String.valueOf(numberWithDot(pipelines.get(i).getQuantity()) + " KL"));
@@ -237,8 +243,16 @@ public class TransferPipelineActivity extends AppCompatActivity {
                             stopSolar.setText(pipelines.get(i).getStop());
                             jumlahSolar.setText(pipelines.get(i).getJumlah());
                         }
-                    }
 
+                        kwantity = kwantity + pipelines.get(i).getQuantity();
+                        min = min + getMinFromString(pipelines.get(i).getJumlah());
+                    }
+                    TextView summaryKuantity = findViewById(R.id.operasi_summary_kwantity);
+                    summaryKuantity.setText(String.valueOf(numberWithDot(kwantity) + " KL"));
+                    TextView summaryJam = findViewById(R.id.operasi_summary_jam_transfer);
+                    summaryJam.setText(getStringFromMin(min));
+
+                    double util = 0.0;
                     JSONArray utilisasi = jsonObject.getJSONArray("utilisasiPipeline");
                     Log.w("utilisasi size", String.valueOf(utilisasi.length()));
                     for (int i = 0; i < utilisasi.length(); i++) {
@@ -257,8 +271,12 @@ public class TransferPipelineActivity extends AppCompatActivity {
                                 handledSetTextComma(utilisasiSolar, object.getString(key), "%");
                                 break;
                         }
+                        util = util + Double.parseDouble(object.getString(key));
                     }
+                    TextView summaryUtilisasi = findViewById(R.id.operasi_summary_utilisasi);
+                    handledSetTextComma(summaryUtilisasi, String.valueOf(util), "%");
 
+                    double flow = 0.0;
                     JSONArray flowrate = jsonObject.getJSONArray("flowrate");
                     Log.w("flowrate size", String.valueOf(flowrate.length()));
                     for (int i = 0; i < flowrate.length(); i++) {
@@ -277,7 +295,10 @@ public class TransferPipelineActivity extends AppCompatActivity {
                                 handledSetTextFlowrate(flowrateSolar, object.getString(key), " KL/Jam");
                                 break;
                         }
+                        flow = flow + Double.parseDouble(object.getString(key));
                     }
+                    TextView summaryFlowrate = findViewById(R.id.operasi_summary_flowrate);
+                    handledSetTextFlowrate(summaryFlowrate, String.valueOf(flow), " KL/Jam");
 
                     if (utilisasi.length() == 0) {
                         utilisasiPertamax.setText("0,00%");
@@ -299,6 +320,25 @@ public class TransferPipelineActivity extends AppCompatActivity {
                 Log.w("error", t.getMessage());
             }
         });
+    }
+
+    private String getStringFromMin(long minutes) {
+        long jam = minutes / 60;
+        long min = minutes % 60;
+        return String.valueOf(jam + ":" + min + ":" + "00");
+    }
+
+    private long getMinFromString(String jumlahJam) {
+        long minute = 0;
+        if (!jumlahJam.equals("0.0")) {
+            List<String> item = Arrays.asList(jumlahJam.split(":"));
+            ArrayList<Long> times = new ArrayList<>();
+            for (int i = 0; i < item.size(); i++) {
+                times.add(Long.parseLong(item.get(i)));
+            }
+            minute = (times.get(0) * 60) + times.get(1);
+        }
+        return minute;
     }
 
     private String numberWithDot(long angka) {
