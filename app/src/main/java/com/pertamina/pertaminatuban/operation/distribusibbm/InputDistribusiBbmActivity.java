@@ -329,19 +329,19 @@ public class InputDistribusiBbmActivity extends AppCompatActivity {
                     case DistribusiBbm.DIST_TANKER:
                         switch (distribusi.getFuel()) {
                             case Matbal.PERTAMAX:
-                                inputTankerPertamax.setText(String.valueOf(distribusi.getValue()));
+                                setTextInput(inputTankerPertamax, distribusi.getValue());
                                 distribusiIds.set(0, distribusi.getId());
                                 break;
                             case Matbal.PREMIUM:
-                                inputTankerPremium.setText(String.valueOf(distribusi.getValue()));
+                                setTextInput(inputTankerPremium, distribusi.getValue());
                                 distribusiIds.set(1, distribusi.getId());
                                 break;
                             case Matbal.SOLAR:
-                                inputTankerSolar.setText(String.valueOf(distribusi.getValue()));
+                                setTextInput(inputTankerSolar, distribusi.getValue());
                                 distribusiIds.set(2, distribusi.getId());
                                 break;
                             case Matbal.PERTALITE:
-                                inputTankerPertalite.setText(String.valueOf(distribusi.getValue()));
+                                setTextInput(inputTankerPertalite, distribusi.getValue());
                                 distribusiIds.set(3, distribusi.getId());
                                 break;
                         }
@@ -349,19 +349,19 @@ public class InputDistribusiBbmActivity extends AppCompatActivity {
                     case DistribusiBbm.DIST_PIPA:
                         switch (distribusi.getFuel()) {
                             case Matbal.PERTAMAX:
-                                inputPipaPertamax.setText(String.valueOf(distribusi.getValue()));
+                                setTextInput(inputPipaPertamax, distribusi.getValue());
                                 distribusiIds.set(4, distribusi.getId());
                                 break;
                             case Matbal.PREMIUM:
-                                inputPipaPremium.setText(String.valueOf(distribusi.getValue()));
+                                setTextInput(inputPipaPremium, distribusi.getValue());
                                 distribusiIds.set(5, distribusi.getId());
                                 break;
                             case Matbal.SOLAR:
-                                inputPipaSolar.setText(String.valueOf(distribusi.getValue()));
+                                setTextInput(inputPipaSolar, distribusi.getValue());
                                 distribusiIds.set(6, distribusi.getId());
                                 break;
                             case Matbal.PERTALITE:
-                                inputPipaPertalite.setText(String.valueOf(distribusi.getValue()));
+                                setTextInput(inputPipaPertalite, distribusi.getValue());
                                 distribusiIds.set(7, distribusi.getId());
                                 break;
                         }
@@ -369,25 +369,33 @@ public class InputDistribusiBbmActivity extends AppCompatActivity {
                     case DistribusiBbm.DIST_MOBIL:
                         switch (distribusi.getFuel()) {
                             case Matbal.PERTAMAX:
-                                inputMobilPertamax.setText(String.valueOf(distribusi.getValue()));
+                                setTextInput(inputMobilPertamax, distribusi.getValue());
                                 distribusiIds.set(8, distribusi.getId());
                                 break;
                             case Matbal.PREMIUM:
-                                inputMobilPremium.setText(String.valueOf(distribusi.getValue()));
+                                setTextInput(inputMobilPremium, distribusi.getValue());
                                 distribusiIds.set(9, distribusi.getId());
                                 break;
                             case Matbal.SOLAR:
-                                inputMobilSolar.setText(String.valueOf(distribusi.getValue()));
+                                setTextInput(inputMobilSolar, distribusi.getValue());
                                 distribusiIds.set(10, distribusi.getId());
                                 break;
                             case Matbal.PERTALITE:
-                                inputMobilPertalite.setText(String.valueOf(distribusi.getValue()));
+                                setTextInput(inputMobilPertalite, distribusi.getValue());
                                 distribusiIds.set(11, distribusi.getId());
                                 break;
                         }
                         break;
                 }
             }
+        }
+    }
+
+    private void setTextInput(EditText editText, long value) {
+        if (value <= 0) {
+            editText.setText("");
+        } else {
+            editText.setText(String.valueOf(value));
         }
     }
 
