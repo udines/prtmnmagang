@@ -612,9 +612,18 @@ public class MatbalActivity extends AppCompatActivity {
 
         float totalNow = 0, totalLalu = 0;
         for (int i = 0; i < matbalLalu.size(); i++) {
-            totalLalu = totalLalu + matbalLalu.get(i).getNilai();
+            if (matbalLalu.get(i).getFuel().equals(Matbal.BIOSOLAR) ||
+                    matbalLalu.get(i).getFuel().equals(Matbal.PREMIUM) ||
+                    matbalLalu.get(i).getFuel().equals(Matbal.PERTALITE) ||
+                    matbalLalu.get(i).getFuel().equals(Matbal.PERTAMAX)) {
+                totalLalu = totalLalu + matbalLalu.get(i).getNilai();
+            }
         }
         for (int i = 0; i < matbalSekarang.size(); i++) {
+            if (matbalSekarang.get(i).getFuel().equals(Matbal.BIOSOLAR) ||
+                    matbalSekarang.get(i).getFuel().equals(Matbal.PREMIUM) ||
+                    matbalSekarang.get(i).getFuel().equals(Matbal.PERTALITE) ||
+                    matbalSekarang.get(i).getFuel().equals(Matbal.PERTAMAX))
             totalNow = totalNow + matbalSekarang.get(i).getNilai();
         }
 
