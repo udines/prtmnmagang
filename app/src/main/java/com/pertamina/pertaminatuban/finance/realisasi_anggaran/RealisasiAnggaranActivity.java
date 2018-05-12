@@ -13,6 +13,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.google.gson.Gson;
 import com.pertamina.pertaminatuban.R;
 import com.pertamina.pertaminatuban.distribusi.MatbalActivity;
@@ -26,6 +32,7 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -41,6 +48,7 @@ public class RealisasiAnggaranActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private int year;
     private TextView tahun;
+    private BarChart barChart;
 
     private TextView actual, commitment, allotted, plan, available;
 
@@ -68,6 +76,7 @@ public class RealisasiAnggaranActivity extends AppCompatActivity {
         allotted = findViewById(R.id.realisasi_anggaran_allotted);
         plan = findViewById(R.id.realisasi_anggaran_plan);
         available = findViewById(R.id.realisasi_anggaran_available);
+        barChart = findViewById(R.id.realisasi_anggaran_chart);
 
         Calendar cal = Calendar.getInstance();
         year = cal.get(Calendar.YEAR);
@@ -170,6 +179,7 @@ public class RealisasiAnggaranActivity extends AppCompatActivity {
                             }
                         }*/
                         recyclerView.setAdapter(new NewRealisasiAdapter(realisasiAnggarans, year));
+                        populateBarChart(realisasiAnggarans);
                     } /*else {
                         actual.setText("");
                         commitment.setText("");
@@ -208,6 +218,31 @@ public class RealisasiAnggaranActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void populateBarChart(ArrayList<RealisasiAnggaran> anggarans) {
+        List<BarEntry> entries = new ArrayList<>();
+        String[] values = new String[12];
+        for (int i = 0; i < 11; i++) {
+            if (i < anggarans.size()) {
+                double plan, allotted;
+                plan = anggarans.get(i).getPlan();
+                allotted = anggarans.get(i).getAllotted();
+                entries.add(new BarEntry(i + 1, (int) (allotted / plan * 100)));
+            } else {
+                entries.add(new BarEntry(i + 1, 0));
+            }
+            values[i] = String.valueOf(i + 1);
+        }
+        BarDataSet dataSet = new BarDataSet(entries, String.valueOf(year));
+        BarData barData = new BarData(dataSet);
+        barChart.getDescription().setEnabled(false);
+        barChart.getLegend().setEnabled(false);
+        barChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(values));
+        barChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
+        barChart.getAxisRight().setEnabled(false);
+        barChart.setData(barData);
+        barChart.invalidate();
     }
 
     private String currencyFor(double amount) {
