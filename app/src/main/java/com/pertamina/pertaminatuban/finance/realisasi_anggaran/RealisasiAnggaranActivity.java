@@ -111,7 +111,7 @@ public class RealisasiAnggaranActivity extends AppCompatActivity {
         tahun.setText(String.valueOf(year));
     }
 
-    private void getRealisasiAnggaran(int year) {
+    private void getRealisasiAnggaran(final int year) {
         SharedPreferences preferences = RealisasiAnggaranActivity.this.getSharedPreferences(
                 "login",
                 Context.MODE_PRIVATE
@@ -155,7 +155,7 @@ public class RealisasiAnggaranActivity extends AppCompatActivity {
                     ArrayList<RealisasiAnggaran> realisasiAnggarans =  response.body();
                     Log.w("size", String.valueOf(realisasiAnggarans.size()));
                     if (realisasiAnggarans.size() > 0) {
-                        for (int i = 0; i < realisasiAnggarans.size(); i++) {
+                        /*for (int i = 0; i < realisasiAnggarans.size(); i++) {
                             if (realisasiAnggarans.get(i).getCost_elements().equals("Over/Underabsorption")) {
                                 ArrayList<RealisasiAnggaran> overUnderAnggaran = new ArrayList<>();
                                 overUnderAnggaran.add(realisasiAnggarans.get(i));
@@ -168,8 +168,9 @@ public class RealisasiAnggaranActivity extends AppCompatActivity {
                                 plan.setText(currencyFor(realisasiAnggarans.get(i).getPlan()));
                                 available.setText(currencyFor(realisasiAnggarans.get(i).getAvailable()));
                             }
-                        }
-                    } else {
+                        }*/
+                        recyclerView.setAdapter(new NewRealisasiAdapter(realisasiAnggarans, year));
+                    } /*else {
                         actual.setText("");
                         commitment.setText("");
                         allotted.setText("");
@@ -179,7 +180,7 @@ public class RealisasiAnggaranActivity extends AppCompatActivity {
                         recyclerView.setAdapter(new RealisasiAnggaranAdapter(
                                 overUnderAnggaran, getApplicationContext()
                         ));
-                    }
+                    }*/
                 }
             }
 
