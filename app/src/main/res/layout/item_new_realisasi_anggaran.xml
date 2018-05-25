@@ -26,21 +26,46 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <TextView
-                    android:id="@+id/item_new_realisasi_anggaran_plan"
+                android:orientation="horizontal">
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:textColor="@color/black"
-                    android:text="Plan Rp5.000"/>
-                <TextView
-                    android:id="@+id/item_new_realisasi_anggaran_realisasi"
-                    android:layout_width="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingEnd="16dp"
+                    android:paddingRight="16dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:textColor="@color/black"
+                        android:text="Plan"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:textColor="@color/black"
+                        android:text="Realisasi"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:textColor="@color/black"
-                    android:text="Realisasi Rp10.000"/>
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/item_new_realisasi_anggaran_plan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:textColor="@color/black"
+                        android:text="Rp5.000"/>
+                    <TextView
+                        android:id="@+id/item_new_realisasi_anggaran_realisasi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:textColor="@color/black"
+                        android:text="Rp10.000"/>
+                </LinearLayout>
+
             </LinearLayout>
             <TextView
                 android:id="@+id/item_new_realisasi_anggaran_persentase"
@@ -49,8 +74,11 @@
                 android:layout_marginStart="12dp"
                 android:gravity="center"
                 android:textSize="16sp"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
                 android:textColor="@color/black"
                 android:text="200%"
+                android:background="@drawable/outline_background"
                 android:layout_marginLeft="12dp" />
         </LinearLayout>
     </android.support.v7.widget.CardView>

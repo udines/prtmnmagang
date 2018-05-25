@@ -33,8 +33,8 @@ public class NewRealisasiAdapter extends RecyclerView.Adapter<NewRealisasiViewHo
     @Override
     public void onBindViewHolder(@NonNull NewRealisasiViewHolder holder, int position) {
         holder.bulan.setText(String.valueOf("Bulan: " + getMonth(position) + " " + year));
-        holder.plan.setText(String.valueOf("Plan Rp" + MethodCollection.numberWithDot(anggarans.get(position).getPlan())));
-        holder.realisasi.setText(String.valueOf("Realisasi Rp" + MethodCollection.numberWithDot(anggarans.get(position).getAllotted())));
+        holder.plan.setText(String.valueOf("Rp" + MethodCollection.numberWithDot(anggarans.get(position).getPlan())));
+        holder.realisasi.setText(String.valueOf("Rp" + MethodCollection.numberWithDot(anggarans.get(position).getAllotted())));
         holder.persentase.setText(String.valueOf(
                  MethodCollection.numberWithComma((anggarans.get(position).getAllotted() / anggarans.get(position).getPlan() * 100)) + "%"
         ));
